@@ -56,7 +56,21 @@ Después, cada push a `main` redespliega solo.
 
 Requisitos: Python 3.13+, Node.js 20+.
 
-### Backend
+### Solo verla en tu computador (lo más liviano)
+
+Doble clic en **`ver-app.bat`**. Levanta un solo proceso (~60 MB), abre
+<http://localhost:8000> en el navegador y se apaga al cerrar su ventana. Solo escucha en
+tu computador, no en la red.
+
+Necesita, una sola vez, el entorno `backend/.venv` y el build `frontend/dist`
+(pasos de abajo). Si falta alguno, el script te dice qué correr.
+
+### Desarrollo
+
+Para programar con recarga automática, en dos terminales. Consume bastante más que
+`ver-app.bat`: dos procesos de Python vigilando archivos más el servidor de Vite.
+
+#### Backend
 
 ```powershell
 cd backend
@@ -67,7 +81,7 @@ uvicorn app.main:app --reload
 # API en http://localhost:8000  ·  docs en http://localhost:8000/docs
 ```
 
-### Frontend
+#### Frontend
 
 ```powershell
 cd frontend
@@ -76,16 +90,8 @@ npm run dev
 # App en http://localhost:5173
 ```
 
-### Todo en un solo servidor (más liviano)
-
-Si ya existe `frontend/dist` (`npm run build`), el backend también sirve la app web y no
-hace falta el servidor de Vite:
-
-```powershell
-cd frontend; npm run build; cd ..\backend
-uvicorn app.main:app
-# App y API en http://localhost:8000
-```
+Para actualizar lo que muestra `ver-app.bat` después de cambiar pantallas:
+`cd frontend; npm run build`.
 
 ## Estructura del repositorio
 
@@ -94,6 +100,7 @@ Hackaton/
 ├─ backend/              API FastAPI + carga del dataset + capa de IA
 ├─ frontend/             PWA React para la educadora
 ├─ Dump/                 Material del desafío (síntesis + dataset sintético)
+├─ ver-app.bat           Abre la app en tu computador (un solo proceso)
 ├─ Dockerfile            Imagen única: build del frontend + API
 ├─ render.yaml           Blueprint de despliegue en Render
 └─ README.md
