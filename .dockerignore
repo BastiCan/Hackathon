@@ -1,0 +1,11 @@
+# Solo entra a la imagen lo necesario; dependencias y builds se generan dentro.
+.git
+**/node_modules
+**/.venv
+**/__pycache__
+**/*.pyc
+**/dist
+**/*.tsbuildinfo
+**/*.log
+**/.env
+Dump/*.pdf

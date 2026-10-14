@@ -30,6 +30,27 @@ Ver la propuesta completa en [`Dump/integra_desafio1_sintesis.md`](Dump/integra_
 | Backend | FastAPI (Python 3.13) | [`backend/`](backend/) |
 | Datos | Dataset sintético E-1 (CSV / JSON) | [`Dump/dataset_e1_publico/`](Dump/dataset_e1_publico/) |
 | IA | Capa de servicio con interfaz estable (mock → modelo real) | [`backend/app/services/ai.py`](backend/app/services/ai.py) |
+| Despliegue | Una imagen Docker en Render (plan gratis): la API también sirve las pantallas | [`Dockerfile`](Dockerfile), [`render.yaml`](render.yaml) |
+
+## Ver la app en línea (un solo link)
+
+La app se despliega en [Render](https://render.com) como un único servicio: pantallas y
+API quedan bajo la misma URL. Configuración inicial, una sola vez:
+
+1. Entra a [render.com](https://render.com) con **Sign in with GitHub**.
+2. Abre <https://render.com/deploy?repo=https://github.com/BastiCan/Hackathon>.
+   Si Render pide permisos, instala su GitHub App y dale acceso al repo `Hackathon`
+   (es privado).
+3. Confirma el Blueprint (servicio `integra-hackathon`, plan Free) y espera el primer
+   build (~5 min). Cuando diga **Live**, el link aparece arriba del servicio
+   (`https://integra-hackathon….onrender.com`).
+
+Después, cada push a `main` redespliega solo.
+
+- En el plan gratis el servicio se duerme tras 15 min sin visitas y despierta en
+  ~1 min con la siguiente. Antes de una demo, abre el link un minuto antes.
+- La app no tiene login: cualquiera con el link la ve. Sirve porque los datos son
+  sintéticos; con datos reales de niños hay que agregar autenticación primero.
 
 ## Puesta en marcha
 
@@ -55,6 +76,17 @@ npm run dev
 # App en http://localhost:5173
 ```
 
+### Todo en un solo servidor (más liviano)
+
+Si ya existe `frontend/dist` (`npm run build`), el backend también sirve la app web y no
+hace falta el servidor de Vite:
+
+```powershell
+cd frontend; npm run build; cd ..\backend
+uvicorn app.main:app
+# App y API en http://localhost:8000
+```
+
 ## Estructura del repositorio
 
 ```
@@ -62,6 +94,8 @@ Hackaton/
 ├─ backend/              API FastAPI + carga del dataset + capa de IA
 ├─ frontend/             PWA React para la educadora
 ├─ Dump/                 Material del desafío (síntesis + dataset sintético)
+├─ Dockerfile            Imagen única: build del frontend + API
+├─ render.yaml           Blueprint de despliegue en Render
 └─ README.md
 ```
 

@@ -9,6 +9,7 @@ Endpoints principales:
 - GET  /api/ninos/{id}/alertas                    alertas del niño
 - GET  /api/ruta                                  ruta de niveles
 - POST /api/capturas/procesar                     IA: procesa una captura de texto
+- GET  /*                                         app web (si existe frontend/dist)
 """
 from __future__ import annotations
 
@@ -16,7 +17,9 @@ from datetime import date
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 
+from .config import FRONTEND_DIST
 from .data import get_store
 from .models import (
     Alerta,
@@ -127,3 +130,38 @@ def procesar_captura(req: CapturaRequest):
     ninos_sala = store.ninos_de_sala(primer_jardin, salas[0]) if salas else []
     sugerencias = ai.procesar_captura(store, req.texto, ninos_sala, HOY)
     return ProcesarCapturaResponse(sugerencias=sugerencias)
+
+
+# ---- App web (build de Vite) servida por la misma API ----
+# Así pantallas y API viven en un solo link. Va al final porque captura
+# cualquier GET que no coincida con las rutas /api definidas arriba.
+_INDEX_HTML = FRONTEND_DIST / "index.html"
+
+if _INDEX_HTML.is_file():
+
+    @app.get("/{ruta:path}", include_in_schema=False)
+    def app_web(ruta: str) -> FileResponse:
+        # Una ruta /api inexistente responde 404 en vez de devolver la página.
+        if ruta == "api" or ruta.startswith("api/"):
+            raise HTTPException(404, "Recurso no encontrado")
+
+        if ruta:
+            try:
+                archivo = (FRONTEND_DIST / ruta).resolve()
+            except (OSError, ValueError):
+                archivo = None
+            # Solo se sirven archivos dentro de dist/ (evita path traversal).
+            if archivo and archivo.is_relative_to(FRONTEND_DIST) and archivo.is_file():
+                # Los assets llevan hash en el nombre: se pueden cachear para siempre.
+                cache = (
+                    "public, max-age=31536000, immutable"
+                    if ruta.startswith("assets/")
+                    else "no-cache"
+                )
+                return FileResponse(archivo, headers={"Cache-Control": cache})
+            # Un asset viejo (p. ej. tras un redeploy) no debe recibir el HTML.
+            if ruta.startswith("assets/"):
+                raise HTTPException(404, "Archivo no encontrado")
+
+        # El resto (/, /nino/NINO-00008, ...) lo resuelve React Router.
+        return FileResponse(_INDEX_HTML, headers={"Cache-Control": "no-cache"})

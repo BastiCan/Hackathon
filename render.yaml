@@ -1,0 +1,17 @@
+# Blueprint de Render: despliega la app completa (API + pantallas) como un solo servicio.
+# Spec: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: integra-hackathon
+    runtime: docker
+    plan: free
+    # US East: menor latencia desde Chile que la región por defecto (oregon).
+    region: virginia
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    # Cada push a main vuelve a desplegar: el link siempre muestra la última versión.
+    autoDeployTrigger: commit
+    envVars:
+      - key: AI_PROVIDER
+        value: mock
