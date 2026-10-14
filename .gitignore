@@ -1,0 +1,40 @@
+# ---- Node / Frontend ----
+node_modules/
+dist/
+dist-ssr/
+*.local
+.vite/
+.eslintcache
+
+# ---- Python / Backend ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ---- Env & secrets ----
+.env
+.env.*
+!.env.example
+
+# ---- OS / Editor ----
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+
+# ---- Material pesado / con copyright (se mantiene en disco, fuera de git) ----
+Dump/*.pdf
+
+# ---- Logs ----
+*.log
+logs/
+npm-install.log
+
+# ---- Artefactos de build de TypeScript ----
+*.tsbuildinfo
