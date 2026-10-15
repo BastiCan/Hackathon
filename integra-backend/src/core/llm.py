@@ -121,7 +121,11 @@ def _bedrock():
         _cliente = boto3.client(
             "bedrock-runtime",
             region_name=config.region,
-            config=BotoConfig(retries={"max_attempts": 0, "mode": "standard"}),
+            config=BotoConfig(
+                retries={"max_attempts": 0, "mode": "standard"},
+                read_timeout=120,
+                connect_timeout=10,
+            ),
         )
     return _cliente
 

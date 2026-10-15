@@ -29,7 +29,7 @@ Parameters:
 
 Globals:
   Function:
-    Timeout: 300
+    Timeout: 900
     MemorySize: 1024
     Runtime: python3.13
 
@@ -189,6 +189,9 @@ Resources:
       FunctionName: ProcesarNota
       CodeUri: src/
       Handler: handler.handler
+      # Invocacion asincrona (disparo S3): a lo sumo 1 reintento ante fallo del handler.
+      EventInvokeConfig:
+        MaximumRetryAttempts: 1
       Environment:
         Variables:
           FUENTE_DATOS: aws

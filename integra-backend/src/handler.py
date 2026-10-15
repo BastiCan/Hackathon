@@ -18,6 +18,7 @@ from __future__ import annotations
 import json
 import logging
 import urllib.parse
+from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 from typing import Any
 
@@ -33,6 +34,10 @@ from core.rubrica import Rubrica
 
 logging.basicConfig(level=getattr(logging, config.log_level, logging.INFO))
 log = logging.getLogger("procesar_nota")
+
+# Partes de una captura procesadas en paralelo. No subir: pipeline.py ya usa hasta 5 hilos
+# por parte, y mas de 3 partes concurrentes saturaria la cuota de Bedrock.
+MAX_PARTES_PARALELO = 3
 
 # --- Recursos cacheados por contenedor (se cargan una vez) ---
 _rubrica: Rubrica | None = None
@@ -183,37 +188,47 @@ def _procesar_texto(datos: Any, bucket: str, id_captura: str, key: str) -> dict[
     total_obs = 0
     error_captura_completa: str | None = None
 
-    for n_parte, parte in enumerate(partes):
+    # Partes en paralelo (hasta 3). pipeline.py ya usa hasta 5 hilos POR parte, asi que no
+    # se sube de 3 partes concurrentes para no saturar Bedrock. Se recogen por n_parte.
+    def _una_parte(n_parte: int, parte) -> tuple[int, int, str | None]:
         archivo_s3 = (
             capturas_mod.clave_archivo(id_captura, parte.archivo) if parte.archivo else None
         )
-        try:
-            entrada = Entrada(
-                texto=parte.texto,
-                id_educadora=meta.id_educadora,
-                sala_grupo=meta.sala_grupo,
-                fecha=meta.fecha_observacion,
-            )
-            resultado = procesar_nota(
-                entrada,
-                datos,
-                rubrica,
-                retriever,
-                fewshot,
-                id_captura=id_captura,
-                n_parte=n_parte,
-                archivo_s3=archivo_s3,
-            )
-            total_obs += len(resultado.observaciones)
-        except ErrorCapturaExc as e:
-            # EDUCADORA/SALA_DESCONOCIDA afectan a toda la captura (vienen de meta).
-            if e.codigo in (ErrorCaptura.EDUCADORA_DESCONOCIDA, ErrorCaptura.SALA_DESCONOCIDA):
-                error_captura_completa = e.codigo.value
-                break
-            errores.append({"n_parte": n_parte, "error": e.codigo.value})
-        except Exception as e:
-            log.exception("fallo la parte %d de %s (%s)", n_parte, id_captura, type(e).__name__)
-            errores.append({"n_parte": n_parte, "error": "ERROR_INTERNO"})
+        entrada = Entrada(
+            texto=parte.texto,
+            id_educadora=meta.id_educadora,
+            sala_grupo=meta.sala_grupo,
+            fecha=meta.fecha_observacion,
+        )
+        resultado = procesar_nota(
+            entrada, datos, rubrica, retriever, fewshot,
+            id_captura=id_captura, n_parte=n_parte, archivo_s3=archivo_s3,
+        )
+        return n_parte, len(resultado.observaciones), None
+
+    with ThreadPoolExecutor(max_workers=min(MAX_PARTES_PARALELO, len(partes))) as ex:
+        futuros = {ex.submit(_una_parte, i, p): i for i, p in enumerate(partes)}
+        resultados_parte: dict[int, tuple[int, str | None]] = {}
+        for fut, n_parte in futuros.items():
+            try:
+                _, n_obs, _ = fut.result()
+                resultados_parte[n_parte] = (n_obs, None)
+            except ErrorCapturaExc as e:
+                # EDUCADORA/SALA_DESCONOCIDA afectan a toda la captura (vienen de meta).
+                if e.codigo in (ErrorCaptura.EDUCADORA_DESCONOCIDA, ErrorCaptura.SALA_DESCONOCIDA):
+                    error_captura_completa = e.codigo.value
+                else:
+                    resultados_parte[n_parte] = (0, e.codigo.value)
+            except Exception as e:
+                log.exception("fallo la parte %d de %s (%s)", n_parte, id_captura, type(e).__name__)
+                resultados_parte[n_parte] = (0, "ERROR_INTERNO")
+
+    # Reconstruir conteo y errores en orden de n_parte (determinista).
+    for n_parte in sorted(resultados_parte):
+        n_obs, err = resultados_parte[n_parte]
+        total_obs += n_obs
+        if err is not None:
+            errores.append({"n_parte": n_parte, "error": err})
 
     if error_captura_completa is not None:
         datos.upsert_registro(
