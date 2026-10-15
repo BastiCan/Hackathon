@@ -22,12 +22,13 @@ integra-backend/
 │   │   ├── postproceso.py      # consolidación de corridas: nivel, certeza, comentario
 │   │   ├── llm.py              # call_json (Bedrock Converse)
 │   │   ├── retriever.py        # búsqueda por embeddings sobre la rúbrica
-│   │   ├── datos.py            # leer nómina/educadora y guardar observaciones (DynamoDB o local)
-│   │   └── pipeline.py         # procesar_nota(entrada) -> Resultado
+│   │   ├── datos.py            # leer nómina/educadora y guardar observaciones/registros (DynamoDB o local)
+│   │   ├── capturas.py         # parseo de la ruta/evento S3: id_captura, tipo (meta|texto), claves
+│   │   └── pipeline.py         # procesar_nota(id_captura, entrada, archivo_s3) -> Resultado
 │   ├── prompts/                # separar_identificar.md, extraer_conductas.md, clasificar.md
 │   ├── schemas/                # JSON Schema de salida de cada prompt
 │   └── handler.py              # Lambda: evento -> pipeline -> respuesta
-├── scripts/                    # embeber_rubrica.py, cargar_aws.py, pipeline_local.py, medir.py
+├── scripts/                    # embeber_rubrica.py, cargar_aws.py, pipeline_local.py, medir.py, subir_captura_prueba.py
 ├── events/                     # eventos de prueba para invocar la Lambda
 ├── tests/{unit,llm,fixtures}/
 ├── docs/                       # AWS_SETUP.md, DECISIONES.md
@@ -37,5 +38,6 @@ integra-backend/
 
 ## Convenciones
 - Identificadores en español sin tildes ni ñ (`nino`, `anio`).
-- `handler.py` es delgado: valida el evento, llama a `pipeline.procesar_nota`, devuelve el resultado.
-- Lógica sin AWS en `core/` con test unitario. IDs con prefijo: `CAP-<ulid>`, `OBS-<ulid>`.
+- Claves compuestas: `sala_key = "{id_jardin}#{sala_grupo}"`; `orden = "{fecha}#{creado_en}"` (fecha de la observación).
+- `handler.py` es delgado: detecta records S3 (o evento directo), llama a `pipeline.procesar_nota`, devuelve el resultado.
+- Lógica sin AWS en `core/` con test unitario. IDs: `CAP-<ulid>` (de la ruta S3); `id_obs = {id_captura}-p{n_parte}-{n_obs}` (determinista).

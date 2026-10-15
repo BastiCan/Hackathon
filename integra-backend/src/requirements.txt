@@ -1,0 +1,6 @@
+# Dependencias de runtime de la Lambda (sam build las instala en el paquete).
+# boto3/botocore ya vienen en el runtime de Lambda; el resto no.
+pydantic>=2
+jsonschema
+rapidfuzz
+python-ulid

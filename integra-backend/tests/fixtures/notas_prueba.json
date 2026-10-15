@@ -1,5 +1,5 @@
 {
-  "_descripcion": "Notas de prueba sobre la sala real JAR-0001 / SG-A (nombres de demo en nomina_demo.json). C* = notas reales de la PPT de Integra; I* = identificación; P1 = post-it completo. 'esperado' es orientativo: listas = cualquiera de esos valores es aceptable. La edad se calcula a la fecha de la nota (2026-10-15). Revisar en equipo en el checkpoint (tarea 7).",
+  "_descripcion": "Casos para probar SEPARACIÓN (general/particular), IDENTIFICACIÓN del niño/a y detección de lo NO evaluable, sobre la sala real JAR-0001/SG-A (nombres de demo en nomina_demo.json). NO contienen expectativas de nivel ni dominio: la evaluación no se decide aquí (no hay etiqueta experta). C1–C7 = notas reales de educadoras (PPT de Integra); I1–I5 y P1 = escritos solo para probar identificación. La medición de códigos/niveles se hace con validacion_100.json.",
   "contexto": {
     "id_educadora": "EDU-0001",
     "sala_grupo": "SG-A",
@@ -12,15 +12,10 @@
       "esperado": [
         {
           "tipo": "PARTICULAR",
-          "id_nino": "NINO-00487",
-          "evaluabilidad": "EVALUABLE",
-          "dominios": [
-            "socioemocional"
-          ],
-          "nivel": 9,
-          "nota": "Puede sumar motor grueso; no debe quedar SOLO como motor grueso nivel 6 (trampa de similitud). Nayara tiene 40 meses: fuera del rango de la rúbrica, esperado [9]"
+          "id_nino": "NINO-00487"
         }
-      ]
+      ],
+      "origen": "nota real de educadora (PPT Integra)"
     },
     {
       "id": "C2",
@@ -28,23 +23,10 @@
       "esperado": [
         {
           "tipo": "PARTICULAR",
-          "id_nino": "NINO-00372",
-          "evaluabilidad": "EVALUABLE",
-          "dominios": [
-            "lenguaje_comunicacion"
-          ],
-          "nivel": [
-            8,
-            9
-          ],
-          "nota": "Alexi es un adulto (papá): no genera observación",
-          "certeza": [
-            "media",
-            "baja"
-          ],
-          "comentario_debe_mencionar": "el otro nivel (8 o 9) y que depende de cuántas palabras cuenta 'viene el Alexi'"
+          "id_nino": "NINO-00372"
         }
-      ]
+      ],
+      "origen": "nota real de educadora (PPT Integra)"
     },
     {
       "id": "C3",
@@ -53,14 +35,11 @@
         {
           "tipo": "PARTICULAR",
           "id_nino": "NINO-00487",
-          "evaluabilidad": "EVALUABLE",
-          "dominios": [
-            "lenguaje_comunicacion"
-          ],
-          "nivel": 9,
-          "nota": "'Naiara' se resuelve como Nayara por su variante. Pascal (NINO-00051) solo es mencionado: NO recibe observación"
+          "evaluabilidad": "NO_EVALUABLE",
+          "nota": "Sin componente evaluable (estado de salud de otro niño). Pascal (NINO-00051) solo mencionado: sin observación"
         }
-      ]
+      ],
+      "origen": "nota real de educadora (PPT Integra)"
     },
     {
       "id": "C4",
@@ -68,18 +47,10 @@
       "esperado": [
         {
           "tipo": "PARTICULAR",
-          "id_nino": "NINO-00346",
-          "evaluabilidad": "EVALUABLE",
-          "dominios": [
-            "motor_grueso"
-          ],
-          "nota": "Se evalúa el estado final; el comentario debe decir qué falta saber del circuito",
-          "certeza": [
-            "media",
-            "baja"
-          ]
+          "id_nino": "NINO-00346"
         }
-      ]
+      ],
+      "origen": "nota real de educadora (PPT Integra)"
     },
     {
       "id": "C5",
@@ -87,16 +58,10 @@
       "esperado": [
         {
           "tipo": "PARTICULAR",
-          "id_nino": "NINO-00372",
-          "evaluabilidad": "EVALUABLE",
-          "fecha_en_texto": "25 abril",
-          "certeza": [
-            "media",
-            "baja"
-          ],
-          "comentario_debe_mencionar": "otro nivel viable según si la instrucción era de uno o de dos pasos"
+          "id_nino": "NINO-00372"
         }
-      ]
+      ],
+      "origen": "nota real de educadora (PPT Integra)"
     },
     {
       "id": "C6",
@@ -105,7 +70,8 @@
         {
           "tipo": "GENERAL"
         }
-      ]
+      ],
+      "origen": "nota real de educadora (PPT Integra)"
     },
     {
       "id": "C7",
@@ -114,40 +80,8 @@
         {
           "tipo": "GENERAL"
         }
-      ]
-    },
-    {
-      "id": "C8",
-      "texto": "Pedro llegó con sueño",
-      "esperado": [
-        {
-          "tipo": "PARTICULAR",
-          "id_nino": "NINO-00253",
-          "evaluabilidad": "NO_EVALUABLE",
-          "motivo": "ESTADO_O_SALUD",
-          "nivel": null
-        }
-      ]
-    },
-    {
-      "id": "C9",
-      "texto": "Pedro dijo \"no quiero\" y empujó el plato",
-      "esperado": [
-        {
-          "tipo": "PARTICULAR",
-          "id_nino": "NINO-00253",
-          "evaluabilidad": "EVALUABLE",
-          "dominios": [
-            "lenguaje_comunicacion"
-          ],
-          "nivel": [
-            7,
-            8
-          ],
-          "nota": "Pedro tiene 31 meses (esperado 9). Es información, no alarma: una sola observación muestra lo que hizo, no su techo",
-          "comparacion_edad": "BAJO_LO_ESPERADO"
-        }
-      ]
+      ],
+      "origen": "nota real de educadora (PPT Integra)"
     },
     {
       "id": "I1",
@@ -155,29 +89,18 @@
       "esperado": [
         {
           "tipo": "PARTICULAR",
-          "id_nino": "NINO-00253",
-          "dominios": [
-            "cognitivo"
-          ],
-          "nivel": 9
+          "id_nino": "NINO-00253"
         },
         {
           "tipo": "PARTICULAR",
-          "id_nino": "NINO-00453",
-          "dominios": [
-            "cognitivo"
-          ],
-          "nivel": 9
+          "id_nino": "NINO-00453"
         },
         {
           "tipo": "PARTICULAR",
-          "id_nino": "NINO-00300",
-          "dominios": [
-            "cognitivo"
-          ],
-          "nivel": 9
+          "id_nino": "NINO-00300"
         }
-      ]
+      ],
+      "origen": "escrito para probar identificación (no evalúa)"
     },
     {
       "id": "I2",
@@ -191,7 +114,8 @@
             "NINO-00263"
           ]
         }
-      ]
+      ],
+      "origen": "escrito para probar identificación (no evalúa)"
     },
     {
       "id": "I3",
@@ -204,7 +128,8 @@
             "NINO-00216"
           ]
         }
-      ]
+      ],
+      "origen": "escrito para probar identificación (no evalúa)"
     },
     {
       "id": "I4",
@@ -214,7 +139,8 @@
           "tipo": "NO_IDENTIFICADO",
           "error_identificacion": "NO_ENCONTRADO"
         }
-      ]
+      ],
+      "origen": "escrito para probar identificación (no evalúa)"
     },
     {
       "id": "I5",
@@ -222,19 +148,10 @@
       "esperado": [
         {
           "tipo": "PARTICULAR",
-          "id_nino": "NINO-00080",
-          "evaluabilidad": "EVALUABLE",
-          "dominios": [
-            "cognitivo"
-          ],
-          "nivel": [
-            1,
-            2
-          ],
-          "nota": "Vicente tiene 5 meses (esperado 3); seguir con la mirada cruzando la línea media es nivel 2. Como información, no alarma",
-          "comparacion_edad": "BAJO_LO_ESPERADO"
+          "id_nino": "NINO-00080"
         }
-      ]
+      ],
+      "origen": "escrito para probar identificación (no evalúa)"
     },
     {
       "id": "P1",
@@ -242,36 +159,21 @@
       "esperado": [
         {
           "tipo": "PARTICULAR",
-          "id_nino": "NINO-00394",
-          "dominios": [
-            "motor_grueso"
-          ],
-          "evaluabilidad": "EVALUABLE",
-          "nota": "El comentario debe decir que falta saber si alterna los pies (nivel 7 vs 9)",
-          "certeza": [
-            "media",
-            "baja"
-          ]
+          "id_nino": "NINO-00394"
         },
         {
           "tipo": "PARTICULAR",
-          "id_nino": "NINO-00008",
-          "dominios": [
-            "motor_grueso"
-          ],
-          "nivel": 8,
-          "comparacion_edad": "BAJO_LO_ESPERADO o ACORDE",
-          "nota": "Josefa tiene 28 meses (esperado 9); correr es nivel 8"
+          "id_nino": "NINO-00008"
         },
         {
           "tipo": "NO_IDENTIFICADO",
           "error_identificacion": "AMBIGUO"
         },
         {
-          "tipo": "GENERAL",
-          "nota": "'Hoy hizo mucho frío' y el encabezado 'Patio - motricidad'"
+          "tipo": "GENERAL"
         }
-      ]
+      ],
+      "origen": "escrito para probar identificación (no evalúa)"
     }
   ]
 }

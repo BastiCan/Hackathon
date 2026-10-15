@@ -15,7 +15,8 @@ confunden; la dificultad real está entre **niveles vecinos** y se resuelve con 
 - `edad_meses` = meses completos entre `fecha_nacimiento` y la fecha de la nota (fórmula del diccionario:
   `12*(a2-a1)+(m2-m1)-1[d2<d1]`, mínimo 0).
 - `niveles_esperados` = niveles cuyo rango `[edad_min_meses, edad_max_meses]` contiene la edad (bordes inclusivos, así que
-  en un borde hay dos: 12 meses → [5, 6]). Si la edad supera 36 meses → [9] con `fuera_de_rango_rubrica = true`.
+  en un borde hay dos: 12 meses → [5, 6]). Si la edad supera 36 meses → [9] con `fuera_de_rango_rubrica = true`; en ese caso
+  un nivel 9 se marca `ACORDE` (con la bandera) y uno menor `BAJO_LO_ESPERADO`.
 - `comparacion_edad` del nivel sugerido: `BAJO_LO_ESPERADO` (nivel < mín), `ACORDE`, `SOBRE_LO_ESPERADO` (nivel > máx).
 - Es **información, no alarma**: una sola observación muestra lo que el niño/a hizo ese día (un piso), no su techo. Un niño de
   30 meses que "camina" no está atrasado; la tía solo anotó que caminaba. Las alertas de rezago vendrán después, con varias
@@ -97,18 +98,16 @@ Las NO_EVALUABLE se guardan igual, nunca se borran.
   - `comentario` final = comentario del LLM de una corrida mayoritaria + alternativas + nota de edad del código.
 - Todo código debe existir en `rubrica.json` (lo garantiza el esquema) y `frase_evidencia` debe ser literal del fragmento.
 
-## 6. Casos de prueba canónicos (notas reales de la PPT de Integra)
-Versión ejecutable con niños/as reales del dataset y resultado esperado: `tests/fixtures/notas_prueba.json` (15 casos)
-sobre `tests/fixtures/nomina_demo.json`. En esa nómina, "Naiara" es variante de escritura de Nayara (NINO-00487).
+## 6. Casos de prueba (separación, identificación y no evaluables — SIN niveles)
+`tests/fixtures/notas_prueba.json` (13 casos) sobre `tests/fixtures/nomina_demo.json`. **No hay expectativas de nivel ni de
+dominio**: no existe una etiqueta experta para esas notas y la evaluación no la decide el equipo de desarrollo. Lo que se prueba:
 
-| Nota | Esperado |
+| Nota (texto real, PPT de Integra) | Esperado |
 |---|---|
-| "Nayara: cuando salía del baño se da cuenta que a la tía se le caen los individuales, ella se agacha, recoge los individuales, los ordena y se los pasa a la tía" | EVALUABLE; socioemocional nivel 9 (colaboración espontánea); NO debe quedar solo como motor grueso nivel 6 |
-| "Sofía mira por la ventana y dice 'viene el Alexi'" | EVALUABLE; lenguaje 8 o 9, certeza media; el comentario menciona el otro nivel; "Alexi" es adulto → sin observación |
-| "Naiara: 'tía mira la Pascal tiene moco'" | 1 observación para Nayara (lenguaje 9); Pascal mencionado sin observación |
-| "Rusi: la primera semana tenía más dificultades para hacer actividades de equilibrio, pero al pasar aprox. un mes se ve un gran avance, ya que logra pasar por circuitos de desafíos sin ayuda de adulto" | EVALUABLE; motor grueso; se evalúa el estado final; certeza media o baja, el comentario dice qué falta saber del circuito |
-| "Sofía 25 abril: – sigue instrucciones – reconoce colores" | EVALUABLE; certeza media o baja; el comentario dice que podría ser otro nivel según si la instrucción era de uno o dos pasos |
-| "Esta semana los niños han tenido desregulaciones emocionales" | GENERAL |
-| "Hoy bajó la asistencia, mucha tos" | GENERAL |
-| "Pedro llegó con sueño" | NO_EVALUABLE (ESTADO_O_SALUD), nivel null |
-| "Pedro dijo 'no quiero' y empujó el plato" | EVALUABLE; lenguaje 7 u 8; comparacion_edad BAJO_LO_ESPERADO (31 meses → esperado 9), como información |
+| "Esta semana los niños han tenido desregulaciones emocionales" | GENERAL (se separa, no se evalúa) |
+| "Hoy bajó la asistencia, mucha tos" | GENERAL (se separa, no se evalúa) |
+| "Naiara: 'tía mira la Pascal tiene moco'" | PARTICULAR de Nayara, NO_EVALUABLE; Pascal solo mencionado (sin observación) |
+| "Sofía mira por la ventana y dice 'viene el Alexi'" | PARTICULAR de Sofía; "Alexi" es adulto → sin observación |
+| Resto de notas reales (Nayara individuales, Rusi, Sofía 25 abril) | PARTICULAR del niño/a correcto; el nivel lo sugiere el sistema, sin expectativa |
+
+Los casos I1–I5 y P1 prueban solo identificación (varios niños en una nota, AMBIGUO, FUERA_DE_SALA, NO_ENCONTRADO).

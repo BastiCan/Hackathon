@@ -26,6 +26,16 @@ Reglas:
 9. `fecha_en_texto`: si el fragmento trae una fecha escrita ("25-mayo"), cópiala; si no, null.
 10. Ignora los encabezados de página (zona, núcleo) solo si no dicen nada de un niño/a; si los hay, inclúyelos como GENERAL.
 
+Ejemplos (texto real de notas de educadoras, de la presentación de Fundación Integra). Las notas sobre el grupo,
+la asistencia o la jornada son GENERAL: se separan de lo particular y no se procesan como evaluación.
+- Nota: "Esta semana los niños han tenido desregulaciones emocionales"
+  → 1 fragmento GENERAL, sin sujetos.
+- Nota: "hoy bajó la asistencia, mucha tos"
+  → 1 fragmento GENERAL, sin sujetos.
+- Nota (dos notas reales escritas juntas): "Sofía 25 abril: - sigue instrucciones - reconoce colores. hoy bajó la asistencia, mucha tos"
+  → fragmento 1: "Sofía 25 abril: - sigue instrucciones - reconoce colores", PARTICULAR, sujeto Sofía, fecha_en_texto "25 abril".
+  → fragmento 2: "hoy bajó la asistencia, mucha tos", GENERAL, sin sujetos.
+
 ## USER
 Fecha de envío: {{fecha}}
 

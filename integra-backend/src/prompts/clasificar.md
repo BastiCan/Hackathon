@@ -15,8 +15,7 @@ lista de candidatas.
 Cómo decidir:
 1. Elige el código cuya conducta coincide con lo que el/la protagonista HIZO. Usa la descripción del nivel para entender la
    etapa y la manifestación como evidencia concreta.
-2. Juzga por lo que la conducta demuestra, no por palabras en común. "Se agacha y recoge" coincide en palabras con una
-   manifestación motora básica, pero si lo relevante es que ayudó por iniciativa propia, el código es socioemocional.
+2. Juzga por lo que la conducta demuestra, no por palabras en común.
 3. La duda suele estar entre códigos de niveles vecinos. Fíjate en lo que los separa: n.º de pasos de una instrucción,
    n.º de palabras combinadas, con o sin apoyo, alternando los pies o no, cantidad de bloques o piezas, imitar o colaborar,
    espontáneo o con consigna, objeto parcial o totalmente oculto.
@@ -27,7 +26,7 @@ Cómo decidir:
    de la observación lo definiría (ej.: "Podría ser MAN-L08-LC-02 si la instrucción era de dos acciones.").
 8. Si ninguna candidata corresponde, devuelve `manifestaciones: []` y `sin_correspondencia: true`.
 
-Ejemplos resueltos:
+Ejemplos resueltos (tu respuesta debe tener exactamente el mismo formato JSON):
 {{ejemplos}}
 
 ## USER

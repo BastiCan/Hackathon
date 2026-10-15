@@ -57,7 +57,7 @@ us-east-1 por disponibilidad de modelos. Confirmar si la cuenta del evento limit
 ## D8. El LLM elige el código; el resto es un cruce (acordado)
 El LLM devuelve solo `id_manifestacion` (restringido a los 90 por el esquema). Nivel, dominio y texto_observable salen de
 `data/processed/rubrica.json` con un diccionario: no hay IA que se pueda equivocar en eso. El prompt usa 9 ejemplos
-(`fewshot.json`, 1 por nivel). La medición (`validacion_100.json`, 11–12 casos por nivel) usa observaciones, niños y
+(`fewshot.json`, 1 por nivel, con el texto tal cual de `consolidado.json`). La medición (`validacion_100.json`, 11–12 casos por nivel) usa observaciones, niños y
 códigos que NO aparecen en el few-shot (verificado: 0 superposición). Métrica principal: accuracy del código.
 
 ## Para después (fuera de esta etapa)
@@ -65,6 +65,7 @@ API Gateway o URL de la función · conexión con el frontend · validación de 
 carga del historial de observaciones · métricas de precisión · Cognito.
 
 ## Preguntas abiertas para Integra
+(Se refieren a la rúbrica REAL de Integra, de 8 niveles. El sistema actual usa la rúbrica E-1 de 9 niveles y lee todo desde `rubrica.json`.)
 1. ¿Nos pasan la rúbrica real (núcleos × 8 niveles × tramos, con conductas observables)?
 2. ¿Los 8 niveles son una escala por tramo o continua entre tramos?
 3. ¿Cómo manejan las salas heterogéneas?
