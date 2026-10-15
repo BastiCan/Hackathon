@@ -17,6 +17,17 @@ RAIZ = Path(__file__).resolve().parents[2]
 DATA_PROCESSED = RAIZ / "data" / "processed"
 DATA_RAW = RAIZ / "data" / "raw"
 
+# En desarrollo local, cargar integra-backend/.env si existe (override=False: no pisa
+# lo que ya este en el entorno). En Lambda no hay .env ni python-dotenv: manda el rol IAM.
+_ENV_FILE = RAIZ / ".env"
+if _ENV_FILE.is_file():
+    try:
+        from dotenv import load_dotenv
+
+        load_dotenv(_ENV_FILE, override=False)
+    except ImportError:
+        pass
+
 RUBRICA_LOCAL = DATA_PROCESSED / "rubrica.json"
 FEWSHOT_LOCAL = DATA_PROCESSED / "fewshot.json"
 EMBEDDINGS_LOCAL = DATA_PROCESSED / "embeddings_rubrica.json"

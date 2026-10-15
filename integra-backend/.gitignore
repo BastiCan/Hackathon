@@ -1,6 +1,8 @@
 # Entorno y credenciales (nunca versionar)
 .env
 .env.*
+# ...salvo la plantilla sin secretos, que si se versiona.
+!.env.example
 
 # AWS SAM
 .aws-sam/
