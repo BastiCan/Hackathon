@@ -45,10 +45,12 @@ async function contextoDeSala(datos: DataService, salaId: string): Promise<Conte
 }
 
 /**
- * Captura una evidencia en la sala actual.
+ * Captura una evidencia. Queda en la sala que la tía eligió en Inicio (la sala
+ * actual) o, si la captura empezó en la ficha de un niño/a, en la sala de ese
+ * niño/a: así Huellita busca los nombres en la lista correcta.
  * @param formato foto, audio o texto.
- * @param archivo foto o audio. El audio queda solo en memoria; la foto del
- *   post-it se guarda reducida en la evidencia para que la tía la vea.
+ * @param archivo foto o audio (grabado o subido). El audio queda solo en
+ *   memoria; la foto del post-it se guarda reducida para que la tía la vea.
  * @param texto lo que escribió la tía (solo en formato texto).
  * @param ninoId niño/a asociado si la captura empezó en su ficha.
  */
@@ -60,7 +62,12 @@ export async function capturar(
   servicios: ServiciosCaptura = { datos: servicioDatos, ia: servicioIA },
 ): Promise<ResultadoCaptura> {
   const { datos, ia } = servicios;
-  const [usuaria, sala] = await Promise.all([datos.sesion(), datos.salaActual()]);
+  const [usuaria, salaActual, nino] = await Promise.all([
+    datos.sesion(),
+    datos.salaActual(),
+    ninoId ? datos.nino(ninoId) : Promise.resolve(null),
+  ]);
+  const sala = nino && nino.salaId !== salaActual.id ? { id: nino.salaId } : salaActual;
 
   const foto = formato === 'foto' && archivo ? await reducirFoto(archivo) : undefined;
   const evidencia = await datos.guardarEvidencia(

@@ -26,7 +26,9 @@ export function Layout() {
 
   const enFicha = pathname.startsWith('/nino/');
   const enDirectora = pathname.startsWith('/directora');
-  const conDock = pathname === '/' || enFicha;
+  // Inicio lleva los botones de captura en la pantalla misma; la ficha, en el
+  // dock (celular) o en la barra lateral (computador).
+  const conDock = enFicha;
   const ninoId = enFicha ? pathname.split('/')[2] : undefined;
   const nombreNino = useNombreNino(ninoId);
 
@@ -80,9 +82,12 @@ export function Layout() {
               )}
             </main>
           </div>
+          {/* Las barras fijas van dentro de la columna (`isolate`), igual que las
+              hojas que abren las pantallas: así una hoja (z-20) siempre queda
+              sobre la barra (z-10) y su último botón nunca se esconde detrás. */}
+          {conDock ? <Dock nombreNino={nombreNino ?? undefined} /> : null}
+          <BarraInferior pendientes={pendientes} esDirectora={esDirectora} ancho={ancho} />
         </div>
-        {conDock ? <Dock nombreNino={nombreNino ?? undefined} /> : null}
-        <BarraInferior pendientes={pendientes} esDirectora={esDirectora} ancho={ancho} />
       </ProveedorCaptura>
     </ProveedorAviso>
   );
@@ -117,7 +122,7 @@ function Cargando() {
   return (
     <div className="alto-pantalla mx-auto flex w-full max-w-tia items-center justify-center bg-fondo md:max-w-[640px] lg:max-w-none">
       <p role="status" className="text-tinta-2">
-        Cargando tu agenda…
+        Cargando Huellita…
       </p>
     </div>
   );

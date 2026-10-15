@@ -57,14 +57,34 @@ export function edadAniosMeses(fechaNacimiento: string, hoy: string): { anios: n
   return { anios: Math.floor(total / 12), meses: total % 12 };
 }
 
-/** Nivel cuyo rango de edad orientativa contiene la edad en meses. */
-export function nivelEsperado(edadEnMeses: number): Nivel {
+/**
+ * Niveles cuyo rango de edad orientativa contiene la edad, con la misma regla
+ * del backend (`integra-backend/.kiro/steering/dominio.md`): los bordes son
+ * inclusivos, así que en un borde caben dos (12 meses → [5, 6]). Sobre el
+ * último rango (36 meses) queda el último nivel; bajo el primero, el primero.
+ */
+export function nivelesEsperados(edadEnMeses: number): Nivel[] {
   const lista = niveles();
-  for (const n of lista) {
-    if (edadEnMeses >= n.edadDesdeMeses && edadEnMeses < n.edadHastaMeses) return n.nivel;
-  }
-  // Bajo el rango mínimo o sobre el máximo: se usa el nivel del extremo.
-  return edadEnMeses < lista[0].edadDesdeMeses ? lista[0].nivel : lista[lista.length - 1].nivel;
+  const dentro = lista
+    .filter((n) => edadEnMeses >= n.edadMinMeses && edadEnMeses <= n.edadMaxMeses)
+    .map((n) => n.nivel);
+  if (dentro.length > 0) return dentro;
+  return [edadEnMeses < lista[0].edadMinMeses ? lista[0].nivel : lista[lista.length - 1].nivel];
+}
+
+/** La edad pasa el último rango de la rúbrica (más de 36 meses). */
+export function fueraDeRangoRubrica(edadEnMeses: number): boolean {
+  const lista = niveles();
+  return edadEnMeses > lista[lista.length - 1].edadMaxMeses;
+}
+
+/**
+ * Nivel esperado por edad: el menor de `nivelesEsperados`. Es el mismo piso que
+ * usa el backend para "bajo lo esperado" (nivel < mínimo), así que en un borde
+ * de rango nunca se le pide de más a un niño/a.
+ */
+export function nivelEsperado(edadEnMeses: number): Nivel {
+  return Math.min(...nivelesEsperados(edadEnMeses)) as Nivel;
 }
 
 /** Nivel esperado para la edad que tenía el niño/a en una fecha dada. */

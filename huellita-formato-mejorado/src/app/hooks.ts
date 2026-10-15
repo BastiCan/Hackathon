@@ -14,7 +14,7 @@ import {
   observarAhora,
   resumenSala,
 } from '../lib/evaluacion';
-import { agendaDelDia, proximoIEA, semanaDe, type DiaSemana, type PeriodoAgenda } from '../lib/agenda';
+import { proximoIEA, semanaDe, type DiaSemana } from '../lib/inicio';
 import { conductas, nivelSiguiente } from '../lib/rubrica';
 import type {
   Evidencia,
@@ -373,47 +373,39 @@ export function useNombreNino(ninoId: string | undefined): string | null {
   return consulta.valor;
 }
 
-export interface VistaAgenda {
+export interface VistaInicio {
+  /** Sala donde queda lo que se registre (la sala actual). */
   sala: Sala;
+  /** Salas de la usuaria, para el selector (la tía ve solo las suyas). */
+  salas: Sala[];
   hoy: string;
-  dia: string;
   semana: DiaSemana[];
-  periodos: PeriodoAgenda[];
   pendientes: number;
   partesResumen: { observados: string; menos: string };
   iea: { numero: 1 | 2 | 3; mes: string };
-  nombreAutora: Record<string, string>;
 }
 
-/** Agenda de la sala para un día (por defecto, hoy). */
-export function useAgenda(dia: string | null): Consulta<VistaAgenda> {
-  return useConsulta(
-    async (datos) => {
-      const sala = await datos.salaActual();
-      const hoy = datos.hoy();
-      const elegido = dia ?? hoy;
-      const [ninos, sugerencias, evidencias, usuarias] = await Promise.all([
-        datos.ninos(sala.id),
-        datos.sugerencias({ salaId: sala.id }),
-        datos.evidencias({ salaId: sala.id }),
-        datos.usuarias(),
-      ]);
-      const nombre = (id: string | undefined) => ninos.find((n) => n.id === id)?.nombre;
-      const evaluaciones = evaluacionesValidadas(sugerencias, evidencias);
-      return {
-        sala,
-        hoy,
-        dia: elegido,
-        semana: semanaDe(hoy, evidencias, sugerencias),
-        periodos: agendaDelDia(elegido, evidencias, sugerencias, nombre),
-        pendientes:
-          sugerencias.filter((s) => s.estado === 'pendiente').length +
-          evidencias.filter((e) => e.estado === 'error').length,
-        partesResumen: partesResumenSala(resumenSala(ninos, evaluaciones, hoy)),
-        iea: proximoIEA(hoy),
-        nombreAutora: Object.fromEntries(usuarias.map((u) => [u.id, u.nombre])),
-      };
-    },
-    [dia],
-  );
+/** Pantalla de inicio: la semana, lo que falta revisar y la sala del registro. */
+export function useInicio(): Consulta<VistaInicio> {
+  return useConsulta(async (datos) => {
+    const [sala, salas] = await Promise.all([datos.salaActual(), datos.salas()]);
+    const hoy = datos.hoy();
+    const [ninos, sugerencias, evidencias] = await Promise.all([
+      datos.ninos(sala.id),
+      datos.sugerencias({ salaId: sala.id }),
+      datos.evidencias({ salaId: sala.id }),
+    ]);
+    const evaluaciones = evaluacionesValidadas(sugerencias, evidencias);
+    return {
+      sala,
+      salas,
+      hoy,
+      semana: semanaDe(hoy, evidencias, sugerencias),
+      pendientes:
+        sugerencias.filter((s) => s.estado === 'pendiente').length +
+        evidencias.filter((e) => e.estado === 'error').length,
+      partesResumen: partesResumenSala(resumenSala(ninos, evaluaciones, hoy)),
+      iea: proximoIEA(hoy),
+    };
+  }, []);
 }

@@ -2,41 +2,19 @@ import { ChevronLeft, Eye, Flag } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFicha } from '../app/hooks';
-import {
-  ambitoDe,
-  COLOR_AMBITO,
-  NOMBRE_AMBITO,
-  TEXTO_AMBITO,
-  type AmbitoId,
-} from '../components/ambitos';
 import { Avatar } from '../components/Avatar';
 import { NumeroNivel } from '../components/ChipNivel';
+import { PALETA } from '../components/colores';
 import { HojaNucleo } from '../components/HojaNucleo';
-import { Mancha, type FormaMancha } from '../components/Mancha';
+import { Mancha } from '../components/Mancha';
 import { Miniatura } from '../components/Miniatura';
 import type { NucleoId } from '../lib/tipos';
 import type { NucleoVista } from '../lib/vistas';
 
-const AMBITOS: AmbitoId[] = ['dps', 'com', 'ent'];
-
-/** Fondo suave de cada ámbito para su tarjeta (texto oscuro del mismo color). */
-const FONDO_AMBITO: Record<AmbitoId, string> = {
-  dps: 'bg-ambito-dps',
-  com: 'bg-ambito-com',
-  ent: 'bg-ambito-ent',
-};
-
-/** Una mancha distinta por ámbito, siempre la misma. */
-const FORMA_AMBITO: Record<AmbitoId, FormaMancha> = {
-  dps: 'a',
-  com: 'b',
-  ent: 'c',
-};
-
 /**
- * Ficha del niño/a, como una página de su agenda: qué acompañar esta semana,
- * cómo va por ámbito (con los colores del logo de Integra) y sus registros con
- * la foto de cada post-it.
+ * Ficha del niño/a: qué acompañar esta semana, cómo va en cada núcleo (el
+ * número en el color de su nivel, igual que en la planilla) y sus registros
+ * con la foto de cada post-it.
  */
 export function FichaNino() {
   const { id } = useParams();
@@ -91,147 +69,126 @@ export function FichaNino() {
       <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-6">
         <div className="min-w-0">
           <section className="aviso mb-3 px-3 py-[10px]">
-        <p className="text-[15px]">{f.resumen}</p>
-        {f.conductasObservar.length > 0 ? (
-          <>
-            <h2 className="mt-2 flex items-center gap-[6px] text-[15px]">
-              <Eye aria-hidden="true" className="h-[18px] w-[18px]" />
-              Para observar esta semana
-            </h2>
-            <ul className="mt-1 list-disc pl-5 text-[15px] text-tinta">
-              {f.conductasObservar.map((conducta) => (
-                <li key={conducta}>{conducta}</li>
+            <p className="text-[15px]">{f.resumen}</p>
+            {f.conductasObservar.length > 0 ? (
+              <>
+                <h2 className="mt-2 flex items-center gap-[6px] text-[15px]">
+                  <Eye aria-hidden="true" className="h-[18px] w-[18px]" />
+                  Para observar esta semana
+                </h2>
+                <ul className="mt-1 list-disc pl-5 text-[15px] text-tinta">
+                  {f.conductasObservar.map((conducta) => (
+                    <li key={conducta}>{conducta}</li>
+                  ))}
+                </ul>
+              </>
+            ) : null}
+          </section>
+
+          <section
+            aria-label="Nivel por núcleo"
+            className="relative mb-3 overflow-hidden rounded-tarjeta border border-linea bg-papel px-3 py-[10px] shadow-tarjeta"
+          >
+            <Mancha
+              color={PALETA.azul}
+              forma="c"
+              opacidad={0.08}
+              className="-right-6 -top-7 h-24 w-24"
+            />
+            <p className="rotulo relative mb-1">Cómo va · por núcleo</p>
+            <ul className="relative">
+              {f.nucleos.map((n) => (
+                <li key={n.nucleo} className="border-b border-cuadricula last:border-b-0">
+                  <button
+                    type="button"
+                    onClick={() => setDetalle(n)}
+                    className="flex min-h-tactil w-full items-center justify-between gap-2 py-[6px] text-left"
+                  >
+                    <span className="min-w-0">
+                      <span className="flex items-center gap-[6px] text-[15px]">
+                        {n.nombre}
+                        {n.revisarAvance ? (
+                          <Flag
+                            aria-hidden="true"
+                            className="h-[15px] w-[15px] flex-none text-naranjo-texto"
+                          />
+                        ) : null}
+                      </span>
+                      <span className="block text-[13px] text-tinta-2">
+                        {n.nivel ? `Nivel ${n.nivel} · ${n.nombreNivel}` : 'Sin registros aún'}
+                        {n.revisarAvance ? ` · revisar avance (esperado ${f.nivelEsperadoEdad})` : ''}
+                      </span>
+                    </span>
+                    {n.nivel ? (
+                      <NumeroNivel nivel={n.nivel} revisar={n.revisarAvance} tamano={28} />
+                    ) : (
+                      <span className="text-tinta-3">–</span>
+                    )}
+                  </button>
+                </li>
               ))}
             </ul>
-          </>
-        ) : null}
-      </section>
-
-      <section
-        aria-label="Nivel por núcleo"
-        className="mb-3 rounded-tarjeta border border-linea bg-papel px-3 py-[10px] shadow-tarjeta"
-      >
-        <p className="rotulo mb-1">Cómo va · por ámbito</p>
-        {AMBITOS.map((a) => {
-          const nucleos = f.nucleos.filter((n) => ambitoDe(n.nucleo) === a);
-          if (nucleos.length === 0) return null;
-          return (
-            <div
-              key={a}
-              className={`relative mt-2 overflow-hidden rounded-chip px-[10px] py-2 ${FONDO_AMBITO[a]}`}
-            >
-              <Mancha
-                color={COLOR_AMBITO[a]}
-                forma={FORMA_AMBITO[a]}
-                opacidad={0.22}
-                className="-right-5 -top-6 h-20 w-20"
-              />
-              <h2
-                className="relative mb-1 flex items-center gap-2 text-[13px] font-bold"
-                style={{ color: TEXTO_AMBITO[a] }}
-              >
-                <i
-                  className="block h-[10px] w-[10px] rounded-full"
-                  style={{ background: COLOR_AMBITO[a] }}
-                />
-                {NOMBRE_AMBITO[a]}
-              </h2>
-              {nucleos.map((n) => (
-                <button
-                  key={n.nucleo}
-                  type="button"
-                  onClick={() => setDetalle(n)}
-                  className="relative flex min-h-tactil w-full items-center justify-between gap-2 border-b border-papel py-1 text-left last:border-b-0"
-                >
-                  <span className="min-w-0">
-                    <span className="flex items-center gap-[6px] text-[15px]">
-                      {n.nombre}
-                      {n.revisarAvance ? (
-                        <Flag
-                          aria-hidden="true"
-                          className="h-[15px] w-[15px] flex-none text-naranjo-texto"
-                        />
-                      ) : null}
-                    </span>
-                    <span className="block text-[13px] text-tinta-2">
-                      {n.nivel ? n.nombreNivel : 'Sin registros aún'}
-                      {n.revisarAvance ? ` · revisar avance (esperado ${f.nivelEsperadoEdad})` : ''}
-                    </span>
-                  </span>
-                  {n.nivel ? (
-                    <NumeroNivel
-                      nivel={n.nivel}
-                      nucleo={n.nucleo}
-                      revisar={n.revisarAvance}
-                      tamano={28}
-                    />
-                  ) : (
-                    <span className="text-tinta-3">–</span>
-                  )}
-                </button>
-              ))}
-            </div>
-          );
-        })}
-      </section>
+          </section>
         </div>
 
         <div className="min-w-0">
-      {tira.length > 0 ? (
-        <section className="mb-3 rounded-tarjeta border border-linea bg-papel px-3 py-[10px] shadow-tarjeta">
-          <p className="rotulo mb-2">Su agenda · últimos registros</p>
-          <ul className="sin-barra -mx-3 flex gap-3 overflow-x-auto px-3">
-            {tira.map((r) => (
-              <li key={r.id} className="w-[84px] flex-none">
-                <Miniatura formato={r.formato ?? 'texto'} foto={r.foto} tamano={84} conMancha />
-                <p className="mt-1 text-[12px] text-tinta-2">
-                  {r.fechaCorta} · {r.nucleo} {r.nivel}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
+          {tira.length > 0 ? (
+            <section className="mb-3 rounded-tarjeta border border-linea bg-papel px-3 py-[10px] shadow-tarjeta">
+              <p className="rotulo mb-2">Últimos registros</p>
+              <ul className="sin-barra -mx-3 flex gap-3 overflow-x-auto px-3">
+                {tira.map((r) => (
+                  <li key={r.id} className="w-[84px] flex-none">
+                    <Miniatura formato={r.formato ?? 'texto'} foto={r.foto} tamano={84} conMancha />
+                    <p className="mt-1 text-[12px] text-tinta-2">
+                      {r.fechaCorta} · {r.sigla} {r.nivel}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
 
-      <section className="mb-3 rounded-tarjeta border border-linea bg-papel px-3 py-[10px] shadow-tarjeta">
-        <div className="mb-2 flex items-center justify-between gap-2">
-          <h2>Registros</h2>
-          <label className="min-w-0 flex-none text-[14px] text-tinta-2">
-            <span className="sr-only">Filtrar por núcleo</span>
-            <select
-              value={filtro}
-              onChange={(e) => setFiltro(e.target.value as NucleoId | 'todos')}
-              className="min-h-tactil max-w-[180px] truncate rounded-campo border border-linea bg-papel px-2 text-[15px] text-tinta"
-            >
-              <option value="todos">Todos los núcleos</option>
-              {f.nucleos.map((n) => (
-                <option key={n.nucleo} value={n.nucleo}>
-                  {n.nombre}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
+          <section className="mb-3 rounded-tarjeta border border-linea bg-papel px-3 py-[10px] shadow-tarjeta">
+            <div className="mb-2 flex items-center justify-between gap-2">
+              <h2>Registros</h2>
+              <label className="min-w-0 flex-none text-[14px] text-tinta-2">
+                <span className="sr-only">Filtrar por núcleo</span>
+                <select
+                  value={filtro}
+                  onChange={(e) => setFiltro(e.target.value as NucleoId | 'todos')}
+                  className="min-h-tactil max-w-[180px] truncate rounded-campo border border-linea bg-papel px-2 text-[15px] text-tinta"
+                >
+                  <option value="todos">Todos los núcleos</option>
+                  {f.nucleos.map((n) => (
+                    <option key={n.nucleo} value={n.nucleo}>
+                      {n.nombre}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
 
-        {historial.length === 0 ? (
-          <p className="text-[15px] text-tinta-2">Todavía no hay registros guardados con este filtro.</p>
-        ) : (
-          <ol className="linea-tiempo">
-            {historial.map((r) => (
-              <li
-                key={r.id}
-                className="pb-3"
-                style={{ ['--punto' as string]: COLOR_AMBITO[ambitoDe(r.nucleo)] }}
-              >
-                <p className="text-[13px] text-tinta-2">
-                  {r.fechaCorta} · {r.nombreNucleo} · Nivel {r.nivel} · {r.autora}
-                </p>
-                <q className="text-[15px] text-tinta">“{r.cita}”</q>
-              </li>
-            ))}
-          </ol>
-        )}
-      </section>
+            {historial.length === 0 ? (
+              <p className="text-[15px] text-tinta-2">
+                Todavía no hay registros guardados con este filtro.
+              </p>
+            ) : (
+              <ol className="linea-tiempo">
+                {historial.map((r) => (
+                  <li
+                    key={r.id}
+                    className="pb-3"
+                    style={{ ['--punto' as string]: r.color }}
+                  >
+                    <p className="text-[13px] text-tinta-2">
+                      {r.fechaCorta} · {r.nombreNucleo} · Nivel {r.nivel} · {r.autora}
+                    </p>
+                    <q className="text-[15px] text-tinta">“{r.cita}”</q>
+                  </li>
+                ))}
+              </ol>
+            )}
+          </section>
         </div>
       </div>
 

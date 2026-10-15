@@ -1,10 +1,4 @@
-import {
-  Building2,
-  CalendarDays,
-  ClipboardCheck,
-  Table2,
-  type LucideIcon,
-} from 'lucide-react';
+import { Building2, ClipboardCheck, House, Table2, type LucideIcon } from 'lucide-react';
 
 /**
  * Los destinos de la navegación, en un solo lugar: los usan la barra inferior
@@ -24,7 +18,7 @@ export interface Destino {
 }
 
 const TODOS: Destino[] = [
-  { a: '/', texto: 'Agenda', icono: CalendarDays, esActivo: (r) => r === '/' },
+  { a: '/', texto: 'Inicio', icono: House, esActivo: (r) => r === '/' },
   {
     a: '/sala',
     texto: 'Sala',

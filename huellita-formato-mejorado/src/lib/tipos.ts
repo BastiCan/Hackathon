@@ -3,11 +3,19 @@
  * Los nombres de dominio van en español: niño, sala, núcleo, evidencia.
  */
 
-/** Códigos de los 8 núcleos de las BCEP 2018. La lista viva se carga de la rúbrica. */
-export type NucleoId = 'IA' | 'CC' | 'CM' | 'LV' | 'LA' | 'EN' | 'ES' | 'PM';
+/**
+ * Los 5 núcleos de la rúbrica E-1 del backend, con el mismo código que usa el
+ * backend (`dominio`). La lista viva y su orden se cargan de la rúbrica.
+ */
+export type NucleoId =
+  | 'motor_grueso'
+  | 'motor_fino'
+  | 'lenguaje_comunicacion'
+  | 'socioemocional'
+  | 'cognitivo';
 
-/** Niveles de la rúbrica de Integra (1 Comenzando … 8 Profundizando). */
-export type Nivel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+/** Los 9 niveles de la rúbrica E-1 (0 a 36 meses). */
+export type Nivel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
 export type Rol = 'tia' | 'directora';
 export type Formato = 'foto' | 'audio' | 'texto';
@@ -121,20 +129,29 @@ export interface EvaluacionValidada {
 export interface NivelInfo {
   nivel: Nivel;
   nombre: string;
-  tramo: string;
-  grupoOrientativo: string;
+  /** Descripción integradora del nivel (la misma para los 5 núcleos). */
+  descripcion: string;
   /** Inclusivo. */
-  edadDesdeMeses: number;
-  /** Exclusivo (el último nivel no tiene techo efectivo). */
-  edadHastaMeses: number;
+  edadMinMeses: number;
+  /** Inclusivo, como en el backend: en un borde caben dos niveles. */
+  edadMaxMeses: number;
+  /** "27–36 meses". */
   edadOrientativa: string;
 }
 
 /** Un núcleo de la rúbrica (configuración cargada desde datos). */
 export interface NucleoInfo {
   codigo: NucleoId;
+  /** Sigla de 2 letras para la planilla ("MG"). */
+  sigla: string;
   nombre: string;
-  ambito: string;
+}
+
+/** Una conducta observable de la rúbrica, con su código del backend. */
+export interface Manifestacion {
+  /** "MAN-L09-MG-01". */
+  id: string;
+  texto: string;
 }
 
 /** Contenido de un núcleo en un nivel. */
@@ -142,9 +159,10 @@ export interface CeldaRubrica {
   nucleo: NucleoId;
   nivel: Nivel;
   nombreNivel: string;
-  descriptor: string;
+  descripcionNivel: string;
+  /** Las conductas observables de la celda (texto de cada manifestación). */
   conductas: string[];
-  oaReferencia: string[];
+  manifestaciones: Manifestacion[];
 }
 
 export type ColorFrescura = 'verde' | 'amarillo' | 'rojo';

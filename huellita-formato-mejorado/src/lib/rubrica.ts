@@ -1,95 +1,121 @@
 /**
- * Carga y consulta de `data/rubrica_8_niveles.json`.
+ * Carga y consulta de la rúbrica E-1, la misma que usa el backend:
+ * `data/rubrica_e1.json` es copia exacta de
+ * `integra-backend/data/processed/rubrica.json` (5 núcleos × 9 niveles,
+ * 90 conductas observables). `data/nucleos_e1.json` agrega solo lo que el
+ * backend no trae: el nombre visible y la sigla de cada núcleo.
+ *
  * La rúbrica es la única fuente de verdad: aquí no se escriben a mano niveles,
- * descriptores ni conductas observables (ver `.kiro/steering/rubrica.md`).
+ * descripciones ni conductas observables (ver `.kiro/steering/rubrica.md`).
  */
-import rubricaJson from '@data/rubrica_8_niveles.json';
-import type { CeldaRubrica, Nivel, NivelInfo, NucleoId, NucleoInfo } from './tipos';
+import rubricaJson from '@data/rubrica_e1.json';
+import nucleosJson from '@data/nucleos_e1.json';
+import type {
+  CeldaRubrica,
+  Manifestacion,
+  Nivel,
+  NivelInfo,
+  NucleoId,
+  NucleoInfo,
+} from './tipos';
 
 interface NivelJson {
   nivel: number;
-  nombre: string;
-  tramo_bcep: string;
-  grupo_orientativo: string;
-  edad_orientativa: string;
+  nombre_nivel: string;
+  edad_min_meses: number;
+  edad_max_meses: number;
+  descripcion: string;
 }
 
-interface NucleoJson {
-  codigo: string;
-  nucleo: string;
-  ambito: string;
-  niveles: {
-    nivel: number;
-    nombre: string;
-    descriptor: string;
-    conductas_observables: string[];
-    oa_referencia?: string[];
-  }[];
+interface ManifestacionJson {
+  nivel: number;
+  dominio: string;
+  texto_observable: string;
 }
 
 interface RubricaJson {
-  nota?: string;
+  version: string;
+  dominios: string[];
   niveles: NivelJson[];
-  rubrica: NucleoJson[];
+  manifestaciones: Record<string, ManifestacionJson>;
+}
+
+interface NucleosJson {
+  nucleos: { dominio: string; sigla: string; nombre: string }[];
 }
 
 const datos = rubricaJson as unknown as RubricaJson;
+const presentacion = nucleosJson as unknown as NucleosJson;
 
-/** Colores de nivel definidos en `.kiro/steering/interfaz.md`. */
+/**
+ * Un color por nivel, del cálido (1) al azul oscuro (9), en la familia de los
+ * colores del logo de Integra. Cada uno cumple contraste AA con su color de
+ * texto (`colorTextoNivel`): tinta del 1 al 7 y blanco en el 8 y el 9.
+ * Definidos en `.kiro/steering/interfaz.md`.
+ */
 const COLORES_NIVEL: Record<Nivel, string> = {
-  1: '#E8664F',
-  2: '#F08A3E',
-  3: '#F2C14E',
-  4: '#9BC53D',
-  5: '#5A9E3A',
-  6: '#3A9E9A',
-  7: '#3D7DD8',
-  8: '#1F3B6B',
+  1: '#EF7A6A',
+  2: '#F59E4C',
+  3: '#F7CB4D',
+  4: '#B7D351',
+  5: '#72BE5B',
+  6: '#3FB3A3',
+  7: '#56A3E3',
+  8: '#2F6BC4',
+  9: '#233F86',
 };
 
-/** "32–40 meses" → { desde: 32, hasta: 40 }. Acepta guion normal o medio. */
-function rangoEdad(texto: string): { desde: number; hasta: number } {
-  const m = /(\d+)\s*[–—-]\s*(\d+)/.exec(texto);
-  if (!m) throw new Error(`Rango de edad no reconocido en la rúbrica: "${texto}"`);
-  return { desde: Number(m[1]), hasta: Number(m[2]) };
-}
-
 const NIVELES: NivelInfo[] = datos.niveles
-  .map((n) => {
-    const { desde, hasta } = rangoEdad(n.edad_orientativa);
-    return {
-      nivel: n.nivel as Nivel,
-      nombre: n.nombre,
-      tramo: n.tramo_bcep,
-      grupoOrientativo: n.grupo_orientativo,
-      edadDesdeMeses: desde,
-      edadHastaMeses: hasta,
-      edadOrientativa: n.edad_orientativa,
-    };
-  })
+  .map((n) => ({
+    nivel: n.nivel as Nivel,
+    nombre: n.nombre_nivel,
+    descripcion: n.descripcion,
+    edadMinMeses: n.edad_min_meses,
+    edadMaxMeses: n.edad_max_meses,
+    edadOrientativa: `${n.edad_min_meses}–${n.edad_max_meses} meses`,
+  }))
   .sort((a, b) => a.nivel - b.nivel);
 
-const NUCLEOS: NucleoInfo[] = datos.rubrica.map((n) => ({
-  codigo: n.codigo as NucleoId,
-  nombre: n.nucleo,
-  ambito: n.ambito,
-}));
+const NUCLEOS: NucleoInfo[] = datos.dominios.map((dominio) => {
+  const visible = presentacion.nucleos.find((n) => n.dominio === dominio);
+  if (!visible) throw new Error(`Falta el nombre visible del núcleo "${dominio}" en nucleos_e1.json`);
+  return { codigo: dominio as NucleoId, sigla: visible.sigla, nombre: visible.nombre };
+});
 
 const CELDAS = new Map<string, CeldaRubrica>();
-for (const nucleo of datos.rubrica) {
-  for (const celda of nucleo.niveles) {
-    CELDAS.set(`${nucleo.codigo}:${celda.nivel}`, {
-      nucleo: nucleo.codigo as NucleoId,
-      nivel: celda.nivel as Nivel,
-      nombreNivel: celda.nombre,
-      descriptor: celda.descriptor,
-      conductas: celda.conductas_observables,
-      oaReferencia: celda.oa_referencia ?? [],
+for (const nucleo of NUCLEOS) {
+  for (const info of NIVELES) {
+    CELDAS.set(`${nucleo.codigo}:${info.nivel}`, {
+      nucleo: nucleo.codigo,
+      nivel: info.nivel,
+      nombreNivel: info.nombre,
+      descripcionNivel: info.descripcion,
+      conductas: [],
+      manifestaciones: [],
     });
   }
 }
+// Las conductas en el orden de su código (…-01 antes que …-02).
+for (const id of Object.keys(datos.manifestaciones).sort()) {
+  const m = datos.manifestaciones[id];
+  const c = CELDAS.get(`${m.dominio}:${m.nivel}`);
+  if (!c) throw new Error(`La manifestación ${id} apunta a un núcleo o nivel que no existe`);
+  const manifestacion: Manifestacion = { id, texto: m.texto_observable };
+  c.manifestaciones.push(manifestacion);
+  c.conductas.push(manifestacion.texto);
+}
+for (const c of CELDAS.values()) {
+  if (c.conductas.length === 0) {
+    throw new Error(`La rúbrica no trae conductas para ${c.nucleo} en el nivel ${c.nivel}`);
+  }
+}
 
-/** Los 8 niveles con su nombre y rango de edad orientativa. */
+/** Versión de la rúbrica del backend ("E1-2026-10-13"). */
+export function versionRubrica(): string {
+  return datos.version;
+}
+
+/** Los 9 niveles con su nombre, descripción y rango de edad orientativa. */
 export function niveles(): NivelInfo[] {
   return NIVELES;
 }
@@ -104,33 +130,38 @@ export function codigosNucleos(): NucleoId[] {
   return NUCLEOS.map((n) => n.codigo);
 }
 
-/** Información de un nivel (nombre, tramo, rango de edad). */
+/** Información de un nivel (nombre, descripción, rango de edad). */
 export function nivelInfo(nivel: Nivel): NivelInfo {
   const info = NIVELES.find((n) => n.nivel === nivel);
   if (!info) throw new Error(`Nivel desconocido: ${nivel}`);
   return info;
 }
 
-/** Nombre del nivel, por ejemplo 4 → "Afianzando". */
+/** Nombre del nivel, por ejemplo 9 → "Secuencias y autonomía creciente". */
 export function nombreNivel(nivel: Nivel): string {
   return nivelInfo(nivel).nombre;
 }
 
-/** Nombre del núcleo, por ejemplo "LV" → "Lenguaje Verbal". */
+/** Descripción integradora del nivel. */
+export function descripcionNivel(nivel: Nivel): string {
+  return nivelInfo(nivel).descripcion;
+}
+
+/** Nombre visible del núcleo, por ejemplo "motor_fino" → "Motor fino". */
 export function nombreNucleo(nucleo: NucleoId): string {
   return NUCLEOS.find((n) => n.codigo === nucleo)?.nombre ?? nucleo;
 }
 
-/** Celda completa de la rúbrica (descriptor, conductas y OA de referencia). */
+/** Sigla de la planilla, por ejemplo "lenguaje_comunicacion" → "LC". */
+export function siglaNucleo(nucleo: NucleoId): string {
+  return NUCLEOS.find((n) => n.codigo === nucleo)?.sigla ?? nucleo;
+}
+
+/** Celda completa de la rúbrica (nivel y conductas observables del núcleo). */
 export function celda(nucleo: NucleoId, nivel: Nivel): CeldaRubrica {
   const c = CELDAS.get(`${nucleo}:${nivel}`);
   if (!c) throw new Error(`La rúbrica no tiene ${nucleo} en el nivel ${nivel}`);
   return c;
-}
-
-/** Descriptor del núcleo en ese nivel. */
-export function descriptor(nucleo: NucleoId, nivel: Nivel): string {
-  return celda(nucleo, nivel).descriptor;
 }
 
 /** Conductas observables del núcleo en ese nivel. */
@@ -138,7 +169,7 @@ export function conductas(nucleo: NucleoId, nivel: Nivel): string[] {
   return celda(nucleo, nivel).conductas;
 }
 
-/** Color del nivel (solo para barras y etiquetas de nivel). */
+/** Color del nivel (números, etiquetas y puntos de nivel). */
 export function colorNivel(nivel: Nivel): string {
   return COLORES_NIVEL[nivel];
 }
@@ -148,7 +179,12 @@ export function todasLasCeldas(): CeldaRubrica[] {
   return [...CELDAS.values()];
 }
 
-/** Nivel siguiente, o el mismo si ya está en 8. */
+/** El nivel más alto de la rúbrica (9). */
+export function nivelMaximo(): Nivel {
+  return NIVELES[NIVELES.length - 1].nivel;
+}
+
+/** Nivel siguiente, o el mismo si ya está en el último. */
 export function nivelSiguiente(nivel: Nivel): Nivel {
-  return (nivel < 8 ? nivel + 1 : 8) as Nivel;
+  return (nivel < nivelMaximo() ? nivel + 1 : nivel) as Nivel;
 }

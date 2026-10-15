@@ -132,13 +132,28 @@ describe('áreas táctiles', () => {
     });
   }
 
-  it('la barra de captura tiene 3 botones grandes y Grabar destacado', async () => {
+  it('Inicio tiene los 4 botones para registrar, grandes y con Grabar destacado', async () => {
     await montar('/');
-    const dock = contenedor.querySelector('[aria-label="Registrar"]');
-    expect(dock).not.toBeNull();
+    const registrar = contenedor.querySelector('section[aria-labelledby="titulo-registrar"]');
+    expect(registrar).not.toBeNull();
+    const botones = registrar!.querySelectorAll('button');
+    expect(botones).toHaveLength(4);
+    botones.forEach((b) => expect(b.className).toContain('min-h-[96px]'));
+    expect(registrar!.querySelectorAll('.bg-grabar')).toHaveLength(1);
+    // El selector de sala tiene su etiqueta visible: el título del bloque.
+    const selector = registrar!.querySelector('select');
+    expect(selector?.labels?.[0]?.textContent).toBe('Registrar en');
+  });
+
+  it('la barra de captura de la ficha tiene 4 botones grandes y Grabar destacado', async () => {
+    await montar('/nino/NINO-00001');
+    const dock = [
+      ...contenedor.querySelectorAll<HTMLElement>('[aria-label="Registrar para Josefa"]'),
+    ].find((d) => d.className.includes('fixed'));
+    expect(dock).toBeDefined();
     const botones = dock!.querySelectorAll('button');
-    expect(botones).toHaveLength(3);
-    botones.forEach((b) => expect(b.className).toContain('min-h-[48px]'));
+    expect(botones).toHaveLength(4);
+    botones.forEach((b) => expect(b.className).toContain('min-h-[56px]'));
     expect(dock!.querySelectorAll('.bg-grabar')).toHaveLength(1);
   });
 });

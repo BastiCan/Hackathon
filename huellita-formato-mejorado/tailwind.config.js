@@ -35,21 +35,13 @@ export default {
           claro: '#E3EFFA',
           oscuro: '#004C91',
         },
-        // Los 4 colores oficiales del logo (franja superior y ámbitos).
+        // Los 4 colores oficiales del logo (franja superior). Los números de
+        // nivel usan los 9 colores de nivel de `src/lib/rubrica.ts`.
         logo: {
           rojo: '#DD271D',
           amarillo: '#FFCD07',
           azul: '#0063BD',
           verde: '#67BC27',
-        },
-        // Ámbitos de las BCEP: fondo suave + texto oscuro del mismo color (AA).
-        ambito: {
-          dps: '#FDE3E1',
-          'dps-texto': '#A01810',
-          com: '#FFF3C2',
-          'com-texto': '#6B5200',
-          ent: '#E6F5DA',
-          'ent-texto': '#2B5A0C',
         },
         // Mancha rosada: acento cálido (notas, "Hoy", detalles decorativos).
         rosado: {

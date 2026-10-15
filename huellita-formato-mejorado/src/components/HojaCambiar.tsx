@@ -7,8 +7,9 @@ import { NumeroNivel } from './ChipNivel';
 import { HojaInferior } from './HojaInferior';
 
 /**
- * Hoja "Cambiar": la tía corrige niño/a, núcleo y nivel. Cada nivel muestra su
- * descriptor, que sale de la rúbrica (requisito 3.3).
+ * Hoja "Corregir": la tía corrige niño/a, núcleo y nivel (1 a 9). Cada nivel
+ * muestra las conductas observables de ese núcleo, que salen de la rúbrica
+ * (requisito 3.3).
  */
 export function HojaCambiar({
   sugerencia,
@@ -65,15 +66,15 @@ export function HojaCambiar({
             role="radio"
             aria-checked={info.nivel === nivel}
             onClick={() => setNivel(info.nivel)}
-            className={`flex min-h-tactil items-center gap-3 rounded-tarjeta border p-[10px] text-left ${
+            className={`flex min-h-tactil items-start gap-3 rounded-tarjeta border p-[10px] text-left ${
               info.nivel === nivel ? 'border-integra bg-integra-claro' : 'border-linea'
             }`}
           >
-            <NumeroNivel nivel={info.nivel} nucleo={nucleo} tamano={26} />
-            <span>
+            <NumeroNivel nivel={info.nivel} tamano={26} />
+            <span className="min-w-0">
               <strong>{info.nombre}</strong>
               <small className="block text-[13px] text-tinta-2">
-                {celda(nucleo, info.nivel).descriptor}
+                {celda(nucleo, info.nivel).conductas.join(' · ')}
               </small>
             </span>
           </button>
