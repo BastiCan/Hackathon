@@ -27,7 +27,12 @@ class Datos(Protocol):
 
     def ninos_de_jardin(self, id_jardin: str) -> list[Nino]: ...
 
-    def guardar_observaciones(self, observaciones: list[Observacion]) -> None: ...
+    def guardar_observaciones(
+        self,
+        observaciones: list[Observacion],
+        id_captura: str = "",
+        cabecera: dict | None = None,
+    ) -> None: ...
 
 
 def _parse_nino(d: dict) -> Nino:
@@ -61,7 +66,13 @@ class DatosLocal:
     def ninos_de_jardin(self, id_jardin: str) -> list[Nino]:
         return [n for n in self._ninos if n.id_jardin == id_jardin]
 
-    def guardar_observaciones(self, observaciones: list[Observacion]) -> None:
+    def guardar_observaciones(
+        self,
+        observaciones: list[Observacion],
+        id_captura: str = "",
+        cabecera: dict | None = None,
+    ) -> None:
+        # En local se ignora la cabecera de captura (solo se guarda en memoria).
         self.guardadas.extend(observaciones)
 
 

@@ -1,0 +1,158 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Procesador de notas de sala (Desafio 1 - Fundacion Integra).
+  1 Lambda sincrona + 3 tablas DynamoDB + 1 bucket S3 + rol IAM minimo.
+
+Parameters:
+  ModelIdSeparar:
+    Type: String
+    Description: Inference profile de Claude Haiku 4.5 (separar/identificar).
+  ModelIdConductas:
+    Type: String
+    Description: Inference profile de Claude Sonnet 5 (extraer conductas).
+  ModelIdEvaluar:
+    Type: String
+    Description: Inference profile de Claude Sonnet 5 (clasificar codigo).
+  ModelIdEmbeddings:
+    Type: String
+    Default: amazon.titan-embed-text-v2:0
+    Description: Titan Text Embeddings V2.
+  NCorridas:
+    Type: Number
+    Default: 3
+    Description: Numero de corridas de clasificacion a consolidar.
+  TopK:
+    Type: Number
+    Default: 8
+    Description: Candidatas por conducta en el RAG.
+
+Globals:
+  Function:
+    Timeout: 300
+    MemorySize: 1024
+    Runtime: python3.13
+
+Resources:
+  TablaEducadoras:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: id_educadora
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id_educadora
+          KeyType: HASH
+
+  TablaNinos:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: id_jardin
+          AttributeType: S
+        - AttributeName: id_nino
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id_jardin
+          KeyType: HASH
+        - AttributeName: id_nino
+          KeyType: RANGE
+
+  TablaObservaciones:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: id_captura
+          AttributeType: S
+        - AttributeName: id_obs
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id_captura
+          KeyType: HASH
+        - AttributeName: id_obs
+          KeyType: RANGE
+
+  BucketRubrica:
+    Type: AWS::S3::Bucket
+    Properties:
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+
+  ProcesarNotaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: ProcesarNota
+      CodeUri: src/
+      Handler: handler.handler
+      Environment:
+        Variables:
+          FUENTE_DATOS: aws
+          TABLA_EDUCADORAS: !Ref TablaEducadoras
+          TABLA_NINOS: !Ref TablaNinos
+          TABLA_OBSERVACIONES: !Ref TablaObservaciones
+          BUCKET: !Ref BucketRubrica
+          MODEL_ID_SEPARAR: !Ref ModelIdSeparar
+          MODEL_ID_CONDUCTAS: !Ref ModelIdConductas
+          MODEL_ID_EVALUAR: !Ref ModelIdEvaluar
+          MODEL_ID_EMBEDDINGS: !Ref ModelIdEmbeddings
+          N_CORRIDAS_EVALUAR: !Ref NCorridas
+          TOP_K: !Ref TopK
+          LOG_LEVEL: INFO
+      Policies:
+        # Lectura de nomina (Educadoras y Ninos).
+        - Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:GetItem
+                - dynamodb:Query
+              Resource:
+                - !GetAtt TablaEducadoras.Arn
+                - !GetAtt TablaNinos.Arn
+        # Escritura de resultados (Observaciones).
+        - Statement:
+            - Effect: Allow
+              Action:
+                - dynamodb:PutItem
+                - dynamodb:BatchWriteItem
+              Resource:
+                - !GetAtt TablaObservaciones.Arn
+        # Lectura de la rubrica y embeddings en S3.
+        - Statement:
+            - Effect: Allow
+              Action:
+                - s3:GetObject
+              Resource:
+                - !Sub "${BucketRubrica.Arn}/rubrica/*"
+        # Bedrock: Converse y embeddings sobre inference profiles y modelos fundacionales.
+        - Statement:
+            - Effect: Allow
+              Action:
+                - bedrock:InvokeModel
+                - bedrock:Converse
+              Resource:
+                - !Sub "arn:aws:bedrock:*:${AWS::AccountId}:inference-profile/*"
+                - "arn:aws:bedrock:*::foundation-model/*"
+
+Outputs:
+  NombreFuncion:
+    Description: Nombre de la funcion Lambda.
+    Value: !Ref ProcesarNotaFunction
+  NombreBucket:
+    Description: Bucket S3 de la rubrica.
+    Value: !Ref BucketRubrica
+  TablaEducadorasNombre:
+    Value: !Ref TablaEducadoras
+  TablaNinosNombre:
+    Value: !Ref TablaNinos
+  TablaObservacionesNombre:
+    Value: !Ref TablaObservaciones

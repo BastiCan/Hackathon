@@ -461,7 +461,13 @@ def procesar_nota(
         observaciones.extend(_procesar_fragmento(ctx, frag, nomina, resto, entrada.fecha))
 
     resultado = Resultado(id_captura=id_captura, advertencias=advertencias, observaciones=observaciones)
-    datos.guardar_observaciones(observaciones)
+    cabecera = {
+        "fecha": entrada.fecha.isoformat(),
+        "id_educadora": entrada.id_educadora,
+        "id_jardin": educadora.id_jardin,
+        "sala_grupo": entrada.sala_grupo,
+    }
+    datos.guardar_observaciones(observaciones, id_captura=id_captura, cabecera=cabecera)
     return resultado
 
 
