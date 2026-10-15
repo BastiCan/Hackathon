@@ -70,7 +70,7 @@
   - Tablas `Jardines` y `Registros` + GSIs (`porJardin`, `porSala`, `porNino`); permisos nuevos: `s3:GetObject` en `capturas/*`, `dynamodb:PutItem/UpdateItem` en `Registros`, `dynamodb:UpdateItem` en `Ninos`
   - Parámetros/outputs nuevos (nombre del bucket de capturas y de las tablas nuevas)
 
-- [ ] 8f. Carga ampliada y captura de prueba
+- [x] 8f. Carga ampliada y captura de prueba
   - `cargar_aws.py`: cargar `Jardines` (CSV + `salas[]` deducidas de `ninos.csv`), `Educadoras`, `Ninos`; e historial de `consolidado.json` en `Observaciones` (`origen=dataset`), calculando `ultima_obs_fecha`/`ultimo_nivel`/`ultimo_nivel_fecha` por niño. Dejar de subir `raw/`
   - `scripts/subir_captura_prueba.py`: genera `CAP-<ULID>` y sube `meta.json` + `texto.json` de una nota de prueba (dispara el flujo sin OCR)
 
