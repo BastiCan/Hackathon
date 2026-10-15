@@ -69,11 +69,14 @@ class Config:
     model_id_evaluar: str | None = field(default_factory=lambda: os.environ.get("MODEL_ID_EVALUAR"))
     model_id_embeddings: str | None = field(default_factory=lambda: os.environ.get("MODEL_ID_EMBEDDINGS"))
 
-    # Tablas DynamoDB y bucket S3 (solo relevantes con FUENTE_DATOS=aws).
+    # Tablas DynamoDB y buckets S3 (solo relevantes con FUENTE_DATOS=aws).
+    tabla_jardines: str | None = field(default_factory=lambda: os.environ.get("TABLA_JARDINES"))
     tabla_educadoras: str | None = field(default_factory=lambda: os.environ.get("TABLA_EDUCADORAS"))
     tabla_ninos: str | None = field(default_factory=lambda: os.environ.get("TABLA_NINOS"))
+    tabla_registros: str | None = field(default_factory=lambda: os.environ.get("TABLA_REGISTROS"))
     tabla_observaciones: str | None = field(default_factory=lambda: os.environ.get("TABLA_OBSERVACIONES"))
     bucket: str | None = field(default_factory=lambda: os.environ.get("BUCKET"))
+    bucket_capturas: str | None = field(default_factory=lambda: os.environ.get("BUCKET_CAPTURAS"))
 
     # Parametros del pipeline.
     n_corridas_evaluar: int = field(default_factory=lambda: _entero("N_CORRIDAS_EVALUAR", 3))

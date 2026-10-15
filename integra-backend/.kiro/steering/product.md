@@ -8,7 +8,9 @@ Una tía (educadora o técnica de párvulos) dedica ~4 horas semanales a pasar s
 Otro equipo convierte fotos de post-its/audios en texto. **Este proyecto parte cuando ya existe el texto.**
 
 ## Qué hace (alcance COMPLETO de esta etapa)
-Una función en AWS recibe una nota en texto libre + quién la envía (`id_educadora`) + de qué sala viene (`sala_grupo`) + fecha, y:
+Otro equipo deja en un bucket S3 la transcripción de una nota (texto ya extraído de fotos/audios) bajo
+`capturas/{id_captura}/texto.json`, junto con `meta.json` (quién la envía `id_educadora`, de qué sala `sala_grupo`, fecha de
+observación y tipo). La subida de `texto.json` dispara una función en AWS que, con ese contexto:
 
 1. **Separa** la nota con un LLM: cuáles fragmentos son **generales** (del grupo) y cuáles son **particulares** (de un niño/a),
    y **guarda cada uno como su propio texto** en DynamoDB.
@@ -17,6 +19,8 @@ Una función en AWS recibe una nota en texto libre + quién la envía (`id_educa
 3. Para cada fragmento particular identificado, decide si es **evaluable** y hace **RAG sobre la rúbrica** para sugerir
    el **nivel** obtenido (con dominio, certeza y un comentario que explica la decisión y si otro nivel es viable), buscando en toda la rúbrica.
    Después, en código, compara el nivel con lo esperado para la edad del niño/a (`ruta_niveles`).
+
+La invocación directa con un evento JSON sigue disponible para pruebas (`sam remote invoke`), con el mismo contrato.
 
 ## Ubicación en el repo
 Este proyecto vive en la carpeta `integra-backend/` del repo del equipo `BastiCan/Hackathon`. **Todo el trabajo se hace dentro
@@ -29,7 +33,7 @@ texto de la rúbrica (`texto_observable`) ni la descripción de los niveles: eso
 
 ## Fuera de alcance por ahora (NO construir)
 API Gateway, endpoints, frontend, validación por la tía, Step Functions, Cognito, Knowledge Base gestionada,
-carga del historial de observaciones, métricas. Se verán después. Si una tarea parece necesitarlos, preguntar.
+el OCR/ASR que produce `texto.json` (lo hace otro equipo), métricas. Se verán después. Si una tarea parece necesitarlos, preguntar.
 
 ## Principios
 - **La IA sugiere**: todo queda como `SUGERIDO`.

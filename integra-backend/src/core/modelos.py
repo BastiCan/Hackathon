@@ -136,6 +136,18 @@ class Candidato(_Modelo):
     score: int
 
 
+class Jardin(_Modelo):
+    """Jardin infantil (tabla Jardines)."""
+
+    id_jardin: str
+    nombre_fantasia: str | None = None
+    comuna: str | None = None
+    region: str | None = None
+    numero_salas: int | None = None
+    numero_educadoras: int | None = None
+    salas: list[str] = Field(default_factory=list)  # sala_grupo distintos del jardin
+
+
 # --- Conductas (salida de extraer_conductas) ---
 
 class Conducta(_Modelo):

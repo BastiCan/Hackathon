@@ -34,6 +34,8 @@ class Datos(Protocol):
         cabecera: dict | None = None,
     ) -> None: ...
 
+    def upsert_registro(self, id_captura: str, campos: dict) -> None: ...
+
 
 def _parse_nino(d: dict) -> Nino:
     return Nino(
@@ -59,6 +61,8 @@ class DatosLocal:
         }
         self._ninos: list[Nino] = [_parse_nino(n) for n in datos.get("ninos", [])]
         self.guardadas: list[Observacion] = []
+        # Historial de upserts de Registros (en memoria; util para pruebas locales).
+        self.registros: dict[str, dict] = {}
 
     def educadora(self, id_educadora: str) -> Educadora | None:
         return self._educadoras.get(id_educadora)
@@ -74,6 +78,10 @@ class DatosLocal:
     ) -> None:
         # En local se ignora la cabecera de captura (solo se guarda en memoria).
         self.guardadas.extend(observaciones)
+
+    def upsert_registro(self, id_captura: str, campos: dict) -> None:
+        # En local no hay tabla Registros: se acumula en memoria (upsert simple).
+        self.registros.setdefault(id_captura, {}).update(campos)
 
 
 def crear_datos() -> Datos:
