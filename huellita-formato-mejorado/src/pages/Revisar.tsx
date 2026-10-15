@@ -9,6 +9,7 @@ import { HojaCambiar } from '../components/HojaCambiar';
 import { TarjetaError, TarjetaSugerencia } from '../components/TarjetaSugerencia';
 import type { Sugerencia } from '../lib/tipos';
 import type { CambiosValidacion } from '../services/datos';
+import { mensajeParaTia } from '../services/errores';
 
 /** Lo que dura la transición de salida de una nota resuelta. */
 const DURACION_SALIDA_MS = 160;
@@ -53,9 +54,13 @@ export function Revisar() {
 
   const { notas, conError, seguras, ninos } = vista.valor;
 
+  /** Si el cambio no se guardó (por ejemplo, sin conexión), la nota vuelve y se avisa. */
+  const fallo = (error: unknown) =>
+    aviso(mensajeParaTia(error, 'No pudimos guardar el cambio. Inténtalo de nuevo.'));
+
   /** Deshacer = devolver las sugerencias tal como estaban antes. */
   const deshacerCon = (previas: Sugerencia[]) => () => {
-    void datos.guardarSugerencias(previas);
+    void datos.guardarSugerencias(previas).catch(fallo);
   };
 
   const guardar = (nota: NotaPendiente) => {
@@ -67,14 +72,16 @@ export function Revisar() {
             ? 'Nota guardada'
             : `Guardado en la ficha de ${nota.nombreNino ?? nota.sugerencia.nombreDetectado ?? 'la sala'}`;
         aviso(mensaje, deshacerCon(previa));
-      });
+      }, fallo);
     });
   };
 
   const descartar = (nota: NotaPendiente) => {
     const previa = [{ ...nota.sugerencia }];
     conSalida([nota.sugerencia.id], () => {
-      void datos.descartar(nota.sugerencia.id).then(() => aviso('Descartada', deshacerCon(previa)));
+      void datos
+        .descartar(nota.sugerencia.id)
+        .then(() => aviso('Descartada', deshacerCon(previa)), fallo);
     });
   };
 
@@ -82,9 +89,9 @@ export function Revisar() {
     const previa = [{ ...sugerencia }];
     setCambiando(null);
     conSalida([sugerencia.id], () => {
-      void datos.validar(sugerencia.id, cambios).then(() =>
-        aviso('Corregido y guardado', deshacerCon(previa)),
-      );
+      void datos
+        .validar(sugerencia.id, cambios)
+        .then(() => aviso('Corregido y guardado', deshacerCon(previa)), fallo);
     });
   };
 
@@ -97,11 +104,13 @@ export function Revisar() {
     conSalida(
       altas.map((n) => n.sugerencia.id),
       () => {
-        void Promise.all(altas.map((n) => datos.validar(n.sugerencia.id))).then(() =>
-          aviso(
-            `${altas.length} ${altas.length === 1 ? 'guardada' : 'guardadas'}`,
-            deshacerCon(previas),
-          ),
+        void Promise.all(altas.map((n) => datos.validar(n.sugerencia.id))).then(
+          () =>
+            aviso(
+              `${altas.length} ${altas.length === 1 ? 'guardada' : 'guardadas'}`,
+              deshacerCon(previas),
+            ),
+          fallo,
         );
       },
     );
@@ -163,7 +172,7 @@ export function Revisar() {
               // borró de la memoria al marcarla.
               void datos
                 .marcarEvidencia(nota.evidencia.id, 'lista')
-                .then(() => aviso('Descartada'));
+                .then(() => aviso('Descartada'), fallo);
             }}
           />
         ))}

@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { destinos, type Destino as DestinoNav } from './destinos';
+import { useOpciones } from './opciones';
 
 /**
  * Barra inferior fija del celular: Agenda · Sala · Revisar (con el contador de
@@ -19,13 +20,14 @@ export function BarraInferior({
   ancho?: string;
 }) {
   const { pathname } = useLocation();
+  const { agenda } = useOpciones();
 
   return (
     <nav
       aria-label="Principal"
       className={`barra-segura fixed bottom-0 left-1/2 z-10 box-content flex h-[64px] w-full -translate-x-1/2 border-t border-linea bg-papel lg:hidden ${ancho}`}
     >
-      {destinos(esDirectora).map((d) => (
+      {destinos(esDirectora, agenda).map((d) => (
         <Destino
           key={d.a}
           destino={d}

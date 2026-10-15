@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFicha } from '../app/hooks';
 import {
+  abreviatura,
   ambitoDe,
   COLOR_AMBITO,
   NOMBRE_AMBITO,
@@ -185,7 +186,7 @@ export function FichaNino() {
               <li key={r.id} className="w-[84px] flex-none">
                 <Miniatura formato={r.formato ?? 'texto'} foto={r.foto} tamano={84} conMancha />
                 <p className="mt-1 text-[12px] text-tinta-2">
-                  {r.fechaCorta} · {r.nucleo} {r.nivel}
+                  {r.fechaCorta} · {abreviatura(r.nucleo)} {r.nivel}
                 </p>
               </li>
             ))}

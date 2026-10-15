@@ -47,7 +47,10 @@ const TODOS: Destino[] = [
   },
 ];
 
-/** Los destinos que corresponden al rol de quien entró. */
-export function destinos(esDirectora: boolean): Destino[] {
-  return TODOS.filter((d) => !d.soloDirectora || esDirectora);
+/**
+ * Los destinos que corresponden al rol de quien entró. Sin agenda (versión
+ * AWS), la agenda no aparece en el menú.
+ */
+export function destinos(esDirectora: boolean, conAgenda = true): Destino[] {
+  return TODOS.filter((d) => (!d.soloDirectora || esDirectora) && (conAgenda || d.a !== '/'));
 }

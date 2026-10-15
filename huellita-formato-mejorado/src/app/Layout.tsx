@@ -8,6 +8,7 @@ import { Dock } from './Dock';
 import { Encabezado } from './Encabezado';
 import { useNombreNino, useSesion } from './hooks';
 import { NavegacionLateral } from './NavegacionLateral';
+import { rutaInicio, useOpciones } from './opciones';
 
 /**
  * Marco de las pantallas, adaptable (`.kiro/steering/diseno-visual.md`):
@@ -23,15 +24,18 @@ import { NavegacionLateral } from './NavegacionLateral';
 export function Layout() {
   const { pathname } = useLocation();
   const sesion = useSesion();
+  const opciones = useOpciones();
+  // La captura acompaña al inicio (la agenda o, sin agenda, Mi sala) y a la ficha.
+  const inicio = rutaInicio(opciones);
 
   const enFicha = pathname.startsWith('/nino/');
   const enDirectora = pathname.startsWith('/directora');
-  const conDock = pathname === '/' || enFicha;
+  const conDock = pathname === inicio || enFicha;
   const ninoId = enFicha ? pathname.split('/')[2] : undefined;
   const nombreNino = useNombreNino(ninoId);
 
   if (sesion.cargando) {
-    return <Cargando />;
+    return <Cargando texto={opciones.agenda ? 'Cargando tu agenda…' : 'Cargando tu sala…'} />;
   }
 
   // Demo sin usuaria elegida: primero la pantalla de entrada (tarea 5).
@@ -44,7 +48,7 @@ export function Layout() {
 
   // Acceso por rol: la vista directora no es para las tías (privacidad.md 6).
   if (enDirectora && sesion.valor && !esDirectora) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={inicio} replace />;
   }
 
   // Ancho de la columna del celular; en escritorio manda la grilla de abajo.
@@ -113,11 +117,11 @@ export function FondoManchas() {
   );
 }
 
-function Cargando() {
+function Cargando({ texto }: { texto: string }) {
   return (
     <div className="alto-pantalla mx-auto flex w-full max-w-tia items-center justify-center bg-fondo md:max-w-[640px] lg:max-w-none">
       <p role="status" className="text-tinta-2">
-        Cargando tu agenda…
+        {texto}
       </p>
     </div>
   );

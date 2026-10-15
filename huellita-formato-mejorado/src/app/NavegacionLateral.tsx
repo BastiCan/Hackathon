@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { BotonesCaptura, etiquetaRegistrar } from './Dock';
 import { destinos, type Destino as DestinoNav } from './destinos';
+import { useOpciones } from './opciones';
 
 /**
  * Barra lateral del computador (desde 1024 px): arriba el bloque "Registrar"
@@ -15,11 +16,12 @@ export function NavegacionLateral({
 }: {
   pendientes: number;
   esDirectora: boolean;
-  /** La captura solo acompaña a la agenda y a la ficha, igual que en el celular. */
+  /** La captura solo acompaña al inicio y a la ficha, igual que en el celular. */
   conDock: boolean;
   nombreNino?: string;
 }) {
   const { pathname } = useLocation();
+  const { agenda } = useOpciones();
 
   return (
     <div className="sticky top-4 hidden w-[232px] flex-none flex-col gap-5 self-start py-6 pl-4 pr-2 lg:flex">
@@ -34,7 +36,7 @@ export function NavegacionLateral({
         </div>
       ) : null}
       <nav aria-label="Secciones" className="flex flex-col gap-1">
-        {destinos(esDirectora).map((d) => (
+        {destinos(esDirectora, agenda).map((d) => (
           <Destino
             key={d.a}
             destino={d}

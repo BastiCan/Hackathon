@@ -2,7 +2,7 @@ import { Mic, Pencil } from 'lucide-react';
 import { urlFoto } from '../lib/fotos';
 import type { Formato, NucleoId } from '../lib/tipos';
 import { nombreNucleo } from '../lib/rubrica';
-import { ambitoDe, CLASE_ETIQUETA } from './ambitos';
+import { abreviatura, ambitoDe, CLASE_ETIQUETA } from './ambitos';
 import { PALETA } from './colores';
 import { Mancha } from './Mancha';
 
@@ -75,7 +75,7 @@ export function EtiquetaNucleo({ nucleo, corta = false }: { nucleo: NucleoId; co
         CLASE_ETIQUETA[ambitoDe(nucleo)]
       }`}
     >
-      {corta ? nucleo : nombreNucleo(nucleo)}
+      {corta ? abreviatura(nucleo) : nombreNucleo(nucleo)}
     </span>
   );
 }

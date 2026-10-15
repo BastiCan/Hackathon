@@ -6,25 +6,28 @@ import { FichaNino } from '../pages/FichaNino';
 import { MiSala } from '../pages/MiSala';
 import { Revisar } from '../pages/Revisar';
 import { Layout } from './Layout';
+import { rutaInicio, useOpciones } from './opciones';
 import { ProveedorServicios } from './servicios';
 
 /**
  * Rutas de Huellita. Nada de datos de niños/as en las URLs: solo IDs
- * (privacidad.md 8).
+ * (privacidad.md 8). Sin agenda (versión AWS), "/" lleva a Mi sala.
  */
 export function Rutas() {
+  const opciones = useOpciones();
+  const inicio = rutaInicio(opciones);
   return (
     <Routes>
       <Route path="/entrada" element={<Entrada />} />
       <Route element={<Layout />}>
-        <Route path="/" element={<Agenda />} />
+        <Route path="/" element={opciones.agenda ? <Agenda /> : <Navigate to="/sala" replace />} />
         <Route path="/sala" element={<MiSala />} />
         <Route path="/revisar" element={<Revisar />} />
         <Route path="/nino/:id" element={<FichaNino />} />
         <Route path="/directora" element={<Directora />} />
         <Route path="/directora/sala/:salaId" element={<MiSala soloLectura />} />
       </Route>
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<Navigate to={inicio} replace />} />
     </Routes>
   );
 }

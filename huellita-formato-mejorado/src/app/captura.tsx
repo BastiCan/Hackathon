@@ -8,7 +8,9 @@ import { createContext, useCallback, useContext, useMemo, useState, type ReactNo
 import { HojaAudio, HojaFoto, HojaTexto } from '../components/Captura';
 import type { Formato } from '../lib/tipos';
 import { capturar } from '../services/captura';
+import { mensajeParaTia } from '../services/errores';
 import { useAviso } from './aviso';
+import { useOpciones } from './opciones';
 import { useServicios } from './servicios';
 
 export interface NinoAsociado {
@@ -27,6 +29,7 @@ export function ProveedorCaptura({
   nino?: NinoAsociado | null;
 }) {
   const { datos, ia } = useServicios();
+  const { audioMaxSegundos } = useOpciones();
   const aviso = useAviso();
   const [hoja, setHoja] = useState<Formato | null>(null);
 
@@ -37,7 +40,8 @@ export function ProveedorCaptura({
       setHoja(null);
       void capturar(formato, archivo, texto, nino?.id, servicios).then(
         () => aviso('Listo, lo verás en Revisar'),
-        () => aviso('No pudimos guardar la nota. Inténtalo de nuevo.'),
+        (error: unknown) =>
+          aviso(mensajeParaTia(error, 'No pudimos guardar la nota. Inténtalo de nuevo.')),
       );
     },
     [aviso, nino?.id, servicios],
@@ -54,7 +58,12 @@ export function ProveedorCaptura({
       {children}
       {hoja === 'foto' ? <HojaFoto onEnviar={enviarFoto} onCerrar={cerrar} /> : null}
       {hoja === 'audio' ? (
-        <HojaAudio onEnviar={enviarAudio} onCerrar={cerrar} onEscribir={abrirTexto} />
+        <HojaAudio
+          onEnviar={enviarAudio}
+          onCerrar={cerrar}
+          onEscribir={abrirTexto}
+          maximoSegundos={audioMaxSegundos}
+        />
       ) : null}
       {hoja === 'texto' ? <HojaTexto onEnviar={enviarTexto} onCerrar={cerrar} /> : null}
     </ContextoCaptura.Provider>

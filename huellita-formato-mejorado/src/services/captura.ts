@@ -75,6 +75,13 @@ export async function capturar(
     archivo,
   );
 
+  // Versión AWS: el BFF lee la nota y el sondeo de `suscribir` trae las
+  // sugerencias. Acá no se llama a la IA del dispositivo ni se toca la
+  // evidencia: sus estados los define el servidor.
+  if (datos.procesaEnServidor === true) {
+    return { evidencia, procesada: Promise.resolve([]) };
+  }
+
   const procesada = (async () => {
     try {
       const contexto = await contextoDeSala(datos, sala.id);

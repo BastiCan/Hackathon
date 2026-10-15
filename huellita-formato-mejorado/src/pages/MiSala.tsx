@@ -2,7 +2,7 @@ import { ChevronLeft, Flag, HelpCircle } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMiSala } from '../app/hooks';
-import { NOMBRE_AMBITO } from '../components/ambitos';
+import { abreviatura, NOMBRE_AMBITO } from '../components/ambitos';
 import { NumeroNivel } from '../components/ChipNivel';
 import { COLOR_FRESCURA, PALETA } from '../components/colores';
 import { HojaGestionNino } from '../components/HojaGestionNino';
@@ -118,7 +118,7 @@ export function MiSala({ soloLectura = false }: { soloLectura?: boolean }) {
                     className="px-[1px] py-2 font-bold lg:px-2 lg:py-3"
                   >
                     <abbr title={nombreNucleo(n)} className="no-underline">
-                      {n}
+                      {abreviatura(n)}
                     </abbr>
                   </th>
                 ))}

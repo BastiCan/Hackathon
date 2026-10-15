@@ -13,6 +13,7 @@ import { capturar } from '../services/captura';
 import { almacenMemoria, DataServiceLocal } from '../services/datos';
 import { IAServiceSimulado } from '../services/ia';
 import { Rutas } from './App';
+import { ProveedorOpciones } from './opciones';
 import { ProveedorServicios } from './servicios';
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
@@ -22,13 +23,19 @@ let raiz: Root;
 let datos: DataServiceLocal;
 let ia: IAServiceSimulado;
 
+/**
+ * Monta la versión con agenda, que es la del guion de la demo local. Se declara con
+ * `ProveedorOpciones` para que el guion no dependa de las variables `VITE_*` del entorno.
+ */
 async function montar(ruta: string) {
   await act(async () => {
     raiz.render(
       <ProveedorServicios datos={datos} ia={ia}>
-        <MemoryRouter initialEntries={[ruta]}>
-          <Rutas />
-        </MemoryRouter>
+        <ProveedorOpciones agenda>
+          <MemoryRouter initialEntries={[ruta]}>
+            <Rutas />
+          </MemoryRouter>
+        </ProveedorOpciones>
       </ProveedorServicios>,
     );
   });
@@ -102,12 +109,12 @@ describe('guion de la demo', () => {
     await montar('/entrada');
     expect(texto()).toContain('¿Quién entra hoy?');
     await tocar(botonPor('Tía Ana'));
-    expect(texto()).toContain('Agenda · Medio Menor A');
+    expect(texto()).toContain('Agenda · Sala A');
     expect(texto()).toContain('por revisar');
     await tocar(destinoPor('Sala'));
     const josefa = contenedor.querySelector('[aria-label^="Josefa"]');
-    expect(josefa?.getAttribute('aria-label')).toContain('revisar avance');
-    expect(contenedor.querySelectorAll('tbody tr')).toHaveLength(18);
+    expect(josefa?.getAttribute('aria-label')).toContain('nivel 5');
+    expect(contenedor.querySelectorAll('tbody tr')).toHaveLength(13);
 
     // 2. Foto del post-it: llega a Revisar el guion de Josefa.
     await capturarArchivo('foto');
@@ -127,7 +134,7 @@ describe('guion de la demo', () => {
     await tocar(contenedor.querySelector<HTMLButtonElement>('[aria-label^="Josefa"]')!);
     expect(texto()).toContain('Registrar para Josefa');
     expect(texto()).toContain('se agacha y recoge los individuales');
-    expect(texto()).toContain('Convivencia y Ciudadanía');
+    expect(texto()).toContain('Socioemocional');
 
     // 4. Otra foto: guion de Emilio y corrección del nivel con "Corregir".
     await capturarArchivo('foto');
@@ -136,14 +143,14 @@ describe('guion de la demo', () => {
     expect(texto()).toContain('Emilio');
     await tocar(botonPor('Corregir'));
     expect(texto()).toContain('Corregir evaluación');
-    await tocar(botonPor('Integrando')); // nivel 5
+    await tocar(botonPor('Combinación y participación')); // nivel 8
     await tocar(botonPor('Guardar corrección'));
     await esperarSalida();
     expect(texto()).toContain('Corregido y guardado');
-    const deEmilio = await datos.sugerencias({ ninoId: 'NINO-00002' });
+    const deEmilio = await datos.sugerencias({ ninoId: 'NINO-00453' });
     const cambiada = deEmilio.find((s) => s.estado === 'cambiada');
-    expect(cambiada?.nivel).toBe(5);
-    expect(cambiada?.original?.nivel).toBe(4);
+    expect(cambiada?.nivel).toBe(8);
+    expect(cambiada?.original?.nivel).toBe(9);
 
     // 5. Nota grupal: se ofrece guardar en la sala, no evaluar a un niño/a.
     await act(async () => {
@@ -162,7 +169,7 @@ describe('guion de la demo', () => {
     await esperarSalida();
     expect(texto()).toContain('Nota guardada');
 
-    // 6. Entrar como directora y ver el avance de las 3 salas.
+    // 6. Entrar como directora y ver el avance de las 2 salas.
     await tocar(destinoPor('Agenda'));
     await tocar(contenedor.querySelector<HTMLButtonElement>('[aria-label^="Menú de"]')!);
     await tocar(botonPor('Cambiar de usuaria'));
@@ -170,9 +177,9 @@ describe('guion de la demo', () => {
     await tocar(botonPor('Directora Carmen'));
     await tocar(destinoPor('Directora'));
     expect(texto()).toContain('Salas');
-    expect(texto()).toContain('Medio Menor B');
+    expect(texto()).toContain('Sala B');
     expect(texto()).toContain('observados en 30 días');
-    await tocar(botonPor('Medio Menor A'));
+    await tocar(botonPor('Sala A'));
     expect(texto()).toContain('Vista de la directora · solo lectura');
   });
 });

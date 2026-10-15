@@ -5,14 +5,20 @@
  */
 import { createContext, useContext, useMemo, type ReactNode } from 'react';
 import { servicioDatos, type DataService } from '../services/datos';
+import { servicioHttp } from '../services/http';
 import { servicioIA, type IAService } from '../services/ia';
+import { CONFIG } from './config';
 
 export interface Servicios {
   datos: DataService;
   ia: IAService;
 }
 
-const PREDETERMINADOS: Servicios = { datos: servicioDatos, ia: servicioIA };
+/** Con `VITE_DATOS=http` la app habla con el BFF en `/api`; si no, es local. */
+const PREDETERMINADOS: Servicios = {
+  datos: CONFIG.datos === 'http' ? servicioHttp : servicioDatos,
+  ia: servicioIA,
+};
 
 const ContextoServicios = createContext<Servicios>(PREDETERMINADOS);
 

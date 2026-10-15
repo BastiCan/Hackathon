@@ -1,6 +1,7 @@
 import { Camera, Mic, Pencil } from 'lucide-react';
 import type { Formato } from '../lib/tipos';
 import { useCaptura } from './captura';
+import { useServicios } from './servicios';
 
 /** Nombre del grupo de captura, el mismo en el celular y en el computador. */
 export function etiquetaRegistrar(nombreNino?: string): string {
@@ -8,15 +9,19 @@ export function etiquetaRegistrar(nombreNino?: string): string {
 }
 
 /**
- * Los 3 botones de captura: Foto, Grabar (al centro, en rojo como una
- * grabadora) y Escribir. En el celular van en fila dentro del dock; en el
- * computador, en columna dentro del bloque "Registrar" de la barra lateral.
+ * Los botones de captura: Foto, Grabar (al centro, en rojo como una grabadora)
+ * y Escribir. En el celular van en fila dentro del dock; en el computador, en
+ * columna dentro del bloque "Registrar" de la barra lateral. Si el servicio de
+ * datos todavía no recibe fotos (versión AWS), Foto no aparece.
  */
 export function BotonesCaptura({ columna = false }: { columna?: boolean }) {
   const abrir = useCaptura();
+  const { datos } = useServicios();
+  const conFoto = datos.admiteFoto !== false;
+  const fila = conFoto ? 'grid grid-cols-[1fr_1.3fr_1fr] gap-2' : 'grid grid-cols-[1.3fr_1fr] gap-2';
   return (
-    <div className={columna ? 'grid gap-2' : 'grid grid-cols-[1fr_1.3fr_1fr] gap-2'}>
-      <BotonCaptura formato="foto" etiqueta="Foto" onAbrir={abrir} />
+    <div className={columna ? 'grid gap-2' : fila}>
+      {conFoto ? <BotonCaptura formato="foto" etiqueta="Foto" onAbrir={abrir} /> : null}
       <BotonCaptura formato="audio" etiqueta="Grabar" onAbrir={abrir} principal />
       <BotonCaptura formato="texto" etiqueta="Escribir" onAbrir={abrir} />
     </div>

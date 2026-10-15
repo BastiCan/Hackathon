@@ -23,6 +23,7 @@ import { almacenMemoria, DataServiceLocal } from '../services/datos';
 import { IAServiceSimulado } from '../services/ia';
 import { Rutas } from './App';
 import { destinos } from './destinos';
+import { ProveedorOpciones } from './opciones';
 import { ProveedorServicios } from './servicios';
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
@@ -31,13 +32,20 @@ let contenedor: HTMLDivElement;
 let raiz: Root;
 let datos: DataServiceLocal;
 
+/**
+ * Monta la versión con agenda. Se declara con `ProveedorOpciones` en vez de confiar en
+ * `CONFIG`: así estas pruebas dan igual aunque el entorno traiga `VITE_AGENDA=false`
+ * (la versión AWS tiene las suyas en `version-aws.test.tsx`).
+ */
 async function montar(ruta: string) {
   await act(async () => {
     raiz.render(
       <ProveedorServicios datos={datos} ia={new IAServiceSimulado({ latenciaMs: 0 })}>
-        <MemoryRouter initialEntries={[ruta]}>
-          <Rutas />
-        </MemoryRouter>
+        <ProveedorOpciones agenda>
+          <MemoryRouter initialEntries={[ruta]}>
+            <Rutas />
+          </MemoryRouter>
+        </ProveedorOpciones>
       </ProveedorServicios>,
     );
   });
@@ -67,7 +75,7 @@ function barraLateral(): HTMLElement {
 
 beforeEach(async () => {
   datos = new DataServiceLocal({ almacen: almacenMemoria() });
-  await datos.cambiarUsuaria('USR-ANA');
+  await datos.cambiarUsuaria('EDU-0001');
   contenedor = document.createElement('div');
   document.body.appendChild(contenedor);
   raiz = createRoot(contenedor);
@@ -221,7 +229,7 @@ describe('pantallas en escritorio', () => {
   });
 
   it('la ficha del niño o niña se abre en dos columnas', async () => {
-    await montar('/nino/NINO-00001');
+    await montar('/nino/NINO-00008');
     const grilla = uno('.aviso').parentElement!.parentElement as HTMLElement;
     expect(grilla.className).toContain('lg:grid');
     expect(grilla.className).toContain('lg:grid-cols-2');
@@ -273,7 +281,7 @@ describe('hojas y avisos', () => {
 });
 
 describe('sin scroll horizontal', () => {
-  const RUTAS = ['/', '/sala', '/revisar', '/nino/NINO-00001'];
+  const RUTAS = ['/', '/sala', '/revisar', '/nino/NINO-00008'];
 
   for (const ruta of RUTAS) {
     it(`${ruta} no deja anchos fijos ni fotos sin tope`, async () => {
