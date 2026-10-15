@@ -31,7 +31,7 @@
   - 6.1 `datos.py` (implementación local primero) y `pipeline.py` usando los prompts (`separar_identificar`, `extraer_conductas`, `clasificar`) y esquemas existentes (no reescribirlos); el prompt `clasificar` recibe los ejemplos de `fewshot.json`
   - 6.2 `scripts/pipeline_local.py`
   - 6.3 `datos.py` local lee `tests/fixtures/nomina_demo.json` (ya escrito; no modificarlo)
-  - 6.4 `tests/llm/test_notas_prueba.py` con los 15 casos de `tests/fixtures/notas_prueba.json` (ya escrito; no modificarlo); `pipeline_local.py --casos` imprime la tabla esperado vs obtenido
+  - 6.4 `tests/llm/test_notas_prueba.py` con los 13 casos de `tests/fixtures/notas_prueba.json` (ya escrito; no modificarlo); `pipeline_local.py --casos` imprime la tabla esperado vs obtenido
   - _Requirements: 1.1–1.3, 2.1–2.3, 3.1, 3.3, 4.1, 4.2, 6.1–6.3, 7.2, 7.3, 8.1, 8.6_
 
 - [ ] 7. Medición (`scripts/medir.py`)
@@ -39,7 +39,7 @@
   - Reporta las métricas del Requirement 10 en `data/eval/reporte.md` y el detalle por caso en `data/eval/resultados.jsonl`
   - _Requirements: 10.1–10.3_
 
-- [ ] 7b. ⏸ Checkpoint de calidad: correr `medir.py` y correr `pipeline_local.py` con los 15 casos de `tests/fixtures/notas_prueba.json` y revisar en equipo antes de tocar AWS
+- [ ] 7b. ⏸ Checkpoint de calidad: correr `medir.py` y correr `pipeline_local.py` con los 13 casos de `tests/fixtures/notas_prueba.json` y revisar en equipo antes de tocar AWS
 
 - [ ] 8. AWS
   - 8.1 `datos.py` implementación DynamoDB; `config.py` lee `rubrica/` desde S3 al iniciar

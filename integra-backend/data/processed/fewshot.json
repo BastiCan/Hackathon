@@ -1,147 +1,147 @@
 {
-  "_descripcion": "9 ejemplos resueltos (1 por nivel) para el prompt de clasificación. Sus códigos, observaciones y niños NO aparecen en validacion_100.json.",
+  "_descripcion": "9 ejemplos (1 por nivel) tomados TAL CUAL de consolidado.json: 'nota' = texto de la observación (texto_observable de sus manifestaciones + nota_breve si existe), sin redacción de Claude. 'protagonista' = id_nino (el dataset no trae nombres). 'comentario' = plantilla fija desde rubrica.json. Sus observaciones, niños y códigos NO aparecen en validacion_100.json.",
   "ejemplos": [
     {
       "id_observacion_origen": "OBS-0002110",
-      "protagonista": "Diego",
-      "nota": "Diego estaba llorando inquieto en la cuna; lo tomé, le hablé despacito y lo apegué a mi pecho, y se fue calmando hasta quedar tranquilo.",
+      "protagonista": "NINO-00358",
+      "nota": "Disminuye el llanto o la agitación ante voz suave, contacto o contención.",
       "respuesta": {
         "manifestaciones": [
           {
             "id_manifestacion": "MAN-L01-SE-02",
-            "frase_evidencia": "le hablé despacito y lo apegué a mi pecho, y se fue calmando"
+            "frase_evidencia": "Disminuye el llanto o la agitación ante voz suave, contacto o contención."
           }
         ],
         "otro_codigo_viable": null,
-        "comentario": "Se calma con la voz y el contacto de la tía: nivel 1.",
+        "comentario": "MAN-L01-SE-02: nivel 1, socioemocional.",
         "sin_correspondencia": false
       }
     },
     {
       "id_observacion_origen": "OBS-0002706",
-      "protagonista": "Rafaela",
-      "nota": "Rafaela en juego libre: le dejé el móvil de argollas cerca y le pegaba con la mano una y otra vez.",
+      "protagonista": "NINO-00461",
+      "nota": "Golpea o roza de forma repetida un objeto colocado a su alcance. Registro realizado durante una actividad de juego libre.",
       "respuesta": {
         "manifestaciones": [
           {
             "id_manifestacion": "MAN-L02-MF-02",
-            "frase_evidencia": "le pegaba con la mano una y otra vez"
+            "frase_evidencia": "Golpea o roza de forma repetida un objeto colocado a su alcance."
           }
         ],
         "otro_codigo_viable": null,
-        "comentario": "Golpea varias veces un objeto que tiene a su alcance: nivel 2.",
+        "comentario": "MAN-L02-MF-02: nivel 2, motor_fino.",
         "sin_correspondencia": false
       }
     },
     {
       "id_observacion_origen": "OBS-0000931",
-      "protagonista": "Maite",
-      "nota": "Maite, juego libre: sacudió el cascabel, sonó, y lo volvió a sacudir varias veces para que sonara de nuevo.",
+      "protagonista": "NINO-00168",
+      "nota": "Repite una acción sencilla que vuelve a producir un sonido o movimiento. Registro realizado durante una actividad de juego libre.",
       "respuesta": {
         "manifestaciones": [
           {
             "id_manifestacion": "MAN-L03-CO-02",
-            "frase_evidencia": "lo volvió a sacudir varias veces para que sonara de nuevo"
+            "frase_evidencia": "Repite una acción sencilla que vuelve a producir un sonido o movimiento."
           }
         ],
         "otro_codigo_viable": null,
-        "comentario": "Repite una acción simple para volver a producir el sonido: nivel 3.",
+        "comentario": "MAN-L03-CO-02: nivel 3, cognitivo.",
         "sin_correspondencia": false
       }
     },
     {
       "id_observacion_origen": "OBS-0000162",
-      "protagonista": "Simón",
-      "nota": "Simón: cada vez que lo llamo por su nombre desde el otro lado de la sala se da vuelta a mirarme, lo hace siempre.",
+      "protagonista": "NINO-00029",
+      "nota": "Responde de forma consistente a su identificador ficticio o a una llamada habitual del grupo. Se observó la conducta en una interacción breve y espontánea.",
       "respuesta": {
         "manifestaciones": [
           {
             "id_manifestacion": "MAN-L04-LC-02",
-            "frase_evidencia": "cada vez que lo llamo por su nombre"
+            "frase_evidencia": "Responde de forma consistente a su identificador ficticio o a una llamada habitual del grupo."
           }
         ],
         "otro_codigo_viable": null,
-        "comentario": "Responde de forma consistente cuando lo llaman por su nombre: nivel 4.",
+        "comentario": "MAN-L04-LC-02: nivel 4, lenguaje_comunicacion.",
         "sin_correspondencia": false
       }
     },
     {
       "id_observacion_origen": "OBS-0001857",
-      "protagonista": "Facundo",
-      "nota": "Facundo metió los cubitos en el tarro grande y después metía la mano para sacarlos, lo repitió varias veces.",
+      "protagonista": "NINO-00317",
+      "nota": "Introduce un objeto en un recipiente de boca amplia y trata de recuperarlo. La manifestación se observó más de una vez durante la actividad.",
       "respuesta": {
         "manifestaciones": [
           {
             "id_manifestacion": "MAN-L05-MF-02",
-            "frase_evidencia": "metió los cubitos en el tarro grande y después metía la mano para sacarlos"
+            "frase_evidencia": "Introduce un objeto en un recipiente de boca amplia y trata de recuperarlo."
           }
         ],
         "otro_codigo_viable": null,
-        "comentario": "Mete objetos en un recipiente amplio y los vuelve a sacar: nivel 5.",
+        "comentario": "MAN-L05-MF-02: nivel 5, motor_fino.",
         "sin_correspondencia": false
       }
     },
     {
       "id_observacion_origen": "OBS-0002900",
-      "protagonista": "Trinidad",
-      "nota": "Trinidad vio que la tía guardaba los juguetes en la caja y empezó a echar algunos también, igual que ella. Lo hizo varias veces.",
+      "protagonista": "NINO-00491",
+      "nota": "Imita una acción social sencilla, como saludar, aplaudir o ayudar a guardar. La manifestación se observó más de una vez durante la actividad.",
       "respuesta": {
         "manifestaciones": [
           {
             "id_manifestacion": "MAN-L06-SE-02",
-            "frase_evidencia": "empezó a echar algunos también, igual que ella"
+            "frase_evidencia": "Imita una acción social sencilla, como saludar, aplaudir o ayudar a guardar."
           }
         ],
         "otro_codigo_viable": null,
-        "comentario": "Imita a la tía en una acción social sencilla (guardar): nivel 6.",
+        "comentario": "MAN-L06-SE-02: nivel 6, socioemocional.",
         "sin_correspondencia": false
       }
     },
     {
       "id_observacion_origen": "OBS-0002626",
-      "protagonista": "Julieta",
-      "nota": "Julieta intentaba meter la pieza en el encaje y no entraba; la dio vuelta y probó por otro lado hasta que entró.",
+      "protagonista": "NINO-00450",
+      "nota": "Prueba una alternativa cuando la primera estrategia para abrir, encajar o alcanzar no funciona. Registro realizado durante una actividad de juego libre.",
       "respuesta": {
         "manifestaciones": [
           {
             "id_manifestacion": "MAN-L07-CO-02",
-            "frase_evidencia": "la dio vuelta y probó por otro lado hasta que entró"
+            "frase_evidencia": "Prueba una alternativa cuando la primera estrategia para abrir, encajar o alcanzar no funciona."
           }
         ],
         "otro_codigo_viable": null,
-        "comentario": "Cuando la primera forma no resulta, prueba otra para encajar: nivel 7.",
+        "comentario": "MAN-L07-CO-02: nivel 7, cognitivo.",
         "sin_correspondencia": false
       }
     },
     {
       "id_observacion_origen": "OBS-0002735",
-      "protagonista": "Bastián",
-      "nota": "Bastián pateó la pelota que estaba quieta en el patio y la mandó para adelante, sin afirmarse de nada.",
+      "protagonista": "NINO-00466",
+      "nota": "Patea una pelota detenida hacia adelante sin necesitar sostén.",
       "respuesta": {
         "manifestaciones": [
           {
             "id_manifestacion": "MAN-L08-MG-02",
-            "frase_evidencia": "pateó la pelota que estaba quieta"
+            "frase_evidencia": "Patea una pelota detenida hacia adelante sin necesitar sostén."
           }
         ],
         "otro_codigo_viable": null,
-        "comentario": "Patea una pelota detenida sin sostenerse: nivel 8.",
+        "comentario": "MAN-L08-MG-02: nivel 8, motor_grueso.",
         "sin_correspondencia": false
       }
     },
     {
       "id_observacion_origen": "OBS-0002275",
-      "protagonista": "Ignacio",
-      "nota": "Ignacio ensartó las cuentas grandes en el cordón él solito y después armó el encaje de animales de seis piezas.",
+      "protagonista": "NINO-00389",
+      "nota": "Ensarta piezas grandes o completa un encaje de varias piezas adecuadas a la edad. Se documentó evidencia positiva en un momento de exploración.",
       "respuesta": {
         "manifestaciones": [
           {
             "id_manifestacion": "MAN-L09-MF-01",
-            "frase_evidencia": "ensartó las cuentas grandes en el cordón"
+            "frase_evidencia": "Ensarta piezas grandes o completa un encaje de varias piezas adecuadas a la edad."
           }
         ],
         "otro_codigo_viable": null,
-        "comentario": "Ensarta piezas grandes y completa un encaje de varias piezas: nivel 9.",
+        "comentario": "MAN-L09-MF-01: nivel 9, motor_fino.",
         "sin_correspondencia": false
       }
     }

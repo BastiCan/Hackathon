@@ -1,8 +1,8 @@
-"""Tarea 6.4: los 15 casos de tests/fixtures/notas_prueba.json (marcado -m llm).
+"""Tarea 6.4: casos de tests/fixtures/notas_prueba.json (marcado -m llm).
 
-Es una prueba de integracion con Bedrock real. 'esperado' es orientativo (dominio.md
-y el fixture lo dicen): las listas = cualquiera de esos valores es aceptable, y
-'dominios' debe estar INCLUIDO (pueden aparecer otros). No corre por defecto.
+Prueba de integracion con Bedrock real. Estos casos verifican SEPARACION (general/
+particular), IDENTIFICACION del nino/a y deteccion de lo NO evaluable. NO verifican
+nivel ni dominio (eso se mide con validacion_100.json). No corre por defecto.
 """
 
 from __future__ import annotations
@@ -72,7 +72,9 @@ def _esperado_lista(caso):
 
 
 @requiere_modelos
-@pytest.mark.parametrize("caso_id", ["C1", "C2", "C3", "C6", "C7", "C8", "C9", "I1", "I2", "I3", "I4", "I5"])
+@pytest.mark.parametrize(
+    "caso_id", ["C1", "C2", "C3", "C4", "C5", "C6", "C7", "I1", "I2", "I3", "I4", "I5", "P1"]
+)
 def test_casos_notas_prueba(caso_id, suite, contexto) -> None:
     caso = next(c for c in suite["casos"] if c["id"] == caso_id)
     resultado = _procesar(caso, suite, contexto)
@@ -100,26 +102,29 @@ def test_casos_notas_prueba(caso_id, suite, contexto) -> None:
             assert obs.tipo == TipoObservacion.PARTICULAR
             if "evaluabilidad" in e:
                 assert obs.evaluabilidad.value == e["evaluabilidad"]
-            # dominios esperados deben estar incluidos en los obtenidos.
-            if e.get("dominios"):
-                dom_obt = {m.dominio for m in obs.manifestaciones}
-                assert set(e["dominios"]) <= dom_obt, f"{idn}: esperaba {e['dominios']} en {dom_obt}"
 
 
 @requiere_modelos
-def test_pedro_sueno_no_evaluable(suite, contexto) -> None:
-    caso = next(c for c in suite["casos"] if c["id"] == "C8")
+def test_c3_no_evaluable_sin_pascal(suite, contexto) -> None:
+    # C3: la observacion de Naiara (NINO-00487) es NO_EVALUABLE (estado de salud de otro,
+    # sin conducta propia) con nivel None; Pascal (NINO-00051) solo mencionado -> sin obs.
+    caso = next(c for c in suite["casos"] if c["id"] == "C3")
     resultado = _procesar(caso, suite, contexto)
-    obs = next(o for o in resultado.observaciones if o.id_nino == "NINO-00253")
+
+    obs = next((o for o in resultado.observaciones if o.id_nino == "NINO-00487"), None)
+    assert obs is not None, "falta observacion para NINO-00487"
     assert obs.evaluabilidad.value == "NO_EVALUABLE"
     assert obs.nivel is None  # nunca 0
 
+    ids_con_obs = {o.id_nino for o in resultado.observaciones if o.id_nino}
+    assert "NINO-00051" not in ids_con_obs, "Pascal es mencionado, no debe tener observacion"
+
 
 @requiere_modelos
-def test_nayara_colaboracion_socioemocional(suite, contexto) -> None:
-    # C1: debe incluir socioemocional nivel 9 (no quedar solo como motor grueso 6).
-    caso = next(c for c in suite["casos"] if c["id"] == "C1")
+@pytest.mark.parametrize("caso_id", ["C6", "C7"])
+def test_general_unico_fragmento(caso_id, suite, contexto) -> None:
+    # C6 y C7: notas del grupo -> un unico fragmento GENERAL, sin particulares ni no-identificados.
+    caso = next(c for c in suite["casos"] if c["id"] == caso_id)
     resultado = _procesar(caso, suite, contexto)
-    obs = next(o for o in resultado.observaciones if o.id_nino == "NINO-00487")
-    dominios = {m.dominio for m in obs.manifestaciones}
-    assert "socioemocional" in dominios
+    assert len(resultado.observaciones) == 1
+    assert resultado.observaciones[0].tipo == TipoObservacion.GENERAL

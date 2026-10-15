@@ -79,22 +79,36 @@ def _run_casos(args) -> int:
     contexto = suite["contexto"]
     fecha = date.fromisoformat(contexto["fecha"])
 
-    print(f"{'ID':<5} | {'ESPERADO':<48} | OBTENIDO")
-    print("-" * 110)
-    for caso in suite["casos"]:
-        entrada = Entrada(
-            texto=caso["texto"],
-            id_educadora=contexto["id_educadora"],
-            sala_grupo=contexto["sala_grupo"],
-            fecha=fecha,
-        )
-        try:
-            resultado = procesar_nota(entrada, datos, rubrica, retriever, fewshot)
-            obtenido = " ; ".join(_resumen_obs(o) for o in resultado.observaciones)
-        except ErrorCapturaExc as e:
-            obtenido = f"ERROR {e.codigo.value}"
-        esperado = _resumen_esperado(caso.get("esperado", []))
-        print(f"{caso['id']:<5} | {esperado:<48} | {obtenido}")
+    # Ademas de imprimir, se escribe la tabla fila por fila a data/eval/tabla_casos.md
+    # (con flush), para que la salida sobreviva aunque el proceso se interrumpa.
+    salida = RAIZ / "data" / "eval" / "tabla_casos.md"
+    salida.parent.mkdir(parents=True, exist_ok=True)
+    f_out = salida.open("w", encoding="utf-8")
+
+    def emitir(linea: str) -> None:
+        print(linea, flush=True)
+        f_out.write(linea + "\n")
+        f_out.flush()
+
+    try:
+        emitir(f"{'ID':<5} | {'ESPERADO':<48} | OBTENIDO")
+        emitir("-" * 110)
+        for caso in suite["casos"]:
+            entrada = Entrada(
+                texto=caso["texto"],
+                id_educadora=contexto["id_educadora"],
+                sala_grupo=contexto["sala_grupo"],
+                fecha=fecha,
+            )
+            try:
+                resultado = procesar_nota(entrada, datos, rubrica, retriever, fewshot)
+                obtenido = " ; ".join(_resumen_obs(o) for o in resultado.observaciones)
+            except ErrorCapturaExc as e:
+                obtenido = f"ERROR {e.codigo.value}"
+            esperado = _resumen_esperado(caso.get("esperado", []))
+            emitir(f"{caso['id']:<5} | {esperado:<48} | {obtenido}")
+    finally:
+        f_out.close()
     return 0
 
 

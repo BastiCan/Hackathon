@@ -78,7 +78,7 @@ Tareas 4, 5, 6 y 7 con el PROMPT 2. Luego:
 > No cambies nada todavía.
 
 Revísenlo en equipo. Si el accuracy de código sale absurdamente bajo, pide `medir.py --depurar` (usa el texto literal de la
-rúbrica: si ahí también falla, el error es del código, no del modelo). Si algo falla, se corrige el prompt mirando los errores de la tabla de 15 casos, **nunca** los de
+rúbrica: si ahí también falla, el error es del código, no del modelo). Si algo falla, se corrige el prompt mirando los errores de la tabla de 13 casos, **nunca** los de
 `validacion_100.json` (ese set solo mide):
 > Propón un cambio mínimo en `src/prompts/[archivo].md` para corregir [caso]. Muéstrame el diff y vuelve a correr todo.
 

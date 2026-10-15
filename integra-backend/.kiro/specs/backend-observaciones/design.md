@@ -78,7 +78,7 @@ def handler(event, context) -> dict   # acepta el evento directo o {"body": "<js
  "niveles":[{"nivel":1,"nombre_nivel":"...","edad_min_meses":0,"edad_max_meses":2,"descripcion":"..."}],
  "manifestaciones":{"MAN-L01-CO-01":{"nivel":1,"dominio":"cognitivo","texto_observable":"..."}, ...}}
 ```
-`fewshot.json` (ya generado): 9 ejemplos `{protagonista, nota, respuesta}` donde `respuesta` cumple exactamente el esquema
+`fewshot.json` (ya generado; texto tal cual de `consolidado.json`, protagonista = id_nino): 9 ejemplos `{protagonista, nota, respuesta}` donde `respuesta` cumple exactamente el esquema
 `clasificar.json` (`manifestaciones`, `otro_codigo_viable`, `comentario`, `sin_correspondencia`). Se insertan en `{{ejemplos}}`
 con el formato de `fewshot.json._formato` (Protagonista / Observación / Respuesta en JSON compacto). En los 9 ejemplos
 `otro_codigo_viable` es null a propósito: cualquier código alternativo sería de la validación y la contaminaría.
@@ -89,7 +89,7 @@ El dataset está anonimizado (solo IDs). Para probar la identificación con dato
 asigna nombres y apodos a los 26 niños/as REALES de JAR-0001 (salas SG-A y SG-B, con sus IDs, fechas y salas del dataset).
 Incluye a propósito una variante de escritura (Nayara/"Naiara"), dos "Martina" en SG-A (AMBIGUO) y un "Joaquín" en SG-B
 (FUERA_DE_SALA). Los demás niños/as del dataset quedan sin nombre (no se identifican por nombre en esta etapa).
-Las notas de prueba están en `tests/fixtures/notas_prueba.json` (15 casos con resultado esperado).
+Las notas de prueba están en `tests/fixtures/notas_prueba.json` (13 casos: separación, identificación y no evaluables; sin niveles).
 
 ## Contrato
 Entrada (evento):
@@ -138,6 +138,6 @@ Error de captura: `{"error":{"codigo":"SALA_DESCONOCIDA","mensaje":"..."}}`.
 ## Pruebas
 - Unitarias: edad (tabla de referencia de `dominio.md` §1), nombres (apodos, tildes, "Naiara/Nayara", duplicados, fuera de sala),
   validaciones literales, consolidación de corridas (nivel, certeza, comentario), edad y comparación (tabla de `dominio.md` §1).
-- LLM (`-m llm`): los 15 casos de `tests/fixtures/notas_prueba.json` con `tests/fixtures/nomina_demo.json`.
+- LLM (`-m llm`): los 13 casos de `tests/fixtures/notas_prueba.json` con `tests/fixtures/nomina_demo.json`.
 - `scripts/pipeline_local.py --texto "..." --educadora EDU-0001 --sala SG-A --fecha 2026-10-15` y `--casos tests/fixtures/notas_prueba.json` (corre todos e imprime tabla esperado vs obtenido).
 - En AWS: `events/nota_ejemplo.json` + `sam remote invoke`.
