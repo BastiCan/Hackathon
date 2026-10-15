@@ -1,0 +1,555 @@
+{
+ "nota": "Ruta orientativa de 9 niveles del dataset sintético E-1: 5 dominios, 9 niveles y 2 conductas observables por celda. Es apoyo pedagógico: no es un instrumento clínico, diagnóstico ni de tamizaje. Generada por scripts/generar_datos_e1.py.",
+ "niveles": [
+  {
+   "nivel": 1,
+   "nombre": "Atención y regulación inicial",
+   "tramo_bcep": "",
+   "grupo_orientativo": "",
+   "edad_orientativa": "0–2 meses"
+  },
+  {
+   "nivel": 2,
+   "nombre": "Interacción y control emergente",
+   "tramo_bcep": "",
+   "grupo_orientativo": "",
+   "edad_orientativa": "2–4 meses"
+  },
+  {
+   "nivel": 3,
+   "nombre": "Alcance y exploración corporal",
+   "tramo_bcep": "",
+   "grupo_orientativo": "",
+   "edad_orientativa": "4–6 meses"
+  },
+  {
+   "nivel": 4,
+   "nombre": "Sedestación y comunicación intencional",
+   "tramo_bcep": "",
+   "grupo_orientativo": "",
+   "edad_orientativa": "6–9 meses"
+  },
+  {
+   "nivel": 5,
+   "nombre": "Movilidad y propósito",
+   "tramo_bcep": "",
+   "grupo_orientativo": "",
+   "edad_orientativa": "9–12 meses"
+  },
+  {
+   "nivel": 6,
+   "nombre": "Autonomía funcional inicial",
+   "tramo_bcep": "",
+   "grupo_orientativo": "",
+   "edad_orientativa": "12–18 meses"
+  },
+  {
+   "nivel": 7,
+   "nombre": "Representación y combinación inicial",
+   "tramo_bcep": "",
+   "grupo_orientativo": "",
+   "edad_orientativa": "18–21 meses"
+  },
+  {
+   "nivel": 8,
+   "nombre": "Combinación y participación",
+   "tramo_bcep": "",
+   "grupo_orientativo": "",
+   "edad_orientativa": "21–27 meses"
+  },
+  {
+   "nivel": 9,
+   "nombre": "Secuencias y autonomía creciente",
+   "tramo_bcep": "",
+   "grupo_orientativo": "",
+   "edad_orientativa": "27–36 meses"
+  }
+ ],
+ "rubrica": [
+  {
+   "codigo": "motor_grueso",
+   "nucleo": "Motor grueso",
+   "ambito": "Desarrollo personal y social",
+   "niveles": [
+    {
+     "nivel": 1,
+     "nombre": "Atención y regulación inicial",
+     "descriptor": "Responde brevemente a estímulos, rostros, voces y contacto; comienza a organizar movimientos y estados de calma.",
+     "conductas_observables": [
+      "En posición boca abajo y despierto, levanta brevemente la cabeza y vuelve a apoyarla.",
+      "Mueve brazos y piernas espontáneamente durante un periodo de alerta."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 2,
+     "nombre": "Interacción y control emergente",
+     "descriptor": "Aumenta el control de cabeza, la atención compartida y el intercambio de sonidos y expresiones.",
+     "conductas_observables": [
+      "Sostiene la cabeza alineada durante varios segundos cuando se le carga con apoyo de tronco.",
+      "Apoya antebrazos y eleva cabeza y parte superior del pecho estando boca abajo."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 3,
+     "nombre": "Alcance y exploración corporal",
+     "descriptor": "Alcanza, manipula, vocaliza y cambia de postura para explorar personas y objetos cercanos.",
+     "conductas_observables": [
+      "Rueda de costado o cambia de boca arriba a boca abajo, o a la inversa, durante el juego.",
+      "Mantiene la cabeza estable al sentarse con apoyo de tronco."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 4,
+     "nombre": "Sedestación y comunicación intencional",
+     "descriptor": "Se sostiene sentado, coordina manos, balbucea e inicia acciones para mantener intercambios o buscar objetos.",
+     "conductas_observables": [
+      "Permanece sentado sin apoyo durante el tiempo necesario para manipular un juguete.",
+      "Cambia entre sentado y otra postura con apoyo de manos o del mobiliario bajo."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 5,
+     "nombre": "Movilidad y propósito",
+     "descriptor": "Se desplaza con mayor autonomía, usa gestos y acciones dirigidas a una meta y comprende rutinas sencillas.",
+     "conductas_observables": [
+      "Se desplaza para alcanzar un objeto mediante gateo, arrastre u otra estrategia coordinada.",
+      "Se pone de pie con apoyo y se mantiene mientras sostiene una superficie estable."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 6,
+     "nombre": "Autonomía funcional inicial",
+     "descriptor": "Camina o practica marcha autónoma, usa objetos de forma funcional, comprende consignas simples y emplea palabras o aproximaciones consistentes.",
+     "conductas_observables": [
+      "Da varios pasos sin apoyo o recorre una distancia breve de forma independiente.",
+      "Se agacha para recoger un objeto y vuelve a incorporarse con o sin apoyo cercano."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 7,
+     "nombre": "Representación y combinación inicial",
+     "descriptor": "Amplía movilidad, vocabulario, imitación y juego representacional; resuelve problemas cotidianos sencillos.",
+     "conductas_observables": [
+      "Camina con estabilidad mientras transporta un objeto liviano.",
+      "Sube uno o más peldaños con apoyo de mano, baranda o gateando."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 8,
+     "nombre": "Combinación y participación",
+     "descriptor": "Combina palabras y acciones, participa junto a pares, clasifica o empareja y ejecuta secuencias breves.",
+     "conductas_observables": [
+      "Corre una distancia breve, aunque todavía ajuste velocidad o equilibrio.",
+      "Patea una pelota detenida hacia adelante sin necesitar sostén."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 9,
+     "nombre": "Secuencias y autonomía creciente",
+     "descriptor": "Coordina movimientos más complejos, conversa con combinaciones breves, coopera por turnos y desarrolla juego y resolución de problemas en secuencia.",
+     "conductas_observables": [
+      "Salta con ambos pies despegándolos del suelo durante el juego.",
+      "Sube peldaños con apoyo de baranda o mano, alternando o reuniendo los pies de forma estable."
+     ],
+     "oa_referencia": []
+    }
+   ]
+  },
+  {
+   "codigo": "motor_fino",
+   "nucleo": "Motor fino",
+   "ambito": "Desarrollo personal y social",
+   "niveles": [
+    {
+     "nivel": 1,
+     "nombre": "Atención y regulación inicial",
+     "descriptor": "Responde brevemente a estímulos, rostros, voces y contacto; comienza a organizar movimientos y estados de calma.",
+     "conductas_observables": [
+      "Abre una o ambas manos por momentos, sin mantenerlas cerradas todo el periodo observado.",
+      "Lleva una mano hacia la cara o la boca durante la observación."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 2,
+     "nombre": "Interacción y control emergente",
+     "descriptor": "Aumenta el control de cabeza, la atención compartida y el intercambio de sonidos y expresiones.",
+     "conductas_observables": [
+      "Junta las manos en la línea media mientras está despierto.",
+      "Golpea o roza de forma repetida un objeto colocado a su alcance."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 3,
+     "nombre": "Alcance y exploración corporal",
+     "descriptor": "Alcanza, manipula, vocaliza y cambia de postura para explorar personas y objetos cercanos.",
+     "conductas_observables": [
+      "Alcanza intencionalmente un objeto visible y lo toma con una o ambas manos.",
+      "Pasa un objeto de una mano a la otra o lo lleva a la boca para explorarlo."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 4,
+     "nombre": "Sedestación y comunicación intencional",
+     "descriptor": "Se sostiene sentado, coordina manos, balbucea e inicia acciones para mantener intercambios o buscar objetos.",
+     "conductas_observables": [
+      "Golpea dos objetos entre sí después de recibirlos o ver una demostración.",
+      "Recoge un objeto pequeño seguro usando dedos y palma con intención."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 5,
+     "nombre": "Movilidad y propósito",
+     "descriptor": "Se desplaza con mayor autonomía, usa gestos y acciones dirigidas a una meta y comprende rutinas sencillas.",
+     "conductas_observables": [
+      "Toma un objeto pequeño seguro entre pulgar y otro dedo.",
+      "Introduce un objeto en un recipiente de boca amplia y trata de recuperarlo."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 6,
+     "nombre": "Autonomía funcional inicial",
+     "descriptor": "Camina o practica marcha autónoma, usa objetos de forma funcional, comprende consignas simples y emplea palabras o aproximaciones consistentes.",
+     "conductas_observables": [
+      "Apila dos bloques u objetos estables después de explorar o ver el ejemplo.",
+      "Intenta usar cuchara, vaso u otro objeto cotidiano según su función."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 7,
+     "nombre": "Representación y combinación inicial",
+     "descriptor": "Amplía movilidad, vocabulario, imitación y juego representacional; resuelve problemas cotidianos sencillos.",
+     "conductas_observables": [
+      "Hace trazos visibles con crayón grueso después de recibir papel y material seguro.",
+      "Pasa varias páginas de cartón o manipula tapas grandes con intención."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 8,
+     "nombre": "Combinación y participación",
+     "descriptor": "Combina palabras y acciones, participa junto a pares, clasifica o empareja y ejecuta secuencias breves.",
+     "conductas_observables": [
+      "Construye una torre de cuatro o más bloques estables.",
+      "Gira una tapa grande, perilla o pieza rotatoria para lograr un resultado."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 9,
+     "nombre": "Secuencias y autonomía creciente",
+     "descriptor": "Coordina movimientos más complejos, conversa con combinaciones breves, coopera por turnos y desarrolla juego y resolución de problemas en secuencia.",
+     "conductas_observables": [
+      "Ensarta piezas grandes o completa un encaje de varias piezas adecuadas a la edad.",
+      "Copia un trazo vertical o circular aproximado después de observar un modelo."
+     ],
+     "oa_referencia": []
+    }
+   ]
+  },
+  {
+   "codigo": "lenguaje_comunicacion",
+   "nucleo": "Lenguaje y comunicación",
+   "ambito": "Comunicación integral",
+   "niveles": [
+    {
+     "nivel": 1,
+     "nombre": "Atención y regulación inicial",
+     "descriptor": "Responde brevemente a estímulos, rostros, voces y contacto; comienza a organizar movimientos y estados de calma.",
+     "conductas_observables": [
+      "Cambia su movimiento o expresión al oír una voz cercana.",
+      "Emite sonidos breves distintos del llanto durante un intercambio tranquilo."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 2,
+     "nombre": "Interacción y control emergente",
+     "descriptor": "Aumenta el control de cabeza, la atención compartida y el intercambio de sonidos y expresiones.",
+     "conductas_observables": [
+      "Responde a la voz con arrullos, vocalizaciones o cambios de expresión.",
+      "Alterna al menos una emisión sonora con la persona adulta durante un intercambio."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 3,
+     "nombre": "Alcance y exploración corporal",
+     "descriptor": "Alcanza, manipula, vocaliza y cambia de postura para explorar personas y objetos cercanos.",
+     "conductas_observables": [
+      "Produce series de vocales, chillidos suaves o sonidos guturales durante el juego.",
+      "Gira hacia la voz de una persona conocida cuando esta habla desde un costado."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 4,
+     "nombre": "Sedestación y comunicación intencional",
+     "descriptor": "Se sostiene sentado, coordina manos, balbucea e inicia acciones para mantener intercambios o buscar objetos.",
+     "conductas_observables": [
+      "Balbucea secuencias repetidas de consonante y vocal durante la interacción.",
+      "Responde de forma consistente a su identificador ficticio o a una llamada habitual del grupo."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 5,
+     "nombre": "Movilidad y propósito",
+     "descriptor": "Se desplaza con mayor autonomía, usa gestos y acciones dirigidas a una meta y comprende rutinas sencillas.",
+     "conductas_observables": [
+      "Usa un gesto convencional, como señalar, mostrar o despedirse, para comunicar una intención.",
+      "Responde con acción o mirada a una palabra frecuente dentro de una rutina."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 6,
+     "nombre": "Autonomía funcional inicial",
+     "descriptor": "Camina o practica marcha autónoma, usa objetos de forma funcional, comprende consignas simples y emplea palabras o aproximaciones consistentes.",
+     "conductas_observables": [
+      "Usa de manera consistente al menos tres palabras, aproximaciones o señas con significado.",
+      "Sigue una instrucción cotidiana de un paso acompañada, si hace falta, por gesto."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 7,
+     "nombre": "Representación y combinación inicial",
+     "descriptor": "Amplía movilidad, vocabulario, imitación y juego representacional; resuelve problemas cotidianos sencillos.",
+     "conductas_observables": [
+      "Usa palabras, aproximaciones o señas diferentes para pedir, nombrar o rechazar en varias ocasiones.",
+      "Señala al menos una parte del cuerpo u objeto conocido cuando se le pregunta."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 8,
+     "nombre": "Combinación y participación",
+     "descriptor": "Combina palabras y acciones, participa junto a pares, clasifica o empareja y ejecuta secuencias breves.",
+     "conductas_observables": [
+      "Combina dos palabras, aproximaciones o señas para expresar una relación o intención.",
+      "Sigue una instrucción de dos acciones relacionadas dentro de una rutina conocida."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 9,
+     "nombre": "Secuencias y autonomía creciente",
+     "descriptor": "Coordina movimientos más complejos, conversa con combinaciones breves, coopera por turnos y desarrolla juego y resolución de problemas en secuencia.",
+     "conductas_observables": [
+      "Produce combinaciones de tres o más palabras, aproximaciones o señas para relatar, pedir o comentar.",
+      "Responde una pregunta sencilla sobre quién, qué o dónde dentro de una situación conocida."
+     ],
+     "oa_referencia": []
+    }
+   ]
+  },
+  {
+   "codigo": "socioemocional",
+   "nucleo": "Socioemocional",
+   "ambito": "Desarrollo personal y social",
+   "niveles": [
+    {
+     "nivel": 1,
+     "nombre": "Atención y regulación inicial",
+     "descriptor": "Responde brevemente a estímulos, rostros, voces y contacto; comienza a organizar movimientos y estados de calma.",
+     "conductas_observables": [
+      "Mantiene por unos segundos la mirada hacia el rostro de la persona que lo sostiene o acompaña.",
+      "Disminuye el llanto o la agitación ante voz suave, contacto o contención."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 2,
+     "nombre": "Interacción y control emergente",
+     "descriptor": "Aumenta el control de cabeza, la atención compartida y el intercambio de sonidos y expresiones.",
+     "conductas_observables": [
+      "Sonríe en respuesta a la sonrisa, voz o acercamiento de una persona.",
+      "Busca nuevamente el rostro cuando la interacción se interrumpe por unos segundos."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 3,
+     "nombre": "Alcance y exploración corporal",
+     "descriptor": "Alcanza, manipula, vocaliza y cambia de postura para explorar personas y objetos cercanos.",
+     "conductas_observables": [
+      "Ríe o vocaliza para prolongar un juego social repetido.",
+      "Expresa agrado o desagrado de manera diferenciada ante actividades distintas."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 4,
+     "nombre": "Sedestación y comunicación intencional",
+     "descriptor": "Se sostiene sentado, coordina manos, balbucea e inicia acciones para mantener intercambios o buscar objetos.",
+     "conductas_observables": [
+      "Inicia un intercambio mediante mirada, sonido, sonrisa o extensión de brazos.",
+      "Reacciona de manera distinta ante una persona habitual y una menos familiar."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 5,
+     "nombre": "Movilidad y propósito",
+     "descriptor": "Se desplaza con mayor autonomía, usa gestos y acciones dirigidas a una meta y comprende rutinas sencillas.",
+     "conductas_observables": [
+      "Comparte atención alternando la mirada entre una persona y un objeto de interés.",
+      "Busca proximidad o apoyo de una persona familiar ante una situación nueva."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 6,
+     "nombre": "Autonomía funcional inicial",
+     "descriptor": "Camina o practica marcha autónoma, usa objetos de forma funcional, comprende consignas simples y emplea palabras o aproximaciones consistentes.",
+     "conductas_observables": [
+      "Se aleja para explorar y vuelve o mira a la persona adulta como referencia.",
+      "Imita una acción social sencilla, como saludar, aplaudir o ayudar a guardar."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 7,
+     "nombre": "Representación y combinación inicial",
+     "descriptor": "Amplía movilidad, vocabulario, imitación y juego representacional; resuelve problemas cotidianos sencillos.",
+     "conductas_observables": [
+      "Imita una tarea cotidiana de otra persona durante el juego.",
+      "Permanece cerca de otro niño o niña realizando una actividad similar por un periodo breve."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 8,
+     "nombre": "Combinación y participación",
+     "descriptor": "Combina palabras y acciones, participa junto a pares, clasifica o empareja y ejecuta secuencias breves.",
+     "conductas_observables": [
+      "Participa en una actividad junto a pares y tolera compartir espacio o materiales con apoyo adulto.",
+      "Comunica una necesidad de ayuda, pausa o consuelo mediante palabra, seña o gesto claro."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 9,
+     "nombre": "Secuencias y autonomía creciente",
+     "descriptor": "Coordina movimientos más complejos, conversa con combinaciones breves, coopera por turnos y desarrolla juego y resolución de problemas en secuencia.",
+     "conductas_observables": [
+      "Participa en al menos un turno de ida y vuelta con un par o una persona adulta durante un juego.",
+      "Colabora en una rutina de autonomía, como guardar, lavarse o vestirse, realizando una parte identificable."
+     ],
+     "oa_referencia": []
+    }
+   ]
+  },
+  {
+   "codigo": "cognitivo",
+   "nucleo": "Cognitivo",
+   "ambito": "Interacción y comprensión del entorno",
+   "niveles": [
+    {
+     "nivel": 1,
+     "nombre": "Atención y regulación inicial",
+     "descriptor": "Responde brevemente a estímulos, rostros, voces y contacto; comienza a organizar movimientos y estados de calma.",
+     "conductas_observables": [
+      "Sigue brevemente con la mirada un rostro u objeto de alto contraste que se desplaza lentamente.",
+      "Orienta ojos o cabeza hacia un estímulo nuevo de luz o sonido cercano."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 2,
+     "nombre": "Interacción y control emergente",
+     "descriptor": "Aumenta el control de cabeza, la atención compartida y el intercambio de sonidos y expresiones.",
+     "conductas_observables": [
+      "Sigue visualmente un objeto lento de un lado al otro cruzando la línea media.",
+      "Observa sus manos o repite un movimiento que produjo un resultado visible cercano."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 3,
+     "nombre": "Alcance y exploración corporal",
+     "descriptor": "Alcanza, manipula, vocaliza y cambia de postura para explorar personas y objetos cercanos.",
+     "conductas_observables": [
+      "Explora un objeto mirándolo, llevándolo a la boca o moviéndolo de más de una manera.",
+      "Repite una acción sencilla que vuelve a producir un sonido o movimiento."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 4,
+     "nombre": "Sedestación y comunicación intencional",
+     "descriptor": "Se sostiene sentado, coordina manos, balbucea e inicia acciones para mantener intercambios o buscar objetos.",
+     "conductas_observables": [
+      "Busca con la mirada o la mano un objeto que quedó parcialmente oculto.",
+      "Anticipa una acción de una rutina conocida mediante movimiento, mirada o vocalización."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 5,
+     "nombre": "Movilidad y propósito",
+     "descriptor": "Se desplaza con mayor autonomía, usa gestos y acciones dirigidas a una meta y comprende rutinas sencillas.",
+     "conductas_observables": [
+      "Busca un objeto que vio ocultarse completamente bajo una tela o recipiente.",
+      "Prueba más de una acción para alcanzar un objeto cercano fuera de alcance directo."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 6,
+     "nombre": "Autonomía funcional inicial",
+     "descriptor": "Camina o practica marcha autónoma, usa objetos de forma funcional, comprende consignas simples y emplea palabras o aproximaciones consistentes.",
+     "conductas_observables": [
+      "Usa un objeto cotidiano de manera funcional en una actividad breve.",
+      "Identifica un objeto conocido al elegirlo entre dos cuando se le solicita."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 7,
+     "nombre": "Representación y combinación inicial",
+     "descriptor": "Amplía movilidad, vocabulario, imitación y juego representacional; resuelve problemas cotidianos sencillos.",
+     "conductas_observables": [
+      "Realiza una acción de juego representacional, como dar de comer a un muñeco o simular hablar.",
+      "Prueba una alternativa cuando la primera estrategia para abrir, encajar o alcanzar no funciona."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 8,
+     "nombre": "Combinación y participación",
+     "descriptor": "Combina palabras y acciones, participa junto a pares, clasifica o empareja y ejecuta secuencias breves.",
+     "conductas_observables": [
+      "Empareja dos o más objetos o imágenes iguales entre varias opciones.",
+      "Completa una secuencia cotidiana de dos pasos después de una indicación inicial."
+     ],
+     "oa_referencia": []
+    },
+    {
+     "nivel": 9,
+     "nombre": "Secuencias y autonomía creciente",
+     "descriptor": "Coordina movimientos más complejos, conversa con combinaciones breves, coopera por turnos y desarrolla juego y resolución de problemas en secuencia.",
+     "conductas_observables": [
+      "Representa una secuencia de dos o más acciones relacionadas en el juego simbólico.",
+      "Clasifica objetos por una característica visible, como forma, color o tamaño, después de una consigna simple."
+     ],
+     "oa_referencia": []
+    }
+   ]
+  }
+ ]
+}
