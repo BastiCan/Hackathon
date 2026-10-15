@@ -1,7 +1,14 @@
 # Montaje en AWS: lo que haces tú a mano
 
-Recursos que se crean (nada más): **1 Lambda, 3 tablas DynamoDB, 1 bucket S3, 1 rol IAM**, más el uso de Bedrock.
+Recursos que se crean (nada más): **1 Lambda, 5 tablas DynamoDB, 2 buckets S3, 1 rol IAM**, más el uso de Bedrock.
+La Lambda se dispara por **eventos S3** del bucket de capturas; también admite `sam remote invoke` para pruebas directas.
 Comandos para PowerShell en Windows.
+
+Recursos del stack:
+- **Lambda** `ProcesarNota` (Python 3.13, 300 s, 1024 MB).
+- **Tablas** `Jardines`, `Educadoras` (GSI `porJardin`), `Ninos` (GSI `porJardin`), `Registros` (GSI `porSala`),
+  `Observaciones` (GSI `porNino` y `porSala`).
+- **Buckets** `rubrica` (nombre autogenerado) y `capturas` (nombre fijo `integra-capturas-<AccountId>`).
 
 ## 0. Herramientas (una vez)
 - **AWS CLI v2** → `aws --version`
@@ -35,6 +42,7 @@ aws bedrock list-foundation-models --region us-east-1 --by-provider amazon --que
 Anota: Haiku 4.5 → `MODEL_ID_SEPARAR`; Sonnet 5 → `MODEL_ID_CONDUCTAS` y `MODEL_ID_EVALUAR`; Titan V2 → `MODEL_ID_EMBEDDINGS`.
 
 ## 3. Variables para correr en local (terminal de Kiro)
+Para pruebas locales (sin AWS), con los fixtures de `tests/fixtures/`:
 ```powershell
 $env:FUENTE_DATOS="local"
 $env:MODEL_ID_SEPARAR="<id haiku 4.5>"; $env:MODEL_ID_CONDUCTAS="<id sonnet 5>"; $env:MODEL_ID_EVALUAR="<id sonnet 5>"
@@ -43,29 +51,60 @@ $env:MODEL_ID_EMBEDDINGS="<id titan v2>"; $env:N_CORRIDAS_EVALUAR="3"; $env:TOP_
 
 ## 4. Desplegar (tarea 9)
 ```powershell
+sam validate --lint          # chequeo estático del template (opcional)
 sam build
 sam deploy --guided
 ```
-En `--guided`: stack `integra-procesador`, región us-east-1, pega los IDs de modelo, acepta crear el rol IAM.
-Copia los **Outputs** (función, bucket, tablas).
+En `--guided`: stack `integra-procesador`, región us-east-1, pega los IDs de modelo (`ModelIdSeparar`,
+`ModelIdConductas`, `ModelIdEvaluar`; `ModelIdEmbeddings` ya trae default), acepta crear el rol IAM.
+Copia los **Outputs**: `NombreFuncion`, `NombreBucketRubrica`, `NombreBucketCapturas`, y los nombres de las 5 tablas.
 
-## 5. Cargar datos
+El bucket de capturas tiene **nombre fijo** `integra-capturas-<AccountId>` (por eso no choca con la notificación S3 que
+dispara la Lambda). Las notificaciones ya quedan configuradas por el template (prefijo `capturas/`, sufijos `meta.json`
+y `texto.json`); no hay que crearlas a mano.
+
+## 5. Variables de entorno para los scripts (después del deploy)
+Los scripts (`cargar_aws.py`, `subir_captura_prueba.py`) leen el entorno. Pega los Outputs del stack:
+```powershell
+$env:FUENTE_DATOS="aws"
+$env:TABLA_JARDINES="<out>"; $env:TABLA_EDUCADORAS="<out>"; $env:TABLA_NINOS="<out>"
+$env:TABLA_REGISTROS="<out>"; $env:TABLA_OBSERVACIONES="<out>"
+$env:BUCKET="<NombreBucketRubrica>"; $env:BUCKET_CAPTURAS="<NombreBucketCapturas>"
+```
+(La Lambda NO necesita esto: sus variables las define el template en el deploy.)
+
+## 6. Cargar datos
 ```powershell
 py -3.13 scripts/cargar_aws.py
 ```
-Verifica en la consola: tablas `Educadoras` (80) y `Ninos` (500); en S3, `rubrica/` y `raw/`.
+Carga `Jardines` (20, con `salas[]`), `Educadoras` (80), el historial en `Observaciones`
+(`origen=dataset`, ~2950) y `Ninos` (500, con `ultima_obs_fecha`/`ultimo_nivel` donde haya historial);
+sube `rubrica/` a S3 (ya **no** se sube `raw/`). Verifica los conteos que imprime y revisa las tablas en la consola.
 
-## 6. Probar
+## 7. Probar
+### 7a. Disparo por S3 (flujo real, sin OCR)
+```powershell
+py -3.13 scripts/subir_captura_prueba.py
+```
+Sube `capturas/<CAP-...>/meta.json` y `.../texto.json` al bucket de capturas y dispara la Lambda. Verifica:
+- Tabla `Registros`: el `id_captura` pasó de `RECIBIDO` (al llegar `meta.json`) a `PROCESADO` (al terminar `texto.json`).
+- Tabla `Observaciones`: aparecen las observaciones de esa captura (`origen=app`).
+- CloudWatch Logs del grupo de la función: línea `captura ... procesada: N observaciones`.
+
+### 7b. Invocación directa (sin S3)
 ```powershell
 sam remote invoke ProcesarNotaFunction --stack-name integra-procesador --event-file events/nota_ejemplo.json
 ```
-O en la consola de Lambda → *Test* con el contenido de `events/nota_ejemplo.json`. Revisa la tabla `Observaciones`.
+O en la consola de Lambda → *Test* con `events/nota_ejemplo.json` (evento directo) o `events/s3_texto.json`
+(simula el record S3; requiere que `meta.json`/`texto.json` existan en el bucket).
 
-## 7. Borrar todo
+## 8. Borrar todo
 ```powershell
 sam delete --stack-name integra-procesador
 ```
-(Si el bucket tiene archivos, vacíalo antes desde la consola).
+Los dos buckets deben estar **vacíos** antes de borrar el stack (vacíalos desde la consola o con
+`aws s3 rm s3://<bucket> --recursive`). El bucket de capturas tiene nombre fijo: si quedara sin borrar, un
+redeploy fallaría por nombre en uso.
 
 ## Problemas típicos
 | Síntoma | Causa probable |
@@ -75,3 +114,6 @@ sam delete --stack-name integra-procesador
 | `Task timed out` | Nota muy larga: subir el timeout o bajar corridas |
 | `Runtime.ImportModuleError` | Librería compilada empaquetada para Windows → `sam build --use-container` |
 | `ExpiredToken` | Claves temporales vencidas → paso 1 |
+| La captura queda en `RECIBIDO` y no avanza | Llegó `meta.json` pero no `texto.json` (o la notificación de `texto.json` no disparó): revisa que el objeto termine en `texto.json` bajo `capturas/` |
+| `Registros` en `ERROR` con `META_INVALIDA` | `meta.json` ausente o mal formado cuando llegó `texto.json` |
+| `BucketAlreadyExists` en el deploy | Quedó el bucket de capturas de un stack anterior (nombre fijo): vacíalo y bórralo |
