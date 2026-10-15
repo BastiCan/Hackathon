@@ -115,13 +115,15 @@ stateDiagram-v2
     recibida --> subiendo: foto o audio; transmitir contenido
     subiendo --> en_cola: objeto, captura y trabajo durables
     recibida --> en_cola: texto, captura y trabajo durables
-    en_cola --> transcribiendo: trabajo de audio
-    en_cola --> procesando: trabajo de foto o texto
+    en_cola --> transcribiendo: audio pendiente de transcripción
+    en_cola --> procesando: foto, texto o reproceso Bedrock
     transcribiendo --> procesando: transcripción terminada
     transcribiendo --> en_cola: reintento programado
     procesando --> en_cola: reintento programado
     procesando --> lista_para_revisar: propuestas completas
     procesando --> pendiente_asignacion: faltan niños confirmados
+    lista_para_revisar --> en_cola: corrección auditada; reproceso Bedrock
+    revision_manual --> en_cola: corrección auditada; reproceso Bedrock
     transcribiendo --> revision_manual: fallo definitivo o decisión humana
     procesando --> revision_manual: fallo definitivo o decisión humana
     pendiente_asignacion --> en_cola: selección manual y reproceso
@@ -138,7 +140,7 @@ stateDiagram-v2
     descartada --> [*]
 ```
 
-Los trabajos estancados permanecen visibles como pendientes/demorados. Pueden reintentarse o pasar a `revision_manual` según un umbral operacional configurable, sin perder la captura ni bloquear a la usuaria.
+Los trabajos estancados permanecen visibles como pendientes/demorados. Pueden reintentarse o pasar a `revision_manual` según un umbral operacional configurable, sin perder la captura ni bloquear a la usuaria. Corregir una transcripción solo se admite desde `lista_para_revisar` o `revision_manual`: una transacción bloquea la captura, guarda la versión auditada, invalida las sugerencias, crea el trabajo Bedrock y cambia el estado a `en_cola`. Mientras ese reproceso no vuelva a un estado revisable, confirmar devuelve 409.
 
 ## Diagramas de secuencia
 
@@ -212,7 +214,18 @@ sequenceDiagram
     T->>W: Abrir detalle cuando quiera
     W->>A: GET /api/capturas/{id}
     A-->>W: Progreso, transcripción y sugerencias autorizadas
-    T->>W: Corregir, aceptar o reemplazar
+    alt corregir transcripción
+        T->>W: Corregir texto
+        W->>A: PUT /api/capturas/{id}/transcripcion
+        A->>D: Transacción: auditar, invalidar, encolar y pasar a en_cola
+        A-->>W: Captura en_cola; confirmación temporalmente no permitida
+        Q->>B: Reprocesar sugerencias desde texto corregido
+        B-->>Q: Nuevas propuestas
+        Q->>D: Guardar sugerencias y lista_para_revisar
+        W->>A: GET /api/capturas/{id}
+        A-->>W: Nuevas sugerencias revisables
+    end
+    T->>W: Aceptar o reemplazar propuestas
     W->>A: POST /api/capturas/{id}/confirmar
     A->>D: Crear observaciones en transacción
     A-->>W: IDs creados
@@ -405,7 +418,7 @@ STRUCTURE Bandeja
 END STRUCTURE
 ```
 
-Incluye `recibida`, `subiendo`, `en_cola`, `transcribiendo`, `procesando`, `lista_para_revisar`, `pendiente_asignacion`, `revision_manual` y condición `demorada`. El aviso interno se detecta por polling cada 30 s; una notificación del navegador es opcional y requiere consentimiento.
+Incluye `recibida`, `subiendo`, `en_cola`, `transcribiendo`, `procesando`, `lista_para_revisar`, `pendiente_asignacion`, `revision_manual` y condición `demorada`. Tras corregir una transcripción, la bandeja reemplaza inmediatamente la condición revisable por `en_cola` y no ofrece confirmar hasta que el reproceso Bedrock vuelva a `lista_para_revisar` o `revision_manual`. El aviso interno se detecta por polling cada 30 s; una notificación del navegador es opcional y requiere consentimiento.
 
 ### Componente 8: sistema visual y privacidad
 
@@ -728,17 +741,34 @@ Bedrock recibe el texto fuente y candidatos ya acotados. Devuelve por niño un n
 ALGORITHM corregirTranscripcion(sesion, captura, nuevo_texto)
 BEGIN
   autorizarRevision(sesion, captura)
-  guardarVersionAuditada(nuevo_texto, sesion.id_usuario, ahora())
-  invalidarSugerenciasNoConfirmadas()
-  encolarBedrockIdempotente(captura.id, hash(nuevo_texto))
+  INICIAR TRANSACCIÓN
+    captura ← bloquearCapturaParaActualizar(captura.id)
+    IF captura.estado NOT IN (lista_para_revisar, revision_manual) THEN
+      CANCELAR TRANSACCIÓN
+      RETURN HTTP 409
+    END IF
+    guardarVersionAuditada(nuevo_texto, sesion.id_usuario, ahora())
+    invalidarSugerenciasNoConfirmadas(captura.id)
+    encolarBedrockIdempotente(captura.id, hash(nuevo_texto))
+    cambiarEstado(captura.id, en_cola)
+  CONFIRMAR TRANSACCIÓN
+  RETURN captura.id, en_cola
 END
 
 ALGORITHM confirmarCaptura(sesion, captura, items)
 BEGIN
   autorizarSala(sesion, captura)
-  IF captura.estado = confirmada THEN RETURN observacionesExistentes(captura.id) END IF
-  ASSERT captura.estado IN (lista_para_revisar, revision_manual)
   INICIAR TRANSACCIÓN
+    captura ← bloquearCapturaParaActualizar(captura.id)
+    IF captura.estado = confirmada THEN
+      resultado ← observacionesExistentes(captura.id)
+      CONFIRMAR TRANSACCIÓN
+      RETURN resultado
+    END IF
+    IF captura.estado NOT IN (lista_para_revisar, revision_manual) THEN
+      CANCELAR TRANSACCIÓN
+      RETURN HTTP 409
+    END IF
     FOR each item IN items DO
       validarNivelManifestacionesNotaYSala(item)
       insertarObservacionYVinculos(item)
@@ -749,7 +779,7 @@ BEGIN
 END
 ```
 
-Una repetición autorizada después del éxito devuelve las mismas observaciones sin crear filas nuevas. La autorización se evalúa antes de ese retorno para no revelar resultados fuera del alcance; solo la primera confirmación exige estado revisable y ejecuta la transacción atómica.
+Una repetición autorizada después del éxito devuelve las mismas observaciones sin crear filas nuevas. La autorización se evalúa antes de ese retorno para no revelar resultados fuera del alcance; solo la primera confirmación exige estado revisable y ejecuta las inserciones atómicas. Corrección y confirmación bloquean la misma fila: si compiten, solo una transición puede ganar; la otra recibe 409 y debe refrescar el detalle. Durante `en_cola` o `procesando` no se pueden confirmar sugerencias invalidadas.
 
 Una palabra es dudosa si `confianza < umbral_confianza_palabra`, cuyo valor inicial es 0,60. La corrección queda auditada y reprocesa únicamente sugerencias aún no confirmadas.
 
@@ -771,7 +801,7 @@ El traslado exige destino distinto del mismo jardín, conserva todas las observa
 | `reclamarTrabajo` | Cupo y trabajo disponible | Arrendamiento exclusivo; activos no superan el límite configurado. |
 | `obtenerCaptura` | Acceso a sala/jardín | Devuelve estado, progreso, condición demorada y resultados autorizados, sin secretos AWS. |
 | `consultarTranscripcion` | Captura de audio autorizada | Devuelve texto completo, items, idioma, proveedor/modelo y tiempos. |
-| `corregirTranscripcion` | Rol autorizado y captura no confirmada | Guarda auditoría y encola nuevamente Bedrock de forma idempotente. |
+| `corregirTranscripcion` | Rol autorizado; captura en `lista_para_revisar` o `revision_manual` | En una transacción audita el texto, invalida sugerencias, encola Bedrock y cambia a `en_cola`; una carrera con confirmación se serializa y una operación recibe 409. |
 | `asignarNinos` | Roster activo de la sala | Candidatos solo de la sala; homónimos requieren selección. |
 | `confirmarCaptura` | Captura autorizada en estado revisable o ya `confirmada`; items válidos para la primera confirmación | La primera ejecución crea observaciones atómicamente; las repeticiones autorizadas devuelven las mismas sin duplicarlas. |
 | `recomendarArea` | Niño/a existente | Cinco núcleos, sin repetición y orden determinista. |
@@ -845,6 +875,7 @@ El caso `NINO-00002` conserva sus 6 observaciones con niveles 3, 4, 4, 4, 4 y 5 
 - **P25 Trazabilidad IA:** idioma, proveedor, modelo, identificadores y tiempos quedan persistidos.
 - **P26 Retención:** las purgas se ejecutan dentro de la política configurada y conservan solo evidencia mínima autorizada.
 - **P27 Ejecución externa:** puede haber más de un intento físico, pero los manejadores y efectos internos son idempotentes.
+- **P28 Corrección consistente:** corregir texto desde un estado revisable audita, invalida, encola y pasa a `en_cola` atómicamente; hasta recuperar un estado revisable no se puede confirmar, y una carrera corrección-confirmación nunca confirma sugerencias invalidadas.
 
 ## Manejo de errores
 
@@ -865,6 +896,7 @@ El caso `NINO-00002` conserva sus 6 observaciones con niveles 3, 4, 4, 4, 4 y 5 
 | Límite de concurrencia alcanzado | `en_cola` | Espera justa; no bloquea nuevas aceptaciones dentro de cuotas. |
 | Ningún niño o homónimo | `pendiente_asignacion` | Selección manual dentro de la sala. |
 | Palabra dudosa | Resaltado bajo 0,60 inicial | Corrección auditada y reproceso opcional. |
+| Corrección fuera de estado o concurrente con confirmación | 409 y solicitud de refrescar | La operación ganadora conserva la transición atómica; nunca se confirman sugerencias invalidadas. |
 | Confirmación inválida | 422 por campo | Corregir nivel, manifestaciones o nota. |
 | Acceso fuera de alcance | 403 sin revelar existencia | Sin recuperación automática. |
 | Sesión vencida | 401 | Reautenticar; IndexedDB conserva pendientes no aceptados. |
@@ -874,7 +906,7 @@ El caso `NINO-00002` conserva sus 6 observaciones con niveles 3, 4, 4, 4, 4 y 5 
 ### Unitarias y propiedades
 
 - Edad, niveles, semáforo, recomendador, validación y conteos históricos P2–P4, P7, P12–P16.
-- Confirmación P9: primera ejecución atómica y repetición autorizada que devuelve las mismas observaciones sin duplicar filas; repetición fuera de alcance devuelve 403.
+- Confirmación P9 y corrección P28: primera confirmación atómica; repetición autorizada devuelve las mismas observaciones sin duplicar filas; repetición fuera de alcance devuelve 403. Una carrera corrección-confirmación sobre la misma captura se serializa: la operación perdedora devuelve 409, las sugerencias invalidadas no pueden confirmarse y el reproceso transita `en_cola` → `procesando` → estado revisable.
 - Asignación por `nombre_pila`: coincidencia limitada a sala, homónimos, icono/color y confirmación P5–P6.
 - MediaRecorder por WebM/Ogg/MP4/M4A disponibles, `timeslice`, máximo 300 s, rechazo de configuración menor a 240 s, Wake Lock presente/ausente y selector de archivo.
 - IndexedDB: persistencia antes de red, recarga, `esperando_conexion`, recuperación y misma clave P18–P19.
@@ -902,7 +934,7 @@ Con voces del equipo, nombres/contenido ficticios y frases chilenas se ejecutan 
 - Golden set con nombres ficticios y términos pedagógicos, sin reutilizar texto del catálogo.
 - Tres personas ajenas al equipo validan teléfono/computador, navegación no bloqueante y mensajes neutros.
 
-Cada P1–P27 queda cubierta por al menos una prueba unitaria, de propiedad, integración o E2E.
+Cada P1–P28 queda cubierta por al menos una prueba unitaria, de propiedad, integración o E2E.
 
 ## Consideraciones de rendimiento
 
@@ -1000,9 +1032,9 @@ Los tipos compartidos incluyen `NinoResumen`, `CapturaEstado`, `CapturaTranscrip
 | `GET /api/ninos/{id}/ficha`, `/linea_tiempo`, `/guia_nivel`, `/recomendacion_area` | Ficha e historia autorizadas. |
 | `POST /api/capturas` | Multipart para foto/audio o JSON para texto; exige `Idempotency-Key`; responde 202 durable; creación audiovisual heredada devuelve 422. |
 | `GET /api/capturas/{id}` | Estado, progreso, demorada, transcripción y sugerencias según rol. |
-| `PUT /api/capturas/{id}/transcripcion` | Corrección auditada y reproceso idempotente antes de confirmar. |
+| `PUT /api/capturas/{id}/transcripcion` | Solo desde `lista_para_revisar` o `revision_manual`; en una transacción audita, invalida sugerencias, encola reproceso Bedrock y responde con estado `en_cola`; conflicto de estado o carrera con confirmación devuelve 409. |
 | `PUT /api/capturas/{id}/ninos` | Selección/corrección manual dentro de la sala. |
-| `POST /api/capturas/{id}/confirmar` | Único contrato que crea observaciones. |
+| `POST /api/capturas/{id}/confirmar` | Único contrato que crea observaciones; acepta estados `lista_para_revisar` o `revision_manual`, es idempotente si ya está `confirmada` y devuelve 409 durante `en_cola`, `transcribiendo` o `procesando`. |
 | `POST /api/capturas/{id}/descartar` | Estado terminal y posterior retención. |
 | `GET /api/alertas/bandeja?ambito=` | En curso, demoradas y revisables. |
 | `GET /api/directora/jardin/{id}/salas`, `/educadoras` | Vista autorizada del jardín. |
@@ -1087,4 +1119,4 @@ La solución está terminada cuando:
 9. La bandeja incluye trabajos en curso/demorados/revisables y notifica al terminar.
 10. Toda observación requiere confirmación humana; la IA nunca la crea sola.
 11. La usuaria recibe aviso AWS; bucket, cifrado, mínimo privilegio, retención y purga están verificados.
-12. Conteos/reglas históricas, teléfono/computador, accesibilidad, pruebas P1–P27 y guion E2E pasan.
+12. Conteos/reglas históricas, teléfono/computador, accesibilidad, pruebas P1–P28 y guion E2E pasan.
