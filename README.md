@@ -1,114 +1,101 @@
-# Integra · Desafío 1 — IA para el Desarrollo Infantil
+# Integra · Desafío 1: IA para documentar el desarrollo infantil
 
-Aplicación para educadoras de párvulos de Fundación Integra que reduce el tiempo de
-documentación pedagógica y ayuda a **detectar rezagos a tiempo**.
+Hackatón AWS Breaking Barriers Chile 2026 (14–16 oct, FCFM U. de Chile) · Desafío 1 de Fundación Integra.
 
-> Hackatón AWS Breaking Barriers Chile 2026 (14–16 oct, FCFM U. de Chile).
+Hoy una educadora dedica cerca de 4 horas a la semana a pasar post-its y cuadernos a la ruta de aprendizaje
+de cada niño. **Huellita** busca bajar ese tiempo a menos de 15 minutos: la tía registra en 2 toques (foto de
+post-its, audio o texto) y la IA sugiere a qué niño corresponde, qué conducta se observó y en qué nivel va,
+citando la evidencia.
 
-## El problema
+- **La IA sugiere y la tía decide:** ella confirma, corrige o descarta cada sugerencia.
+- **Sin lenguaje de diagnóstico:** la ruta no es un instrumento clínico y la falta de registro no significa
+  falta de aprendizaje. En pantalla se habla de "sin registro reciente", nunca de "rezago".
 
-Hoy una educadora dedica ~4 horas semanales a sistematizar observaciones (pasar notas
-de post-its y cuadernos a núcleos y niveles). El objetivo es llevar ese tiempo lo más
-cerca posible de 0, manteniendo a la educadora como quien **decide**: la IA solo sugiere.
+## Demo
 
-## Qué hace la app
+**<https://bastican.github.io/Hackathon/>**: Huellita con datos ficticios e IA simulada (no se conecta a AWS).
+Es el mismo archivo que [`huellita-formato-mejorado/huellita-demo.html`](huellita-formato-mejorado/huellita-demo.html),
+que también funciona con doble clic.
 
-1. **Captura rápida** en sala: audio (prioritario), foto, texto.
-2. **Procesamiento con IA**: transcribe, separa observaciones por niño, filtra lo no
-   evaluable y **sugiere** núcleo, manifestación y nivel con la evidencia textual.
-3. **Validación**: la educadora acepta o corrige en una bandeja de pendientes.
-4. **Seguimiento**: vista de sala con semáforo, ficha por niño con línea de tiempo,
-   alertas de rezago y "misión del día".
+## Qué hay en el repositorio
 
-Ver la propuesta completa en [`Dump/integra_desafio1_sintesis.md`](Dump/integra_desafio1_sintesis.md).
-
-## Arquitectura
-
-| Capa | Stack | Carpeta |
+| Carpeta | Qué es | Estado |
 |---|---|---|
-| Frontend | React + Vite + TypeScript (PWA) | [`frontend/`](frontend/) |
-| Backend | FastAPI (Python 3.13) | [`backend/`](backend/) |
-| Datos | Dataset sintético E-1 (CSV / JSON) | [`Dump/dataset_e1_publico/`](Dump/dataset_e1_publico/) |
-| IA | Capa de servicio con interfaz estable (mock → modelo real) | [`backend/app/services/ai.py`](backend/app/services/ai.py) |
-| Despliegue | Una imagen Docker en Render (plan gratis): la API también sirve las pantallas | [`Dockerfile`](Dockerfile), [`render.yaml`](render.yaml) |
+| [`huellita-formato-mejorado/`](huellita-formato-mejorado/) | App de las tías: React + Vite + TypeScript (PWA). Agenda del día, planilla de la sala, revisión de sugerencias, ficha por niño y vista de directora. | Versión actual. Funciona con datos locales e IA simulada; los servicios de datos e IA están separados para conectarla a un backend. |
+| [`huellita/`](huellita/) | Versión anterior de Huellita (diseño de post-its). | Referencia, sin cambios. |
+| [`integra-backend/`](integra-backend/) | Procesamiento con IA en AWS: Lambda en Python 3.13 con Amazon Bedrock, DynamoDB y S3 (AWS SAM). | Procesa las capturas que llegan a S3 y guarda observaciones sugeridas. Todavía no tiene API para el frontend. |
+| [`Dump/`](Dump/) | Material del desafío: [síntesis](Dump/integra_desafio1_sintesis.md) y [dataset sintético E-1](Dump/dataset_e1_publico/). | — |
+| `backend/`, `frontend/`, `ver-app.bat`, `Dockerfile`, `render.yaml` | Primer prototipo (FastAPI + React, con una IA de prueba basada en reglas). | Reemplazado por Huellita e integra-backend. Queda solo como referencia. |
 
-## Ver la app en línea (un solo link)
+## Cómo funciona el procesamiento (`integra-backend`)
 
-La app se despliega en [Render](https://render.com) como un único servicio: pantallas y
-API quedan bajo la misma URL. Configuración inicial, una sola vez:
+1. Cada captura se sube a S3 en `capturas/CAP-<ULID>/`: primero `meta.json` (educadora, sala y fecha) y al
+   final `texto.json` (una parte por post-it o nota).
+2. La llegada de `texto.json` dispara la Lambda `ProcesarNota`, que:
+   - separa lo que es de un niño de lo que es de toda la sala;
+   - identifica al niño por nombre o apodo dentro de su sala. Si hay dudas (dos niños con el mismo nombre, o
+     uno de otra sala) no lo asigna y deja los candidatos;
+   - decide si la nota es evaluable y busca en la rúbrica las manifestaciones que la respaldan (RAG con embeddings);
+   - sugiere el nivel con su certeza (alta, media o baja).
+3. El resultado queda en DynamoDB: las observaciones en `Observaciones` (estado `SUGERIDO`) y el avance de cada
+   captura en `Registros`.
 
-1. Entra a [render.com](https://render.com) con **Sign in with GitHub**.
-2. Abre <https://render.com/deploy?repo=https://github.com/BastiCan/Hackathon>.
-   Si Render pide permisos, instala su GitHub App y dale acceso al repo `Hackathon`
-   (es privado).
-3. Confirma el Blueprint (servicio `integra-hackathon`, plan Free) y espera el primer
-   build (~5 min). Cuando diga **Live**, el link aparece arriba del servicio
-   (`https://integra-hackathon….onrender.com`).
+Más detalle en `integra-backend/`: diseño y contrato en
+[`.kiro/specs/backend-observaciones/design.md`](integra-backend/.kiro/specs/backend-observaciones/design.md),
+montaje y pruebas en [`docs/AWS_SETUP.md`](integra-backend/docs/AWS_SETUP.md) y decisiones en
+[`docs/DECISIONES.md`](integra-backend/docs/DECISIONES.md).
 
-Después, cada push a `main` redespliega solo.
+## Pendiente para conectar todo
 
-- En el plan gratis el servicio se duerme tras 15 min sin visitas y despierta en
-  ~1 min con la siguiente. Antes de una demo, abre el link un minuto antes.
-- La app no tiene login: cualquiera con el link la ve. Sirve porque los datos son
-  sintéticos; con datos reales de niños hay que agregar autenticación primero.
+- Una API con login (Cognito) entre Huellita y el backend: leer salas, niños y sugerencias, confirmar o corregir,
+  y subir capturas.
+- Unificar la rúbrica. Huellita usa una propuesta de 8 núcleos × 8 niveles (BCEP 2018) y el backend usa la del
+  dataset E-1 (9 niveles × 5 dominios, 90 manifestaciones).
+- Unificar la nómina de demo (nombres inventados sobre los IDs del dataset) para la app, el backend y las fotos
+  de prueba.
+- La lectura de fotos de post-its (OpenCV + Bedrock), que se está desarrollando aparte.
 
 ## Puesta en marcha
 
-Requisitos: Python 3.13+, Node.js 20+.
+### Huellita
 
-### Solo verla en tu computador (lo más liviano)
-
-Doble clic en **`ver-app.bat`**. Levanta un solo proceso (~60 MB), abre
-<http://localhost:8000> en el navegador y se apaga al cerrar su ventana. Solo escucha en
-tu computador, no en la red.
-
-Necesita, una sola vez, el entorno `backend/.venv` y el build `frontend/dist`
-(pasos de abajo). Si falta alguno, el script te dice qué correr.
-
-### Desarrollo
-
-Para programar con recarga automática, en dos terminales. Consume bastante más que
-`ver-app.bat`: dos procesos de Python vigilando archivos más el servidor de Vite.
-
-#### Backend
+Requisitos: Node.js 20 o superior.
 
 ```powershell
-cd backend
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-uvicorn app.main:app --reload
-# API en http://localhost:8000  ·  docs en http://localhost:8000/docs
-```
-
-#### Frontend
-
-```powershell
-cd frontend
+cd huellita-formato-mejorado
 npm install
-npm run dev
-# App en http://localhost:5173
+npm run dev     # http://localhost:5173
+npm test        # pruebas con Vitest
 ```
 
-Para actualizar lo que muestra `ver-app.bat` después de cambiar pantallas:
-`cd frontend; npm run build`.
+### integra-backend
 
-## Estructura del repositorio
+Requisitos: Python 3.13. Las pruebas unitarias corren sin AWS. El pipeline llama a Bedrock, así que necesita
+credenciales y los IDs de modelo (ver [`docs/AWS_SETUP.md`](integra-backend/docs/AWS_SETUP.md)).
 
+```powershell
+cd integra-backend
+py -3.13 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -e ".[dev]"
+python -m pytest tests/unit -q
+
+# Con credenciales de AWS y los MODEL_ID_* configurados (copia .env.example a .env):
+python scripts/pipeline_local.py --texto "Pedro y Emilio clasificaron hojas por tamaño" --educadora EDU-0001 --sala SG-A
 ```
-Hackaton/
-├─ backend/              API FastAPI + carga del dataset + capa de IA
-├─ frontend/             PWA React para la educadora
-├─ Dump/                 Material del desafío (síntesis + dataset sintético)
-├─ ver-app.bat           Abre la app en tu computador (un solo proceso)
-├─ Dockerfile            Imagen única: build del frontend + API
-├─ render.yaml           Blueprint de despliegue en Render
-└─ README.md
-```
+
+El despliegue usa `sam build` y `sam deploy --guided`. Los pasos completos, la carga de datos y la prueba con una
+captura están en `docs/AWS_SETUP.md`.
+
+### Primer prototipo
+
+Doble clic en `ver-app.bat`. Necesita `backend/.venv` y `frontend/dist`; si falta alguno, el script avisa qué correr.
 
 ## Datos y privacidad
 
-- El dataset es **100% sintético**; no contiene datos reales de niños.
-- Los PDFs de referencia (Referente Curricular, Modelo de Educación Emocional) tienen
-  copyright de Integra/MINEDUC y **no se versionan** en el repositorio (ver `.gitignore`).
-- Diseño pensado para seudonimización y borrado automático de multimedia (Ley 21.719).
+- El dataset es 100% sintético y los nombres de los niños en las demos son inventados.
+- Los PDFs de referencia (Referente Curricular, Modelo de Educación Emocional) tienen copyright y no se versionan
+  (ver `.gitignore`).
+- Todavía no hay login: la demo publicada solo muestra datos ficticios. Antes de usar datos reales hay que agregar
+  autenticación y control de acceso por rol.
+- Las credenciales de AWS van como variables de entorno o en `.env` (ignorado por git), nunca en el repositorio.
