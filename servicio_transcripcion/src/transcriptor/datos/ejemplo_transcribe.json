@@ -1,0 +1,25 @@
+{
+  "jobName": "tr-CAP-000012",
+  "accountId": "111122223333",
+  "results": {
+    "transcripts": [{"transcript": "Armó una torre de seis bloques y después ayudó a ordenar."}],
+    "items": [
+      {"id": 0, "start_time": "0.42", "end_time": "0.81", "alternatives": [{"confidence": "0.9312", "content": "Armó"}], "type": "pronunciation"},
+      {"id": 1, "start_time": "0.81", "end_time": "0.95", "alternatives": [{"confidence": "0.9987", "content": "una"}], "type": "pronunciation"},
+      {"id": 2, "start_time": "0.95", "end_time": "1.40", "alternatives": [{"confidence": "0.5703", "content": "torre"}], "type": "pronunciation"},
+      {"id": 3, "start_time": "1.40", "end_time": "1.52", "alternatives": [{"confidence": "0.9921", "content": "de"}], "type": "pronunciation"},
+      {"id": 4, "start_time": "1.52", "end_time": "1.90", "alternatives": [{"confidence": "0.9655", "content": "seis"}], "type": "pronunciation"},
+      {"id": 5, "start_time": "1.90", "end_time": "2.48", "alternatives": [{"confidence": "0.9104", "content": "bloques"}], "type": "pronunciation"},
+      {"id": 6, "start_time": "2.48", "end_time": "2.60", "alternatives": [{"confidence": "0.9978", "content": "y"}], "type": "pronunciation"},
+      {"id": 7, "start_time": "2.60", "end_time": "3.10", "alternatives": [{"confidence": "0.8826", "content": "después"}], "type": "pronunciation"},
+      {"id": 8, "start_time": "3.10", "end_time": "3.55", "alternatives": [{"confidence": "0.8611", "content": "ayudó"}], "type": "pronunciation"},
+      {"id": 9, "start_time": "3.55", "end_time": "3.62", "alternatives": [{"confidence": "0.9733", "content": "a"}], "type": "pronunciation"},
+      {"id": 10, "start_time": "3.62", "end_time": "4.21", "alternatives": [{"confidence": "0.9402", "content": "ordenar"}], "type": "pronunciation"},
+      {"id": 11, "alternatives": [{"confidence": "0.0", "content": "."}], "type": "punctuation"}
+    ],
+    "audio_segments": [
+      {"id": 0, "transcript": "Armó una torre de seis bloques y después ayudó a ordenar.", "start_time": "0.42", "end_time": "4.21", "items": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}
+    ]
+  },
+  "status": "COMPLETED"
+}
