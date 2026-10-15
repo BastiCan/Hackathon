@@ -1,5 +1,7 @@
 # Diseño: Huellita
 
+> **Actualización (15-10-2026):** la app pasó a la rúbrica E-1 del backend (5 núcleos × 9 niveles, `data/rubrica_e1.json`) y la Agenda se reemplazó por Inicio. Donde este documento diga 8 núcleos, nivel 1–8 o `rubrica_8_niveles.json`, mandan `.kiro/steering/rubrica.md` e `interfaz.md`. Detalle en `PROGRESO.md`.
+
 ## Visión general
 La app es una PWA en React. Todas las pantallas consumen dos interfaces: `DataService` (datos) e `IAService` (procesamiento de evidencias). En la Fase 1 ambas son locales o simuladas, y la demo funciona sin AWS ni internet. En las Fases 2–3 se cambian por implementaciones con AWS Amplify y Bedrock, sin tocar las pantallas.
 

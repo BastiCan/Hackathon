@@ -13,8 +13,8 @@ Hoy las tías observan durante el juego y las rutinas, y anotan en **post-its**,
 
 ## Qué es Huellita
 Una app web móvil (PWA) donde la tía:
-1. **Captura** en 2 toques una evidencia: foto del post-it, audio de voz o texto corto.
-2. La IA **lee, identifica al niño/a, el núcleo, la conducta observable y sugiere un nivel** (1–8) con su certeza.
+1. **Captura** en 2 toques una evidencia: foto del post-it (sacada o de la galería), audio de voz (grabado o una nota de voz ya grabada) o texto corto, en la sala que elige.
+2. La IA **lee, identifica al niño/a, el núcleo, la conducta observable y sugiere un nivel** (1–9, rúbrica E-1 del backend) con su certeza.
 3. La tía **confirma, cambia o descarta** la sugerencia con un toque.
 4. Todo se ordena solo en la **ficha del niño/a** y en el **panel de la sala**, que muestra a quién falta observar y quién necesita apoyo.
 
