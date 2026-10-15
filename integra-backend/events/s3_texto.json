@@ -1,0 +1,12 @@
+{
+  "Records": [
+    {
+      "eventSource": "aws:s3",
+      "eventName": "ObjectCreated:Put",
+      "s3": {
+        "bucket": { "name": "integra-capturas-277702547089" },
+        "object": { "key": "capturas/CAP-01J8Z3M4N5P6Q7R8S9T0V1W2X3/texto.json" }
+      }
+    }
+  ]
+}

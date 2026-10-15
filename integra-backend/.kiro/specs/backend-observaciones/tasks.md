@@ -48,19 +48,19 @@
   - 8.4 `scripts/cargar_aws.py`: carga Educadoras (80) y Ninos (500; con `nombre`/`apodos` de `nomina_demo.json` cuando existan); sube a `rubrica/` los archivos `rubrica.json`, `fewshot.json` y `embeddings_rubrica.json`, y `data/raw/` a `raw/`; imprime conteos
   - _Requirements: 7.1, 9.1_
 
-- [ ] 8b. Entrada por S3 — dominio puro primero
+- [x] 8b. Entrada por S3 — dominio puro primero
   - `src/core/capturas.py`: `id_captura_de_clave` (valida `CAP-<ULID>`), `tipo_de_clave` (`meta`|`texto`|`otro`), `clave_archivo` + tests unitarios
   - `modelos.py`: `Meta`, `TextoCaptura`/`Parte`, enums de estado de `Registros`; `id_obs = {id_captura}-p{n_parte}-{n_obs}`
   - `pipeline.procesar_nota` recibe `id_captura`, `n_parte` y `archivo_s3` (no genera el id); una parte = una nota; `archivo_s3` se copia a sus observaciones
   - _Idempotencia e IDs deterministas_
 
-- [ ] 8c. Datos AWS — nuevas tablas y escrituras
+- [x] 8c. Datos AWS — nuevas tablas y escrituras
   - `datos_aws.py`: `Jardines`; `Educadoras`/`Ninos` con GSI `porJardin`; `Registros` (upsert de `meta` y de estado, GSI `porSala` SK subido_en);
     `Observaciones` con `sala_key`, `origen`, `orden`, `archivo_s3` y GSI `porNino`/`porSala`; `UpdateItem` en `Ninos` (ultima_obs_fecha, ultimo_nivel, ultimo_nivel_fecha)
   - Fechas ISO 8601 con zona `-03:00`; `sala_key = "{id_jardin}#{sala_grupo}"`; `orden = "{fecha}#{creado_en}"`
   - Tests unitarios de serialización/claves (sin AWS)
 
-- [ ] 8d. Handler disparado por S3
+- [x] 8d. Handler disparado por S3
   - `handler.py`: records S3 → `meta.json` upsert `Registros` RECIBIDO; `texto.json` → PROCESANDO, procesa cada parte, PROCESADO/SIN_TEXTO/ERROR con `errores[]` por parte
   - La invocación directa (evento JSON) sigue funcionando para pruebas; `id_captura` opcional
   - `events/s3_meta.json` y `events/s3_texto.json` de ejemplo

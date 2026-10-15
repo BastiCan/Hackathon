@@ -67,6 +67,8 @@ class ErrorCaptura(StrEnum):
     TEXTO_VACIO = "TEXTO_VACIO"
     EDUCADORA_DESCONOCIDA = "EDUCADORA_DESCONOCIDA"
     SALA_DESCONOCIDA = "SALA_DESCONOCIDA"
+    META_INVALIDA = "META_INVALIDA"  # meta.json ausente o invalido
+    TEXTO_INVALIDO = "TEXTO_INVALIDO"  # texto.json invalido
 
 
 class ErrorEvaluacion(StrEnum):

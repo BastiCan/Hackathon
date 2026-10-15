@@ -50,3 +50,9 @@ def cargar_json(nombre: str) -> dict[str, Any]:
         raise ValueError("falta BUCKET en el entorno para cargar recursos desde S3")
     resp = _s3().get_object(Bucket=config.bucket, Key=clave_s3)
     return json.loads(resp["Body"].read())
+
+
+def leer_json_s3(bucket: str, clave: str) -> dict[str, Any]:
+    """Lee y parsea un objeto JSON arbitrario de S3 (usado por el handler para capturas)."""
+    resp = _s3().get_object(Bucket=bucket, Key=clave)
+    return json.loads(resp["Body"].read())
