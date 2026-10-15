@@ -1,0 +1,15 @@
+{
+  "id_captura": "CAP-000012",
+  "origen": "audio",
+  "estado": "transcribiendo",
+  "texto_completo": "",
+  "palabras": [],
+  "confianza_agregada": null,
+  "idioma": "es-US",
+  "proveedor": "amazon_transcribe",
+  "modelo": "batch-standard",
+  "id_trabajo": "tr-CAP-000012",
+  "iniciado_en": "2026-10-15T14:02:11Z",
+  "terminado_en": null,
+  "error": null
+}

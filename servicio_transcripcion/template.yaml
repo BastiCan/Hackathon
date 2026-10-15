@@ -1,0 +1,247 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: Transcriptor de audio con Amazon Transcribe por lotes - Lambda, API Gateway REST, S3 y EventBridge
+
+Parameters:
+  Idioma:
+    Type: String
+    Default: es-US
+    AllowedValues: [es-US, es-MX, es-ES]
+    Description: Idioma de Transcribe (no existe es-CL)
+  UmbralPalabraDudosa:
+    Type: String
+    Default: "0.60"
+    AllowedPattern: '^(0(\.[0-9]+)?|1(\.0+)?)$'
+    Description: Confianza bajo la cual una palabra queda marcada como dudosa
+  PrefijoTrabajo:
+    Type: String
+    Default: tr-
+    AllowedPattern: '^[A-Za-z0-9._-]{1,20}$'
+    Description: Prefijo de los trabajos de Transcribe que crea este servicio
+  LimiteDiario:
+    Type: Number
+    Default: 2000
+    MinValue: 1
+    Description: Solicitudes por dia permitidas a la clave de API
+  ModoMock:
+    Type: String
+    Default: "0"
+    AllowedValues: ["0", "1"]
+    Description: 1 devuelve datos simulados sin llamar a Transcribe
+  BucketCapturas:
+    Type: String
+    Default: integra-capturas-277702547089
+    AllowedPattern: '^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$'
+    Description: Bucket de entrada de ProcesarNota; aqui se escribe capturas/{id}/texto.json
+
+Globals:
+  Function:
+    Runtime: python3.13
+    Architectures: [arm64]
+    CodeUri: src/
+    Environment:
+      Variables:
+        BUCKET: !Ref BucketTranscripcion
+        TRANSCRIBE_IDIOMA: !Ref Idioma
+        UMBRAL_PALABRA_DUDOSA: !Ref UmbralPalabraDudosa
+        PREFIJO_TRABAJO: !Ref PrefijoTrabajo
+        MAX_BYTES_AUDIO: "4194304"
+        MODO_MOCK: !Ref ModoMock
+        BUCKET_CAPTURAS: !Ref BucketCapturas
+
+Resources:
+  # Audio, salida cruda de Transcribe y JSON final. Todo se borra a 1 dia (S3 lo hace a medianoche UTC).
+  BucketTranscripcion:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      LifecycleConfiguration:
+        Rules:
+          - Id: borrar-a-1-dia
+            Status: Enabled
+            ExpirationInDays: 1
+            AbortIncompleteMultipartUpload:
+              DaysAfterInitiation: 1
+
+  PoliticaBucket:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref BucketTranscripcion
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: SoloHttps
+            Effect: Deny
+            Principal: "*"
+            Action: "s3:*"
+            Resource:
+              - !GetAtt BucketTranscripcion.Arn
+              - !Sub "${BucketTranscripcion.Arn}/*"
+            Condition:
+              Bool:
+                aws:SecureTransport: "false"
+
+  # Permisos que usan las dos funciones. Transcribe lee el audio y escribe su salida con estas credenciales.
+  PoliticaComun:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description: Consultar trabajos de Transcribe del servicio y usar su bucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: ConsultarTrabajos
+            Effect: Allow
+            Action: transcribe:GetTranscriptionJob
+            Resource: !Sub "arn:${AWS::Partition}:transcribe:${AWS::Region}:${AWS::AccountId}:transcription-job/${PrefijoTrabajo}*"
+          # Con ListBucket, un objeto que no existe responde 404 en vez de 403. El codigo depende de eso.
+          - Sid: ListarBucket
+            Effect: Allow
+            Action: s3:ListBucket
+            Resource: !GetAtt BucketTranscripcion.Arn
+          - Sid: LeerYEscribirObjetos
+            Effect: Allow
+            Action: [s3:GetObject, s3:PutObject]
+            Resource: !Sub "${BucketTranscripcion.Arn}/*"
+          - Sid: BorrarAudio
+            Effect: Allow
+            Action: s3:DeleteObject
+            Resource: !Sub "${BucketTranscripcion.Arn}/audio/*"
+          # Entrega a ProcesarNota: revisa meta.json, copia el audio a original/ y escribe texto.json.
+          - Sid: ListarCapturas
+            Effect: Allow
+            Action: s3:ListBucket
+            Resource: !Sub "arn:${AWS::Partition}:s3:::${BucketCapturas}"
+          - Sid: LeerMetaDeCaptura
+            Effect: Allow
+            Action: s3:GetObject
+            Resource: !Sub "arn:${AWS::Partition}:s3:::${BucketCapturas}/capturas/*/meta.json"
+          - Sid: EscribirEnCaptura
+            Effect: Allow
+            Action: s3:PutObject
+            Resource:
+              - !Sub "arn:${AWS::Partition}:s3:::${BucketCapturas}/capturas/*/texto.json"
+              - !Sub "arn:${AWS::Partition}:s3:::${BucketCapturas}/capturas/*/original/*"
+
+  # REST API (no HTTP API) porque solo REST tiene claves de API y planes de uso.
+  ApiTranscripcion:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: !Sub "${AWS::StackName}-api"
+      StageName: v1
+      OpenApiVersion: "3.0.1"
+      EndpointConfiguration:
+        Type: REGIONAL
+      Auth:
+        ApiKeyRequired: true
+        UsagePlan:
+          CreateUsagePlan: PER_API
+          Description: Limite de uso del transcriptor
+          Throttle:
+            RateLimit: 5
+            BurstLimit: 10
+          Quota:
+            Limit: !Ref LimiteDiario
+            Period: DAY
+
+  LogsApi:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${AWS::StackName}-api"
+      RetentionInDays: 7
+
+  LogsEventos:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${AWS::StackName}-eventos"
+      RetentionInDays: 7
+
+  FuncionApi:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: POST y GET del transcriptor de audio
+      Handler: transcriptor.app.handler
+      Timeout: 25  # menor que los 29 s de la integracion de API Gateway
+      MemorySize: 512
+      LoggingConfig:
+        LogFormat: JSON
+        ApplicationLogLevel: INFO
+        SystemLogLevel: WARN
+        LogGroup: !Ref LogsApi
+      Policies:
+        - !Ref PoliticaComun
+        - Statement:
+            - Sid: IniciarTrabajos
+              Effect: Allow
+              Action: transcribe:StartTranscriptionJob
+              Resource: "*"  # esta accion no admite ARN de recurso; se limita con la condicion
+              Condition:
+                StringEquals:
+                  transcribe:OutputBucketName: !Ref BucketTranscripcion
+      Events:
+        Crear:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiTranscripcion
+            Path: /api/transcripciones/audio
+            Method: POST
+        Consultar:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiTranscripcion
+            Path: /api/transcripciones/{id_trabajo}
+            Method: GET
+        Salud:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiTranscripcion
+            Path: /api/salud
+            Method: GET
+
+  # Guarda el JSON final apenas Transcribe termina. Si el evento se pierde, el GET hace lo mismo.
+  FuncionEventos:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: Guarda el resultado cuando un trabajo de Transcribe termina
+      Handler: transcriptor.eventos.handler
+      Timeout: 60
+      MemorySize: 256
+      LoggingConfig:
+        LogFormat: JSON
+        ApplicationLogLevel: INFO
+        SystemLogLevel: WARN
+        LogGroup: !Ref LogsEventos
+      Policies:
+        - !Ref PoliticaComun
+      Events:
+        TrabajoTerminado:
+          Type: EventBridgeRule
+          Properties:
+            Pattern:
+              source: [aws.transcribe]
+              detail-type: ["Transcribe Job State Change"]
+              detail:
+                TranscriptionJobStatus: [COMPLETED, FAILED]
+                TranscriptionJobName:
+                  - prefix: !Ref PrefijoTrabajo
+
+Outputs:
+  UrlApi:
+    Description: URL base del transcriptor
+    Value: !Sub "https://${ApiTranscripcion}.execute-api.${AWS::Region}.amazonaws.com/v1"
+  IdClaveApi:
+    Description: ID de la clave de API (el valor se obtiene con aws apigateway get-api-key --include-value)
+    Value: !Ref ApiTranscripcionApiKey
+  Bucket:
+    Description: Bucket privado del transcriptor
+    Value: !Ref BucketTranscripcion
