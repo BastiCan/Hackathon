@@ -119,9 +119,20 @@ def _metricas(resultados: list[dict]) -> dict:
         if v
     }
 
+    # Matriz de confusion de NIVEL: esperado (fila) x nivel principal obtenido (columna).
+    # El nivel obtenido es el consolidado principal (obs.nivel); None (sin codigo) -> "0".
+    matriz: dict[int, dict[int, int]] = {}
+    for r in validos:
+        ne = r["nivel_esperado"]
+        no = r.get("nivel_obtenido")
+        col = no if no is not None else 0  # 0 = sin codigo / no evaluable
+        matriz.setdefault(ne, {})
+        matriz[ne][col] = matriz[ne].get(col, 0) + 1
+
     return {
         "n": n,
         "n_total": len(resultados),
+        "matriz_confusion_nivel": matriz,
         "n_error": len(resultados) - n,
         "accuracy_codigo_exacto": pct(cod_exacto, n),
         "recall_codigos": pct(recall_num, recall_den),
@@ -131,6 +142,31 @@ def _metricas(resultados: list[dict]) -> dict:
         "accuracy_dominio": pct(dom_ok, n),
         "accuracy_por_certeza": acc_certeza,
     }
+
+
+def _render_matriz(matriz: dict[int, dict[int, int]]) -> list[str]:
+    """Matriz de confusion de nivel como tabla markdown.
+
+    Filas = nivel esperado; columnas = nivel principal obtenido (0 = sin codigo).
+    La diagonal son los aciertos exactos. Lo que cae fuera muestra EN QUE se equivoca.
+    """
+    if not matriz:
+        return ["(sin datos)"]
+    niveles_esp = sorted(matriz)
+    cols = sorted({c for fila in matriz.values() for c in fila})
+    enc = "esp\\obt | " + " | ".join("sin" if c == 0 else str(c) for c in cols) + " | total"
+    sep = "|".join(["---"] * (len(cols) + 2))
+    filas = [enc, sep]
+    for ne in niveles_esp:
+        fila = matriz[ne]
+        total = sum(fila.values())
+        celdas = []
+        for c in cols:
+            v = fila.get(c, 0)
+            # Marcar la diagonal (acierto exacto) para que salte a la vista.
+            celdas.append(f"**{v}**" if c == ne and v else str(v))
+        filas.append(f"{ne} | " + " | ".join(celdas) + f" | {total}")
+    return filas
 
 
 def _escribir_reporte(m: dict, depurar: bool) -> None:
@@ -155,6 +191,13 @@ def _escribir_reporte(m: dict, depurar: bool) -> None:
     ]
     for cert, v in m.get("accuracy_por_certeza", {}).items():
         lineas.append(f"- {cert}: {v['acc_nivel']}% (n={v['n']})")
+    lineas.append("")
+    lineas.append("## Matriz de confusion de nivel")
+    lineas.append("")
+    lineas.append("Fila = nivel esperado, columna = nivel principal obtenido (`sin` = sin codigo).")
+    lineas.append("La diagonal (**negrita**) son los aciertos exactos.")
+    lineas.append("")
+    lineas.extend(_render_matriz(m.get("matriz_confusion_nivel", {})))
     if depurar:
         lineas.append("")
         lineas.append("> NOTA: corrida con --depurar (texto_control). No es resultado reportable.")
@@ -203,7 +246,10 @@ def main() -> int:
     print(f"recall / precision codigos: {m.get('recall_codigos', 0)}% / {m.get('precision_codigos', 0)}%")
     print(f"accuracy nivel exacto / +-1: {m.get('accuracy_nivel_exacto', 0)}% / {m.get('accuracy_nivel_pm1', 0)}%")
     print(f"accuracy dominio: {m.get('accuracy_dominio', 0)}%")
-    print(f"reporte -> {EVAL_DIR / 'reporte.md'}")
+    print("\nMatriz de confusion de nivel (fila=esperado, col=obtenido, sin=sin codigo):")
+    for linea in _render_matriz(m.get("matriz_confusion_nivel", {})):
+        print("  " + linea.replace("**", ""))
+    print(f"\nreporte -> {EVAL_DIR / 'reporte.md'}")
     return 0
 
 
