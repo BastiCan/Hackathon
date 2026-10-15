@@ -2,7 +2,7 @@
 
 > Nota: las rutas que empiezan con `.agents/` o `c:\Users\crist\...` son de la máquina donde se desarrolló y probó el módulo; esos archivos no están en el repo.
 
-> Estado al 15-10-2026. Manda el código de la rama `feature/postits-ocr` (commit `fc9c50c`, carpeta `postits-ocr/` del
+> Estado al 15-10-2026. Manda el código de la rama `feature/postits-ocr` (commit `83547ae`, carpeta `postits-ocr/` del
 > repo), que es el que corre en AWS: los 8 módulos del zip desplegado son idénticos byte a byte a los del commit. Los
 > ejemplos salen de la prueba real `CAP-01M50JVN0CBE1Q6A8P3BCWYRBN` (foto `Prueba2.jpeg`, 9 post-its, educadora
 > `EDU-0001`, sala `SG-A`). Los datos de la demo son sintéticos, pero el sistema es para datos de niños.
@@ -959,7 +959,7 @@ ddb.Table("integra-procesador-TablaRegistros-P238ZZKPTQ51").delete_item(Key={"id
 
 ## 9. API de ingesta (foto o audio)
 
-El stack `integra-ingesta` (carpeta `ingesta/`, commit `2e041ac`) pone una API REST con `x-api-key` delante de la Lambda
+El stack `integra-ingesta` (carpeta `ingesta/`, commit `4b44a2d`) pone una API REST con `x-api-key` delante de la Lambda
 `integra-ingesta`. La Lambda firma la subida, decide por los bytes si el archivo es foto o audio, escribe `meta.json` y
 llama a `postits-ocr` o al transcriptor. Solo lee DynamoDB: las tablas las llena `ProcesarNota`, igual que en 4.6. Se probó
 el 15-10-2026 con una foto (`CAP-01M50SZZW88ETYSFE2YNH3Z4S8`, 17 observaciones) y un audio
@@ -1115,7 +1115,7 @@ reformulado para cumplir con las restricciones de licencia.
 
 ## 10. Cambios del 15-10 en la noche: giro, freno y prompt
 
-Commits `4dfe24b` y `4eb5a16`, ya desplegados en `postits-ocr` y en `integra-ingesta`.
+Commits `8b8a74f` y `a3b6121`, ya desplegados en `postits-ocr` y en `integra-ingesta`.
 
 - **Giro sin el modelo.** `postits-ocr` calcula el eje de la letra con perfiles de tinta sobre todos los recortes.
   - Si la letra es horizontal, o el resultado es dudoso, no gira.
