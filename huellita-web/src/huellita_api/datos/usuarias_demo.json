@@ -1,0 +1,19 @@
+{
+  "_descripcion": "Tías de la demo: nombres ficticios asociados a las educadoras reales de JAR-0001 del dataset E-1 (EDU-0001 y EDU-0002). El dataset no asigna educadoras a salas, así que la sala de cada tía sale de esta lista. La directora queda pendiente.",
+  "usuarias": [
+    {
+      "id": "EDU-0001",
+      "nombre": "Tía Ana",
+      "rol": "tia",
+      "jardinId": "JAR-0001",
+      "salaIds": ["SG-A"]
+    },
+    {
+      "id": "EDU-0002",
+      "nombre": "Tía Rosa",
+      "rol": "tia",
+      "jardinId": "JAR-0001",
+      "salaIds": ["SG-B"]
+    }
+  ]
+}

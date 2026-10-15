@@ -1,0 +1,418 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Huellita en AWS (tareas 4 a 8). Un BFF FastAPI + Mangum en Lambda detras de una
+  HTTP API, dos tablas propias (Capturas y Decisiones) y la SPA en un bucket privado
+  servido por CloudFront, con /api/* hacia el BFF en el mismo dominio.
+
+# Fuentes: SPEC-OFICIAL.md secciones 4 y 5 (manda) y CONTRATOS.md seccion 10.
+# Nombres de los parametros: identicos a samconfig.toml (congelado). Las tablas
+# compartidas, el bucket de capturas y el transcriptor son de otros stacks
+# (integra-procesador y transcriptor-audio): aqui solo se referencian por nombre.
+# Nada de secretos en la plantilla: IdClaveTranscriptor es el ID de la clave de API,
+# no su valor; el valor lo lee la funcion en memoria con apigateway:GET.
+
+Parameters:
+  # --- Tablas de integra-procesador (solo lectura) -----------------------------
+  TablaJardines:
+    Type: String
+    AllowedPattern: '^[A-Za-z0-9_.-]{3,255}$'
+    Description: Tabla Jardines de integra-procesador (GetItem del jardin demo)
+  TablaEducadoras:
+    Type: String
+    AllowedPattern: '^[A-Za-z0-9_.-]{3,255}$'
+    Description: Tabla Educadoras de integra-procesador (reservada, las tias salen de usuarias_demo.json)
+  TablaNinos:
+    Type: String
+    AllowedPattern: '^[A-Za-z0-9_.-]{3,255}$'
+    Description: Tabla Ninos de integra-procesador (Query por id_jardin)
+  TablaRegistros:
+    Type: String
+    AllowedPattern: '^[A-Za-z0-9_.-]{3,255}$'
+    Description: Tabla Registros de integra-procesador (Query en porSala y BatchGetItem)
+  TablaObservaciones:
+    Type: String
+    AllowedPattern: '^[A-Za-z0-9_.-]{3,255}$'
+    Description: Tabla Observaciones de integra-procesador (Query en porSala)
+
+  # --- Integraciones ------------------------------------------------------------
+  BucketCapturas:
+    Type: String
+    Default: integra-capturas-277702547089
+    AllowedPattern: '^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$'
+    Description: Bucket de entrada de ProcesarNota; el BFF escribe capturas/{id}/meta.json y texto.json
+  UrlTranscriptor:
+    Type: String
+    AllowedPattern: '^https://[^ ]+$'
+    Description: URL base del transcriptor de audio (etapa v1 de su API REST)
+  IdClaveTranscriptor:
+    Type: String
+    AllowedPattern: '^[A-Za-z0-9]{5,64}$'
+    Description: ID (no el valor) de la clave de API del transcriptor
+
+  # --- Demo ---------------------------------------------------------------------
+  JardinDemo:
+    Type: String
+    Default: JAR-0001
+    AllowedPattern: '^[A-Za-z0-9-]{3,32}$'
+    Description: Jardin unico de la demo
+  SalasDemo:
+    Type: String
+    Default: SG-A,SG-B
+    AllowedPattern: '^[A-Za-z0-9-]+(,[A-Za-z0-9-]+)*$'
+    Description: Salas habilitadas, separadas por coma
+  MaxCapturasDia:
+    Type: Number
+    Default: 300
+    MinValue: 1
+    Description: Tope diario de capturas por sala (contador atomico en TablaCapturas)
+  MinutosMaxProcesando:
+    Type: Number
+    Default: 20
+    MinValue: 1
+    Description: Minutos tras los cuales una captura en procesando se da por vencida
+
+Resources:
+  # =============================================================== Datos propios
+  # Las dos tablas son de este stack (no estan en samconfig): sus nombres reales
+  # llegan al codigo por entorno, nunca escritos en el codigo.
+
+  TablaCapturas:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: id_captura
+          AttributeType: S
+        - AttributeName: sala_key
+          AttributeType: S
+        - AttributeName: creada_en
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id_captura
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        # Capturas de una sala en orden de llegada. Es un indice DISPERSO: el item
+        # contador del tope diario ("CONTADOR#AAAA-MM-DD", atributo total) no lleva
+        # sala_key ni creada_en, asi que no aparece en las consultas de la sala.
+        - IndexName: porSala
+          KeySchema:
+            - AttributeName: sala_key
+              KeyType: HASH
+            - AttributeName: creada_en
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+
+  TablaDecisiones:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      # Consultable por sala_key con un Query directo sobre la clave de particion:
+      # no necesita indices. La sugerencia (id_obs) es la clave de orden, por eso
+      # guardar es un PutItem que pisa y la decision resulta idempotente.
+      AttributeDefinitions:
+        - AttributeName: sala_key
+          AttributeType: S
+        - AttributeName: id_sugerencia
+          AttributeType: S
+      KeySchema:
+        - AttributeName: sala_key
+          KeyType: HASH
+        - AttributeName: id_sugerencia
+          KeyType: RANGE
+
+  # ======================================================================== API
+  LogsApi:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${AWS::StackName}-api"
+      RetentionInDays: 7
+
+  # HTTP API explicita para poder declarar RouteSettings por ruta. No lleva
+  # autorizador: la demo identifica a la tia con la cabecera X-Usuaria-Id y el
+  # riesgo esta aceptado en SPEC-OFICIAL.md seccion 5. La contencion es el
+  # throttling de aqui, el tope diario de capturas y los limites de tamano del BFF.
+  ApiHttp:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      # Etapa $default: la URL de invocacion no lleva prefijo de etapa, asi que
+      # CloudFront puede reenviar /api/* sin OriginPath ni reescrituras.
+      StageName: "$default"
+      DefaultRouteSettings:
+        ThrottlingRateLimit: 10
+        ThrottlingBurstLimit: 20
+      RouteSettings:
+        # La captura escribe en S3 y llama al transcriptor: es la ruta cara, asi
+        # que lleva un tope propio, mas bajo que el del resto.
+        "POST /api/capturas":
+          ThrottlingRateLimit: 1
+          ThrottlingBurstLimit: 3
+
+  FuncionApi:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: BFF de Huellita (FastAPI + Mangum) para la app de las tias
+      CodeUri: src/
+      Handler: huellita_api.app.handler
+      Runtime: python3.13
+      # arm64: mas barato por ms. Ojo al construir: pydantic-core y las demas
+      # ruedas binarias tienen que ser aarch64 (sam build --use-container).
+      Architectures:
+        - arm64
+      MemorySize: 512
+      # 25 s: por debajo de los 30 s de la integracion de la HTTP API, con margen
+      # sobre los 10 s del POST al transcriptor.
+      Timeout: 25
+      LoggingConfig:
+        LogFormat: JSON
+        ApplicationLogLevel: INFO
+        SystemLogLevel: WARN
+        LogGroup: !Ref LogsApi
+      Environment:
+        Variables:
+          # Los nombres son los que lee cargar_config() en config.py (congelado).
+          TABLA_JARDINES: !Ref TablaJardines
+          TABLA_EDUCADORAS: !Ref TablaEducadoras
+          TABLA_NINOS: !Ref TablaNinos
+          TABLA_REGISTROS: !Ref TablaRegistros
+          TABLA_OBSERVACIONES: !Ref TablaObservaciones
+          TABLA_CAPTURAS: !Ref TablaCapturas
+          TABLA_DECISIONES: !Ref TablaDecisiones
+          BUCKET_CAPTURAS: !Ref BucketCapturas
+          URL_TRANSCRIPTOR: !Ref UrlTranscriptor
+          # Solo el ID de la clave; el valor se pide en caliente y vive en memoria.
+          ID_CLAVE_TRANSCRIPTOR: !Ref IdClaveTranscriptor
+          JARDIN_DEMO: !Ref JardinDemo
+          SALAS_DEMO: !Ref SalasDemo
+          # Sub, no Ref: el entorno de Lambda solo acepta cadenas.
+          MAX_CAPTURAS_DIA: !Sub "${MaxCapturasDia}"
+          MINUTOS_MAX_PROCESANDO: !Sub "${MinutosMaxProcesando}"
+          ZONA_HORARIA: America/Santiago
+      Events:
+        # Todas las rutas del contrato (salud, contexto, ninos, registros,
+        # capturas/{id}/archivar y decisiones) entran por este comodin, para que
+        # una ruta inexistente llegue al BFF y conteste 404 en su propio JSON.
+        Catchall:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref ApiHttp
+            Path: /api/{proxy+}
+            Method: ANY
+        # Ruta propia solo para poder acotarle el throttling en RouteSettings.
+        Capturas:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref ApiHttp
+            Path: /api/capturas
+            Method: POST
+      Policies:
+        # Dataset de integra-procesador: solo lectura, tabla por tabla y con sus
+        # indices (porSala). Sin PutItem ni UpdateItem: ese stack es el dueno.
+        - Statement:
+            - Sid: LeerDatasetIntegra
+              Effect: Allow
+              Action:
+                - dynamodb:GetItem
+                - dynamodb:Query
+                - dynamodb:BatchGetItem
+              Resource:
+                - !Sub "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${TablaJardines}"
+                - !Sub "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${TablaJardines}/index/*"
+                - !Sub "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${TablaEducadoras}"
+                - !Sub "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${TablaEducadoras}/index/*"
+                - !Sub "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${TablaNinos}"
+                - !Sub "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${TablaNinos}/index/*"
+                - !Sub "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${TablaRegistros}"
+                - !Sub "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${TablaRegistros}/index/*"
+                - !Sub "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${TablaObservaciones}"
+                - !Sub "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${TablaObservaciones}/index/*"
+        # Tablas propias: la funcion es su unica escritora. DynamoDBCrudPolicy
+        # alcanza la tabla y su index/*, y nada mas.
+        - DynamoDBCrudPolicy:
+            TableName: !Ref TablaCapturas
+        - DynamoDBCrudPolicy:
+            TableName: !Ref TablaDecisiones
+        # Entrega a ProcesarNota: exactamente los dos objetos que escribe el BFF.
+        # Sin GetObject, sin DeleteObject y sin ListBucket.
+        - Statement:
+            - Sid: EscribirCapturaEnS3
+              Effect: Allow
+              Action: s3:PutObject
+              Resource:
+                - !Sub "arn:${AWS::Partition}:s3:::${BucketCapturas}/capturas/*/meta.json"
+                - !Sub "arn:${AWS::Partition}:s3:::${BucketCapturas}/capturas/*/texto.json"
+        # Valor de la clave de API del transcriptor: una sola clave, por su ID.
+        - Statement:
+            - Sid: LeerClaveDelTranscriptor
+              Effect: Allow
+              Action: apigateway:GET
+              Resource: !Sub "arn:${AWS::Partition}:apigateway:${AWS::Region}::/apikeys/${IdClaveTranscriptor}"
+        # Los permisos de CloudWatch Logs los agrega SAM con
+        # AWSLambdaBasicExecutionRole: es el minimo que necesita toda Lambda y el
+        # grupo de logs que usa esta funcion es LogsApi, con retencion de 7 dias.
+
+  # ==================================================== Hosting de la SPA (tarea 8)
+  BucketWeb:
+    Type: AWS::S3::Bucket
+    Properties:
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+
+  PoliticaBucketWeb:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref BucketWeb
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          # Unico lector: esta distribucion, por su ARN. El bucket queda privado.
+          - Sid: LeerDesdeCloudFront
+            Effect: Allow
+            Principal:
+              Service: cloudfront.amazonaws.com
+            Action: s3:GetObject
+            Resource: !Sub "${BucketWeb.Arn}/*"
+            Condition:
+              StringEquals:
+                AWS:SourceArn: !Sub "arn:${AWS::Partition}:cloudfront::${AWS::AccountId}:distribution/${Distribucion}"
+          - Sid: SoloHttps
+            Effect: Deny
+            Principal: "*"
+            Action: "s3:*"
+            Resource:
+              - !GetAtt BucketWeb.Arn
+              - !Sub "${BucketWeb.Arn}/*"
+            Condition:
+              Bool:
+                aws:SecureTransport: "false"
+
+  OacWeb:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Name: !Sub "${AWS::StackName}-oac-web"
+        Description: Acceso firmado de CloudFront al bucket privado de la SPA
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+  # Fallback de SPA sin CustomErrorResponses: estas aplican a toda la distribucion
+  # y convertirian los 404 y 403 de /api/* en index.html.
+  FuncionSpa:
+    Type: AWS::CloudFront::Function
+    Properties:
+      Name: !Sub "${AWS::StackName}-spa"
+      AutoPublish: true
+      FunctionConfig:
+        Comment: Reescribe a /index.html las rutas sin extension
+        Runtime: cloudfront-js-2.0
+      FunctionCode: |
+        function handler(event) {
+            var request = event.request;
+            var uri = request.uri;
+            var ultimo = uri.substring(uri.lastIndexOf('/') + 1);
+            if (ultimo.indexOf('.') === -1) {
+                request.uri = '/index.html';
+            }
+            return request;
+        }
+
+  Distribucion:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        Comment: !Sub "${AWS::StackName}: SPA de Huellita y BFF en /api/*"
+        DefaultRootObject: index.html
+        HttpVersion: http2and3
+        IPV6Enabled: true
+        PriceClass: PriceClass_100
+        Origins:
+          - Id: web
+            # RegionalDomainName (no DomainName): evita el redirect 307 de S3
+            # mientras el bucket nuevo se propaga.
+            DomainName: !GetAtt BucketWeb.RegionalDomainName
+            OriginAccessControlId: !GetAtt OacWeb.Id
+            S3OriginConfig:
+              OriginAccessIdentity: ""
+          - Id: api
+            DomainName: !Sub "${ApiHttp}.execute-api.${AWS::Region}.amazonaws.com"
+            CustomOriginConfig:
+              OriginProtocolPolicy: https-only
+              OriginSSLProtocols:
+                - TLSv1.2
+        DefaultCacheBehavior:
+          TargetOriginId: web
+          ViewerProtocolPolicy: redirect-to-https
+          AllowedMethods: [GET, HEAD]
+          CachedMethods: [GET, HEAD]
+          Compress: true
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6  # CachingOptimized
+          FunctionAssociations:
+            - EventType: viewer-request
+              FunctionARN: !GetAtt FuncionSpa.FunctionARN
+        CacheBehaviors:
+          - PathPattern: /api/*
+            TargetOriginId: api
+            # https-only y no redirect-to-https: el redirect es un 301 y un POST
+            # o PUT por http perderia el cuerpo. La app se carga por https, asi
+            # que sus llamadas relativas a /api ya salen por https.
+            ViewerProtocolPolicy: https-only
+            AllowedMethods: [GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE]
+            CachedMethods: [GET, HEAD]
+            Compress: true
+            CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad  # CachingDisabled
+            # AllViewerExceptHostHeader: reenvia cabeceras, cookies y query strings
+            # pero deja el Host del origen, que es lo que exige API Gateway.
+            OriginRequestPolicyId: b689b0a8-53d0-40ab-baf2-68738e2966ac
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: true
+
+  # ---------------------------------------------------------------------------
+  # PLAN B de la tarea 8 (documentado, NO activado): si la cuenta no permite
+  # crear distribuciones de CloudFront (SCP o limite), la Lambda del BFF sirve
+  # tambien el build, en el mismo dominio de la API:
+  #   1. Borrar o comentar BucketWeb, PoliticaBucketWeb, OacWeb, FuncionSpa y
+  #      Distribucion, y dejar UrlApp = UrlApiDirecta en los Outputs.
+  #   2. Agregar a FuncionApi el evento raiz (Path: /{proxy+}, Method: ANY) para
+  #      que las rutas de la SPA tambien lleguen a la funcion.
+  #   3. publicar_front.ps1 copia huellita-formato-mejorado/dist a
+  #      huellita-web/src/web/ antes de sam build, en vez de hacer s3 sync, y no
+  #      invalida nada; app.py monta esos archivos en / (StaticFiles con
+  #      html=True) y deja /api/* como esta. VITE_DATOS=http sigue hablando con
+  #      /api relativo, asi que el frontend no cambia.
+  #   4. Hay que AVISARLO en el reporte: sin CloudFront no hay cache de borde ni
+  #      cabeceras Cache-Control por carpeta, y cada GET de la SPA cuesta una
+  #      invocacion de Lambda.
+  # ---------------------------------------------------------------------------
+
+Outputs:
+  UrlApp:
+    Description: URL publica de Huellita (CloudFront)
+    Value: !Sub "https://${Distribucion.DomainName}"
+  UrlApiDirecta:
+    Description: URL de la HTTP API sin pasar por CloudFront (pruebas y humo)
+    Value: !Sub "https://${ApiHttp}.execute-api.${AWS::Region}.amazonaws.com"
+  BucketWeb:
+    Description: Bucket privado con el build de la SPA (lo usa publicar_front.ps1)
+    Value: !Ref BucketWeb
+  IdDistribucion:
+    Description: ID de la distribucion (create-invalidation despues de publicar)
+    Value: !Ref Distribucion
+  TablaCapturasNombre:
+    Description: Tabla propia de capturas (TABLA_CAPTURAS)
+    Value: !Ref TablaCapturas
+  TablaDecisionesNombre:
+    Description: Tabla propia de decisiones (TABLA_DECISIONES)
+    Value: !Ref TablaDecisiones
