@@ -1,0 +1,131 @@
+{
+  "_descripcion": "9 ejemplos resueltos (1 por nivel) para el prompt de clasificación. Sus códigos, observaciones y niños NO aparecen en validacion_100.json.",
+  "ejemplos": [
+    {
+      "id_observacion_origen": "OBS-0002110",
+      "protagonista": "Diego",
+      "nota": "Diego estaba llorando inquieto en la cuna; lo tomé, le hablé despacito y lo apegué a mi pecho, y se fue calmando hasta quedar tranquilo.",
+      "respuesta": {
+        "manifestaciones": [
+          {
+            "id_manifestacion": "MAN-L01-SE-02",
+            "frase_evidencia": "le hablé despacito y lo apegué a mi pecho, y se fue calmando"
+          }
+        ],
+        "comentario": "Se calma con la voz y el contacto de la tía: nivel 1."
+      }
+    },
+    {
+      "id_observacion_origen": "OBS-0002706",
+      "protagonista": "Rafaela",
+      "nota": "Rafaela en juego libre: le dejé el móvil de argollas cerca y le pegaba con la mano una y otra vez.",
+      "respuesta": {
+        "manifestaciones": [
+          {
+            "id_manifestacion": "MAN-L02-MF-02",
+            "frase_evidencia": "le pegaba con la mano una y otra vez"
+          }
+        ],
+        "comentario": "Golpea varias veces un objeto que tiene a su alcance: nivel 2."
+      }
+    },
+    {
+      "id_observacion_origen": "OBS-0000931",
+      "protagonista": "Maite",
+      "nota": "Maite, juego libre: sacudió el cascabel, sonó, y lo volvió a sacudir varias veces para que sonara de nuevo.",
+      "respuesta": {
+        "manifestaciones": [
+          {
+            "id_manifestacion": "MAN-L03-CO-02",
+            "frase_evidencia": "lo volvió a sacudir varias veces para que sonara de nuevo"
+          }
+        ],
+        "comentario": "Repite una acción simple para volver a producir el sonido: nivel 3."
+      }
+    },
+    {
+      "id_observacion_origen": "OBS-0000162",
+      "protagonista": "Simón",
+      "nota": "Simón: cada vez que lo llamo por su nombre desde el otro lado de la sala se da vuelta a mirarme, lo hace siempre.",
+      "respuesta": {
+        "manifestaciones": [
+          {
+            "id_manifestacion": "MAN-L04-LC-02",
+            "frase_evidencia": "cada vez que lo llamo por su nombre"
+          }
+        ],
+        "comentario": "Responde de forma consistente cuando lo llaman por su nombre: nivel 4."
+      }
+    },
+    {
+      "id_observacion_origen": "OBS-0001857",
+      "protagonista": "Facundo",
+      "nota": "Facundo metió los cubitos en el tarro grande y después metía la mano para sacarlos, lo repitió varias veces.",
+      "respuesta": {
+        "manifestaciones": [
+          {
+            "id_manifestacion": "MAN-L05-MF-02",
+            "frase_evidencia": "metió los cubitos en el tarro grande y después metía la mano para sacarlos"
+          }
+        ],
+        "comentario": "Mete objetos en un recipiente amplio y los vuelve a sacar: nivel 5."
+      }
+    },
+    {
+      "id_observacion_origen": "OBS-0002900",
+      "protagonista": "Trinidad",
+      "nota": "Trinidad vio que la tía guardaba los juguetes en la caja y empezó a echar algunos también, igual que ella. Lo hizo varias veces.",
+      "respuesta": {
+        "manifestaciones": [
+          {
+            "id_manifestacion": "MAN-L06-SE-02",
+            "frase_evidencia": "empezó a echar algunos también, igual que ella"
+          }
+        ],
+        "comentario": "Imita a la tía en una acción social sencilla (guardar). Si guardara por iniciativa propia una parte de la rutina sería nivel 9."
+      }
+    },
+    {
+      "id_observacion_origen": "OBS-0002626",
+      "protagonista": "Julieta",
+      "nota": "Julieta intentaba meter la pieza en el encaje y no entraba; la dio vuelta y probó por otro lado hasta que entró.",
+      "respuesta": {
+        "manifestaciones": [
+          {
+            "id_manifestacion": "MAN-L07-CO-02",
+            "frase_evidencia": "la dio vuelta y probó por otro lado hasta que entró"
+          }
+        ],
+        "comentario": "Cuando la primera forma no resulta, prueba otra para encajar: nivel 7."
+      }
+    },
+    {
+      "id_observacion_origen": "OBS-0002735",
+      "protagonista": "Bastián",
+      "nota": "Bastián pateó la pelota que estaba quieta en el patio y la mandó para adelante, sin afirmarse de nada.",
+      "respuesta": {
+        "manifestaciones": [
+          {
+            "id_manifestacion": "MAN-L08-MG-02",
+            "frase_evidencia": "pateó la pelota que estaba quieta"
+          }
+        ],
+        "comentario": "Patea una pelota detenida sin sostenerse: nivel 8."
+      }
+    },
+    {
+      "id_observacion_origen": "OBS-0002275",
+      "protagonista": "Ignacio",
+      "nota": "Ignacio ensartó las cuentas grandes en el cordón él solito y después armó el encaje de animales de seis piezas.",
+      "respuesta": {
+        "manifestaciones": [
+          {
+            "id_manifestacion": "MAN-L09-MF-01",
+            "frase_evidencia": "ensartó las cuentas grandes en el cordón"
+          }
+        ],
+        "comentario": "Ensarta piezas grandes y completa un encaje de varias piezas: nivel 9."
+      }
+    }
+  ]
+}

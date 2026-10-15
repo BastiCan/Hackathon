@@ -1,0 +1,528 @@
+{
+  "version": "E1-2026-10-13",
+  "_descripcion": "Tabla de cruce de la rúbrica E-1. El LLM solo elige id_manifestacion; nivel, dominio y texto_observable salen de aquí (sin IA). Los niveles traen el rango de edad y la descripción de ruta_niveles.",
+  "dominios": [
+    "motor_grueso",
+    "motor_fino",
+    "lenguaje_comunicacion",
+    "socioemocional",
+    "cognitivo"
+  ],
+  "niveles": [
+    {
+      "nivel": 1,
+      "nombre_nivel": "Atención y regulación inicial",
+      "edad_min_meses": 0,
+      "edad_max_meses": 2,
+      "descripcion": "Responde brevemente a estímulos, rostros, voces y contacto; comienza a organizar movimientos y estados de calma."
+    },
+    {
+      "nivel": 2,
+      "nombre_nivel": "Interacción y control emergente",
+      "edad_min_meses": 2,
+      "edad_max_meses": 4,
+      "descripcion": "Aumenta el control de cabeza, la atención compartida y el intercambio de sonidos y expresiones."
+    },
+    {
+      "nivel": 3,
+      "nombre_nivel": "Alcance y exploración corporal",
+      "edad_min_meses": 4,
+      "edad_max_meses": 6,
+      "descripcion": "Alcanza, manipula, vocaliza y cambia de postura para explorar personas y objetos cercanos."
+    },
+    {
+      "nivel": 4,
+      "nombre_nivel": "Sedestación y comunicación intencional",
+      "edad_min_meses": 6,
+      "edad_max_meses": 9,
+      "descripcion": "Se sostiene sentado, coordina manos, balbucea e inicia acciones para mantener intercambios o buscar objetos."
+    },
+    {
+      "nivel": 5,
+      "nombre_nivel": "Movilidad y propósito",
+      "edad_min_meses": 9,
+      "edad_max_meses": 12,
+      "descripcion": "Se desplaza con mayor autonomía, usa gestos y acciones dirigidas a una meta y comprende rutinas sencillas."
+    },
+    {
+      "nivel": 6,
+      "nombre_nivel": "Autonomía funcional inicial",
+      "edad_min_meses": 12,
+      "edad_max_meses": 18,
+      "descripcion": "Camina o practica marcha autónoma, usa objetos de forma funcional, comprende consignas simples y emplea palabras o aproximaciones consistentes."
+    },
+    {
+      "nivel": 7,
+      "nombre_nivel": "Representación y combinación inicial",
+      "edad_min_meses": 18,
+      "edad_max_meses": 21,
+      "descripcion": "Amplía movilidad, vocabulario, imitación y juego representacional; resuelve problemas cotidianos sencillos."
+    },
+    {
+      "nivel": 8,
+      "nombre_nivel": "Combinación y participación",
+      "edad_min_meses": 21,
+      "edad_max_meses": 27,
+      "descripcion": "Combina palabras y acciones, participa junto a pares, clasifica o empareja y ejecuta secuencias breves."
+    },
+    {
+      "nivel": 9,
+      "nombre_nivel": "Secuencias y autonomía creciente",
+      "edad_min_meses": 27,
+      "edad_max_meses": 36,
+      "descripcion": "Coordina movimientos más complejos, conversa con combinaciones breves, coopera por turnos y desarrolla juego y resolución de problemas en secuencia."
+    }
+  ],
+  "manifestaciones": {
+    "MAN-L01-CO-01": {
+      "nivel": 1,
+      "dominio": "cognitivo",
+      "texto_observable": "Sigue brevemente con la mirada un rostro u objeto de alto contraste que se desplaza lentamente."
+    },
+    "MAN-L01-CO-02": {
+      "nivel": 1,
+      "dominio": "cognitivo",
+      "texto_observable": "Orienta ojos o cabeza hacia un estímulo nuevo de luz o sonido cercano."
+    },
+    "MAN-L01-LC-01": {
+      "nivel": 1,
+      "dominio": "lenguaje_comunicacion",
+      "texto_observable": "Cambia su movimiento o expresión al oír una voz cercana."
+    },
+    "MAN-L01-LC-02": {
+      "nivel": 1,
+      "dominio": "lenguaje_comunicacion",
+      "texto_observable": "Emite sonidos breves distintos del llanto durante un intercambio tranquilo."
+    },
+    "MAN-L01-MF-01": {
+      "nivel": 1,
+      "dominio": "motor_fino",
+      "texto_observable": "Abre una o ambas manos por momentos, sin mantenerlas cerradas todo el periodo observado."
+    },
+    "MAN-L01-MF-02": {
+      "nivel": 1,
+      "dominio": "motor_fino",
+      "texto_observable": "Lleva una mano hacia la cara o la boca durante la observación."
+    },
+    "MAN-L01-MG-01": {
+      "nivel": 1,
+      "dominio": "motor_grueso",
+      "texto_observable": "En posición boca abajo y despierto, levanta brevemente la cabeza y vuelve a apoyarla."
+    },
+    "MAN-L01-MG-02": {
+      "nivel": 1,
+      "dominio": "motor_grueso",
+      "texto_observable": "Mueve brazos y piernas espontáneamente durante un periodo de alerta."
+    },
+    "MAN-L01-SE-01": {
+      "nivel": 1,
+      "dominio": "socioemocional",
+      "texto_observable": "Mantiene por unos segundos la mirada hacia el rostro de la persona que lo sostiene o acompaña."
+    },
+    "MAN-L01-SE-02": {
+      "nivel": 1,
+      "dominio": "socioemocional",
+      "texto_observable": "Disminuye el llanto o la agitación ante voz suave, contacto o contención."
+    },
+    "MAN-L02-CO-01": {
+      "nivel": 2,
+      "dominio": "cognitivo",
+      "texto_observable": "Sigue visualmente un objeto lento de un lado al otro cruzando la línea media."
+    },
+    "MAN-L02-CO-02": {
+      "nivel": 2,
+      "dominio": "cognitivo",
+      "texto_observable": "Observa sus manos o repite un movimiento que produjo un resultado visible cercano."
+    },
+    "MAN-L02-LC-01": {
+      "nivel": 2,
+      "dominio": "lenguaje_comunicacion",
+      "texto_observable": "Responde a la voz con arrullos, vocalizaciones o cambios de expresión."
+    },
+    "MAN-L02-LC-02": {
+      "nivel": 2,
+      "dominio": "lenguaje_comunicacion",
+      "texto_observable": "Alterna al menos una emisión sonora con la persona adulta durante un intercambio."
+    },
+    "MAN-L02-MF-01": {
+      "nivel": 2,
+      "dominio": "motor_fino",
+      "texto_observable": "Junta las manos en la línea media mientras está despierto."
+    },
+    "MAN-L02-MF-02": {
+      "nivel": 2,
+      "dominio": "motor_fino",
+      "texto_observable": "Golpea o roza de forma repetida un objeto colocado a su alcance."
+    },
+    "MAN-L02-MG-01": {
+      "nivel": 2,
+      "dominio": "motor_grueso",
+      "texto_observable": "Sostiene la cabeza alineada durante varios segundos cuando se le carga con apoyo de tronco."
+    },
+    "MAN-L02-MG-02": {
+      "nivel": 2,
+      "dominio": "motor_grueso",
+      "texto_observable": "Apoya antebrazos y eleva cabeza y parte superior del pecho estando boca abajo."
+    },
+    "MAN-L02-SE-01": {
+      "nivel": 2,
+      "dominio": "socioemocional",
+      "texto_observable": "Sonríe en respuesta a la sonrisa, voz o acercamiento de una persona."
+    },
+    "MAN-L02-SE-02": {
+      "nivel": 2,
+      "dominio": "socioemocional",
+      "texto_observable": "Busca nuevamente el rostro cuando la interacción se interrumpe por unos segundos."
+    },
+    "MAN-L03-CO-01": {
+      "nivel": 3,
+      "dominio": "cognitivo",
+      "texto_observable": "Explora un objeto mirándolo, llevándolo a la boca o moviéndolo de más de una manera."
+    },
+    "MAN-L03-CO-02": {
+      "nivel": 3,
+      "dominio": "cognitivo",
+      "texto_observable": "Repite una acción sencilla que vuelve a producir un sonido o movimiento."
+    },
+    "MAN-L03-LC-01": {
+      "nivel": 3,
+      "dominio": "lenguaje_comunicacion",
+      "texto_observable": "Produce series de vocales, chillidos suaves o sonidos guturales durante el juego."
+    },
+    "MAN-L03-LC-02": {
+      "nivel": 3,
+      "dominio": "lenguaje_comunicacion",
+      "texto_observable": "Gira hacia la voz de una persona conocida cuando esta habla desde un costado."
+    },
+    "MAN-L03-MF-01": {
+      "nivel": 3,
+      "dominio": "motor_fino",
+      "texto_observable": "Alcanza intencionalmente un objeto visible y lo toma con una o ambas manos."
+    },
+    "MAN-L03-MF-02": {
+      "nivel": 3,
+      "dominio": "motor_fino",
+      "texto_observable": "Pasa un objeto de una mano a la otra o lo lleva a la boca para explorarlo."
+    },
+    "MAN-L03-MG-01": {
+      "nivel": 3,
+      "dominio": "motor_grueso",
+      "texto_observable": "Rueda de costado o cambia de boca arriba a boca abajo, o a la inversa, durante el juego."
+    },
+    "MAN-L03-MG-02": {
+      "nivel": 3,
+      "dominio": "motor_grueso",
+      "texto_observable": "Mantiene la cabeza estable al sentarse con apoyo de tronco."
+    },
+    "MAN-L03-SE-01": {
+      "nivel": 3,
+      "dominio": "socioemocional",
+      "texto_observable": "Ríe o vocaliza para prolongar un juego social repetido."
+    },
+    "MAN-L03-SE-02": {
+      "nivel": 3,
+      "dominio": "socioemocional",
+      "texto_observable": "Expresa agrado o desagrado de manera diferenciada ante actividades distintas."
+    },
+    "MAN-L04-CO-01": {
+      "nivel": 4,
+      "dominio": "cognitivo",
+      "texto_observable": "Busca con la mirada o la mano un objeto que quedó parcialmente oculto."
+    },
+    "MAN-L04-CO-02": {
+      "nivel": 4,
+      "dominio": "cognitivo",
+      "texto_observable": "Anticipa una acción de una rutina conocida mediante movimiento, mirada o vocalización."
+    },
+    "MAN-L04-LC-01": {
+      "nivel": 4,
+      "dominio": "lenguaje_comunicacion",
+      "texto_observable": "Balbucea secuencias repetidas de consonante y vocal durante la interacción."
+    },
+    "MAN-L04-LC-02": {
+      "nivel": 4,
+      "dominio": "lenguaje_comunicacion",
+      "texto_observable": "Responde de forma consistente a su identificador ficticio o a una llamada habitual del grupo."
+    },
+    "MAN-L04-MF-01": {
+      "nivel": 4,
+      "dominio": "motor_fino",
+      "texto_observable": "Golpea dos objetos entre sí después de recibirlos o ver una demostración."
+    },
+    "MAN-L04-MF-02": {
+      "nivel": 4,
+      "dominio": "motor_fino",
+      "texto_observable": "Recoge un objeto pequeño seguro usando dedos y palma con intención."
+    },
+    "MAN-L04-MG-01": {
+      "nivel": 4,
+      "dominio": "motor_grueso",
+      "texto_observable": "Permanece sentado sin apoyo durante el tiempo necesario para manipular un juguete."
+    },
+    "MAN-L04-MG-02": {
+      "nivel": 4,
+      "dominio": "motor_grueso",
+      "texto_observable": "Cambia entre sentado y otra postura con apoyo de manos o del mobiliario bajo."
+    },
+    "MAN-L04-SE-01": {
+      "nivel": 4,
+      "dominio": "socioemocional",
+      "texto_observable": "Inicia un intercambio mediante mirada, sonido, sonrisa o extensión de brazos."
+    },
+    "MAN-L04-SE-02": {
+      "nivel": 4,
+      "dominio": "socioemocional",
+      "texto_observable": "Reacciona de manera distinta ante una persona habitual y una menos familiar."
+    },
+    "MAN-L05-CO-01": {
+      "nivel": 5,
+      "dominio": "cognitivo",
+      "texto_observable": "Busca un objeto que vio ocultarse completamente bajo una tela o recipiente."
+    },
+    "MAN-L05-CO-02": {
+      "nivel": 5,
+      "dominio": "cognitivo",
+      "texto_observable": "Prueba más de una acción para alcanzar un objeto cercano fuera de alcance directo."
+    },
+    "MAN-L05-LC-01": {
+      "nivel": 5,
+      "dominio": "lenguaje_comunicacion",
+      "texto_observable": "Usa un gesto convencional, como señalar, mostrar o despedirse, para comunicar una intención."
+    },
+    "MAN-L05-LC-02": {
+      "nivel": 5,
+      "dominio": "lenguaje_comunicacion",
+      "texto_observable": "Responde con acción o mirada a una palabra frecuente dentro de una rutina."
+    },
+    "MAN-L05-MF-01": {
+      "nivel": 5,
+      "dominio": "motor_fino",
+      "texto_observable": "Toma un objeto pequeño seguro entre pulgar y otro dedo."
+    },
+    "MAN-L05-MF-02": {
+      "nivel": 5,
+      "dominio": "motor_fino",
+      "texto_observable": "Introduce un objeto en un recipiente de boca amplia y trata de recuperarlo."
+    },
+    "MAN-L05-MG-01": {
+      "nivel": 5,
+      "dominio": "motor_grueso",
+      "texto_observable": "Se desplaza para alcanzar un objeto mediante gateo, arrastre u otra estrategia coordinada."
+    },
+    "MAN-L05-MG-02": {
+      "nivel": 5,
+      "dominio": "motor_grueso",
+      "texto_observable": "Se pone de pie con apoyo y se mantiene mientras sostiene una superficie estable."
+    },
+    "MAN-L05-SE-01": {
+      "nivel": 5,
+      "dominio": "socioemocional",
+      "texto_observable": "Comparte atención alternando la mirada entre una persona y un objeto de interés."
+    },
+    "MAN-L05-SE-02": {
+      "nivel": 5,
+      "dominio": "socioemocional",
+      "texto_observable": "Busca proximidad o apoyo de una persona familiar ante una situación nueva."
+    },
+    "MAN-L06-CO-01": {
+      "nivel": 6,
+      "dominio": "cognitivo",
+      "texto_observable": "Usa un objeto cotidiano de manera funcional en una actividad breve."
+    },
+    "MAN-L06-CO-02": {
+      "nivel": 6,
+      "dominio": "cognitivo",
+      "texto_observable": "Identifica un objeto conocido al elegirlo entre dos cuando se le solicita."
+    },
+    "MAN-L06-LC-01": {
+      "nivel": 6,
+      "dominio": "lenguaje_comunicacion",
+      "texto_observable": "Usa de manera consistente al menos tres palabras, aproximaciones o señas con significado."
+    },
+    "MAN-L06-LC-02": {
+      "nivel": 6,
+      "dominio": "lenguaje_comunicacion",
+      "texto_observable": "Sigue una instrucción cotidiana de un paso acompañada, si hace falta, por gesto."
+    },
+    "MAN-L06-MF-01": {
+      "nivel": 6,
+      "dominio": "motor_fino",
+      "texto_observable": "Apila dos bloques u objetos estables después de explorar o ver el ejemplo."
+    },
+    "MAN-L06-MF-02": {
+      "nivel": 6,
+      "dominio": "motor_fino",
+      "texto_observable": "Intenta usar cuchara, vaso u otro objeto cotidiano según su función."
+    },
+    "MAN-L06-MG-01": {
+      "nivel": 6,
+      "dominio": "motor_grueso",
+      "texto_observable": "Da varios pasos sin apoyo o recorre una distancia breve de forma independiente."
+    },
+    "MAN-L06-MG-02": {
+      "nivel": 6,
+      "dominio": "motor_grueso",
+      "texto_observable": "Se agacha para recoger un objeto y vuelve a incorporarse con o sin apoyo cercano."
+    },
+    "MAN-L06-SE-01": {
+      "nivel": 6,
+      "dominio": "socioemocional",
+      "texto_observable": "Se aleja para explorar y vuelve o mira a la persona adulta como referencia."
+    },
+    "MAN-L06-SE-02": {
+      "nivel": 6,
+      "dominio": "socioemocional",
+      "texto_observable": "Imita una acción social sencilla, como saludar, aplaudir o ayudar a guardar."
+    },
+    "MAN-L07-CO-01": {
+      "nivel": 7,
+      "dominio": "cognitivo",
+      "texto_observable": "Realiza una acción de juego representacional, como dar de comer a un muñeco o simular hablar."
+    },
+    "MAN-L07-CO-02": {
+      "nivel": 7,
+      "dominio": "cognitivo",
+      "texto_observable": "Prueba una alternativa cuando la primera estrategia para abrir, encajar o alcanzar no funciona."
+    },
+    "MAN-L07-LC-01": {
+      "nivel": 7,
+      "dominio": "lenguaje_comunicacion",
+      "texto_observable": "Usa palabras, aproximaciones o señas diferentes para pedir, nombrar o rechazar en varias ocasiones."
+    },
+    "MAN-L07-LC-02": {
+      "nivel": 7,
+      "dominio": "lenguaje_comunicacion",
+      "texto_observable": "Señala al menos una parte del cuerpo u objeto conocido cuando se le pregunta."
+    },
+    "MAN-L07-MF-01": {
+      "nivel": 7,
+      "dominio": "motor_fino",
+      "texto_observable": "Hace trazos visibles con crayón grueso después de recibir papel y material seguro."
+    },
+    "MAN-L07-MF-02": {
+      "nivel": 7,
+      "dominio": "motor_fino",
+      "texto_observable": "Pasa varias páginas de cartón o manipula tapas grandes con intención."
+    },
+    "MAN-L07-MG-01": {
+      "nivel": 7,
+      "dominio": "motor_grueso",
+      "texto_observable": "Camina con estabilidad mientras transporta un objeto liviano."
+    },
+    "MAN-L07-MG-02": {
+      "nivel": 7,
+      "dominio": "motor_grueso",
+      "texto_observable": "Sube uno o más peldaños con apoyo de mano, baranda o gateando."
+    },
+    "MAN-L07-SE-01": {
+      "nivel": 7,
+      "dominio": "socioemocional",
+      "texto_observable": "Imita una tarea cotidiana de otra persona durante el juego."
+    },
+    "MAN-L07-SE-02": {
+      "nivel": 7,
+      "dominio": "socioemocional",
+      "texto_observable": "Permanece cerca de otro niño o niña realizando una actividad similar por un periodo breve."
+    },
+    "MAN-L08-CO-01": {
+      "nivel": 8,
+      "dominio": "cognitivo",
+      "texto_observable": "Empareja dos o más objetos o imágenes iguales entre varias opciones."
+    },
+    "MAN-L08-CO-02": {
+      "nivel": 8,
+      "dominio": "cognitivo",
+      "texto_observable": "Completa una secuencia cotidiana de dos pasos después de una indicación inicial."
+    },
+    "MAN-L08-LC-01": {
+      "nivel": 8,
+      "dominio": "lenguaje_comunicacion",
+      "texto_observable": "Combina dos palabras, aproximaciones o señas para expresar una relación o intención."
+    },
+    "MAN-L08-LC-02": {
+      "nivel": 8,
+      "dominio": "lenguaje_comunicacion",
+      "texto_observable": "Sigue una instrucción de dos acciones relacionadas dentro de una rutina conocida."
+    },
+    "MAN-L08-MF-01": {
+      "nivel": 8,
+      "dominio": "motor_fino",
+      "texto_observable": "Construye una torre de cuatro o más bloques estables."
+    },
+    "MAN-L08-MF-02": {
+      "nivel": 8,
+      "dominio": "motor_fino",
+      "texto_observable": "Gira una tapa grande, perilla o pieza rotatoria para lograr un resultado."
+    },
+    "MAN-L08-MG-01": {
+      "nivel": 8,
+      "dominio": "motor_grueso",
+      "texto_observable": "Corre una distancia breve, aunque todavía ajuste velocidad o equilibrio."
+    },
+    "MAN-L08-MG-02": {
+      "nivel": 8,
+      "dominio": "motor_grueso",
+      "texto_observable": "Patea una pelota detenida hacia adelante sin necesitar sostén."
+    },
+    "MAN-L08-SE-01": {
+      "nivel": 8,
+      "dominio": "socioemocional",
+      "texto_observable": "Participa en una actividad junto a pares y tolera compartir espacio o materiales con apoyo adulto."
+    },
+    "MAN-L08-SE-02": {
+      "nivel": 8,
+      "dominio": "socioemocional",
+      "texto_observable": "Comunica una necesidad de ayuda, pausa o consuelo mediante palabra, seña o gesto claro."
+    },
+    "MAN-L09-CO-01": {
+      "nivel": 9,
+      "dominio": "cognitivo",
+      "texto_observable": "Representa una secuencia de dos o más acciones relacionadas en el juego simbólico."
+    },
+    "MAN-L09-CO-02": {
+      "nivel": 9,
+      "dominio": "cognitivo",
+      "texto_observable": "Clasifica objetos por una característica visible, como forma, color o tamaño, después de una consigna simple."
+    },
+    "MAN-L09-LC-01": {
+      "nivel": 9,
+      "dominio": "lenguaje_comunicacion",
+      "texto_observable": "Produce combinaciones de tres o más palabras, aproximaciones o señas para relatar, pedir o comentar."
+    },
+    "MAN-L09-LC-02": {
+      "nivel": 9,
+      "dominio": "lenguaje_comunicacion",
+      "texto_observable": "Responde una pregunta sencilla sobre quién, qué o dónde dentro de una situación conocida."
+    },
+    "MAN-L09-MF-01": {
+      "nivel": 9,
+      "dominio": "motor_fino",
+      "texto_observable": "Ensarta piezas grandes o completa un encaje de varias piezas adecuadas a la edad."
+    },
+    "MAN-L09-MF-02": {
+      "nivel": 9,
+      "dominio": "motor_fino",
+      "texto_observable": "Copia un trazo vertical o circular aproximado después de observar un modelo."
+    },
+    "MAN-L09-MG-01": {
+      "nivel": 9,
+      "dominio": "motor_grueso",
+      "texto_observable": "Salta con ambos pies despegándolos del suelo durante el juego."
+    },
+    "MAN-L09-MG-02": {
+      "nivel": 9,
+      "dominio": "motor_grueso",
+      "texto_observable": "Sube peldaños con apoyo de baranda o mano, alternando o reuniendo los pies de forma estable."
+    },
+    "MAN-L09-SE-01": {
+      "nivel": 9,
+      "dominio": "socioemocional",
+      "texto_observable": "Participa en al menos un turno de ida y vuelta con un par o una persona adulta durante un juego."
+    },
+    "MAN-L09-SE-02": {
+      "nivel": 9,
+      "dominio": "socioemocional",
+      "texto_observable": "Colabora en una rutina de autonomía, como guardar, lavarse o vestirse, realizando una parte identificable."
+    }
+  }
+}

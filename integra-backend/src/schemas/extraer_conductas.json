@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "extraer_conductas",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "conductas",
+    "evaluable",
+    "motivo_no_evaluable",
+    "es_progreso"
+  ],
+  "properties": {
+    "conductas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "accion",
+          "frase_literal",
+          "iniciativa",
+          "apoyo",
+          "complejidad",
+          "tipo_contenido"
+        ],
+        "properties": {
+          "accion": {
+            "type": "string"
+          },
+          "frase_literal": {
+            "type": "string"
+          },
+          "iniciativa": {
+            "type": "string",
+            "enum": [
+              "espontanea",
+              "con_consigna",
+              "imitacion",
+              "no_se_sabe"
+            ]
+          },
+          "apoyo": {
+            "type": "string",
+            "enum": [
+              "sin_ayuda",
+              "con_apoyo_adulto",
+              "con_apoyo_objeto",
+              "no_se_sabe"
+            ]
+          },
+          "complejidad": {
+            "type": "string"
+          },
+          "tipo_contenido": {
+            "type": "string",
+            "enum": [
+              "conducta",
+              "estado",
+              "juicio",
+              "conducta_adulto",
+              "logistica"
+            ]
+          }
+        }
+      }
+    },
+    "evaluable": {
+      "type": "boolean"
+    },
+    "motivo_no_evaluable": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "ESTADO_O_SALUD",
+        "JUICIO_SIN_CONDUCTA",
+        "CONDUCTA_ADULTO",
+        "LOGISTICA_O_FAMILIA",
+        "OTRO",
+        null
+      ]
+    },
+    "es_progreso": {
+      "type": "boolean"
+    }
+  }
+}

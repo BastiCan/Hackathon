@@ -1,0 +1,319 @@
+{
+  "_descripcion": "Nombres de DEMO asignados a niños/as REALES del dataset E-1 (JAR-0001, salas SG-A y SG-B; IDs, fechas y salas son las del dataset). Sirve para probar la identificación por nombre con datos reales. Casos a propósito: Nayara tiene la variante 'Naiara' (error de escritura); dos 'Martina' en SG-A (AMBIGUO); 'Joaquín' está en SG-B (FUERA_DE_SALA si una nota de SG-A lo nombra); Vicente es una guagua de 5 meses que ingresó en julio. Educadoras del jardín: EDU-0001, EDU-0002.",
+  "educadoras": [
+    {
+      "id_educadora": "EDU-0001",
+      "id_jardin": "JAR-0001"
+    },
+    {
+      "id_educadora": "EDU-0002",
+      "id_jardin": "JAR-0001"
+    }
+  ],
+  "ninos": [
+    {
+      "id_nino": "NINO-00487",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-A",
+      "nombre": "Nayara",
+      "apodos": [
+        "Naiara",
+        "Naya"
+      ],
+      "fecha_nacimiento": "2023-06-01",
+      "sexo_registrado": "f",
+      "fecha_ingreso": "2024-11-24"
+    },
+    {
+      "id_nino": "NINO-00346",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-A",
+      "nombre": "Rusi",
+      "apodos": [
+        "Rusito"
+      ],
+      "fecha_nacimiento": "2023-09-01",
+      "sexo_registrado": "m",
+      "fecha_ingreso": "2025-03-22"
+    },
+    {
+      "id_nino": "NINO-00372",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-A",
+      "nombre": "Sofía",
+      "apodos": [
+        "Sofi",
+        "la Sofi"
+      ],
+      "fecha_nacimiento": "2023-09-01",
+      "sexo_registrado": "f",
+      "fecha_ingreso": "2025-04-02"
+    },
+    {
+      "id_nino": "NINO-00253",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-A",
+      "nombre": "Pedro",
+      "apodos": [
+        "Pedrito"
+      ],
+      "fecha_nacimiento": "2024-03-01",
+      "sexo_registrado": "m",
+      "fecha_ingreso": "2025-03-28"
+    },
+    {
+      "id_nino": "NINO-00008",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-A",
+      "nombre": "Josefa",
+      "apodos": [
+        "Jose",
+        "la Jose"
+      ],
+      "fecha_nacimiento": "2024-06-01",
+      "sexo_registrado": "f",
+      "fecha_ingreso": "2024-12-05"
+    },
+    {
+      "id_nino": "NINO-00051",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-A",
+      "nombre": "Pascal",
+      "apodos": [],
+      "fecha_nacimiento": "2024-10-01",
+      "sexo_registrado": "m",
+      "fecha_ingreso": "2024-12-07"
+    },
+    {
+      "id_nino": "NINO-00237",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-A",
+      "nombre": "Martina M.",
+      "apodos": [
+        "Martina",
+        "Marti"
+      ],
+      "fecha_nacimiento": "2024-10-01",
+      "sexo_registrado": "f",
+      "fecha_ingreso": "2025-03-01"
+    },
+    {
+      "id_nino": "NINO-00263",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-A",
+      "nombre": "Martina R.",
+      "apodos": [
+        "Martina",
+        "Tina"
+      ],
+      "fecha_nacimiento": "2024-10-01",
+      "sexo_registrado": "f",
+      "fecha_ingreso": "2024-12-06"
+    },
+    {
+      "id_nino": "NINO-00453",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-A",
+      "nombre": "Emilio",
+      "apodos": [
+        "Emi"
+      ],
+      "fecha_nacimiento": "2024-10-01",
+      "sexo_registrado": "m",
+      "fecha_ingreso": "2025-04-27"
+    },
+    {
+      "id_nino": "NINO-00300",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-A",
+      "nombre": "Esperanza",
+      "apodos": [
+        "Espe"
+      ],
+      "fecha_nacimiento": "2024-11-01",
+      "sexo_registrado": "f",
+      "fecha_ingreso": "2025-03-08"
+    },
+    {
+      "id_nino": "NINO-00356",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-A",
+      "nombre": "Tomás",
+      "apodos": [
+        "Tomi"
+      ],
+      "fecha_nacimiento": "2024-11-01",
+      "sexo_registrado": "m",
+      "fecha_ingreso": "2025-01-20"
+    },
+    {
+      "id_nino": "NINO-00394",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-A",
+      "nombre": "Benjamín",
+      "apodos": [
+        "Benja",
+        "el Benja"
+      ],
+      "fecha_nacimiento": "2025-02-01",
+      "sexo_registrado": "m",
+      "fecha_ingreso": "2026-08-17"
+    },
+    {
+      "id_nino": "NINO-00080",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-A",
+      "nombre": "Vicente",
+      "apodos": [
+        "Vicho"
+      ],
+      "fecha_nacimiento": "2026-05-01",
+      "sexo_registrado": "m",
+      "fecha_ingreso": "2026-07-29"
+    },
+    {
+      "id_nino": "NINO-00209",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-B",
+      "nombre": "Antonia",
+      "apodos": [
+        "Anto"
+      ],
+      "fecha_nacimiento": "2023-06-01",
+      "sexo_registrado": "f",
+      "fecha_ingreso": "2024-12-20"
+    },
+    {
+      "id_nino": "NINO-00322",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-B",
+      "nombre": "Matías",
+      "apodos": [
+        "Mati"
+      ],
+      "fecha_nacimiento": "2023-08-01",
+      "sexo_registrado": "m",
+      "fecha_ingreso": "2025-01-14"
+    },
+    {
+      "id_nino": "NINO-00216",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-B",
+      "nombre": "Joaquín",
+      "apodos": [
+        "Joaco"
+      ],
+      "fecha_nacimiento": "2024-03-01",
+      "sexo_registrado": "m",
+      "fecha_ingreso": "2024-11-03"
+    },
+    {
+      "id_nino": "NINO-00493",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-B",
+      "nombre": "Isidora",
+      "apodos": [
+        "Isi"
+      ],
+      "fecha_nacimiento": "2024-03-01",
+      "sexo_registrado": "f",
+      "fecha_ingreso": "2025-02-25"
+    },
+    {
+      "id_nino": "NINO-00088",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-B",
+      "nombre": "Alex",
+      "apodos": [],
+      "fecha_nacimiento": "2024-04-01",
+      "sexo_registrado": "no_informado",
+      "fecha_ingreso": "2025-04-25"
+    },
+    {
+      "id_nino": "NINO-00023",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-B",
+      "nombre": "Lucas",
+      "apodos": [],
+      "fecha_nacimiento": "2024-05-01",
+      "sexo_registrado": "m",
+      "fecha_ingreso": "2025-02-17"
+    },
+    {
+      "id_nino": "NINO-00357",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-B",
+      "nombre": "Gaspar",
+      "apodos": [],
+      "fecha_nacimiento": "2024-09-01",
+      "sexo_registrado": "m",
+      "fecha_ingreso": "2024-11-26"
+    },
+    {
+      "id_nino": "NINO-00442",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-B",
+      "nombre": "Maximiliano",
+      "apodos": [
+        "Maxi"
+      ],
+      "fecha_nacimiento": "2024-09-01",
+      "sexo_registrado": "m",
+      "fecha_ingreso": "2025-03-12"
+    },
+    {
+      "id_nino": "NINO-00366",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-B",
+      "nombre": "Felipe",
+      "apodos": [
+        "Pipe"
+      ],
+      "fecha_nacimiento": "2024-10-01",
+      "sexo_registrado": "m",
+      "fecha_ingreso": "2024-12-21"
+    },
+    {
+      "id_nino": "NINO-00265",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-B",
+      "nombre": "Emilia",
+      "apodos": [],
+      "fecha_nacimiento": "2024-12-01",
+      "sexo_registrado": "f",
+      "fecha_ingreso": "2025-01-17"
+    },
+    {
+      "id_nino": "NINO-00037",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-B",
+      "nombre": "Gabriel",
+      "apodos": [
+        "Gabo"
+      ],
+      "fecha_nacimiento": "2025-01-01",
+      "sexo_registrado": "m",
+      "fecha_ingreso": "2025-01-01"
+    },
+    {
+      "id_nino": "NINO-00362",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-B",
+      "nombre": "León",
+      "apodos": [],
+      "fecha_nacimiento": "2025-11-01",
+      "sexo_registrado": "m",
+      "fecha_ingreso": "2026-08-29"
+    },
+    {
+      "id_nino": "NINO-00439",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-B",
+      "nombre": "Amanda",
+      "apodos": [],
+      "fecha_nacimiento": "2026-04-01",
+      "sexo_registrado": "f",
+      "fecha_ingreso": "2026-08-19"
+    }
+  ]
+}

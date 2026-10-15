@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "clasificar",
+  "type": "object",
+  "additionalProperties": false,
+  "$comment": "llm.py reemplaza x-enum-from por la lista de los 90 códigos de data/processed/rubrica.json (structured outputs impide códigos inventados). Nivel, dominio y texto_observable NO los genera el LLM: se cruzan con rubrica.json.",
+  "required": [
+    "manifestaciones",
+    "otro_codigo_viable",
+    "comentario",
+    "sin_correspondencia"
+  ],
+  "properties": {
+    "manifestaciones": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id_manifestacion",
+          "frase_evidencia"
+        ],
+        "properties": {
+          "id_manifestacion": {
+            "type": "string",
+            "x-enum-from": "rubrica.manifestaciones"
+          },
+          "frase_evidencia": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "otro_codigo_viable": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "x-enum-from": "rubrica.manifestaciones"
+    },
+    "comentario": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sin_correspondencia": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,277 @@
+{
+  "_descripcion": "Notas de prueba sobre la sala real JAR-0001 / SG-A (nombres de demo en nomina_demo.json). C* = notas reales de la PPT de Integra; I* = identificación; P1 = post-it completo. 'esperado' es orientativo: listas = cualquiera de esos valores es aceptable. La edad se calcula a la fecha de la nota (2026-10-15). Revisar en equipo en el checkpoint (tarea 7).",
+  "contexto": {
+    "id_educadora": "EDU-0001",
+    "sala_grupo": "SG-A",
+    "fecha": "2026-10-15"
+  },
+  "casos": [
+    {
+      "id": "C1",
+      "texto": "Nayara: cuando salía del baño se da cuenta que a la tía se le caen los individuales, ella se agacha, recoge los individuales, los ordena y se los pasa a la tía",
+      "esperado": [
+        {
+          "tipo": "PARTICULAR",
+          "id_nino": "NINO-00487",
+          "evaluabilidad": "EVALUABLE",
+          "dominios": [
+            "socioemocional"
+          ],
+          "nivel": 9,
+          "nota": "Puede sumar motor grueso; no debe quedar SOLO como motor grueso nivel 6 (trampa de similitud). Nayara tiene 40 meses: fuera del rango de la rúbrica, esperado [9]"
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "texto": "Sofía mira por la ventana y dice \"viene el Alexi\"",
+      "esperado": [
+        {
+          "tipo": "PARTICULAR",
+          "id_nino": "NINO-00372",
+          "evaluabilidad": "EVALUABLE",
+          "dominios": [
+            "lenguaje_comunicacion"
+          ],
+          "nivel": [
+            8,
+            9
+          ],
+          "nota": "Alexi es un adulto (papá): no genera observación",
+          "certeza": [
+            "media",
+            "baja"
+          ],
+          "comentario_debe_mencionar": "el otro nivel (8 o 9) y que depende de cuántas palabras cuenta 'viene el Alexi'"
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "texto": "Naiara: \"tía mira la Pascal tiene moco\"",
+      "esperado": [
+        {
+          "tipo": "PARTICULAR",
+          "id_nino": "NINO-00487",
+          "evaluabilidad": "EVALUABLE",
+          "dominios": [
+            "lenguaje_comunicacion"
+          ],
+          "nivel": 9,
+          "nota": "'Naiara' se resuelve como Nayara por su variante. Pascal (NINO-00051) solo es mencionado: NO recibe observación"
+        }
+      ]
+    },
+    {
+      "id": "C4",
+      "texto": "Rusi: la primera semana tenía más dificultades para hacer actividades de equilibrio, pero al pasar aprox. un mes se ve un gran avance, ya que logra pasar por circuitos de desafíos sin ayuda de adulto",
+      "esperado": [
+        {
+          "tipo": "PARTICULAR",
+          "id_nino": "NINO-00346",
+          "evaluabilidad": "EVALUABLE",
+          "dominios": [
+            "motor_grueso"
+          ],
+          "nota": "Se evalúa el estado final; el comentario debe decir qué falta saber del circuito",
+          "certeza": [
+            "media",
+            "baja"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "C5",
+      "texto": "Sofía 25 abril: - sigue instrucciones - reconoce colores",
+      "esperado": [
+        {
+          "tipo": "PARTICULAR",
+          "id_nino": "NINO-00372",
+          "evaluabilidad": "EVALUABLE",
+          "fecha_en_texto": "25 abril",
+          "certeza": [
+            "media",
+            "baja"
+          ],
+          "comentario_debe_mencionar": "otro nivel viable según si la instrucción era de uno o de dos pasos"
+        }
+      ]
+    },
+    {
+      "id": "C6",
+      "texto": "Esta semana los niños han tenido desregulaciones emocionales",
+      "esperado": [
+        {
+          "tipo": "GENERAL"
+        }
+      ]
+    },
+    {
+      "id": "C7",
+      "texto": "Hoy bajó la asistencia, mucha tos",
+      "esperado": [
+        {
+          "tipo": "GENERAL"
+        }
+      ]
+    },
+    {
+      "id": "C8",
+      "texto": "Pedro llegó con sueño",
+      "esperado": [
+        {
+          "tipo": "PARTICULAR",
+          "id_nino": "NINO-00253",
+          "evaluabilidad": "NO_EVALUABLE",
+          "motivo": "ESTADO_O_SALUD",
+          "nivel": null
+        }
+      ]
+    },
+    {
+      "id": "C9",
+      "texto": "Pedro dijo \"no quiero\" y empujó el plato",
+      "esperado": [
+        {
+          "tipo": "PARTICULAR",
+          "id_nino": "NINO-00253",
+          "evaluabilidad": "EVALUABLE",
+          "dominios": [
+            "lenguaje_comunicacion"
+          ],
+          "nivel": [
+            7,
+            8
+          ],
+          "nota": "Pedro tiene 31 meses (esperado 9). Es información, no alarma: una sola observación muestra lo que hizo, no su techo",
+          "comparacion_edad": "BAJO_LO_ESPERADO"
+        }
+      ]
+    },
+    {
+      "id": "I1",
+      "texto": "Pedro y Emilio clasificaron hojas por tamaño, Esperanza por colores",
+      "esperado": [
+        {
+          "tipo": "PARTICULAR",
+          "id_nino": "NINO-00253",
+          "dominios": [
+            "cognitivo"
+          ],
+          "nivel": 9
+        },
+        {
+          "tipo": "PARTICULAR",
+          "id_nino": "NINO-00453",
+          "dominios": [
+            "cognitivo"
+          ],
+          "nivel": 9
+        },
+        {
+          "tipo": "PARTICULAR",
+          "id_nino": "NINO-00300",
+          "dominios": [
+            "cognitivo"
+          ],
+          "nivel": 9
+        }
+      ]
+    },
+    {
+      "id": "I2",
+      "texto": "Martina pintó con crayón grueso haciendo rayas en todo el papel",
+      "esperado": [
+        {
+          "tipo": "NO_IDENTIFICADO",
+          "error_identificacion": "AMBIGUO",
+          "candidatos_incluyen": [
+            "NINO-00237",
+            "NINO-00263"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I3",
+      "texto": "Joaquín armó una torre de cinco bloques sin que se le cayera",
+      "esperado": [
+        {
+          "tipo": "NO_IDENTIFICADO",
+          "error_identificacion": "FUERA_DE_SALA",
+          "candidatos_incluyen": [
+            "NINO-00216"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I4",
+      "texto": "Catalina saltó con los dos pies en el patio",
+      "esperado": [
+        {
+          "tipo": "NO_IDENTIFICADO",
+          "error_identificacion": "NO_ENCONTRADO"
+        }
+      ]
+    },
+    {
+      "id": "I5",
+      "texto": "Vicente siguió con la mirada el sonajero cuando lo moví lento de un lado al otro",
+      "esperado": [
+        {
+          "tipo": "PARTICULAR",
+          "id_nino": "NINO-00080",
+          "evaluabilidad": "EVALUABLE",
+          "dominios": [
+            "cognitivo"
+          ],
+          "nivel": [
+            1,
+            2
+          ],
+          "nota": "Vicente tiene 5 meses (esperado 3); seguir con la mirada cruzando la línea media es nivel 2. Como información, no alarma",
+          "comparacion_edad": "BAJO_LO_ESPERADO"
+        }
+      ]
+    },
+    {
+      "id": "P1",
+      "texto": "Patio - motricidad. El Benja subió la escalera del resbalín afirmándose de la baranda. La Jose corrió hasta la reja y volvió sin caerse. Martina miraba desde la banca. Hoy hizo mucho frío.",
+      "esperado": [
+        {
+          "tipo": "PARTICULAR",
+          "id_nino": "NINO-00394",
+          "dominios": [
+            "motor_grueso"
+          ],
+          "evaluabilidad": "EVALUABLE",
+          "nota": "El comentario debe decir que falta saber si alterna los pies (nivel 7 vs 9)",
+          "certeza": [
+            "media",
+            "baja"
+          ]
+        },
+        {
+          "tipo": "PARTICULAR",
+          "id_nino": "NINO-00008",
+          "dominios": [
+            "motor_grueso"
+          ],
+          "nivel": 8,
+          "comparacion_edad": "BAJO_LO_ESPERADO o ACORDE",
+          "nota": "Josefa tiene 28 meses (esperado 9); correr es nivel 8"
+        },
+        {
+          "tipo": "NO_IDENTIFICADO",
+          "error_identificacion": "AMBIGUO"
+        },
+        {
+          "tipo": "GENERAL",
+          "nota": "'Hoy hizo mucho frío' y el encabezado 'Patio - motricidad'"
+        }
+      ]
+    }
+  ]
+}

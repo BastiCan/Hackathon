@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "separar_identificar",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "fragmentos"
+  ],
+  "properties": {
+    "fragmentos": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "texto_literal",
+          "tipo",
+          "sujetos",
+          "mencionados",
+          "adultos",
+          "fecha_en_texto"
+        ],
+        "properties": {
+          "texto_literal": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tipo": {
+            "type": "string",
+            "enum": [
+              "PARTICULAR",
+              "GENERAL"
+            ]
+          },
+          "sujetos": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "nombre_como_aparece",
+                "ref"
+              ],
+              "properties": {
+                "nombre_como_aparece": {
+                  "type": "string"
+                },
+                "ref": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^N[0-9]+$"
+                }
+              }
+            }
+          },
+          "mencionados": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "adultos": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "fecha_en_texto": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
