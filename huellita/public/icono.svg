@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Huellita">
+  <rect width="512" height="512" rx="96" fill="#1F4E9A" />
+  <g fill="#FFFFFF">
+    <ellipse cx="256" cy="320" rx="96" ry="78" />
+    <circle cx="150" cy="232" r="34" />
+    <circle cx="214" cy="178" r="36" />
+    <circle cx="298" cy="178" r="36" />
+    <circle cx="362" cy="232" r="34" />
+  </g>
+</svg>
