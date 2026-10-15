@@ -178,8 +178,10 @@ def _cargar_historial(tabla, ninos_idx: dict[str, dict[str, str]]) -> tuple[int,
                 "sala_grupo": sala_grupo,
                 "sala_key": f"{id_jardin}#{sala_grupo}",
                 "fecha": fecha,
-                # orden = fecha#tiebreak (el dataset no trae creado_en; id_obs lo hace unico).
-                "orden": f"{fecha}#{id_obs}",
+                # orden = fecha#creado_en#tiebreak. Se usa medianoche -03:00 como creado_en
+                # sintetico para que, dentro de un mismo dia, el historial (dataset) quede
+                # ANTES que lo nuevo (orden = fecha#creado_en con hora real). id_obs desempata.
+                "orden": f"{fecha}#{fecha}T00:00:00-03:00#{id_obs}",
                 "texto_literal": texto,
                 "manifestaciones": [
                     {
