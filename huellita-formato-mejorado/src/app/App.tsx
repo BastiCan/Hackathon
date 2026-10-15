@@ -1,8 +1,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { Agenda } from '../pages/Agenda';
 import { Directora } from '../pages/Directora';
 import { Entrada } from '../pages/Entrada';
 import { FichaNino } from '../pages/FichaNino';
+import { Inicio } from '../pages/Inicio';
 import { MiSala } from '../pages/MiSala';
 import { Revisar } from '../pages/Revisar';
 import { Layout } from './Layout';
@@ -17,7 +17,7 @@ export function Rutas() {
     <Routes>
       <Route path="/entrada" element={<Entrada />} />
       <Route element={<Layout />}>
-        <Route path="/" element={<Agenda />} />
+        <Route path="/" element={<Inicio />} />
         <Route path="/sala" element={<MiSala />} />
         <Route path="/revisar" element={<Revisar />} />
         <Route path="/nino/:id" element={<FichaNino />} />

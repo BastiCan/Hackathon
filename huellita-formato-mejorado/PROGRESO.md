@@ -599,3 +599,73 @@ Orden `adaptable-escritorio.md`. En celular **no cambió nada**; desde 1024 px
   Revisar, Ficha, Entrada, Directora, la planilla en modo lectura, una hoja
   abierta y un aviso: **sin desplazamiento horizontal en ninguna**
   (`scrollWidth` = `clientWidth` en los 45 casos).
+
+## Inicio, colores por nivel y rúbrica del backend (15-10-2026, Kiro)
+Pedido: la Agenda se va y la reemplaza **Inicio** con los botones para registrar
+(se agrega **Subir audio**) y un selector de sala; se mantienen la semana y el
+aviso "N por revisar". En Sala, los números dejan de pintarse por ámbito y se
+pintan **por nivel**. Toda la app pasa a la rúbrica del backend: **5 núcleos y
+9 niveles**.
+
+**Inicio** (`src/pages/Inicio.tsx`, `src/lib/inicio.ts`)
+- Se borraron `pages/Agenda.tsx` y `lib/agenda.ts` (jornada por períodos). El
+  destino "/" ahora es **Inicio** en la barra inferior y en la lateral.
+- Quedan la fecha, la **semana** (solo informa: un punto por registro, naranjo si
+  falta revisarlo), el aviso **"N por revisar"** y la línea del IEA.
+- **Registrar en [sala]**: selector con las salas de la usuaria (privacidad.md 6).
+  Cambiarla cambia la sala de trabajo, la misma de Sala y Revisar, así la tía
+  revisa después lo que registró. Con una sola sala, solo se nombra.
+- 4 botones grandes: **Subir foto**, **Grabar audio**, **Escribir** y **Subir
+  audio**. En Inicio no hay dock ni bloque lateral: los botones no se duplican.
+  La ficha mantiene su barra "Registrar para…", ahora con los mismos 4.
+- **Subir foto** ofrece cámara o galería (antes solo cámara); "Tomar foto" abre
+  la cámara directo.
+- **Subir audio** (`HojaSubirAudio`, `src/lib/audio.ts`): mismas reglas que el
+  transcriptor de Lucas (`servicio_transcripcion/src/transcriptor/audio.py`):
+  formato por los primeros bytes (webm, ogg/opus de WhatsApp, m4a/mp4, wav, flac,
+  amr, mp3) y hasta 4 MiB, con mensajes claros si no sirve. Se puede escuchar
+  antes de enviar y entra por el mismo camino que el audio grabado. El nombre
+  del archivo no se guarda. La clave del transcriptor no va en el navegador.
+
+**Colores por nivel** (`src/lib/rubrica.ts`, `components/ChipNivel.tsx`)
+- Un color por nivel del 1 al 9, del cálido al azul oscuro; tinta del 1 al 7 y
+  blanco en el 8 y el 9, todos AA (lo comprueba `rubrica.test.ts`).
+- Los usan la planilla de Sala (también la de la directora), la ficha, Revisar,
+  Corregir y la línea de tiempo. "Revisar avance" suma un aro naranjo oscuro al
+  número, sin cambiar el color del nivel. El número va siempre escrito y cada
+  celda de la planilla dice "Nivel 7, revisar avance" al lector de pantalla.
+- Leyenda de los 9 niveles bajo la tabla y en "Qué significan los colores".
+- Se borraron `components/ambitos.ts` y los tokens `ambito-*`: las etiquetas de
+  núcleo van en azul claro institucional, el color queda para el nivel.
+
+**Rúbrica E-1 del backend**
+- `data/rubrica_e1.json` es copia exacta de
+  `integra-backend/data/processed/rubrica.json`; `data/nucleos_e1.json` agrega
+  nombre visible y sigla (MG, MF, LC, SE, CO). Se borró `data/rubrica_8_niveles.json`.
+- `NucleoId` es el código `dominio` del backend y `Nivel` va del 1 al 9.
+- Niveles esperados con bordes inclusivos, como el backend (12 meses → 5 y 6);
+  el nivel esperado es el menor. Revisar avance sigue con "≤ esperado − 2".
+- IA simulada: núcleo, nivel y conducta salen de la conducta de la rúbrica que
+  mejor calza con la oración del niño/a (como el backend); si no calza, propone
+  su nivel actual con certeza media.
+- `data/semilla.json` (versión 2, así el `localStorage` viejo se descarta):
+  mismos IDs, fechas, autoras y pendientes; el historial se rehízo con conductas
+  reales de la rúbrica, en niveles cercanos al esperado para la edad de ese día.
+  Josefa queda en revisar avance en Lenguaje y comunicación (7, esperado 9).
+  Cada sala tiene un núcleo menos registrado distinto. Tía Ana ve los dos Medio
+  Menor (para mostrar el selector); Rosa, Paula y Carla siguen con una sala.
+
+**Otros**
+- Lo que se captura desde una ficha queda en la sala de ese niño/a, aunque la
+  sala de trabajo sea otra (le pasaba a la directora).
+- Las barras fijas pasaron dentro de la columna `isolate`: una hoja abierta
+  ahora queda siempre sobre la barra inferior (antes la barra tapaba el último
+  botón de algunas hojas largas).
+- Steering (`interfaz.md`, `rubrica.md`, `diseno-visual.md`, `producto.md`,
+  `tecnologia.md`), `README.md`, `DEMO.md` y `PENDIENTES.md` al día.
+
+**Resultado**
+- `npm test`: 180 pruebas en 12 archivos, en verde. `npm run build`: sin errores.
+- Revisado en Edge sin ventana (CDP, script temporal borrado) a 320, 390 y
+  1280 px: Inicio, Sala, leyenda, Ficha, Revisar, Corregir, Subir foto y Subir
+  audio, sin desplazamiento horizontal.

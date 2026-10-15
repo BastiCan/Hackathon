@@ -4,8 +4,9 @@ import { HojaInferior } from './HojaInferior';
 import { NumeroNivel } from './ChipNivel';
 
 /**
- * Detalle de un núcleo: descriptor y conductas del nivel actual y del
- * siguiente, como apoyo a la tía (requisito 5.5). Todo sale de la rúbrica.
+ * Detalle de un núcleo: lo que describe el nivel actual y el siguiente, con
+ * sus conductas observables, como apoyo a la tía (requisito 5.5). Todo sale de
+ * la rúbrica.
  */
 export function HojaNucleo({
   nucleo,
@@ -40,12 +41,12 @@ export function HojaNucleo({
             className="mb-3 rounded-tarjeta border border-linea bg-papel p-[14px]"
           >
             <div className="flex items-center gap-[10px]">
-              <NumeroNivel nivel={paso.nivel} nucleo={nucleo} tamano={26} />
+              <NumeroNivel nivel={paso.nivel} tamano={26} />
               <strong>
                 {paso.rotulo}: {c.nombreNivel}
               </strong>
             </div>
-            <p className="mt-2 text-[15px] text-tinta-2">{c.descriptor}</p>
+            <p className="mt-2 text-[15px] text-tinta-2">{c.descripcionNivel}</p>
             <ul className="mt-2 list-disc pl-5 text-[15px]">
               {c.conductas.map((conducta) => (
                 <li key={conducta} className="mb-1">

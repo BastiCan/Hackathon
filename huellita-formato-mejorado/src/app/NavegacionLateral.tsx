@@ -3,9 +3,10 @@ import { BotonesCaptura, etiquetaRegistrar } from './Dock';
 import { destinos, type Destino as DestinoNav } from './destinos';
 
 /**
- * Barra lateral del computador (desde 1024 px): arriba el bloque "Registrar"
- * con los mismos 3 botones de captura y debajo los mismos destinos de la barra
- * inferior. En el celular no existe: la reemplaza `BarraInferior` + `Dock`.
+ * Barra lateral del computador (desde 1024 px): en la ficha, arriba, el bloque
+ * "Registrar" con los mismos 4 botones de captura; debajo, los mismos destinos
+ * de la barra inferior. En el celular no existe: la reemplaza `BarraInferior`
+ * + `Dock`. En Inicio los botones van en la pantalla misma.
  */
 export function NavegacionLateral({
   pendientes,
@@ -15,7 +16,7 @@ export function NavegacionLateral({
 }: {
   pendientes: number;
   esDirectora: boolean;
-  /** La captura solo acompaña a la agenda y a la ficha, igual que en el celular. */
+  /** La captura acompaña a la ficha, igual que el dock del celular. */
   conDock: boolean;
   nombreNino?: string;
 }) {
@@ -30,7 +31,7 @@ export function NavegacionLateral({
           className="rounded-tarjeta border border-linea bg-papel p-3 shadow-tarjeta"
         >
           <p className="rotulo mb-2">{etiquetaRegistrar(nombreNino)}</p>
-          <BotonesCaptura columna />
+          <BotonesCaptura disposicion="columna" />
         </div>
       ) : null}
       <nav aria-label="Secciones" className="flex flex-col gap-1">

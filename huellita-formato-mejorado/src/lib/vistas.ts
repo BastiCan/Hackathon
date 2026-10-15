@@ -14,7 +14,7 @@ import {
   nivelGeneral,
   revisarAvance,
 } from './evaluacion';
-import { codigosNucleos, colorNivel, nombreNivel, nombreNucleo } from './rubrica';
+import { codigosNucleos, colorNivel, nombreNivel, nombreNucleo, siglaNucleo } from './rubrica';
 import type {
   Certeza,
   ColorFrescura,
@@ -260,7 +260,7 @@ export interface NucleoVista {
   revisarAvance: boolean;
 }
 
-/** Los 8 núcleos con su nivel actual, en el orden de la rúbrica. */
+/** Todos los núcleos con su nivel actual, en el orden de la rúbrica. */
 export function nucleosDeFicha(
   evaluaciones: EvaluacionValidada[],
   fechaNacimiento: string,
@@ -327,7 +327,10 @@ export interface RegistroVista {
   fechaCorta: string;
   nucleo: NucleoId;
   nombreNucleo: string;
+  /** Sigla del núcleo para la tira de registros ("LC"). */
+  sigla: string;
   nivel: Nivel;
+  /** Color del nivel (punto de la línea de tiempo). */
   color: string;
   autora: string;
   cita: string;
@@ -353,6 +356,7 @@ export function historialVista(
     fechaCorta: fechaCorta(e.fecha),
     nucleo: e.nucleo,
     nombreNucleo: nombreNucleo(e.nucleo),
+    sigla: siglaNucleo(e.nucleo),
     nivel: e.nivel,
     color: colorNivel(e.nivel),
     autora: nombreAutora(e.validadaPor),

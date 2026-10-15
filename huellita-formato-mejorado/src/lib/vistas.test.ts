@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import semillaJson from '@data/semilla.json';
 import { evaluacionesDe, evaluacionesValidadas, resumenSala } from './evaluacion';
+import { colorNivel } from './rubrica';
 import type { EvaluacionValidada, Nino, Semilla } from './tipos';
 import {
   conteosFiltro,
@@ -10,6 +11,7 @@ import {
   fechaCorta,
   fechaLarga,
   filtrarTarjetas,
+  historialVista,
   iniciales,
   inicialesUsuaria,
   nucleosDeFicha,
@@ -50,8 +52,8 @@ function evaluacion(parcial: Partial<EvaluacionValidada> = {}): EvaluacionValida
     evidenciaId: 'EVI-X',
     ninoId: 'NINO-X',
     salaId: SALA,
-    nucleo: 'LV',
-    nivel: 4,
+    nucleo: 'lenguaje_comunicacion',
+    nivel: 9,
     fecha: HOY,
     cita: 'Dijo una oración completa.',
     validadaPor: 'USR-ANA',
@@ -102,16 +104,19 @@ describe('textos de la interfaz', () => {
 describe('tarjetas de la sala', () => {
   const tarjetas = tarjetasDeSala(ninosSala, evaluaciones, HOY);
 
-  it('arma una tarjeta por niño/a activo de la sala', () => {
+  it('arma una tarjeta por niño/a activo de la sala con sus 5 núcleos', () => {
     expect(tarjetas).toHaveLength(18);
     expect(tarjetas.every((t) => t.iniciales.length === 2)).toBe(true);
+    expect(Object.keys(tarjetas[0].niveles)).toHaveLength(5);
   });
 
-  it('marca a Josefa con bandera y nivel general 4 (reglas de la rúbrica)', () => {
+  it('marca a Josefa con bandera y nivel general 9 (reglas de la rúbrica)', () => {
     const josefa = tarjetas.find((t) => t.id === 'NINO-00001');
     expect(josefa?.nombre).toBe('Josefa');
     expect(josefa?.revisarAvance).toBe(true);
-    expect(josefa?.nivelGeneral).toBe(4);
+    expect(josefa?.marcados).toEqual(['lenguaje_comunicacion']);
+    expect(josefa?.niveles.lenguaje_comunicacion).toBe(7);
+    expect(josefa?.nivelGeneral).toBe(9);
     expect(tarjetas.filter((t) => t.revisarAvance)).toHaveLength(1);
   });
 
@@ -119,9 +124,7 @@ describe('tarjetas de la sala', () => {
     const conteos = conteosFiltro(tarjetas);
     expect(conteos.todos).toBe(18);
     expect(conteos.revisarAvance).toBe(1);
-    expect(conteos.sinRegistro).toBe(
-      tarjetas.filter((t) => t.frescura === 'rojo').length,
-    );
+    expect(conteos.sinRegistro).toBe(tarjetas.filter((t) => t.frescura === 'rojo').length);
     expect(filtrarTarjetas(tarjetas, 'revisar-avance')).toHaveLength(1);
     expect(filtrarTarjetas(tarjetas, 'todos')).toHaveLength(18);
     expect(filtrarTarjetas(tarjetas, 'sin-registro').every((t) => t.frescura === 'rojo')).toBe(
@@ -134,21 +137,19 @@ describe('tarjetas de la sala', () => {
     expect(etiquetaTarjeta(sinRegistro)).toBe('Prueba, sin nivel todavía, sin registros');
 
     const conRegistro = tarjetasDeSala([nino()], [evaluacion({ fecha: '2026-10-14' })], HOY)[0];
-    expect(etiquetaTarjeta(conRegistro)).toBe('Prueba, nivel 4, 1 día desde el último registro');
+    expect(etiquetaTarjeta(conRegistro)).toBe('Prueba, nivel 9, 1 día desde el último registro');
   });
 });
 
 describe('resumen de la sala', () => {
   it('usa los textos del prototipo', () => {
     const texto = textoResumenSala(resumenSala(ninosSala, evaluaciones, HOY));
-    expect(texto).toContain('Observados en 30 días: 16 de 18');
-    expect(texto).toContain('Menos registrado:');
+    expect(texto).toBe('Observados en 30 días: 16 de 18 · Menos registrado: Motor grueso');
   });
 
   it('separa las dos partes que van en negrita', () => {
     const partes = partesResumenSala(resumenSala(ninosSala, evaluaciones, HOY));
-    expect(partes.observados).toBe('16 de 18');
-    expect(partes.menos.length).toBeGreaterThan(0);
+    expect(partes).toEqual({ observados: '16 de 18', menos: 'Motor grueso' });
   });
 });
 
@@ -156,13 +157,13 @@ describe('tarjeta de sala (vista directora)', () => {
   const sala = { id: SALA, nombre: 'Medio Menor A' };
 
   it('cuenta los observados de los últimos 30 días y los de revisar avance', () => {
-    const t = tarjetaSala(sala, ninosSala, evaluaciones, HOY, 'EN');
+    const t = tarjetaSala(sala, ninosSala, evaluaciones, HOY, 'motor_grueso');
     expect(t.total).toBe(18);
     // 2 de los 18 llevan más de 30 días sin registro (aro rojo).
     expect(t.observados30).toBe(16);
     expect(t.porcentaje).toBe(89);
     expect(t.revisarAvance).toBe(1);
-    expect(t.nombreNucleoMenosCubierto).toBe('Exploración del Entorno Natural');
+    expect(t.nombreNucleoMenosCubierto).toBe('Motor grueso');
   });
 
   it('no divide por cero en una sala vacía', () => {
@@ -178,41 +179,61 @@ describe('ficha', () => {
   const suyas = evaluacionesDe(evaluaciones, josefa.id);
   const nucleos = nucleosDeFicha(suyas, josefa.fechaNacimiento);
 
-  it('muestra los 8 núcleos con su nivel o sin registros', () => {
-    expect(nucleos).toHaveLength(8);
-    const lv = nucleos.find((n) => n.nucleo === 'LV');
-    expect(lv?.nivel).toBe(2);
-    expect(lv?.nombreNivel).toBe('Explorando');
-    expect(lv?.revisarAvance).toBe(true);
+  it('muestra los 5 núcleos con su nivel, su color o sin registros', () => {
+    expect(nucleos).toHaveLength(5);
+    const lc = nucleos.find((n) => n.nucleo === 'lenguaje_comunicacion');
+    expect(lc?.nivel).toBe(7);
+    expect(lc?.nombreNivel).toBe('Representación y combinación inicial');
+    expect(lc?.color).toBe(colorNivel(7));
+    expect(lc?.revisarAvance).toBe(true);
     expect(nucleos.filter((n) => n.revisarAvance)).toHaveLength(1);
+    const mg = nucleos.find((n) => n.nucleo === 'motor_grueso');
+    expect(mg?.nivel).toBeNull();
+    expect(mg?.color).toBeNull();
   });
 
   it('escribe el resumen por plantilla, sin lenguaje clínico', () => {
-    const texto = resumenFicha(josefa.nombre, nucleos, { nucleo: 'CC', nivel: 5, conductas: [] });
+    const texto = resumenFicha(josefa.nombre, nucleos, {
+      nucleo: 'socioemocional',
+      nivel: 9,
+      conductas: [],
+    });
     expect(texto).toContain('Avanza bien en');
     expect(texto.toLowerCase()).not.toContain('rezago');
   });
 
   it('si hay un núcleo en revisar avance, el resumen lo nombra primero', () => {
-    const texto = resumenFicha(josefa.nombre, nucleos, { nucleo: 'CC', nivel: 5, conductas: [] });
-    expect(texto).toContain('Conviene acompañar de cerca Lenguaje Verbal');
-    expect(texto).not.toContain('Avanza bien en Lenguaje Verbal');
+    const texto = resumenFicha(josefa.nombre, nucleos, {
+      nucleo: 'socioemocional',
+      nivel: 9,
+      conductas: [],
+    });
+    expect(texto).toBe('Avanza bien en Motor fino. Conviene acompañar de cerca Lenguaje y comunicación.');
   });
 
   it('sin núcleos marcados, sugiere el núcleo por observar', () => {
     const sinMarca = nucleos.map((n) => ({ ...n, revisarAvance: false }));
-    const texto = resumenFicha(josefa.nombre, sinMarca, { nucleo: 'PM', nivel: 4, conductas: [] });
-    expect(texto).toContain('Conviene observar más Pensamiento Matemático');
+    const texto = resumenFicha(josefa.nombre, sinMarca, {
+      nucleo: 'motor_grueso',
+      nivel: 9,
+      conductas: [],
+    });
+    expect(texto).toContain('Conviene observar más Motor grueso');
   });
 
   it('ordena Cómo va: marcados, con registros y luego sin registros', () => {
     const orden = ordenarNucleosFicha(nucleos);
-    expect(orden[0].nucleo).toBe('LV');
-    const primeraSinRegistro = orden.findIndex((n) => n.nivel === null);
-    if (primeraSinRegistro >= 0) {
-      expect(orden.slice(primeraSinRegistro).every((n) => n.nivel === null)).toBe(true);
-    }
-    expect(orden).toHaveLength(8);
+    expect(orden[0].nucleo).toBe('lenguaje_comunicacion');
+    expect(orden[orden.length - 1].nucleo).toBe('motor_grueso');
+    expect(orden).toHaveLength(5);
+  });
+
+  it('el historial lleva la sigla del núcleo y el color del nivel', () => {
+    const historial = historialVista(suyas, () => 'Tía Ana');
+    expect(historial.length).toBe(suyas.length);
+    const lc = historial.find((r) => r.nucleo === 'lenguaje_comunicacion');
+    expect(lc?.sigla).toBe('LC');
+    expect(lc?.color).toBe(colorNivel(7));
   });
 
   it('invita a registrar cuando no hay evidencia', () => {

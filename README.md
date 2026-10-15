@@ -21,7 +21,7 @@ que también funciona con doble clic.
 
 | Carpeta | Qué es | Estado |
 |---|---|---|
-| [`huellita-formato-mejorado/`](huellita-formato-mejorado/) | App de las tías: React + Vite + TypeScript (PWA). Agenda del día, planilla de la sala, revisión de sugerencias, ficha por niño y vista de directora. | Versión actual. Funciona con datos locales e IA simulada; los servicios de datos e IA están separados para conectarla a un backend. |
+| [`huellita-formato-mejorado/`](huellita-formato-mejorado/) | App de las tías: React + Vite + TypeScript (PWA). Inicio para registrar (foto, grabar audio, escribir y subir audio, con selector de sala), planilla de la sala con un color por nivel, revisión de sugerencias, ficha por niño y vista de directora. Usa la rúbrica del backend (5 núcleos × 9 niveles). | Versión actual. Funciona con datos locales e IA simulada; los servicios de datos e IA están separados para conectarla a un backend. |
 | [`huellita/`](huellita/) | Versión anterior de Huellita (diseño de post-its). | Referencia, sin cambios. |
 | [`integra-backend/`](integra-backend/) | Procesamiento con IA en AWS: Lambda en Python 3.13 con Amazon Bedrock, DynamoDB y S3 (AWS SAM). | Procesa las capturas que llegan a S3 y guarda observaciones sugeridas. Todavía no tiene API para el frontend. |
 | [`Dump/`](Dump/) | Material del desafío: [síntesis](Dump/integra_desafio1_sintesis.md) y [dataset sintético E-1](Dump/dataset_e1_publico/). | — |
@@ -49,8 +49,9 @@ montaje y pruebas en [`docs/AWS_SETUP.md`](integra-backend/docs/AWS_SETUP.md) y 
 
 - Una API con login (Cognito) entre Huellita y el backend: leer salas, niños y sugerencias, confirmar o corregir,
   y subir capturas.
-- Unificar la rúbrica. Huellita usa una propuesta de 8 núcleos × 8 niveles (BCEP 2018) y el backend usa la del
-  dataset E-1 (9 niveles × 5 dominios, 90 manifestaciones).
+- ~~Unificar la rúbrica.~~ Hecho: Huellita usa la misma del backend (dataset E-1, 9 niveles × 5 dominios,
+  90 manifestaciones); `huellita-formato-mejorado/data/rubrica_e1.json` es copia exacta y una prueba avisa si
+  se desalinean.
 - Unificar la nómina de demo (nombres inventados sobre los IDs del dataset) para la app, el backend y las fotos
   de prueba.
 - La lectura de fotos de post-its (OpenCV + Bedrock), que se está desarrollando aparte.

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import semillaJson from '@data/semilla.json';
+import { evaluacionesDe, evaluacionesValidadas, nivelActualPorNucleo } from '../lib/evaluacion';
 import { almacenMemoria, CLAVE_ALMACEN, DataServiceLocal } from './datos';
 import { IAServiceSimulado } from './ia';
 import { capturar } from './captura';
@@ -25,9 +26,20 @@ describe('DataServiceLocal', () => {
 
   it('una tía ve solo sus salas y la directora, todo el jardín', async () => {
     const { datos } = servicios();
+    // Tía Ana es educadora de los dos Medio Menor; Tía Rosa, solo del A.
+    expect((await datos.salas()).map((s) => s.id)).toEqual(['SALA-MMA', 'SALA-MMB']);
+    await datos.cambiarUsuaria('USR-ROSA');
     expect((await datos.salas()).map((s) => s.id)).toEqual(['SALA-MMA']);
     await datos.cambiarUsuaria('USR-CARMEN');
-    expect((await datos.salas())).toHaveLength(3);
+    expect(await datos.salas()).toHaveLength(3);
+  });
+
+  it('cambiar de sala solo deja elegir las salas de la usuaria', async () => {
+    const { datos } = servicios();
+    await datos.cambiarSala('SALA-MMB');
+    expect((await datos.salaActual()).id).toBe('SALA-MMB');
+    await expect(datos.cambiarSala('SALA-SCM')).rejects.toThrow();
+    expect((await datos.salaActual()).id).toBe('SALA-MMB');
   });
 
   it('guarda en localStorage con la clave huellita:v1 y recupera el estado', async () => {
@@ -157,18 +169,66 @@ describe('capturar', () => {
     expect(sugerencias[0].ninoId).toBe('NINO-00003');
   });
 
-  it('el nivel propuesto usa el nivel actual del núcleo del niño/a', async () => {
+  it('queda en la sala elegida en Inicio', async () => {
+    const { datos, ia } = servicios();
+    await datos.cambiarSala('SALA-MMB');
+    const { evidencia, procesada } = await capturar(
+      'texto',
+      undefined,
+      'Renata construye una torre de cuatro bloques estables.',
+      undefined,
+      { datos, ia },
+    );
+    expect(evidencia.salaId).toBe('SALA-MMB');
+    const [sug] = await procesada;
+    // Huellita busca el nombre en la lista de esa sala.
+    expect(sug.salaId).toBe('SALA-MMB');
+    expect(sug.ninoId).toBe('NINO-00023');
+  });
+
+  it('desde la ficha queda en la sala del niño/a, aunque la sala de trabajo sea otra', async () => {
+    const { datos, ia } = servicios();
+    await datos.cambiarSala('SALA-MMB');
+    const { evidencia } = await capturar('texto', undefined, 'Josefa ordenó los individuales.', 'NINO-00001', {
+      datos,
+      ia,
+    });
+    expect(evidencia.salaId).toBe('SALA-MMA');
+  });
+
+  it('con una conducta reconocible, propone el nivel de esa conducta (como el backend)', async () => {
     const { datos, ia } = servicios();
     const { procesada } = await capturar(
       'texto',
       undefined,
-      'Josefa usa palabras nuevas para contar temas de su interés.',
+      'Josefa combina dos palabras para expresar lo que quiere.',
       undefined,
       { datos, ia },
     );
     const [sug] = await procesada;
     expect(sug.ninoId).toBe('NINO-00001');
-    expect(sug.nucleo).toBe('LV');
-    expect(sug.nivel).toBe(2); // nivel actual de Josefa en Lenguaje Verbal
+    expect(sug.nucleo).toBe('lenguaje_comunicacion');
+    expect(sug.nivel).toBe(8); // MAN-L08-LC-01, aunque su nivel actual sea 7
+    expect(sug.certeza).toBe('alta');
+  });
+
+  it('si la conducta no calza, propone el nivel actual del núcleo del niño/a', async () => {
+    const { datos, ia } = servicios();
+    const { procesada } = await capturar(
+      'texto',
+      undefined,
+      'Josefa estuvo muy contenta en el rincón.',
+      undefined,
+      { datos, ia },
+    );
+    const [sug] = await procesada;
+    expect(sug.ninoId).toBe('NINO-00001');
+    expect(sug.certeza).toBe('media');
+    const evaluaciones = evaluacionesValidadas(
+      await datos.sugerencias({ ninoId: 'NINO-00001' }),
+      await datos.evidencias({ salaId: 'SALA-MMA' }),
+    );
+    const actual = nivelActualPorNucleo(evaluacionesDe(evaluaciones, 'NINO-00001'))[sug.nucleo!];
+    expect(sug.nivel).toBe(actual ?? 9);
   });
 });

@@ -122,16 +122,39 @@ function hablaDelGrupo(texto: string): boolean {
   return SENALES_GRUPO.some((senal) => plano.includes(` ${normalizar(senal)} `));
 }
 
-/** Celda de la rúbrica con más palabras en común con el texto. */
-function mejorCelda(texto: string): { nucleo: NucleoId; nivel: Nivel; puntaje: number } {
+interface Calce {
+  nucleo: NucleoId;
+  nivel: Nivel;
+  conducta: string;
+  /** Palabras con contenido en común con la conducta. */
+  puntaje: number;
+  /** Desempate: qué parte de la conducta calza (los vecinos se parecen). */
+  proporcion: number;
+}
+
+/**
+ * La conducta de la rúbrica (de las 90, sin filtrar por nivel) con más
+ * palabras en común con el texto. Como en el backend, el nivel y el núcleo
+ * salen de la conducta elegida, no de la edad.
+ */
+function mejorManifestacion(texto: string): Calce {
   const palabras = palabrasUtiles(texto);
-  let mejor = { nucleo: codigosNucleos()[0], nivel: 1 as Nivel, puntaje: -1 };
+  const primera = todasLasCeldas()[0];
+  let mejor: Calce = {
+    nucleo: primera?.nucleo ?? codigosNucleos()[0],
+    nivel: primera?.nivel ?? (1 as Nivel),
+    conducta: primera?.conductas[0] ?? '',
+    puntaje: -1,
+    proporcion: 0,
+  };
   for (const c of todasLasCeldas()) {
-    let puntaje = coincidencias(palabras, c.descriptor);
     for (const conducta of c.conductas) {
-      puntaje = Math.max(puntaje, coincidencias(palabras, conducta) * 2);
+      const puntaje = coincidencias(palabras, conducta);
+      const proporcion = puntaje / Math.max(1, palabrasUtiles(conducta).size);
+      if (puntaje > mejor.puntaje || (puntaje === mejor.puntaje && proporcion > mejor.proporcion)) {
+        mejor = { nucleo: c.nucleo, nivel: c.nivel, conducta, puntaje, proporcion };
+      }
     }
-    if (puntaje > mejor.puntaje) mejor = { nucleo: c.nucleo, nivel: c.nivel, puntaje };
   }
   return mejor;
 }
@@ -286,17 +309,33 @@ export class IAServiceSimulado implements IAService {
     }));
   }
 
+  /**
+   * Mejor conducta para un niño/a: primero en la oración que lo nombra (así,
+   * en una nota con dos niños cada uno tiene la suya) y, si ahí no calza, en
+   * la nota completa.
+   */
+  private calceDe(texto: string, nombre: string): Calce {
+    const enSuOracion = mejorManifestacion(citaDe(texto, nombre));
+    if (enSuOracion.puntaje >= this.umbral) return enSuOracion;
+    const enLaNota = mejorManifestacion(texto);
+    return enLaNota.puntaje > enSuOracion.puntaje ? enLaNota : enSuOracion;
+  }
+
   private evaluacionDe(
     evidencia: Evidencia,
     texto: string,
     nino: NinoContexto,
     indice: number,
   ): Sugerencia {
-    const mejor = mejorCelda(texto);
-    const nucleo = mejor.nucleo;
-    const nivelActual = nino.nivelesActuales?.[nucleo] ?? null;
-    const nivel: Nivel = nivelActual ?? nino.nivelEsperado ?? mejor.nivel;
+    const mejor = this.calceDe(texto, nino.nombre);
     const conductaReconocible = mejor.puntaje >= this.umbral;
+    const nucleo = mejor.nucleo;
+    // Con una conducta reconocible, el nivel es el de esa conducta (como en el
+    // backend). Si no calza bien, se propone su nivel actual en ese núcleo, o
+    // el esperado para su edad, y la tía lo revisa.
+    const nivel: Nivel = conductaReconocible
+      ? mejor.nivel
+      : (nino.nivelesActuales?.[nucleo] ?? nino.nivelEsperado ?? mejor.nivel);
     // Certeza (rubrica.md): nombre exacto de la sala + conducta reconocible → alta.
     const certeza: Certeza = conductaReconocible ? 'alta' : 'media';
 
@@ -309,7 +348,7 @@ export class IAServiceSimulado implements IAService {
       nombreDetectado: nino.nombre,
       nucleo,
       nivel,
-      conducta: mejorConducta(nucleo, nivel, texto),
+      conducta: conductaReconocible ? mejor.conducta : mejorConducta(nucleo, nivel, texto),
       cita: citaDe(texto, nino.nombre),
       certeza,
       estado: 'pendiente',
@@ -322,7 +361,7 @@ export class IAServiceSimulado implements IAService {
     nombre: string,
     indice: number,
   ): Sugerencia {
-    const { nucleo, nivel } = mejorCelda(texto);
+    const { nucleo, nivel, conducta } = this.calceDe(texto, nombre);
     return {
       id: this.id(evidencia, indice),
       evidenciaId: evidencia.id,
@@ -332,7 +371,7 @@ export class IAServiceSimulado implements IAService {
       nombreDetectado: nombre,
       nucleo,
       nivel,
-      conducta: mejorConducta(nucleo, nivel, texto),
+      conducta,
       cita: citaDe(texto, nombre),
       certeza: 'baja',
       estado: 'pendiente',

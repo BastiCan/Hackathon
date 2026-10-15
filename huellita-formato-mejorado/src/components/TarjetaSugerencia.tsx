@@ -172,7 +172,7 @@ export function TarjetaSugerencia({
               {s.nivel ? (
                 <Fila etiqueta="Nivel">
                   <span className="inline-flex items-center gap-2">
-                    <NumeroNivel nivel={s.nivel} nucleo={s.nucleo} tamano={22} />
+                    <NumeroNivel nivel={s.nivel} tamano={22} />
                     {nombreNivel(s.nivel)}
                   </span>
                 </Fila>

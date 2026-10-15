@@ -5,18 +5,24 @@
  * (requisito 1.5).
  */
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
-import { HojaAudio, HojaFoto, HojaTexto } from '../components/Captura';
+import { HojaAudio, HojaFoto, HojaSubirAudio, HojaTexto } from '../components/Captura';
 import type { Formato } from '../lib/tipos';
 import { capturar } from '../services/captura';
 import { useAviso } from './aviso';
 import { useServicios } from './servicios';
+
+/**
+ * Las 4 formas de registrar: subir o sacar una foto, grabar un audio, escribir
+ * o subir un audio ya grabado. Las dos de audio terminan en el mismo formato.
+ */
+export type AccionCaptura = 'foto' | 'grabar' | 'escribir' | 'subir-audio';
 
 export interface NinoAsociado {
   id: string;
   nombre: string;
 }
 
-const ContextoCaptura = createContext<(formato: Formato) => void>(() => {});
+const ContextoCaptura = createContext<(accion: AccionCaptura) => void>(() => {});
 
 export function ProveedorCaptura({
   children,
@@ -28,7 +34,7 @@ export function ProveedorCaptura({
 }) {
   const { datos, ia } = useServicios();
   const aviso = useAviso();
-  const [hoja, setHoja] = useState<Formato | null>(null);
+  const [hoja, setHoja] = useState<AccionCaptura | null>(null);
 
   const servicios = useMemo(() => ({ datos, ia }), [datos, ia]);
 
@@ -47,21 +53,22 @@ export function ProveedorCaptura({
   const enviarAudio = useCallback((archivo: Blob) => enviar('audio', archivo), [enviar]);
   const enviarTexto = useCallback((texto: string) => enviar('texto', undefined, texto), [enviar]);
   const cerrar = useCallback(() => setHoja(null), []);
-  const abrirTexto = useCallback(() => setHoja('texto'), []);
+  const abrirTexto = useCallback(() => setHoja('escribir'), []);
 
   return (
     <ContextoCaptura.Provider value={setHoja}>
       {children}
       {hoja === 'foto' ? <HojaFoto onEnviar={enviarFoto} onCerrar={cerrar} /> : null}
-      {hoja === 'audio' ? (
+      {hoja === 'grabar' ? (
         <HojaAudio onEnviar={enviarAudio} onCerrar={cerrar} onEscribir={abrirTexto} />
       ) : null}
-      {hoja === 'texto' ? <HojaTexto onEnviar={enviarTexto} onCerrar={cerrar} /> : null}
+      {hoja === 'escribir' ? <HojaTexto onEnviar={enviarTexto} onCerrar={cerrar} /> : null}
+      {hoja === 'subir-audio' ? <HojaSubirAudio onEnviar={enviarAudio} onCerrar={cerrar} /> : null}
     </ContextoCaptura.Provider>
   );
 }
 
-/** Abre la captura: `abrirCaptura('audio')`. */
+/** Abre la captura: `abrirCaptura('grabar')`. */
 export function useCaptura() {
   return useContext(ContextoCaptura);
 }

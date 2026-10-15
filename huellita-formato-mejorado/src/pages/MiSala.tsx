@@ -2,13 +2,12 @@ import { ChevronLeft, Flag, HelpCircle } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMiSala } from '../app/hooks';
-import { NOMBRE_AMBITO } from '../components/ambitos';
-import { NumeroNivel } from '../components/ChipNivel';
+import { FilaNiveles, NumeroNivel } from '../components/ChipNivel';
 import { COLOR_FRESCURA, PALETA } from '../components/colores';
 import { HojaGestionNino } from '../components/HojaGestionNino';
 import { HojaLeyenda } from '../components/HojaLeyenda';
 import { Mancha } from '../components/Mancha';
-import { codigosNucleos, nombreNucleo } from '../lib/rubrica';
+import { codigosNucleos, nombreNucleo, siglaNucleo } from '../lib/rubrica';
 import {
   etiquetaTarjeta,
   filtrarTarjetas,
@@ -18,8 +17,9 @@ import {
 
 /**
  * Sala: la planilla de la sala, como el registro que la tía ya conoce. Una fila
- * por niño/a, una columna por núcleo con su nivel actual y la fecha del último
- * registro con un punto de frescura.
+ * por niño/a, una columna por núcleo con su nivel actual (el número va en el
+ * color de su nivel, del 1 al 9) y la fecha del último registro con un punto
+ * de frescura.
  *
  * En `soloLectura` es la misma planilla vista por la directora (tarea 14): al
  * tocar un niño/a se ofrece ver su ficha, moverlo de sala o darlo de baja.
@@ -118,7 +118,7 @@ export function MiSala({ soloLectura = false }: { soloLectura?: boolean }) {
                     className="px-[1px] py-2 font-bold lg:px-2 lg:py-3"
                   >
                     <abbr title={nombreNucleo(n)} className="no-underline">
-                      {n}
+                      {siglaNucleo(n)}
                     </abbr>
                   </th>
                 ))}
@@ -159,15 +159,17 @@ export function MiSala({ soloLectura = false }: { soloLectura?: boolean }) {
                   </th>
                   {nucleos.map((n) => {
                     const nivel = t.niveles[n];
+                    const revisar = t.marcados.includes(n);
                     return (
                       <td key={n} className="px-[1px] text-center lg:px-2">
                         {nivel ? (
-                          <NumeroNivel
-                            nivel={nivel}
-                            nucleo={n}
-                            revisar={t.marcados.includes(n)}
-                            tamano={20}
-                          />
+                          <>
+                            <NumeroNivel nivel={nivel} revisar={revisar} tamano={20} />
+                            <span className="sr-only">
+                              Nivel {nivel}
+                              {revisar ? ', revisar avance' : ''}
+                            </span>
+                          </>
                         ) : (
                           <span className="text-tinta-3" aria-label="sin registros">
                             –
@@ -196,14 +198,13 @@ export function MiSala({ soloLectura = false }: { soloLectura?: boolean }) {
         </p>
       )}
 
-      <p className="mt-2 text-[13px] leading-[1.5] text-tinta-2">
-        <span className="mr-2 inline-block h-[10px] w-[10px] rounded-full bg-logo-rojo" />
-        {NOMBRE_AMBITO.dps}
-        <span className="mx-2 inline-block h-[10px] w-[10px] rounded-full bg-logo-amarillo" />
-        {NOMBRE_AMBITO.com}
-        <span className="mx-2 inline-block h-[10px] w-[10px] rounded-full bg-logo-verde" />
-        {NOMBRE_AMBITO.ent}
-      </p>
+      <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] leading-[1.5] text-tinta-2">
+        <span>Nivel alcanzado, del 1 al 9:</span>
+        <FilaNiveles />
+        <span>
+          · aro <span className="font-bold text-naranjo-texto">naranjo</span>: revisar avance
+        </span>
+      </div>
 
       <p className="relative mt-3 overflow-hidden rounded-tarjeta border border-linea bg-papel p-3 text-[15px] text-tinta-2 shadow-tarjeta">
         <Mancha

@@ -98,16 +98,20 @@ afterEach(() => {
 
 describe('guion de la demo', () => {
   it('se puede correr completo después de reiniciar', async () => {
-    // 1. Entrar como tía Ana: su agenda de hoy y la planilla de la sala.
+    // 1. Entrar como tía Ana: su inicio de hoy y la planilla de la sala.
     await montar('/entrada');
     expect(texto()).toContain('¿Quién entra hoy?');
     await tocar(botonPor('Tía Ana'));
-    expect(texto()).toContain('Agenda · Medio Menor A');
+    expect(texto()).toContain('Inicio · Medio Menor A');
     expect(texto()).toContain('por revisar');
+    expect(contenedor.querySelector('#sala-registro')).not.toBeNull();
+    expect(texto()).toContain('Subir audio');
     await tocar(destinoPor('Sala'));
     const josefa = contenedor.querySelector('[aria-label^="Josefa"]');
     expect(josefa?.getAttribute('aria-label')).toContain('revisar avance');
     expect(contenedor.querySelectorAll('tbody tr')).toHaveLength(18);
+    // Su 7 en Lenguaje y comunicación va en el color del nivel 7, con aro naranjo.
+    expect(texto()).toContain('Nivel 7, revisar avance');
 
     // 2. Foto del post-it: llega a Revisar el guion de Josefa.
     await capturarArchivo('foto');
@@ -127,7 +131,7 @@ describe('guion de la demo', () => {
     await tocar(contenedor.querySelector<HTMLButtonElement>('[aria-label^="Josefa"]')!);
     expect(texto()).toContain('Registrar para Josefa');
     expect(texto()).toContain('se agacha y recoge los individuales');
-    expect(texto()).toContain('Convivencia y Ciudadanía');
+    expect(texto()).toContain('Socioemocional');
 
     // 4. Otra foto: guion de Emilio y corrección del nivel con "Corregir".
     await capturarArchivo('foto');
@@ -136,26 +140,18 @@ describe('guion de la demo', () => {
     expect(texto()).toContain('Emilio');
     await tocar(botonPor('Corregir'));
     expect(texto()).toContain('Corregir evaluación');
-    await tocar(botonPor('Integrando')); // nivel 5
+    await tocar(botonPor('Secuencias y autonomía creciente')); // nivel 9
     await tocar(botonPor('Guardar corrección'));
     await esperarSalida();
     expect(texto()).toContain('Corregido y guardado');
     const deEmilio = await datos.sugerencias({ ninoId: 'NINO-00002' });
     const cambiada = deEmilio.find((s) => s.estado === 'cambiada');
-    expect(cambiada?.nivel).toBe(5);
-    expect(cambiada?.original?.nivel).toBe(4);
+    expect(cambiada?.nivel).toBe(9);
+    expect(cambiada?.original?.nivel).toBe(8);
 
-    // 5. Nota grupal: se ofrece guardar en la sala, no evaluar a un niño/a.
-    await act(async () => {
-      const { procesada } = await capturar(
-        'texto',
-        undefined,
-        'Hoy bajó la asistencia, los niños comenzaron a resfriarse y han estado con mucha tos.',
-        undefined,
-        { datos, ia },
-      );
-      await procesada;
-    });
+    // 5. Subir audio: una nota de voz grupal se ofrece guardar en la sala, no
+    //    evaluar a un niño/a.
+    await capturarArchivo('audio');
     expect(texto()).toContain('Nota de la sala');
     expect(texto()).toContain('bajó la asistencia');
     await tocar(botonPor('Guardar en la sala'));
@@ -163,7 +159,7 @@ describe('guion de la demo', () => {
     expect(texto()).toContain('Nota guardada');
 
     // 6. Entrar como directora y ver el avance de las 3 salas.
-    await tocar(destinoPor('Agenda'));
+    await tocar(destinoPor('Inicio'));
     await tocar(contenedor.querySelector<HTMLButtonElement>('[aria-label^="Menú de"]')!);
     await tocar(botonPor('Cambiar de usuaria'));
     expect(texto()).toContain('¿Quién entra hoy?');

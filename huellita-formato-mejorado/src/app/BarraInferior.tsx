@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { destinos, type Destino as DestinoNav } from './destinos';
 
 /**
- * Barra inferior fija del celular: Agenda · Sala · Revisar (con el contador de
+ * Barra inferior fija del celular: Inicio · Sala · Revisar (con el contador de
  * pendientes) · Directora (solo para el rol directora).
  *
  * Desde 1024 px (`lg:`) desaparece: en el computador los mismos destinos viven

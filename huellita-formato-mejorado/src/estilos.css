@@ -69,12 +69,14 @@
     padding-bottom: calc(84px + env(safe-area-inset-bottom));
   }
 
+  /* Barra de 64 px + dock de 4 botones de 56 px (73 px; 98 px con el rótulo
+     "Registrar para…") + aire. */
   .hueco-dock {
-    padding-bottom: calc(132px + env(safe-area-inset-bottom));
+    padding-bottom: calc(160px + env(safe-area-inset-bottom));
   }
 
   .hueco-dock-nino {
-    padding-bottom: calc(156px + env(safe-area-inset-bottom));
+    padding-bottom: calc(184px + env(safe-area-inset-bottom));
   }
 
   /* Barra inferior fija: respeta la zona segura del iPhone. */
@@ -94,7 +96,7 @@
   }
 
   .aviso-flotante-dock {
-    bottom: calc(136px + env(safe-area-inset-bottom));
+    bottom: calc(170px + env(safe-area-inset-bottom));
   }
 
   @media (min-width: 1024px) {

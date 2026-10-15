@@ -1,0 +1,10 @@
+{
+  "_descripcion": "Cómo muestra Huellita los 5 núcleos (dominios) de la rúbrica E-1. La rúbrica es data/rubrica_e1.json, copia exacta de integra-backend/data/processed/rubrica.json; aquí solo va lo que el backend no trae: el nombre visible y la sigla de la planilla. La sigla es la de los códigos de manifestación (MAN-L09-MG-01 → MG). El orden de la planilla es el de 'dominios' en la rúbrica.",
+  "nucleos": [
+    { "dominio": "motor_grueso", "sigla": "MG", "nombre": "Motor grueso" },
+    { "dominio": "motor_fino", "sigla": "MF", "nombre": "Motor fino" },
+    { "dominio": "lenguaje_comunicacion", "sigla": "LC", "nombre": "Lenguaje y comunicación" },
+    { "dominio": "socioemocional", "sigla": "SE", "nombre": "Socioemocional" },
+    { "dominio": "cognitivo", "sigla": "CO", "nombre": "Cognitivo" }
+  ]
+}
