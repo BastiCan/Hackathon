@@ -345,8 +345,11 @@ def _llamar_ocr(id_captura: str, clave: str) -> tuple[int, dict]:
     log.info(json.dumps({"evento": "ocr_ok", "id_captura": id_captura, "n_postits": cuerpo.get("n_postits"),
                          "avisos": [str(a).split(":")[0] for a in cuerpo.get("avisos", [])], "ms": ms}))
     partes = [{k: p.get(k) for k in ("orden", "archivo", "texto", "legibilidad")} for p in cuerpo.get("partes", [])]
-    return 200, {"n_postits": cuerpo.get("n_postits"), "partes": partes, "texto_escrito": cuerpo.get("texto_escrito"),
-                 "tiempos_ms": cuerpo.get("tiempos_ms"), "avisos": cuerpo.get("avisos", [])}
+    # no_leidos: partes con lectura baja que van como [ilegible]; la web muestra su recorte para escribirlas a mano
+    no_leidos = [{k: p.get(k) for k in ("orden", "archivo")} for p in cuerpo.get("no_leidos", []) if isinstance(p, dict)]
+    return 200, {"n_postits": cuerpo.get("n_postits"), "partes": partes, "no_leidos": no_leidos,
+                 "texto_escrito": cuerpo.get("texto_escrito"), "tiempos_ms": cuerpo.get("tiempos_ms"),
+                 "avisos": cuerpo.get("avisos", [])}
 
 
 def _llamar_transcriptor(id_captura: str, clave: str) -> tuple[int, dict]:

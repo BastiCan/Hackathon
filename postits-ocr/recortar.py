@@ -22,6 +22,8 @@ Uso como módulo:
   lado mayor 1600 px (liviana para el front).
 - codificar_jpeg: JPEG calidad 90 dentro de los límites de una imagen de Bedrock Converse
   (3.75 MB y 8000 px por lado).
+- eje_texto: eje de la letra (horizontal o vertical) de todos los recortes de una foto con
+  perfiles de proyección de la tinta, sin el modelo.
 
 Las imágenes son RGB en todo el módulo; solo se pasa a BGR al codificar con OpenCV.
 """
@@ -46,6 +48,13 @@ COLORES_DIBUJO = {
     "celeste": (0, 150, 255),
 }
 COLOR_DESCONOCIDO = (160, 160, 160)
+
+# Eje del texto (eje_texto).
+LADO_EJE = 320  # lado mayor al que se lleva cada recorte antes de medir
+MARGEN_EJE = 0.05  # 5% por lado: fuera el borde del post-it y su sombra
+SUAVIZADO_EJE = 7  # px (en LADO_EJE): borra el ruido de cada trazo, deja los renglones
+TINTA_MIN = 0.004  # fracción mínima de tinta para que un recorte cuente
+UMBRAL_EJE = 0.25  # |media de log(estructura filas / estructura columnas)| para decidir
 
 
 def ordenar_esquinas(puntos) -> np.ndarray:
@@ -100,6 +109,60 @@ def orden_lectura(poligonos) -> list[int]:
         else:
             filas.append([i])
     return [i for fila in filas for i in sorted(fila, key=lambda k: centros[k][0])]
+
+
+def mascara_tinta(rgb: np.ndarray, lado: int = LADO_EJE, margen: float = MARGEN_EJE) -> np.ndarray:
+    """Tinta oscura sobre el color del post-it (0/1): umbral adaptativo en gris, sin un margen de 5%."""
+    escala = lado / max(rgb.shape[:2])
+    reducida = cv2.resize(rgb, None, fx=escala, fy=escala,
+                          interpolation=cv2.INTER_AREA if escala < 1 else cv2.INTER_CUBIC)
+    alto, ancho = reducida.shape[:2]
+    my, mx = int(round(alto * margen)), int(round(ancho * margen))
+    gris = cv2.cvtColor(np.ascontiguousarray(reducida[my:alto - my, mx:ancho - mx]), cv2.COLOR_RGB2GRAY)
+    if min(gris.shape) < 16:
+        return np.zeros(gris.shape, np.uint8)
+    gris = cv2.GaussianBlur(gris, (3, 3), 0)
+    bloque = max(15, (min(gris.shape) // 6) | 1)
+    return cv2.adaptiveThreshold(gris, 1, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV, bloque, 12)
+
+
+def estructura_perfil(perfil: np.ndarray, suavizado: int = SUAVIZADO_EJE) -> float:
+    """Varianza normalizada (desviación / media) del perfil suavizado, dentro del tramo con tinta (2% a 98%
+    acumulado). Los renglones dan picos y valles en el perfil de filas; las columnas quedan más parejas."""
+    perfil = np.asarray(perfil, np.float64)
+    total = perfil.sum()
+    if total <= 0:
+        return 0.0
+    acumulado = np.cumsum(perfil) / total
+    tramo = perfil[int(np.searchsorted(acumulado, 0.02)):int(np.searchsorted(acumulado, 0.98)) + 1]
+    if tramo.size < 2 * suavizado:
+        return 0.0
+    tramo = np.convolve(tramo, np.ones(suavizado) / suavizado, mode="valid")
+    media = tramo.mean()
+    return float(tramo.std() / media) if media > 0 else 0.0
+
+
+def puntaje_eje(rgb: np.ndarray) -> float | None:
+    """log(estructura de filas / estructura de columnas) de un recorte: > 0 letra horizontal, < 0 vertical.
+    None si el recorte casi no tiene tinta."""
+    tinta = mascara_tinta(rgb)
+    if tinta.size == 0 or tinta.mean() < TINTA_MIN:
+        return None
+    filas, columnas = estructura_perfil(tinta.sum(axis=1)), estructura_perfil(tinta.sum(axis=0))
+    if filas <= 0 or columnas <= 0:
+        return None
+    return float(np.log(filas / columnas))
+
+
+def eje_texto(recortes, umbral: float = UMBRAL_EJE) -> tuple[str, float, int]:
+    """("horizontal" | "vertical" | "dudoso", puntaje medio, recortes que contaron) de los recortes de una
+    foto. La letra suele estar girada igual en todos los post-its de la foto, así que se promedian."""
+    puntajes = [p for p in (puntaje_eje(r) for r in recortes) if p is not None]
+    if not puntajes:
+        return "dudoso", 0.0, 0
+    media = float(np.mean(puntajes))
+    eje = "horizontal" if media > umbral else "vertical" if media < -umbral else "dudoso"
+    return eje, media, len(puntajes)
 
 
 def codificar_jpeg(rgb: np.ndarray, calidad: int = CALIDAD_JPEG, max_bytes: int = MAX_BYTES_IMAGEN,

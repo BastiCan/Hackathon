@@ -16,9 +16,14 @@ original/postit_NN.jpg y original/overlay.jpg; después meta.json solo si no exi
 ProcesarNota: fila RECIBIDO en Registros) y al final texto.json (dispara el procesamiento). Cada
 parte de texto.json lleva su `archivo`, que ProcesarNota copia como `archivo_s3` en Observaciones.
 
-Respuesta: {"id_captura", "prefijo", "n_postits", "modo", "partes": [{"orden", "archivo", "texto",
-"legibilidad", "color"}], "tiempos_ms", "meta_escrito", "texto_escrito", "avisos"} (+ "documentos"
-en el ensayo en seco). Error: {"error": {"codigo", "mensaje"}, "id_captura"?}.
+Respuesta: {"id_captura", "prefijo", "n_postits", "modo", "giro_grados", "partes": [{"orden", "archivo",
+"texto", "legibilidad", "color"}], "no_leidos": [{"orden", "archivo"}], "tiempos_ms", "meta_escrito",
+"texto_escrito", "avisos"} (+ "documentos" en el ensayo en seco). Error: {"error": {"codigo", "mensaje"},
+"id_captura"?}.
+
+Orientación: el eje de la letra sale de los perfiles de proyección de la tinta (sin el modelo); solo si
+está vertical, el modelo elige entre 90° y 270°. Freno: una parte con legibilidad baja va a texto.json
+como [ilegible] (ProcesarNota no le asigna niño) y queda en no_leidos, con el aviso LECTURA_BAJA: N.
 
 Los eventos S3 se ignoran ("ignorada") hasta que el equipo agregue el disparador.
 Los logs llevan solo IDs, conteos, tiempos y códigos: nunca textos leídos ni nombres.
@@ -130,9 +135,17 @@ def _poligono_de_caja(caja, ancho: int, alto: int) -> np.ndarray:
     return np.array([[x0, y0], [x1, y0], [x1, y1], [x0, y1]], np.float32)
 
 
-def _orientacion(rgb: np.ndarray, detecciones, lector) -> tuple[int, bool]:
-    """(índice de leer.GIROS, incierta). Vota con los 2 post-its más grandes; si los votos no coinciden
-    o no hay ninguno válido, la orientación es incierta."""
+def _orientacion(rgb: np.ndarray, detecciones, lector) -> tuple[int, bool, str]:
+    """(índice de leer.GIROS, incierta, eje). El eje de la letra sale de los perfiles de proyección de la
+    tinta de todos los recortes (recortar.eje_texto), sin el modelo: horizontal o dudoso -> 0°, sin llamar
+    al modelo. Vertical -> el modelo elige solo entre 90° y 270° con los 2 post-its más grandes; si los
+    votos no coinciden o no hay ninguno válido, la orientación es incierta y se queda en 0°."""
+    eje, puntaje, contados = recortar.eje_texto([recortar.recortar_postit(rgb, d.poligono) for d in detecciones])
+    log.info("eje_texto eje=%s puntaje=%.3f recortes=%d", eje, puntaje, contados)
+    if eje != "vertical":
+        return 0, False, eje
+    if not hasattr(lector, "giro"):
+        return 0, True, eje
     grandes = sorted(detecciones, key=lambda d: d.area_rel, reverse=True)[:2]
     recortes = [recortar.recortar_postit(rgb, d.poligono) for d in grandes]
 
@@ -145,11 +158,11 @@ def _orientacion(rgb: np.ndarray, detecciones, lector) -> tuple[int, bool]:
 
     with ThreadPoolExecutor(max_workers=len(recortes)) as grupo:
         votos = list(grupo.map(votar, recortes))
-    validos = [v for v in votos if v is not None]
+    validos = [v for v in votos if v in leer.GIROS_VERTICAL]
     log.info("orientacion votos=%s", votos)
     if not validos or any(v != validos[0] for v in validos):
-        return (validos[0] if validos else 0), True
-    return validos[0], False
+        return 0, True, eje
+    return validos[0], False, eje
 
 
 def procesar_captura(evento, *, almacen, lector, nomina, restante_ms=None) -> dict:
@@ -306,9 +319,9 @@ def _procesar(evento, almacen, lector, nomina, restante_ms, t0, estado) -> dict:
         # 7. Detección y orientación (una por foto: la letra suele estar girada igual en todos los post-its)
         t_det = time.perf_counter()
         detecciones = [] if p["modo"] == "llm" else detectar.detectar_postits(rgb)
-        giro, orientacion_incierta = 0, False
-        if detecciones and hasattr(lector, "giro"):
-            giro, orientacion_incierta = _orientacion(rgb, detecciones, lector)
+        giro, orientacion_incierta, eje = 0, False, None
+        if detecciones:
+            giro, orientacion_incierta, eje = _orientacion(rgb, detecciones, lector)
             if orientacion_incierta:
                 avisos.append("ORIENTACION_INCIERTA")
             if giro:
@@ -386,6 +399,17 @@ def _procesar(evento, almacen, lector, nomina, restante_ms, t0, estado) -> dict:
     finally:
         subidas.shutdown(wait=True)
 
+    # 11. Freno: una parte con legibilidad baja va como [ilegible] (ProcesarNota no le asigna niño) y queda en
+    # no_leidos, para que la web muestre su recorte y la educadora la escriba a mano.
+    no_leidos = []
+    for parte in partes:
+        if parte["legibilidad"] == "baja":
+            parte["texto"] = leer.ILEGIBLE
+        if parte["texto"] == leer.ILEGIBLE:
+            no_leidos.append({"orden": parte["orden"], "archivo": parte["archivo"]})
+    if no_leidos:
+        avisos.append(f"LECTURA_BAJA: {len(no_leidos)}")
+
     # 12. Documentos
     claves_disponibles = set(claves_subidas)
     if not copiar:
@@ -413,7 +437,7 @@ def _procesar(evento, almacen, lector, nomina, restante_ms, t0, estado) -> dict:
 
     respuesta = {
         "id_captura": id_captura, "prefijo": pref, "n_postits": len(partes), "modo": modo,
-        "giro_grados": (0, 90, 180, 270)[giro], "partes": partes,
+        "giro_grados": (0, 90, 180, 270)[giro], "partes": partes, "no_leidos": no_leidos,
         "tiempos_ms": {"deteccion": ms_deteccion, "lectura": ms_lectura, "subida": ms_subida,
                        "total": int((time.perf_counter() - t0) * 1000)},
         "meta_escrito": bool(meta_escrito), "texto_escrito": texto_escrito, "avisos": avisos,
@@ -430,9 +454,9 @@ def _procesar(evento, almacen, lector, nomina, restante_ms, t0, estado) -> dict:
             avisos.append("URLS_NO_DISPONIBLES")
     log.info(json.dumps({
         "evento": "captura", "id_captura": id_captura, "origen": "directo", "modo": modo, "n_postits": len(partes),
-        "giro_grados": respuesta["giro_grados"],
+        "giro_grados": respuesta["giro_grados"], "eje": eje,
         "lecturas_fallidas": sum(1 for a in avisos if a.startswith("LECTURA_FALLIDA")),
-        "legibilidad_baja": sum(1 for pt in partes if pt["legibilidad"] == "baja"),
+        "legibilidad_baja": sum(1 for pt in partes if pt["legibilidad"] == "baja"), "no_leidos": len(no_leidos),
         "meta_escrito": respuesta["meta_escrito"], "texto_escrito": texto_escrito, "ensayo": not p["escribir_texto"],
         "avisos": sorted({a.split(":")[0] for a in avisos}), "ms": respuesta["tiempos_ms"]}))
     return respuesta

@@ -92,19 +92,22 @@ _BLOQUE_NINOS = """Niños de la sala (nombre y apodos), solo para ayudarte a lee
 
 _REGLAS = """- Transcribe literal: no resumas, no corrijas ortografía, no completes ni agregues palabras.
 - Copia cada nombre tal como está escrito, aunque se parezca a uno de la lista o esté mal escrito.
+- Si no puedes leer el nombre con seguridad, escribe [ilegible]. Nunca elijas un nombre de la lista solo porque se parece.
 - Mantén los saltos de línea {de} (en el JSON van como \\n).
 - Si una palabra o un trozo no se puede leer, escribe [ilegible] en su lugar. Si no se puede leer nada, el texto es [ilegible].
 - No adivines ni inventes: si no estás seguro de una palabra, escribe [ilegible].
 """
 
-# Orientación: el mismo recorte girado de 4 formas (imagen 1 = sin girar, 2 = 90° horario, 3 = 180°,
-# 4 = 90° antihorario); el modelo elige en cuál la letra está derecha.
+# Orientación: índices 0 a 3 = 0°, 90° horario, 180° y 90° antihorario (giro_grados 0, 90, 180, 270).
+# El eje de la letra lo decide recortar.eje_texto sin el modelo; solo si la letra está vertical, el modelo
+# elige entre 90° horario (imagen 1) y 90° antihorario (imagen 2). El 180° no se considera.
 GIROS = (None, cv2.ROTATE_90_CLOCKWISE, cv2.ROTATE_180, cv2.ROTATE_90_COUNTERCLOCKWISE)
+GIROS_VERTICAL = (1, 3)
 LADO_GIRO = 640
-PROMPT_GIRO = """Las 4 imágenes (1, 2, 3 y 4) son el mismo post-it escrito a mano, girado de 4 formas distintas.
-¿En cuál de las 4 la letra está derecha, es decir, se lee normalmente de izquierda a derecha y con las líneas de arriba hacia abajo?
+PROMPT_GIRO = """Las 2 imágenes (1 y 2) son el mismo post-it escrito a mano, girado de 2 formas: una es la otra dada vuelta (180°).
+¿En cuál de las 2 la letra está derecha, es decir, se lee normalmente de izquierda a derecha y con las líneas de arriba hacia abajo?
 Responde solo JSON: {"derecha": 1, "seguro": true}
-("derecha" es 1, 2, 3 o 4; "seguro" es false si no se puede saber)."""
+("derecha" es 1 o 2; "seguro" es false si no se puede saber)."""
 
 PROMPT_RECORTE = ("""Transcribe este post-it escrito a mano por una educadora de párvulos en Chile.
 Formato habitual: "Nombre: observación".
@@ -346,13 +349,14 @@ class LectorBedrock:
         return normalizar_lectura(extraer_json(crudo), crudo)
 
     def giro(self, rgb_recorte: np.ndarray) -> int | None:
-        """Índice de GIROS (0 a 3) que deja la letra derecha, o None si el modelo no está seguro."""
+        """Para un recorte con la letra vertical: índice de GIROS (1 = 90° horario o 3 = 90° antihorario) que
+        la deja derecha, o None si el modelo no está seguro."""
         escala = LADO_GIRO / max(rgb_recorte.shape[:2])
         base = cv2.resize(rgb_recorte, None, fx=escala, fy=escala,
                           interpolation=cv2.INTER_AREA if escala < 1 else cv2.INTER_CUBIC)
         contenido = []
-        for n, codigo in enumerate(GIROS, start=1):
-            girada = base if codigo is None else cv2.rotate(base, codigo)
+        for n, indice in enumerate(GIROS_VERTICAL, start=1):
+            girada = cv2.rotate(base, GIROS[indice])
             contenido += [{"text": f"Imagen {n}:"},
                           {"image": {"format": "jpeg", "source": {"bytes": recortar.codificar_jpeg(girada, calidad=85)}}}]
         contenido.append({"text": PROMPT_GIRO})
@@ -364,7 +368,7 @@ class LectorBedrock:
             n = int(valor.get("derecha"))
         except (TypeError, ValueError):
             return None
-        return n - 1 if 1 <= n <= 4 else None
+        return GIROS_VERTICAL[n - 1] if 1 <= n <= len(GIROS_VERTICAL) else None
 
     def leer_foto_completa(self, imagen_jpeg: bytes, roster, contexto=None) -> list[dict]:
         crudo = self._converse(self.cliente_foto, imagen_jpeg, prompt_foto(roster), MAX_TOKENS_FOTO)
