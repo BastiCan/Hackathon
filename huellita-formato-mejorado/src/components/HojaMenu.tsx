@@ -24,11 +24,11 @@ export function HojaMenu({
 
   return (
     <HojaInferior titulo={usuaria.nombre} onCerrar={onCerrar}>
-      <p className="mt-1 text-[14px] text-tinta-2">Sala {salaActual.nombre}</p>
+      <p className="mt-1 text-[15px] text-tinta-2">Sala {salaActual.nombre}</p>
 
       {salas.length > 1 ? (
         <div className="mt-4">
-          <h3 className="mb-2 text-[12px] font-bold uppercase tracking-[0.06em] text-tinta-2">
+          <h3 className="mb-2 text-[13px] font-bold uppercase tracking-[0.06em] text-tinta-2">
             Cambiar de sala
           </h3>
           <div className="flex flex-col gap-2">

@@ -12,6 +12,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { almacenMemoria, DataServiceLocal } from '../services/datos';
 import { IAServiceSimulado } from '../services/ia';
 import { Rutas } from './App';
+import { ALT_LOGO } from './Encabezado';
 import { ProveedorServicios } from './servicios';
 
 // React 18 pide esta marca para que `act` no avise en cada render.
@@ -35,6 +36,16 @@ async function montar(ruta: string) {
 
 function texto(): string {
   return contenedor.textContent ?? '';
+}
+
+/**
+ * Imágenes de la pantalla sin contar el logo oficial del encabezado, para
+ * seguir exigiendo cero fotos de niños y niñas.
+ */
+function imagenesSinLogo(): HTMLImageElement[] {
+  return [...contenedor.querySelectorAll('img')].filter(
+    (img) => img.getAttribute('alt') !== ALT_LOGO,
+  );
 }
 
 function botonPor(nombre: string): HTMLButtonElement {
@@ -75,8 +86,10 @@ afterEach(() => {
 describe('Agenda', () => {
   it('muestra el encabezado oficial, la semana, el aviso y la jornada', async () => {
     await montar('/');
-    expect(texto()).toContain('Gobierno');
-    expect(texto()).toContain('INTEGRA');
+    // El encabezado lleva el logo oficial Mineduc + Integra, no un sello dibujado.
+    const logo = contenedor.querySelector(`header img[alt="${ALT_LOGO}"]`);
+    expect(logo).not.toBeNull();
+    expect(logo!.getAttribute('src')).toBeTruthy();
     expect(texto()).toContain('Agenda · Medio Menor A');
     expect(texto()).toContain('Jueves 15 de octubre');
     expect(texto()).toContain('por revisar');
@@ -113,8 +126,8 @@ describe('Sala', () => {
     expect(contenedor.querySelectorAll('tbody tr')).toHaveLength(18);
     // Una columna por núcleo.
     expect(contenedor.querySelectorAll('thead th')).toHaveLength(10);
-    // Nunca fotos de niños ni niñas.
-    expect(contenedor.querySelectorAll('img')).toHaveLength(0);
+    // Nunca fotos de niños ni niñas (solo el logo del encabezado).
+    expect(imagenesSinLogo()).toHaveLength(0);
   });
 
   it('filtra por revisar avance', async () => {
@@ -209,8 +222,8 @@ describe('Directora', () => {
     expect(texto()).toContain('16 de 18 observados en 30 días');
     expect(texto()).toContain('1 por revisar avance');
     expect(texto()).toContain('Menos registrado:');
-    // Nunca fotos de niños ni niñas.
-    expect(contenedor.querySelectorAll('img')).toHaveLength(0);
+    // Nunca fotos de niños ni niñas (solo el logo del encabezado).
+    expect(imagenesSinLogo()).toHaveLength(0);
   });
 
   it('abre una sala en modo lectura, sin captura ni pila de pendientes', async () => {

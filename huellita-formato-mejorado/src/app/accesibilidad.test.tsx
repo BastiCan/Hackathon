@@ -15,6 +15,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { almacenMemoria, DataServiceLocal } from '../services/datos';
 import { IAServiceSimulado } from '../services/ia';
 import { Rutas } from './App';
+import { ALT_LOGO } from './Encabezado';
 import { ProveedorServicios } from './servicios';
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
@@ -57,6 +58,13 @@ async function tocar(elemento: HTMLElement) {
 
 function controles(): HTMLElement[] {
   return [...contenedor.querySelectorAll<HTMLElement>('button, a[href], select, textarea')];
+}
+
+/** Imágenes de la pantalla sin contar el logo oficial del encabezado. */
+function imagenesSinLogo(): HTMLImageElement[] {
+  return [...contenedor.querySelectorAll('img')].filter(
+    (img) => img.getAttribute('alt') !== ALT_LOGO,
+  );
 }
 
 function nombreAccesible(el: HTMLElement): string {
@@ -139,16 +147,17 @@ describe('privacidad en pantalla', () => {
   for (const ruta of RUTAS_TIA) {
     it(`${ruta} solo muestra fotos de notas, nunca de niños ni niñas`, async () => {
       await montar(ruta);
-      const imagenes = [...contenedor.querySelectorAll('img')];
-      for (const img of imagenes) {
+      // El logo institucional del encabezado es la única imagen que no es nota.
+      expect(contenedor.querySelectorAll(`header img[alt="${ALT_LOGO}"]`).length).toBeLessThan(2);
+      for (const img of imagenesSinLogo()) {
         expect(img.getAttribute('alt') ?? '').toMatch(/Foto (de la nota|del post-it)/);
       }
     });
   }
 
-  it('la planilla de la sala no muestra ninguna imagen', async () => {
+  it('la planilla de la sala no muestra ninguna imagen, aparte del logo', async () => {
     await montar('/sala');
-    expect(contenedor.querySelectorAll('img')).toHaveLength(0);
+    expect(imagenesSinLogo()).toHaveLength(0);
   });
 });
 

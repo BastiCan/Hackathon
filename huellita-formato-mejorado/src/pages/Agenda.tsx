@@ -1,17 +1,49 @@
-import { ChevronRight } from 'lucide-react';
+import {
+  ChevronRight,
+  Coffee,
+  Hand,
+  Moon,
+  Palette,
+  Puzzle,
+  Sunrise,
+  Trees,
+  Utensils,
+  type LucideIcon,
+} from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAgenda } from '../app/hooks';
 import { COLOR_AMBITO } from '../components/ambitos';
 import { NumeroNivel } from '../components/ChipNivel';
+import { PALETA } from '../components/colores';
+import { Mancha, type FormaMancha } from '../components/Mancha';
 import { EtiquetaNucleo, Miniatura } from '../components/Miniatura';
 import type { DiaSemana, RegistroAgenda } from '../lib/agenda';
 import { fechaLarga } from '../lib/vistas';
 
 const COLOR_PUNTO: Record<DiaSemana['puntos'][number], string> = {
   ...COLOR_AMBITO,
-  sala: '#8A93A6',
+  sala: PALETA.gris,
 };
+
+/**
+ * Tono de cada período de la jornada: los colores de la paleta oficial rotan
+ * en un orden fijo (azul, naranjo, verde, rosado, amarillo), nunca al azar, así
+ * que un período se ve siempre del mismo color. Donde el color pleno no da
+ * contraste AA con blanco (naranjo, verde y amarillo), el texto va en tinta.
+ */
+const TONOS = [
+  { banda: 'bg-integra text-white', icono: 'text-integra', mancha: PALETA.amarillo },
+  { banda: 'bg-naranjo text-tinta', icono: 'text-naranjo-texto', mancha: PALETA.rosado },
+  { banda: 'bg-logo-verde text-tinta', icono: 'text-ambito-ent-texto', mancha: PALETA.azul },
+  { banda: 'bg-rosado-oscuro text-white', icono: 'text-rosado-oscuro', mancha: PALETA.amarillo },
+  { banda: 'bg-logo-amarillo text-tinta', icono: 'text-ambito-com-texto', mancha: PALETA.azul },
+];
+
+/** Un ícono por período de la jornada, en el orden de `JORNADA`. */
+const ICONOS: LucideIcon[] = [Sunrise, Coffee, Puzzle, Trees, Utensils, Moon, Palette, Hand];
+
+const FORMAS: FormaMancha[] = ['a', 'b', 'c'];
 
 /**
  * Pantalla de inicio: la agenda de la tía. La semana arriba, el aviso de lo que
@@ -43,19 +75,24 @@ export function Agenda() {
   const conRegistros = v.periodos.filter((p) => p.registros.length > 0).length;
 
   return (
-    <>
-      <p className="rotulo">Agenda · {v.sala.nombre}</p>
-      <div className="mb-3 flex items-center justify-between gap-2">
+    /*
+     * En escritorio la agenda se abre en dos columnas: a la izquierda la semana
+     * y la jornada; a la derecha el aviso de pendientes y el resumen. En
+     * celular el orden es el mismo de siempre (todas las clases son `lg:`).
+     */
+    <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_300px] lg:items-start lg:gap-6">
+      <p className="rotulo lg:col-span-2 lg:row-start-1">Agenda · {v.sala.nombre}</p>
+      <div className="mb-3 flex items-center justify-between gap-2 lg:col-span-2 lg:row-start-2">
         <h1>{fechaLarga(v.dia)}</h1>
         {esHoy ? (
-          <span className="rounded-[3px] bg-integra px-2 py-[2px] text-[12px] font-medium text-white">
+          <span className="rounded-chip bg-rosado-oscuro px-[10px] py-[3px] text-[13px] font-bold text-white">
             Hoy
           </span>
         ) : (
           <button
             type="button"
             onClick={() => setDia(null)}
-            className="min-h-tactil text-[14px] font-medium text-integra underline"
+            className="min-h-tactil text-[15px] font-bold text-integra underline"
           >
             Volver a hoy
           </button>
@@ -65,7 +102,7 @@ export function Agenda() {
       <div
         role="group"
         aria-label="Días de la semana"
-        className="-mx-4 mb-3 grid grid-cols-5 gap-1 border-y border-linea bg-[#EAF0F8] px-3 py-2"
+        className="-mx-4 mb-3 grid grid-cols-5 gap-[6px] border-y border-linea bg-integra-claro px-3 py-[10px] lg:col-start-1 lg:row-start-3 lg:mx-0 lg:gap-3 lg:rounded-tarjeta lg:border lg:px-4 lg:py-3"
       >
         {v.semana.map((d) => {
           const activo = d.fecha === v.dia;
@@ -76,15 +113,33 @@ export function Agenda() {
               aria-pressed={activo}
               aria-label={`${d.nombreCorto} ${d.numero}, ${d.puntos.length} registros`}
               onClick={() => setDia(d.fecha === v.hoy ? null : d.fecha)}
-              className={`flex min-h-[54px] flex-col items-center justify-center rounded-[4px] text-[12px] ${
-                activo ? 'bg-integra text-white' : 'text-tinta-2'
+              className={`relative flex min-h-[56px] flex-col items-center justify-center overflow-hidden rounded-chip text-[13px] lg:min-h-[76px] lg:text-[14px] ${
+                activo
+                  ? 'bg-integra text-white shadow-tarjeta'
+                  : 'border border-linea bg-papel text-tinta-2'
               }`}
             >
-              {d.nombreCorto}
-              <b className={`tabular text-[16px] ${activo ? 'text-white' : 'text-tinta'}`}>
+              {activo ? (
+                <>
+                  <Mancha
+                    color={PALETA.amarillo}
+                    forma="b"
+                    opacidad={0.35}
+                    className="-right-3 -top-4 h-10 w-10"
+                  />
+                  <Mancha
+                    color={PALETA.rosado}
+                    forma="c"
+                    opacidad={0.35}
+                    className="-bottom-4 -left-3 h-9 w-9"
+                  />
+                </>
+              ) : null}
+              <span className="relative">{d.nombreCorto}</span>
+              <b className={`tabular relative text-[17px] ${activo ? 'text-white' : 'text-tinta'}`}>
                 {d.numero}
               </b>
-              <span className="flex h-[6px] gap-[2px]">
+              <span className="relative flex h-[6px] gap-[2px]">
                 {d.puntos.map((p, i) => (
                   <i
                     key={i}
@@ -98,52 +153,80 @@ export function Agenda() {
         })}
       </div>
 
-      {v.pendientes > 0 ? (
-        <button
-          type="button"
-          onClick={() => navegar('/revisar')}
-          className="aviso mb-2 flex min-h-tactil w-full items-center justify-between gap-2 px-3 py-2 text-left text-[14px]"
-        >
-          <span>
-            <b>{v.pendientes} por revisar</b>
-            <span className="text-tinta-2"> · confirma lo que leyó Huellita</span>
-          </span>
-          <span className="flex flex-none items-center font-medium text-integra">
-            Revisar
-            <ChevronRight aria-hidden="true" className="h-4 w-4" />
-          </span>
-        </button>
-      ) : null}
-
-      <p className="mb-3 text-[13px] text-tinta-2">
-        Próximo: <b className="text-tinta">{v.iea.numero}º registro IEA ({v.iea.mes})</b> ·
-        observados en 30 días: <b className="text-tinta">{v.partesResumen.observados}</b>
-      </p>
-
-      <section
-        aria-label="Jornada"
-        className="overflow-hidden rounded-tarjeta border border-linea bg-papel"
-      >
-        {v.periodos.map((p) => (
-          <div
-            key={p.inicio}
-            className="grid grid-cols-[52px_1fr] border-b border-dashed border-linea last:border-b-0"
+      <div className="lg:col-start-2 lg:row-start-3 lg:row-span-2 lg:sticky lg:top-6 lg:flex lg:flex-col lg:gap-2">
+        {v.pendientes > 0 ? (
+          <button
+            type="button"
+            onClick={() => navegar('/revisar')}
+            className="aviso mb-2 flex min-h-tactil w-full items-center justify-between gap-2 px-3 py-2 text-left text-[15px] lg:mb-0"
           >
-            <span
-              className={`tabular pl-3 font-rotulo text-[13px] text-tinta-2 ${
-                p.registros.length === 0 ? 'pt-[7px]' : 'pt-[10px]'
+            <span>
+              <b>{v.pendientes} por revisar</b>
+              <span className="text-naranjo-texto"> · confirma lo que leyó Huellita</span>
+            </span>
+            <span className="flex flex-none items-center font-bold text-integra">
+              Revisar
+              <ChevronRight aria-hidden="true" className="h-4 w-4" />
+            </span>
+          </button>
+        ) : null}
+
+        <p className="mb-3 text-[14px] text-tinta-2 lg:mb-0 lg:rounded-tarjeta lg:border lg:border-linea lg:bg-papel lg:p-3 lg:shadow-tarjeta">
+          Próximo: <b className="text-tinta">{v.iea.numero}º registro IEA ({v.iea.mes})</b> ·
+          observados en 30 días: <b className="text-tinta">{v.partesResumen.observados}</b>
+        </p>
+      </div>
+
+      <section aria-label="Jornada" className="flex flex-col gap-2 lg:col-start-1 lg:row-start-4">
+        {v.periodos.map((p, i) => {
+          const conNotas = p.registros.length > 0;
+          const tono = TONOS[i % TONOS.length];
+          const Icono = ICONOS[i % ICONOS.length];
+          return (
+            <div
+              key={p.inicio}
+              className={`relative overflow-hidden rounded-tarjeta border border-linea bg-papel ${
+                conNotas ? 'shadow-tarjeta' : ''
               }`}
             >
-              {p.inicio}
-            </span>
-            <div className={p.registros.length === 0 ? 'py-[6px] pr-3' : 'py-[9px] pr-3'}>
-              {p.registros.length === 0 ? (
-                <p className="text-[13px] text-tinta-3">{p.nombre}</p>
-              ) : (
-                <h2 className="text-[14px] font-medium">{p.nombre}</h2>
-              )}
-              {p.registros.length === 0 ? null : (
-                <ul className="mt-[6px] flex flex-col gap-2">
+              <Mancha
+                color={tono.mancha}
+                forma={FORMAS[i % FORMAS.length]}
+                opacidad={conNotas ? 0.16 : 0.06}
+                className={
+                  conNotas ? '-bottom-7 -right-6 h-28 w-28' : '-bottom-5 -right-4 h-16 w-16'
+                }
+              />
+              <div
+                className={`relative grid grid-cols-[52px_1fr] items-center gap-1 px-3 ${
+                  conNotas ? `${tono.banda} py-2` : 'py-[7px]'
+                }`}
+              >
+                <span
+                  className={`tabular text-[13px] ${conNotas ? 'font-bold' : 'text-tinta-2'}`}
+                >
+                  {p.inicio}
+                </span>
+                <span className="flex items-center gap-2">
+                  <span
+                    className={`grid h-7 w-7 flex-none place-items-center rounded-full ${
+                      conNotas ? 'bg-papel' : 'bg-fondo'
+                    }`}
+                  >
+                    <Icono
+                      aria-hidden="true"
+                      className={`h-4 w-4 ${conNotas ? tono.icono : 'text-tinta-3'}`}
+                    />
+                  </span>
+                  {conNotas ? (
+                    <h2 className="text-[16px]">{p.nombre}</h2>
+                  ) : (
+                    <p className="text-[14px] text-tinta-3">{p.nombre}</p>
+                  )}
+                </span>
+              </div>
+              {conNotas ? (
+                <ul className="relative flex flex-col gap-2 px-3 py-[10px]">
                   {p.registros.map((r) => (
                     <li key={r.evidenciaId}>
                       <Registro
@@ -156,14 +239,14 @@ export function Agenda() {
                     </li>
                   ))}
                 </ul>
-              )}
+              ) : null}
             </div>
-          </div>
-        ))}
+          );
+        })}
       </section>
 
       {conRegistros === 0 ? (
-        <p className="mt-3 text-center text-[14px] text-tinta-2">
+        <p className="mt-3 text-center text-[15px] text-tinta-2 lg:col-start-1 lg:row-start-5">
           {esHoy
             ? 'Todavía no hay registros hoy. Usa Foto, Grabar o Escribir.'
             : v.dia > v.hoy
@@ -171,7 +254,7 @@ export function Agenda() {
               : 'Ese día no hubo registros.'}
         </p>
       ) : null}
-    </>
+    </div>
   );
 }
 
@@ -195,15 +278,15 @@ function Registro({
       onClick={() => onAbrir(primera?.ninoId, pendiente)}
       className="flex min-h-tactil w-full items-start gap-[10px] text-left"
     >
-      <Miniatura formato={r.formato} foto={r.foto} tamano={56} />
+      <Miniatura formato={r.formato} foto={r.foto} tamano={56} conMancha />
       <span className="min-w-0 flex-1">
-        <span className="block text-[14px]">
+        <span className="block text-[15px]">
           <b>{procesando ? 'Leyendo tu nota…' : nombres || 'Nota'}</b>
           <span className="text-tinta-2"> · {r.hora} · {autora}</span>
         </span>
         {r.texto ? (
           <span
-            className="mt-[1px] block overflow-hidden text-[13px] text-tinta-2"
+            className="mt-[1px] block overflow-hidden text-[14px] text-tinta-2"
             style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}
           >
             {r.texto}
@@ -215,12 +298,12 @@ function Registro({
             <NumeroNivel nivel={primera.nivel} nucleo={primera.nucleo} tamano={20} />
           ) : null}
           {primera?.tipo === 'nota_sala' ? (
-            <span className="rounded-[3px] bg-cuadricula px-[6px] py-[1px] text-[12px] text-tinta-2">
+            <span className="rounded-chip bg-cuadricula px-[6px] py-[1px] text-[13px] text-tinta-2">
               Nota de la sala
             </span>
           ) : null}
           {pendiente && !procesando ? (
-            <span className="rounded-[3px] border border-aviso-borde bg-aviso-fondo px-[6px] py-[1px] text-[12px] text-[#6B4A00]">
+            <span className="rounded-chip border border-naranjo bg-naranjo-suave px-[6px] py-[1px] text-[13px] font-bold text-naranjo-texto">
               Por revisar
             </span>
           ) : null}

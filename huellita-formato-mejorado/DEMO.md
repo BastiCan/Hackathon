@@ -19,7 +19,7 @@ O abrir `huellita-demo.html` con doble clic (no necesita instalar nada).
 
 ### 1. Entrar como tía Ana · su agenda (30 s)
 Elegir **"Tía Ana · Medio Menor A"**. Qué mostrar:
-- el **sello institucional** (Gobierno de Chile · Integra) y la franja con los colores del logo;
+- el **logo oficial** (Ministerio de Educación · Gobierno de Chile e Integra) y la franja con los colores del logo;
 - la **semana** de lunes a viernes, con puntos de colores por ámbito;
 - el aviso **"3 por revisar"** y el **próximo registro IEA (noviembre)**;
 - el día ordenado por **períodos de la jornada**: en "Experiencia de aprendizaje" está la **foto real del post-it** de Maximiliano (las tortugas).

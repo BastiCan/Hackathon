@@ -7,6 +7,9 @@ const ENFOCABLES =
  * Hoja que sube desde abajo (captura, cambiar, leyenda, detalle de núcleo).
  * Esquinas de 24 px, asa arriba, se cierra con Escape o tocando el velo. El
  * foco queda dentro mientras está abierta y vuelve a su lugar al cerrarse.
+ *
+ * En el computador (desde 1024 px) la misma hoja se muestra como diálogo
+ * centrado de 520 px, con las 4 esquinas redondeadas.
  */
 export function HojaInferior({
   titulo,
@@ -55,7 +58,7 @@ export function HojaInferior({
 
   return (
     <div
-      className="fixed inset-0 z-20 flex items-end justify-center bg-[rgba(27,42,68,0.42)]"
+      className="fixed inset-0 z-20 flex items-end justify-center bg-[rgba(34,38,46,0.42)] lg:items-center lg:p-6"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) onCerrar();
       }}
@@ -66,7 +69,7 @@ export function HojaInferior({
         role="dialog"
         aria-modal="true"
         aria-label={etiqueta ?? titulo}
-        className="max-h-[88%] w-full max-w-tia animate-sube overflow-auto rounded-t-hoja bg-papel shadow-[0_-4px_16px_rgba(27,42,68,0.12)] px-[18px] pb-7 pt-[10px] outline-none"
+        className="max-h-[88%] w-full max-w-tia animate-sube overflow-auto rounded-t-hoja bg-papel shadow-[0_-4px_16px_rgba(0,40,90,0.14)] px-[18px] pb-7 pt-[10px] outline-none md:max-w-[640px] lg:max-w-[520px] lg:rounded-hoja lg:pb-6 lg:shadow-[0_8px_28px_rgba(0,40,90,0.22)]"
       >
         {/* El asa del prototipo, que además es el botón para cerrar: así la
             hoja siempre tiene un control alcanzable con teclado. */}

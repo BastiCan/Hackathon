@@ -4,9 +4,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useMiSala } from '../app/hooks';
 import { NOMBRE_AMBITO } from '../components/ambitos';
 import { NumeroNivel } from '../components/ChipNivel';
-import { COLOR_FRESCURA } from '../components/colores';
+import { COLOR_FRESCURA, PALETA } from '../components/colores';
 import { HojaGestionNino } from '../components/HojaGestionNino';
 import { HojaLeyenda } from '../components/HojaLeyenda';
+import { Mancha } from '../components/Mancha';
 import { codigosNucleos, nombreNucleo } from '../lib/rubrica';
 import {
   etiquetaTarjeta,
@@ -56,7 +57,7 @@ export function MiSala({ soloLectura = false }: { soloLectura?: boolean }) {
         <button
           type="button"
           onClick={() => navegar('/directora')}
-          className="-ml-[6px] mb-1 inline-flex min-h-tactil items-center gap-1 px-[6px] font-medium text-integra"
+          className="-ml-[6px] mb-1 inline-flex min-h-tactil items-center gap-1 px-[6px] font-bold text-integra"
         >
           <ChevronLeft aria-hidden="true" className="h-[22px] w-[22px]" />
           Salas
@@ -92,28 +93,36 @@ export function MiSala({ soloLectura = false }: { soloLectura?: boolean }) {
           type="button"
           onClick={() => setLeyenda(true)}
           aria-label="Qué significan los colores"
-          className="grid min-h-tactil min-w-tactil flex-none place-items-center rounded-[4px] border border-linea bg-papel text-tinta-2"
+          className="grid min-h-tactil min-w-tactil flex-none place-items-center rounded-chip border border-linea bg-papel text-tinta-2"
         >
           <HelpCircle aria-hidden="true" className="h-[20px] w-[20px]" />
         </button>
       </div>
 
       {visibles.length > 0 ? (
-        <div className="-mx-4 overflow-x-auto border-y border-linea bg-papel sm:mx-0 sm:rounded-tarjeta sm:border">
-          <table aria-label="Niños y niñas de la sala" className="w-full border-collapse text-[13px]">
+        <div className="-mx-4 overflow-x-auto border-y border-linea bg-papel sm:mx-0 sm:rounded-tarjeta sm:border sm:shadow-tarjeta lg:overflow-x-visible">
+          <table
+            aria-label="Niños y niñas de la sala"
+            className="w-full border-collapse text-[13px] lg:text-[15px]"
+          >
             <thead>
-              <tr className="border-b border-[#C9D2DE] font-rotulo text-[11px] uppercase tracking-[0.04em] text-tinta-2">
-                <th scope="col" className="py-2 pl-3 text-left font-medium">
+              <tr className="border-b border-linea text-[12px] font-bold uppercase tracking-[0.04em] text-tinta-2">
+                <th scope="col" className="py-2 pl-3 text-left font-bold lg:py-3 lg:pl-5">
                   Niño/a
                 </th>
                 {nucleos.map((n) => (
-                  <th key={n} scope="col" title={nombreNucleo(n)} className="px-[1px] py-2 font-medium">
+                  <th
+                    key={n}
+                    scope="col"
+                    title={nombreNucleo(n)}
+                    className="px-[1px] py-2 font-bold lg:px-2 lg:py-3"
+                  >
                     <abbr title={nombreNucleo(n)} className="no-underline">
                       {n}
                     </abbr>
                   </th>
                 ))}
-                <th scope="col" className="py-2 pr-3 text-right font-medium">
+                <th scope="col" className="py-2 pr-3 text-right font-bold lg:py-3 lg:pr-5">
                   Último
                 </th>
               </tr>
@@ -122,10 +131,10 @@ export function MiSala({ soloLectura = false }: { soloLectura?: boolean }) {
               {visibles.map((t) => (
                 <tr
                   key={t.id}
-                  className="cursor-pointer border-b border-[#EEF1F5] last:border-b-0 hover:bg-fondo"
+                  className="cursor-pointer border-b border-cuadricula last:border-b-0 hover:bg-integra-claro"
                   onClick={() => (soloLectura ? setGestionando(t) : navegar(`/nino/${t.id}`))}
                 >
-                  <th scope="row" className="pl-3 text-left font-medium">
+                  <th scope="row" className="pl-3 text-left font-bold lg:pl-5">
                     <button
                       type="button"
                       aria-label={etiquetaTarjeta(t)}
@@ -136,16 +145,22 @@ export function MiSala({ soloLectura = false }: { soloLectura?: boolean }) {
                       }}
                       className="flex min-h-tactil items-center gap-1 text-left"
                     >
-                      <span className="max-w-[96px] truncate">{t.nombreCorto}</span>
+                      {/* En escritorio hay espacio: el nombre se ve completo. */}
+                      <span className="max-w-[96px] truncate lg:max-w-none lg:overflow-visible">
+                        {t.nombreCorto}
+                      </span>
                       {t.revisarAvance ? (
-                        <Flag aria-hidden="true" className="h-[13px] w-[13px] flex-none text-ambar" />
+                        <Flag
+                          aria-hidden="true"
+                          className="h-[13px] w-[13px] flex-none text-naranjo-texto"
+                        />
                       ) : null}
                     </button>
                   </th>
                   {nucleos.map((n) => {
                     const nivel = t.niveles[n];
                     return (
-                      <td key={n} className="px-[1px] text-center">
+                      <td key={n} className="px-[1px] text-center lg:px-2">
                         {nivel ? (
                           <NumeroNivel
                             nivel={nivel}
@@ -161,7 +176,7 @@ export function MiSala({ soloLectura = false }: { soloLectura?: boolean }) {
                       </td>
                     );
                   })}
-                  <td className="tabular whitespace-nowrap pr-3 text-right text-[12px] text-tinta-2">
+                  <td className="tabular whitespace-nowrap pr-3 text-right text-[13px] text-tinta-2 lg:pr-5 lg:text-[14px]">
                     <span
                       className="punto mr-1 align-middle"
                       style={{ ['--punto' as string]: COLOR_FRESCURA[t.frescura] }}
@@ -181,18 +196,26 @@ export function MiSala({ soloLectura = false }: { soloLectura?: boolean }) {
         </p>
       )}
 
-      <p className="mt-2 text-[12px] leading-[1.5] text-tinta-2">
-        <span className="mr-2 inline-block h-[9px] w-[9px] rounded-[2px] bg-logo-rojo" />
+      <p className="mt-2 text-[13px] leading-[1.5] text-tinta-2">
+        <span className="mr-2 inline-block h-[10px] w-[10px] rounded-full bg-logo-rojo" />
         {NOMBRE_AMBITO.dps}
-        <span className="mx-2 inline-block h-[9px] w-[9px] rounded-[2px] bg-logo-amarillo" />
+        <span className="mx-2 inline-block h-[10px] w-[10px] rounded-full bg-logo-amarillo" />
         {NOMBRE_AMBITO.com}
-        <span className="mx-2 inline-block h-[9px] w-[9px] rounded-[2px] bg-logo-verde" />
+        <span className="mx-2 inline-block h-[10px] w-[10px] rounded-full bg-logo-verde" />
         {NOMBRE_AMBITO.ent}
       </p>
 
-      <p className="mt-3 rounded-tarjeta border border-linea bg-papel p-3 text-[14px] text-tinta-2">
-        Observados en 30 días: <strong className="text-tinta">{partesResumen.observados}</strong> ·
-        Menos registrado: <strong className="text-tinta">{partesResumen.menos}</strong>
+      <p className="relative mt-3 overflow-hidden rounded-tarjeta border border-linea bg-papel p-3 text-[15px] text-tinta-2 shadow-tarjeta">
+        <Mancha
+          color={PALETA.azul}
+          forma="c"
+          opacidad={0.1}
+          className="-bottom-6 -right-5 h-20 w-20"
+        />
+        <span className="relative">
+          Observados en 30 días: <strong className="text-tinta">{partesResumen.observados}</strong> ·
+          Menos registrado: <strong className="text-tinta">{partesResumen.menos}</strong>
+        </span>
       </p>
 
       {leyenda ? <HojaLeyenda onCerrar={() => setLeyenda(false)} /> : null}
@@ -221,8 +244,10 @@ function Chip({
       type="button"
       aria-pressed={activo}
       onClick={onClick}
-      className={`min-h-tactil flex-none rounded-[4px] border px-3 text-[14px] ${
-        activo ? 'border-integra bg-integra text-white' : 'border-linea bg-papel text-tinta-2'
+      className={`min-h-tactil flex-none rounded-chip border px-3 text-[15px] ${
+        activo
+          ? 'border-integra bg-integra font-bold text-white'
+          : 'border-linea bg-papel text-tinta-2'
       }`}
     >
       {texto}

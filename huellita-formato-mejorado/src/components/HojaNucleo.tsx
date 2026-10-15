@@ -27,7 +27,7 @@ export function HojaNucleo({
 
   return (
     <HojaInferior titulo={nombreNucleo(nucleo)} onCerrar={onCerrar}>
-      <p className="mb-3 mt-1 text-[14px] text-tinta-2">
+      <p className="mb-3 mt-1 text-[15px] text-tinta-2">
         {conEvidencia
           ? 'Lo que se espera en este nivel y en el siguiente.'
           : 'Todavía no hay registros. Esto es lo que se espera a su edad.'}

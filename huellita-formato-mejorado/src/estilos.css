@@ -13,19 +13,20 @@
     @apply bg-fondo font-texto text-base leading-[1.45] text-tinta;
   }
 
-  /* En escritorio la app se centra como una columna sobre un gris azulado. */
-  @media (min-width: 560px) {
+  /* En tablet la app se centra como una columna sobre un gris azulado. Desde
+     1024 px manda el diseño de escritorio, que ocupa todo el ancho. */
+  @media (min-width: 560px) and (max-width: 1023px) {
     body {
-      background: #e3e9f2;
+      background: #e4eaf3;
     }
   }
 
   h1 {
-    @apply text-[21px] font-bold leading-[1.2];
+    @apply text-[22px] font-bold leading-[1.2];
   }
 
   h2 {
-    @apply text-[16px] font-bold;
+    @apply text-[17px] font-bold;
   }
 
   /* Las citas ya traen su propio formato; sin comillas automáticas. */
@@ -34,22 +35,91 @@
   }
 
   :focus-visible {
-    outline: 3px solid #1f4e9a;
+    /* Azul oficial del manual (Pantone 300C). */
+    outline: 3px solid #0063bd;
     outline-offset: 2px;
-    border-radius: 4px;
+    border-radius: 6px;
   }
 }
 
 @layer components {
-  /* Rótulo de sección: mayúscula pequeña, como en los formularios del Estado. */
-  .rotulo {
-    @apply font-rotulo text-[12px] font-medium uppercase tracking-[0.06em] text-tinta-2;
+  /* Alto de la ventana. `dvh` evita que la barra del navegador del celular
+     tape la app; `vh` queda como respaldo para Safari iOS antiguo. */
+  .alto-pantalla {
+    min-height: 100vh;
+    min-height: 100dvh;
   }
 
-  /* Aviso con borde de color a la izquierda (sin esquinas en ese lado). */
+  /* Igual, pero solo en escritorio (la tarjeta de entrada se centra). */
+  @media (min-width: 1024px) {
+    .alto-pantalla-escritorio {
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+  }
+
+  /*
+   * Hueco que el contenido reserva abajo para la barra de navegación, la barra
+   * de captura y la zona segura del iPhone. En escritorio (desde 1024 px) no
+   * hay barras fijas abajo, así que el hueco desaparece.
+   */
+  .hueco-barra,
+  .hueco-dock,
+  .hueco-dock-nino {
+    padding-bottom: calc(84px + env(safe-area-inset-bottom));
+  }
+
+  .hueco-dock {
+    padding-bottom: calc(132px + env(safe-area-inset-bottom));
+  }
+
+  .hueco-dock-nino {
+    padding-bottom: calc(156px + env(safe-area-inset-bottom));
+  }
+
+  /* Barra inferior fija: respeta la zona segura del iPhone. */
+  .barra-segura {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Barra de captura: justo sobre la barra inferior y su zona segura. */
+  .sobre-barra {
+    bottom: calc(64px + env(safe-area-inset-bottom));
+  }
+
+  /* Aviso flotante: sobre la barra inferior (o sobre el dock si lo hay). */
+  .aviso-flotante,
+  .aviso-flotante-dock {
+    bottom: calc(76px + env(safe-area-inset-bottom));
+  }
+
+  .aviso-flotante-dock {
+    bottom: calc(136px + env(safe-area-inset-bottom));
+  }
+
+  @media (min-width: 1024px) {
+    .hueco-barra,
+    .hueco-dock,
+    .hueco-dock-nino {
+      padding-bottom: 40px;
+    }
+
+    .aviso-flotante,
+    .aviso-flotante-dock {
+      bottom: 24px;
+    }
+  }
+
+  /* Rótulo de sección: mayúscula pequeña, como en los formularios del Estado.
+     Carlito solo trae 400 y 700, así que el énfasis va en 700. */
+  .rotulo {
+    @apply text-[13px] font-bold uppercase tracking-[0.06em] text-tinta-2;
+  }
+
+  /* Aviso con la mancha naranja a la izquierda (sin esquinas en ese lado). */
   .aviso {
     @apply border-l-4 border-aviso-borde bg-aviso-fondo;
-    border-radius: 0 6px 6px 0;
+    border-radius: 0 16px 16px 0;
   }
 
   /* Punto de frescura junto a la fecha del último registro. */
@@ -58,7 +128,7 @@
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--punto, #8a93a6);
+    background: var(--punto, #686f7b);
   }
 
   /* Nota resuelta: se despide antes de salir de la lista (tarea 10). */
@@ -101,7 +171,7 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: var(--punto, #8a93a6);
+    background: var(--punto, #686f7b);
   }
 }
 

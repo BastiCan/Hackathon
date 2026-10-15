@@ -35,7 +35,7 @@ export function HojaFoto({
 
   return (
     <HojaInferior titulo="Foto de tu nota" onCerrar={onCerrar}>
-      <p className="mb-[14px] mt-1 text-[14px] text-tinta-2">
+      <p className="mb-[14px] mt-1 text-[15px] text-tinta-2">
         Encuadra el post-it o la hoja completa.
       </p>
       <input
@@ -62,7 +62,7 @@ export function HojaFoto({
           className="mb-[14px] max-h-[46vh] w-full rounded-tarjeta border border-linea object-contain"
         />
       ) : (
-        <div className="mb-[14px] grid aspect-[4/3] place-items-center rounded-tarjeta border border-dashed border-[#C9D2DE] bg-fondo px-6 text-center text-[15px] text-tinta-2">
+        <div className="mb-[14px] grid aspect-[4/3] place-items-center rounded-tarjeta border border-dashed border-linea bg-fondo px-6 text-center text-[15px] text-tinta-2">
           Saca una foto del post-it o de la nota. La foto queda guardada en el registro.
         </div>
       )}
@@ -186,7 +186,7 @@ export function HojaAudio({
         <span className="text-[34px] font-bold tabular-nums" role="timer">
           {reloj}
         </span>
-        <p className="text-center text-[14px] text-tinta-2">
+        <p className="text-center text-[15px] text-tinta-2">
           Cuenta qué hizo y quién. Máximo 60 segundos.
         </p>
         <Boton ancho variante="pri" onClick={detener}>
@@ -223,7 +223,7 @@ export function HojaTexto({
         value={texto}
         onChange={(e) => setTexto(e.target.value)}
         placeholder="Martina armó una torre de 6 bloques y contó hasta 5"
-        className="my-3 min-h-[130px] w-full resize-y rounded-tarjeta border border-linea p-3 text-base text-tinta"
+        className="my-3 min-h-[130px] w-full resize-y rounded-campo border border-linea p-3 text-base text-tinta"
       />
       <Boton ancho variante="pri" disabled={texto.trim().length === 0} onClick={() => onEnviar(texto)}>
         Enviar

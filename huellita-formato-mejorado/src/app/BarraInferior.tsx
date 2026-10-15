@@ -1,15 +1,12 @@
-import {
-  Building2,
-  CalendarDays,
-  ClipboardCheck,
-  Table2,
-  type LucideIcon,
-} from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import { destinos, type Destino as DestinoNav } from './destinos';
 
 /**
- * Barra inferior fija: Agenda · Sala · Revisar (con el contador de pendientes)
- * · Directora (solo para el rol directora).
+ * Barra inferior fija del celular: Agenda · Sala · Revisar (con el contador de
+ * pendientes) · Directora (solo para el rol directora).
+ *
+ * Desde 1024 px (`lg:`) desaparece: en el computador los mismos destinos viven
+ * en la barra lateral (`NavegacionLateral`).
  */
 export function BarraInferior({
   pendientes,
@@ -26,63 +23,56 @@ export function BarraInferior({
   return (
     <nav
       aria-label="Principal"
-      className={`fixed bottom-0 left-1/2 z-10 flex h-[64px] w-full -translate-x-1/2 border-t border-linea bg-papel ${ancho}`}
+      className={`barra-segura fixed bottom-0 left-1/2 z-10 box-content flex h-[64px] w-full -translate-x-1/2 border-t border-linea bg-papel lg:hidden ${ancho}`}
     >
-      <Destino a="/" icono={CalendarDays} texto="Agenda" activo={pathname === '/'} />
-      <Destino
-        a="/sala"
-        icono={Table2}
-        texto="Sala"
-        activo={pathname === '/sala' || pathname.startsWith('/nino/')}
-      />
-      <Destino
-        a="/revisar"
-        icono={ClipboardCheck}
-        texto="Revisar"
-        activo={pathname === '/revisar'}
-        contador={pendientes}
-      />
-      {esDirectora ? (
+      {destinos(esDirectora).map((d) => (
         <Destino
-          a="/directora"
-          icono={Building2}
-          texto="Directora"
-          activo={pathname.startsWith('/directora')}
+          key={d.a}
+          destino={d}
+          activo={d.esActivo(pathname)}
+          contador={d.conContador ? pendientes : undefined}
         />
-      ) : null}
+      ))}
     </nav>
   );
 }
 
 function Destino({
-  a,
-  icono: Icono,
-  texto,
+  destino,
   activo,
   contador,
 }: {
-  a: string;
-  icono: LucideIcon;
-  texto: string;
+  destino: DestinoNav;
   activo: boolean;
   contador?: number;
 }) {
+  const Icono = destino.icono;
   return (
     <Link
-      to={a}
+      to={destino.a}
       aria-current={activo ? 'page' : undefined}
-      className={`relative flex flex-1 flex-col items-center justify-center gap-[2px] text-[12px] font-medium ${
+      className={`relative flex flex-1 flex-col items-center justify-center gap-[2px] text-[13px] font-bold ${
         activo ? 'text-integra' : 'text-tinta-2'
       }`}
     >
       {activo ? (
-        <span aria-hidden="true" className="absolute left-4 right-4 top-0 h-[3px] bg-integra" />
+        <>
+          <span
+            aria-hidden="true"
+            className="absolute left-4 right-4 top-0 h-[3px] rounded-full bg-integra"
+          />
+          {/* Manchita rosada del manual: marca el destino en el que estoy. */}
+          <span
+            aria-hidden="true"
+            className="absolute bottom-[7px] h-[5px] w-[5px] rounded-full bg-rosado"
+          />
+        </>
       ) : null}
       <Icono aria-hidden className="h-[22px] w-[22px]" />
-      {texto}
+      {destino.texto}
       {contador && contador > 0 ? (
         <span
-          className="absolute top-[6px] grid h-5 min-w-5 place-items-center rounded-full bg-aviso-globo px-[6px] text-[12px] font-bold text-white"
+          className="absolute top-[6px] grid h-5 min-w-5 place-items-center rounded-full bg-aviso-globo px-[6px] text-[13px] font-bold text-white"
           style={{ left: 'calc(50% + 6px)' }}
         >
           {contador}

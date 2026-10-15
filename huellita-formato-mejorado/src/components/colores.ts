@@ -1,9 +1,36 @@
 /**
- * Colores de frescura y sus textos. El aro del avatar mide hace cuánto no hay
- * registro, nunca el desempeño del niño/a (ver `.kiro/steering/producto.md`).
+ * Colores que el código necesita como valor (manchas, puntos y aros), siempre
+ * tomados de la paleta oficial del manual de imagen corporativa de Integra.
+ * Lo que se puede resolver con una clase de Tailwind usa el token, no estos
+ * valores (ver `tailwind.config.js`).
+ *
+ * El aro del avatar mide hace cuánto no hay registro, nunca el desempeño del
+ * niño/a (ver `.kiro/steering/producto.md`).
  */
 import { colorNivel } from '../lib/rubrica';
 import type { ColorFrescura, Nivel } from '../lib/tipos';
+
+/** Paleta oficial (versión RGB para pantallas) y sus manchas. */
+export const PALETA = {
+  /** Pantone 300C. */
+  azul: '#0063BD',
+  /** Pantone 485C. */
+  rojo: '#DD271D',
+  /** Pantone 116C. */
+  amarillo: '#FFCD07',
+  /** Pantone 368C. */
+  verde: '#67BC27',
+  /** Mancha rosada de la gráfica institucional. */
+  rosado: '#E43C84',
+  /** Rosado oscurecido, para fondos con texto blanco (AA). */
+  rosadoOscuro: '#C01E63',
+  /** Mancha naranja: "por revisar" y "revisar avance". */
+  naranjo: '#F07818',
+  /** Naranjo oscuro para texto e íconos (AA sobre blanco y naranjo suave). */
+  naranjoTexto: '#9A4708',
+  /** Gris 80%: textos secundarios. */
+  gris: '#58585A',
+} as const;
 
 export const COLOR_FRESCURA: Record<ColorFrescura, string> = {
   verde: '#2E9E5B',
@@ -17,9 +44,10 @@ export const TEXTO_FRESCURA: Record<ColorFrescura, string> = {
   rojo: 'Más de 1 mes sin registro',
 };
 
-export const AMBAR = '#B86E00';
+/** "Revisar avance": la mancha naranja, en su versión oscura para íconos. */
+export const NARANJO_TEXTO = PALETA.naranjoTexto;
 
-export const TINTA = '#1E2A55';
+export const TINTA = '#22262E';
 
 /** Mezcla un color con blanco: `proporcion` 0,22 deja un pastel del original. */
 export function mezclarConBlanco(hex: string, proporcion: number): string {

@@ -27,12 +27,12 @@ export function HojaCambiar({
 
   return (
     <HojaInferior titulo="Corregir evaluación" onCerrar={onCerrar}>
-      <label className="mt-[10px] block text-[14px] text-tinta-2">
+      <label className="mt-[10px] block text-[15px] text-tinta-2">
         Niño o niña
         <select
           value={ninoId}
           onChange={(e) => setNinoId(e.target.value)}
-          className="mt-1 min-h-tactil w-full rounded-tarjeta border border-linea bg-papel px-[10px] py-2 text-base text-tinta"
+          className="mt-1 min-h-tactil w-full rounded-campo border border-linea bg-papel px-[10px] py-2 text-base text-tinta"
         >
           {ninos.map((n) => (
             <option key={n.id} value={n.id}>
@@ -42,12 +42,12 @@ export function HojaCambiar({
         </select>
       </label>
 
-      <label className="mt-[10px] block text-[14px] text-tinta-2">
+      <label className="mt-[10px] block text-[15px] text-tinta-2">
         Núcleo
         <select
           value={nucleo}
           onChange={(e) => setNucleo(e.target.value as NucleoId)}
-          className="mt-1 min-h-tactil w-full rounded-tarjeta border border-linea bg-papel px-[10px] py-2 text-base text-tinta"
+          className="mt-1 min-h-tactil w-full rounded-campo border border-linea bg-papel px-[10px] py-2 text-base text-tinta"
         >
           {codigosNucleos().map((c) => (
             <option key={c} value={c}>

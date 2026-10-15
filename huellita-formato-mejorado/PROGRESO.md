@@ -503,6 +503,7 @@ La versión anterior (carpeta `huellita/` del repositorio) se veía "hecha por I
 - **Tipografía:** una sola familia, Roboto (más Roboto Condensed para los rótulos). Se quitaron Bricolage, Atkinson y Kalam.
 - **Paleta Integra:** azul Integra para la institución y las acciones; rojo, amarillo y verde del logo para los 3 ámbitos de las BCEP (`components/ambitos.ts`).
 - **Encabezado institucional** (Gobierno de Chile · INTEGRA + franja de 4 colores) con la usuaria y su menú (`app/Encabezado.tsx`).
+- **Encabezado con logo oficial Mineduc + Integra**: barra blanca con `src/assets/marca/logo-mineduc-integra.png` (36 px en celular, 44 px desde `sm`) en vez del sello dibujado a mano; la usuaria queda en tinta y en la Entrada el logo va centrado a 56–64 px. Las pruebas de privacidad ignoran solo esa imagen (por su `alt`) y siguen exigiendo cero fotos de niños y niñas.
 - **Nueva pantalla Agenda** (`/`): semana, aviso de pendientes, próximo registro IEA y el día por períodos de la jornada (`lib/agenda.ts`, con pruebas).
 - **Sala** (`/sala`) ahora es una **planilla**: fila por niño/a, columna por núcleo con su nivel, y fecha del último registro.
 - **Revisar:** tarjetas de registro numeradas con **la foto real del post-it**, "Huellita leyó" y una ficha (Niño/a, Núcleo, Nivel, Conducta, Confianza). Botones **Confirmar / Corregir / Descartar**.
@@ -534,3 +535,67 @@ Recorrido completo del guion en el navegador a 360, 390 y 1280 px (Agenda, Sala,
 - Confirmar actualiza la planilla y la ficha al tiro ("Tomás, registrado hoy"); observados en 30 días pasa de 16 a 17 de 18 en la sala y en la directora por igual.
 - La foto del post-it se guarda y se muestra en la agenda, en Revisar (ampliable) y en la ficha; la nota grupal queda como nota de la sala.
 - Una sola tipografía (Roboto), sin letra manuscrita ni notas giradas; colores del logo por ámbito.
+
+### Estética manual Integra (15-10-2026, Kiro + Claude Code)
+Solo estética; la distribución, los textos y la lógica no cambiaron.
+- Paleta oficial del manual de imagen corporativa 2019 (azul `#0063BD`, rojo `#DD271D`, amarillo `#FFCD07`, verde `#67BC27`, gris 80% `#58585A`) más **rosado** `#E43C84` y **naranjo** `#F07818` de las manchas institucionales.
+- Tipografía **Carlito** (equivalente web de Calibri) en toda la app; se quitaron Roboto y Roboto Condensed.
+- Componente `Mancha` y tarjetas más redondeadas (16 px) con manchas de color: día seleccionado, períodos de la agenda, chips de nivel, ámbitos de la ficha, salas de la directora.
+- "Por revisar" y "revisar avance" pasan de ámbar a naranjo.
+- Resultado: 128 pruebas en verde y build sin errores. Revisado a 390 px y en escritorio.
+
+
+### Adaptable: celular y escritorio (15-10-2026, Kiro)
+Orden `adaptable-escritorio.md`. En celular **no cambió nada**; desde 1024 px
+(`lg:` de Tailwind) la app deja de ser "un celular en medio de la pantalla".
+
+**Marco**
+- `app/destinos.ts`: la lista de destinos (Agenda · Sala · Revisar · Directora)
+  vive en un solo lugar y la usan las dos navegaciones, sin duplicarla.
+- `app/NavegacionLateral.tsx`: barra lateral de 232 px, pegada arriba, con el
+  bloque **Registrar** (los mismos 3 botones, el mismo `useCaptura` y los mismos
+  `aria-label`) y los destinos; el actual va en azul oficial con fondo azul claro
+  y la manchita rosada.
+- `BarraInferior` y `Dock` llevan `lg:hidden`; el encabezado llega al borde de la
+  ventana y centra su contenido hasta 1280 px; el contenido va hasta 1000 px con
+  28 px de aire. Entre 768 y 1023 px sigue el diseño de celular, un poco más
+  ancho (640 px) y sin barra lateral.
+- El hueco que reservaban la barra y el dock pasó del `style` en línea a clases
+  (`hueco-barra`, `hueco-dock`, `hueco-dock-nino` en `estilos.css`), que además
+  suman `env(safe-area-inset-bottom)` para el iPhone y desaparecen en escritorio.
+
+**Pantallas en escritorio**
+- **Agenda**: dos columnas (semana y jornada a la izquierda; "por revisar",
+  registro IEA y observados a la derecha, pegados al desplazarse).
+- **Sala**: la planilla ocupa el ancho del contenido, columnas más holgadas y
+  nombres completos; el desplazamiento horizontal queda solo en celular.
+- **Revisar**: tarjetas en 2 columnas y la foto del post-it hasta 300 px.
+- **Ficha**: resumen y "Cómo va · por ámbito" a la izquierda; "Su agenda" y los
+  registros a la derecha.
+- **Directora**: salas en 3 columnas.
+- **Hojas inferiores**: diálogo centrado de 520 px con las 4 esquinas
+  redondeadas (en celular siguen subiendo desde abajo).
+- **Avisos**: abajo a la derecha, 380 px de ancho.
+- **Entrada**: tarjeta centrada de 560 px sobre el fondo con manchas, con las
+  usuarias en 2 columnas.
+
+**Para que abra en cualquier celular**
+- `theme-color` al azul oficial `#0063BD` en `index.html` y en el manifiesto; el
+  manifiesto queda con `start_url` y `scope` relativos (`./`).
+- Alto de ventana con respaldo: la clase `alto-pantalla` declara `100vh` y
+  después `100dvh` (Safari iOS antiguo no entiende `dvh`).
+- **Subcarpeta**: la base es configurable (`base: process.env.BASE_URL ?? '/'`) y
+  el router usa `basename={import.meta.env.BASE_URL}`. Para GitHub Pages:
+  `BASE_URL=/Hackathon/ npm run build`. **No** se usó `base: './'`: con rutas
+  relativas, al recargar `/nino/NINO-00001` el navegador pedía el JS a
+  `/nino/assets/…` y la pantalla quedaba en blanco (se detectó en el navegador
+  durante esta tarea).
+
+**Resultado**
+- `npm test`: **150 pruebas en 11 archivos, todas en verde** (22 nuevas en
+  `src/app/adaptable.test.tsx`). `npm run build`: sin errores.
+- Revisado con Chrome (headless por CDP, script temporal borrado al terminar) en
+  **320, 360, 375, 390, 412, 768, 1024, 1280 y 1440 px**, en Agenda, Sala,
+  Revisar, Ficha, Entrada, Directora, la planilla en modo lectura, una hoja
+  abierta y un aviso: **sin desplazamiento horizontal en ninguna**
+  (`scrollWidth` = `clientWidth` en los 45 casos).

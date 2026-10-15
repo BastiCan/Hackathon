@@ -1,6 +1,9 @@
 /**
  * Aviso oscuro sobre el dock, con "Deshacer" cuando aplica. Dura 5 segundos
  * (el plazo para deshacer de "Aceptar las seguras", requisito 3.5).
+ *
+ * En el computador (desde 1024 px) se corre abajo a la derecha, con 380 px de
+ * ancho: ahí no hay barras fijas que esquivar.
  */
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 
@@ -46,8 +49,9 @@ export function ProveedorAviso({
       {children}
       {aviso ? (
         <div
-          className="pointer-events-none fixed left-1/2 z-30 w-full max-w-tia -translate-x-1/2 px-4"
-          style={{ bottom: conDock ? 136 : 76 }}
+          className={`pointer-events-none fixed left-1/2 z-30 w-full max-w-tia -translate-x-1/2 px-4 md:max-w-[640px] lg:left-auto lg:right-6 lg:w-[380px] lg:max-w-none lg:translate-x-0 lg:px-0 ${
+            conDock ? 'aviso-flotante-dock' : 'aviso-flotante'
+          }`}
         >
           <div
             role="status"

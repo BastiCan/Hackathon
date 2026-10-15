@@ -113,13 +113,13 @@ export function Revisar() {
     <>
       <p className="rotulo">Revisar</p>
       <h1>¿Está bien lo que leyó Huellita?</h1>
-      <p className="text-[14px] text-tinta-2">
+      <p className="text-[15px] text-tinta-2">
         Confirma cada registro. Ninguna evaluación se guarda sin tu revisión.
       </p>
 
       {total > 0 ? (
         <div className="mb-3 mt-2 flex flex-col gap-2">
-          <span className="text-[14px] text-tinta-2">
+          <span className="text-[15px] text-tinta-2">
             {total} {total === 1 ? 'registro pendiente' : 'registros pendientes'}
           </span>
           {seguras > 0 ? (
@@ -138,33 +138,36 @@ export function Revisar() {
         </div>
       ) : null}
 
-      {notas.map((nota, i) => (
-        <TarjetaSugerencia
-          key={nota.sugerencia.id}
-          nota={nota}
-          indice={i}
-          saliendo={saliendo.includes(nota.sugerencia.id)}
-          onGuardar={() => guardar(nota)}
-          onCambiar={() => setCambiando(nota.sugerencia)}
-          onDescartar={() => descartar(nota)}
-        />
-      ))}
+      {/* En escritorio las tarjetas se reparten en dos columnas. */}
+      <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-4">
+        {notas.map((nota, i) => (
+          <TarjetaSugerencia
+            key={nota.sugerencia.id}
+            nota={nota}
+            indice={i}
+            saliendo={saliendo.includes(nota.sugerencia.id)}
+            onGuardar={() => guardar(nota)}
+            onCambiar={() => setCambiando(nota.sugerencia)}
+            onDescartar={() => descartar(nota)}
+          />
+        ))}
 
-      {conError.map((nota, i) => (
-        <TarjetaError
-          key={nota.evidencia.id}
-          nota={nota}
-          indice={notas.length + i}
-          onEscribir={() => abrirCaptura('texto')}
-          onDescartar={() => {
-            // La evidencia queda resuelta y sale de Revisar; su archivo ya se
-            // borró de la memoria al marcarla.
-            void datos
-              .marcarEvidencia(nota.evidencia.id, 'lista')
-              .then(() => aviso('Descartada'));
-          }}
-        />
-      ))}
+        {conError.map((nota, i) => (
+          <TarjetaError
+            key={nota.evidencia.id}
+            nota={nota}
+            indice={notas.length + i}
+            onEscribir={() => abrirCaptura('texto')}
+            onDescartar={() => {
+              // La evidencia queda resuelta y sale de Revisar; su archivo ya se
+              // borró de la memoria al marcarla.
+              void datos
+                .marcarEvidencia(nota.evidencia.id, 'lista')
+                .then(() => aviso('Descartada'));
+            }}
+          />
+        ))}
+      </div>
 
       {cambiando ? (
         <HojaCambiar

@@ -1,7 +1,8 @@
 import { ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useConsulta } from '../app/hooks';
-import { FranjaLogo, SelloInstitucional } from '../app/Encabezado';
+import { FranjaLogo, LogoOficial } from '../app/Encabezado';
+import { FondoManchas } from '../app/Layout';
 import { useServicios } from '../app/servicios';
 import { inicialesUsuaria } from '../lib/vistas';
 
@@ -44,9 +45,15 @@ export function Entrada() {
   };
 
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-tia flex-col bg-fondo">
-      <div className="flex min-h-[44px] items-center bg-integra px-4 py-[6px] text-white">
-        <SelloInstitucional />
+    /*
+     * En escritorio la entrada es una tarjeta centrada de 560 px sobre el fondo
+     * con manchas; en celular sigue siendo la columna de siempre.
+     */
+    <div className="alto-pantalla-escritorio relative isolate lg:flex lg:items-center lg:justify-center lg:py-10">
+      <FondoManchas />
+      <div className="alto-pantalla mx-auto flex w-full max-w-tia flex-col bg-fondo md:max-w-[640px] lg:w-[560px] lg:min-h-0 lg:max-w-none lg:overflow-hidden lg:rounded-tarjeta lg:border lg:border-linea lg:shadow-tarjeta">
+      <div className="flex min-h-[80px] items-center justify-center border-b border-linea bg-papel px-4 py-3">
+        <LogoOficial className="h-14 sm:h-16" />
       </div>
       <FranjaLogo />
       <div className="px-4 pb-10 pt-8">
@@ -60,7 +67,7 @@ export function Entrada() {
       {consulta.cargando ? <p className="text-tinta-2">Cargando…</p> : null}
       {consulta.error ? <p className="text-tinta-2">{consulta.error}</p> : null}
 
-      <ul className="flex flex-col gap-[10px]">
+      <ul className="flex flex-col gap-[10px] lg:grid lg:grid-cols-2">
         {(consulta.valor?.opciones ?? []).map((o) => (
           <li key={o.id}>
             <button
@@ -87,6 +94,7 @@ export function Entrada() {
       <p className="mt-6 text-[14px] text-tinta-2">
         Datos de demostración: los nombres de niños y niñas son ficticios.
       </p>
+      </div>
       </div>
     </div>
   );

@@ -4,6 +4,17 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
+  /*
+   * Carpeta desde la que se sirve la app. Por omisión la raíz del dominio; para
+   * publicarla en una subcarpeta (por ejemplo GitHub Pages en `/Hackathon/`) se
+   * compila con `BASE_URL=/Hackathon/ npm run build`.
+   *
+   * No se usa `base: './'`: con rutas relativas, al recargar una dirección
+   * anidada (`/nino/NINO-00042`) el navegador buscaría el JS en
+   * `/nino/assets/…` y la app queda en blanco. Con una base explícita, las
+   * rutas de los archivos son absolutas y el enlace directo sigue funcionando.
+   */
+  base: process.env.BASE_URL ?? '/',
   plugins: [
     react(),
     VitePWA({
@@ -14,11 +25,12 @@ export default defineConfig({
         short_name: 'Huellita',
         description: 'Registra evidencias del desarrollo de los niños y niñas en 2 toques.',
         lang: 'es-CL',
-        start_url: '/',
-        scope: '/',
+        start_url: './',
+        scope: './',
         display: 'standalone',
         background_color: '#ffffff',
-        theme_color: '#1F4E9A',
+        // Azul oficial de Integra (Pantone 300C), igual que en `index.html`.
+        theme_color: '#0063BD',
         icons: [
           { src: 'icono.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' },
           { src: 'icono.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'maskable' },

@@ -29,10 +29,17 @@ export function Rutas() {
   );
 }
 
+/**
+ * `basename` sale de la base con la que se compiló (`BASE_URL`): así la app
+ * también funciona servida desde una subcarpeta. Una base relativa (`./`, la
+ * del HTML de un solo archivo) no sirve como `basename`: ahí va `/`.
+ */
+const BASE_RUTAS = import.meta.env.BASE_URL.startsWith('/') ? import.meta.env.BASE_URL : '/';
+
 export function App() {
   return (
     <ProveedorServicios>
-      <BrowserRouter>
+      <BrowserRouter basename={BASE_RUTAS}>
         <Rutas />
       </BrowserRouter>
     </ProveedorServicios>

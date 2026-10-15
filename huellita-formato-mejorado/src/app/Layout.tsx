@@ -1,15 +1,24 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { PALETA } from '../components/colores';
+import { Mancha } from '../components/Mancha';
 import { ProveedorAviso } from './aviso';
 import { BarraInferior } from './BarraInferior';
 import { ProveedorCaptura } from './captura';
 import { Dock } from './Dock';
 import { Encabezado } from './Encabezado';
 import { useNombreNino, useSesion } from './hooks';
+import { NavegacionLateral } from './NavegacionLateral';
 
 /**
- * Marco de las pantallas: encabezado institucional arriba, contenido centrado a
- * 480 px (la vista directora usa hasta 1100 px), barra de captura en la agenda
- * y en la ficha, y la barra inferior de navegación.
+ * Marco de las pantallas, adaptable (`.kiro/steering/diseno-visual.md`):
+ *
+ * - **Celular** (< 1024 px): columna de 480 px (640 px en tablet) con el
+ *   encabezado institucional arriba, la barra de captura y la barra inferior
+ *   de navegación fijas abajo.
+ * - **Computador** (desde 1024 px, `lg:`): encabezado a todo el ancho con su
+ *   contenido hasta 1280 px, barra lateral de 232 px con la navegación y el
+ *   bloque "Registrar", y el contenido a la derecha hasta 1000 px. No hay
+ *   barras fijas abajo.
  */
 export function Layout() {
   const { pathname } = useLocation();
@@ -38,29 +47,39 @@ export function Layout() {
     return <Navigate to="/" replace />;
   }
 
-  const ancho = enDirectora ? 'max-w-contenido' : 'max-w-tia';
+  // Ancho de la columna del celular; en escritorio manda la grilla de abajo.
+  const ancho = enDirectora ? 'max-w-contenido' : 'max-w-tia md:max-w-[640px]';
+  const hueco = conDock ? (nombreNino ? 'hueco-dock-nino' : 'hueco-dock') : 'hueco-barra';
 
   return (
     <ProveedorAviso conDock={conDock}>
       <ProveedorCaptura nino={ninoId && nombreNino ? { id: ninoId, nombre: nombreNino } : null}>
-        <div className={`mx-auto flex min-h-dvh w-full flex-col bg-fondo ${ancho}`}>
+        <div
+          className={`alto-pantalla relative isolate mx-auto flex w-full flex-col bg-fondo lg:max-w-none ${ancho}`}
+        >
+          <FondoManchas />
           <Encabezado
             usuaria={sesion.valor?.usuaria}
             salas={sesion.valor?.salas}
             salaActual={sesion.valor?.sala}
           />
-          <main
-            className="flex-1 px-4 pt-[14px]"
-            style={{ paddingBottom: conDock ? (nombreNino ? 156 : 132) : 84 }}
-          >
-            {sesion.error ? (
-              <p className="rounded-tarjeta border border-linea bg-papel p-4 text-tinta-2">
-                {sesion.error}
-              </p>
-            ) : (
-              <Outlet />
-            )}
-          </main>
+          <div className="flex w-full flex-1 lg:mx-auto lg:max-w-[1280px]">
+            <NavegacionLateral
+              pendientes={pendientes}
+              esDirectora={esDirectora}
+              conDock={conDock}
+              nombreNino={nombreNino ?? undefined}
+            />
+            <main className={`min-w-0 flex-1 px-4 pt-[14px] lg:max-w-[1000px] lg:px-7 lg:pt-6 ${hueco}`}>
+              {sesion.error ? (
+                <p className="rounded-tarjeta border border-linea bg-papel p-4 text-tinta-2">
+                  {sesion.error}
+                </p>
+              ) : (
+                <Outlet />
+              )}
+            </main>
+          </div>
         </div>
         {conDock ? <Dock nombreNino={nombreNino ?? undefined} /> : null}
         <BarraInferior pendientes={pendientes} esDirectora={esDirectora} ancho={ancho} />
@@ -69,9 +88,34 @@ export function Layout() {
   );
 }
 
+/**
+ * Manchas gigantes de la gráfica institucional, muy tenues (6 % o menos) y
+ * detrás de todo el contenido (`-z-10` dentro del `isolate` de la columna).
+ * Puro adorno: no estorban la lectura ni capturan toques.
+ */
+export function FondoManchas() {
+  return (
+    <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+      <Mancha color={PALETA.azul} forma="a" opacidad={0.05} className="-left-24 top-20 h-72 w-72" />
+      <Mancha
+        color={PALETA.amarillo}
+        forma="b"
+        opacidad={0.06}
+        className="-right-28 top-1/3 h-80 w-80"
+      />
+      <Mancha
+        color={PALETA.rosado}
+        forma="c"
+        opacidad={0.04}
+        className="-left-20 bottom-8 h-64 w-64"
+      />
+    </div>
+  );
+}
+
 function Cargando() {
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-tia items-center justify-center bg-fondo">
+    <div className="alto-pantalla mx-auto flex w-full max-w-tia items-center justify-center bg-fondo md:max-w-[640px] lg:max-w-none">
       <p role="status" className="text-tinta-2">
         Cargando tu agenda…
       </p>

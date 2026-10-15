@@ -1,9 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 /*
- * Tokens del diseño "agenda institucional" (`.kiro/steering/diseno-visual.md`):
- * una sola familia tipográfica (Roboto), el azul de Integra para la institución
- * y las acciones, y los otros tres colores del logo de Integra para los ámbitos
- * de las Bases Curriculares.
+ * Tokens del diseño "agenda institucional" con la estética del manual de
+ * imagen corporativa de Integra (`.kiro/steering/diseno-visual.md`):
+ *
+ * - paleta oficial (versión RGB para pantallas): azul Pantone 300C `#0063BD`,
+ *   rojo 485C `#DD271D`, amarillo 116C `#FFCD07`, verde 368C `#67BC27` y el
+ *   gris 80% `#58585A` de los textos secundarios;
+ * - los colores de las "manchas" de la gráfica institucional (rosado y
+ *   naranjo), que dan el acento cálido de las tarjetas;
+ * - una sola familia tipográfica: Carlito, equivalente libre de Calibri
+ *   (la familia que pide el manual), con Trebuchet MS como reemplazo;
+ * - esquinas amables (tarjeta 16 px, hoja 20 px, chip 10 px) y sombras cortas.
+ *
+ * Todos los pares fondo/texto de esta tabla cumplen contraste AA (≥ 4,5:1).
  */
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
@@ -11,40 +20,56 @@ export default {
     extend: {
       colors: {
         tinta: {
-          DEFAULT: '#1B2A44',
-          2: '#4E5B70',
-          3: '#8A93A6',
+          DEFAULT: '#22262E',
+          // Gris 80% del manual: el color de los textos secundarios.
+          2: '#58585A',
+          3: '#686F7B',
         },
-        fondo: '#F4F7FC',
+        fondo: '#F5F8FC',
         papel: '#FFFFFF',
         cuadricula: '#E6EBF2',
         linea: '#DCE3EF',
+        // Azul institucional (Pantone 300C).
         integra: {
-          DEFAULT: '#1F4E9A',
-          claro: '#E8EEF8',
-          oscuro: '#163A75',
+          DEFAULT: '#0063BD',
+          claro: '#E3EFFA',
+          oscuro: '#004C91',
         },
-        // Los 4 colores del logo de Integra (franja superior y ámbitos).
+        // Los 4 colores oficiales del logo (franja superior y ámbitos).
         logo: {
-          rojo: '#E5432F',
-          amarillo: '#F5B800',
-          azul: '#1F4E9A',
-          verde: '#4C9A2A',
+          rojo: '#DD271D',
+          amarillo: '#FFCD07',
+          azul: '#0063BD',
+          verde: '#67BC27',
         },
         // Ámbitos de las BCEP: fondo suave + texto oscuro del mismo color (AA).
         ambito: {
-          dps: '#FDE7E3',
-          'dps-texto': '#9A2414',
-          com: '#FFF3C4',
-          'com-texto': '#6B4A00',
-          ent: '#E3F2DA',
-          'ent-texto': '#2E5A12',
+          dps: '#FDE3E1',
+          'dps-texto': '#A01810',
+          com: '#FFF3C2',
+          'com-texto': '#6B5200',
+          ent: '#E6F5DA',
+          'ent-texto': '#2B5A0C',
         },
-        // Avisos: amarillo del logo, suavizado.
+        // Mancha rosada: acento cálido (notas, "Hoy", detalles decorativos).
+        rosado: {
+          DEFAULT: '#E43C84',
+          suave: '#FBE1EC',
+          // Para texto y fondos con texto blanco (el rosado pleno no da AA).
+          oscuro: '#C01E63',
+        },
+        // Mancha naranja: "por revisar" y "revisar avance".
+        naranjo: {
+          DEFAULT: '#F07818',
+          suave: '#FDE7D3',
+          // Naranjo oscuro para texto e íconos sobre blanco o naranjo suave.
+          texto: '#9A4708',
+        },
+        // Avisos con borde izquierdo: la mancha naranja, suavizada.
         aviso: {
-          fondo: '#FFF8DC',
-          borde: '#F5B800',
-          globo: '#C83B3B',
+          fondo: '#FDE7D3',
+          borde: '#F07818',
+          globo: '#C41F15',
         },
         // Solo en el punto de frescura y la leyenda.
         frescura: {
@@ -52,23 +77,28 @@ export default {
           amarillo: '#E0A800',
           rojo: '#D64545',
         },
-        // Bandera de "revisar avance".
-        ambar: '#B86E00',
-        // Botón Confirmar: verde del logo oscurecido para texto blanco AA.
-        guardar: '#2F7A1E',
-        // Botón de grabar: rojo del logo oscurecido para texto blanco AA.
-        grabar: '#C8341F',
+        // Botón Confirmar: verde oficial oscurecido para texto blanco AA.
+        guardar: '#437A19',
+        // Botón de grabar: rojo oficial oscurecido para texto blanco AA.
+        grabar: '#C41F15',
       },
       fontFamily: {
-        // Una sola familia en toda la app (como los sistemas del Estado).
-        texto: ['Roboto', 'system-ui', 'sans-serif'],
-        display: ['Roboto', 'system-ui', 'sans-serif'],
-        // Rótulos pequeños en mayúscula (encabezados de sección).
-        rotulo: ['"Roboto Condensed"', 'Roboto', 'system-ui', 'sans-serif'],
+        // Una sola familia en toda la app. El manual pide Calibri; en web se
+        // usa Carlito, su equivalente libre y métricamente idéntico.
+        texto: ['Carlito', 'Calibri', '"Trebuchet MS"', 'system-ui', 'sans-serif'],
+        display: ['Carlito', 'Calibri', '"Trebuchet MS"', 'system-ui', 'sans-serif'],
+        rotulo: ['Carlito', 'Calibri', '"Trebuchet MS"', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
-        tarjeta: '6px',
-        hoja: '14px',
+        tarjeta: '16px',
+        hoja: '20px',
+        chip: '10px',
+        boton: '12px',
+        campo: '10px',
+      },
+      boxShadow: {
+        // Sombras suaves y cortas, nunca pesadas.
+        tarjeta: '0 1px 2px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 40, 90, 0.06)',
       },
       maxWidth: {
         // Pantallas de la tía; la vista directora puede llegar a 1100 px.
@@ -87,7 +117,7 @@ export default {
           to: { transform: 'none', opacity: '1' },
         },
         late: {
-          '50%': { boxShadow: '0 0 0 14px rgba(200, 52, 31, 0.15)' },
+          '50%': { boxShadow: '0 0 0 14px rgba(196, 31, 21, 0.15)' },
         },
       },
       animation: {

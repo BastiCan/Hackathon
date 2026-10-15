@@ -1,15 +1,22 @@
 import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
+import logoOficial from '../assets/marca/logo-mineduc-integra.png';
 import { HojaMenu } from '../components/HojaMenu';
 import type { Sala, Usuaria } from '../lib/tipos';
 
 /**
- * Encabezado institucional, como en los sistemas del Estado: franja azul con el
- * sello de Gobierno de Chile e Integra, la usuaria a la derecha (abre su menú) y
- * una franja con los 4 colores del logo de Integra.
+ * Texto alternativo del logo oficial. Es la única imagen de la app que no es la
+ * foto de una nota: las pruebas de privacidad la excluyen por este `alt`.
+ */
+export const ALT_LOGO = 'Ministerio de Educación, Gobierno de Chile · Integra';
+
+/**
+ * Encabezado institucional, como en los sistemas del Estado: barra blanca con
+ * el logo oficial (Ministerio de Educación · Gobierno de Chile e Integra), la
+ * usuaria a la derecha (abre su menú) y la franja con los 4 colores del logo.
  *
- * El sello se dibuja con texto y una bandera simple; en producción se reemplaza
- * por los logos oficiales del Kit Digital (kitdigital.gob.cl) y de Integra.
+ * El logo va sobre blanco porque el archivo tiene fondo blanco; nunca sobre el
+ * azul de Integra.
  */
 export function Encabezado({
   usuaria,
@@ -25,22 +32,26 @@ export function Encabezado({
 
   return (
     <header>
-      <div className="flex min-h-[44px] items-center justify-between bg-integra px-4 py-[6px] text-white">
-        <SelloInstitucional />
-        {usuaria ? (
-          <button
-            type="button"
-            onClick={() => setMenu(true)}
-            aria-label={`Menú de ${usuaria.nombre}`}
-            className="flex min-h-tactil items-center gap-1 text-right text-[12px] leading-[1.2]"
-          >
-            <span>
-              <span className="block font-medium">{usuaria.nombre}</span>
-              <span className="block opacity-80">{cargo}</span>
-            </span>
-            <ChevronDown aria-hidden="true" className="h-4 w-4 flex-none" />
-          </button>
-        ) : null}
+      {/* La barra blanca llega al borde de la ventana; su contenido se centra
+          hasta 1280 px, como en los sistemas del Estado. */}
+      <div className="border-b border-linea bg-papel">
+        <div className="mx-auto flex min-h-[56px] w-full items-center justify-between gap-3 px-4 py-2 lg:max-w-[1280px] lg:px-7">
+          <LogoOficial />
+          {usuaria ? (
+            <button
+              type="button"
+              onClick={() => setMenu(true)}
+              aria-label={`Menú de ${usuaria.nombre}`}
+              className="flex min-h-tactil min-w-0 items-center gap-1 text-right text-[13px] leading-[1.2] text-tinta"
+            >
+              <span className="min-w-0">
+                <span className="block truncate font-bold">{usuaria.nombre}</span>
+                <span className="block truncate text-tinta-2 max-[359px]:hidden">{cargo}</span>
+              </span>
+              <ChevronDown aria-hidden="true" className="h-4 w-4 flex-none text-tinta-2" />
+            </button>
+          ) : null}
+        </div>
       </div>
       <FranjaLogo />
       {menu && usuaria && salas && salaActual ? (
@@ -55,25 +66,17 @@ export function Encabezado({
   );
 }
 
-export function SelloInstitucional() {
+/**
+ * Logo oficial Mineduc + Integra. Alto fijo y ancho automático para que nunca
+ * se deforme; `object-contain` evita que se recorte si el espacio se achica.
+ */
+export function LogoOficial({ className = 'h-9 sm:h-11' }: { className?: string }) {
   return (
-    <div className="flex items-center gap-2 text-[10px] leading-[1.1]">
-      <span
-        aria-hidden="true"
-        className="flex h-[20px] w-[14px] flex-col overflow-hidden border border-white/60"
-      >
-        <i className="flex-1 bg-[#0F69C4]" />
-        <i className="flex-1 bg-white" />
-        <i className="flex-1 bg-[#E22C2C]" />
-      </span>
-      <span>
-        Gobierno
-        <br />
-        de Chile
-      </span>
-      <span aria-hidden="true" className="mx-1 h-[22px] w-px bg-white/40" />
-      <span className="text-[13px] font-bold tracking-[0.08em]">INTEGRA</span>
-    </div>
+    <img
+      src={logoOficial}
+      alt={ALT_LOGO}
+      className={`w-auto flex-none object-contain object-left ${className}`}
+    />
   );
 }
 

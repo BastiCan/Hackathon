@@ -5,11 +5,14 @@ type Variante = 'pri' | 'sec' | 'ok';
 const ESTILOS: Record<Variante, string> = {
   pri: 'bg-integra text-white',
   sec: 'bg-papel border border-integra text-integra',
-  // Verde del logo de Integra, oscurecido para que el texto blanco cumpla AA.
+  // Verde oficial de Integra, oscurecido para que el texto blanco cumpla AA.
   ok: 'bg-guardar text-white',
 };
 
-/** Botón de 44 px mínimo, en las 3 variantes del prototipo. */
+/**
+ * Botón de 44 px mínimo, en las 3 variantes del prototipo. Esquinas amables
+ * (12 px) y peso 700, el único énfasis que trae Carlito.
+ */
 export function Boton({
   variante = 'sec',
   ancho,
@@ -27,7 +30,7 @@ export function Boton({
   return (
     <button
       type="button"
-      className={`inline-flex min-h-tactil items-center justify-center gap-[6px] rounded-tarjeta py-[10px] text-[15px] font-medium disabled:opacity-50 ${
+      className={`inline-flex min-h-tactil items-center justify-center gap-[6px] rounded-boton py-[10px] text-[15px] font-bold disabled:opacity-50 ${
         compacto ? 'px-2' : 'px-4'
       } ${ESTILOS[variante]} ${ancho ? 'w-full' : ''} ${className}`}
       {...resto}

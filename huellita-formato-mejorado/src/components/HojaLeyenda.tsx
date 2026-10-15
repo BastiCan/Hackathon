@@ -21,11 +21,11 @@ export function HojaLeyenda({ onCerrar }: { onCerrar: () => void }) {
           </li>
         ))}
         <li className="flex items-center gap-3 py-2">
-          <Flag aria-hidden="true" className="h-[22px] w-[22px] flex-none text-ambar" />
-          Revisar avance: dos registros seguidos bajo lo esperado para su edad (el nivel aparece en ámbar en la planilla)
+          <Flag aria-hidden="true" className="h-[22px] w-[22px] flex-none text-naranjo-texto" />
+          Revisar avance: dos registros seguidos bajo lo esperado para su edad (el nivel aparece en naranjo en la planilla)
         </li>
       </ul>
-      <p className="mt-2 text-[14px] text-tinta-2">
+      <p className="mt-2 text-[15px] text-tinta-2">
         El punto de color junto a la fecha solo indica hace cuánto no se registra algo. No mide cómo le va al niño o
         niña.
       </p>
