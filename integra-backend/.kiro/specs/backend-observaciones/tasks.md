@@ -65,7 +65,7 @@
   - La invocación directa (evento JSON) sigue funcionando para pruebas; `id_captura` opcional
   - `events/s3_meta.json` y `events/s3_texto.json` de ejemplo
 
-- [ ] 8e. `template.yaml` — 2º bucket y disparadores
+- [x] 8e. `template.yaml` — 2º bucket y disparadores
   - Bucket `capturas` con nombre fijo (`!Sub` + `${AWS::AccountId}`); 2 notificaciones S3 a `ProcesarNota` (prefijo `capturas/`, sufijos `meta.json` y `texto.json`)
   - Tablas `Jardines` y `Registros` + GSIs (`porJardin`, `porSala`, `porNino`); permisos nuevos: `s3:GetObject` en `capturas/*`, `dynamodb:PutItem/UpdateItem` en `Registros`, `dynamodb:UpdateItem` en `Ninos`
   - Parámetros/outputs nuevos (nombre del bucket de capturas y de las tablas nuevas)
