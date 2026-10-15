@@ -4,7 +4,7 @@
 
 **Notación:** el pseudocódigo usa bloques `pascal`. La implementación existente del repositorio es una demostración ilustrativa y no restringe esta arquitectura objetivo.
 
-## Overview
+## Descripción general
 
 La plataforma es una web móvil para educadoras y técnicas de párvulos. Permite crear capturas nuevas de **foto, audio y texto/post-it**. El valor `video` se conserva exclusivamente para leer observaciones históricas del dataset; no se graban ni se suben registros nuevos de ese formato. La IA propone candidatos, nivel, manifestaciones y una nota breve, pero la tía siempre revisa y confirma antes de crear una observación.
 
@@ -51,7 +51,7 @@ Se aplican tres principios:
 | D13 | La transcripción completa no tiene el límite de 280 caracteres. Cada nota/resumen por niño y su fragmento de respaldo sí tienen máximo 280. | Separa fuente completa de resultado pedagógico breve. |
 | D14 | La demostración usa dataset, nombres y contenidos ficticios y voces del equipo. El uso real exige evaluación legal y de privacidad, consentimiento y controles apropiados. | El contenido se envía a AWS. |
 
-## Architecture
+## Arquitectura
 
 La SPA React/PWA almacena pendientes en IndexedDB y consume una API REST FastAPI. PostgreSQL conserva datos, capturas, idempotencia y cola. Uno o más trabajadores reclaman trabajos con arrendamiento y límite global configurable. S3 almacena temporalmente objetos privados; Transcribe procesa audio desde S3 y Bedrock procesa transcripciones, fotos y textos. No se requieren Lambda, SAM ni API Gateway, y la arquitectura no queda atada a un proveedor de alojamiento del backend.
 
@@ -107,13 +107,14 @@ stateDiagram-v2
     aceptada --> [*]: retirar contenido local según política
 ```
 
-**Estados persistidos en backend:** `subiendo` es una etapa interna de aceptación. El backend responde 202 solo cuando el objeto necesario y la captura/cola quedaron durables. `demorada` es una condición operacional calculada sobre el estado y la edad del trabajo, no un estado terminal.
+**Estados persistidos en backend:** la API reserva idempotentemente la captura en `recibida`. Para foto y audio la mueve a `subiendo` mientras transmite el objeto; para texto persiste el contenido sin esa etapa. El backend responde 202 con estado `en_cola` solo después de que el contenido necesario, la captura y el trabajo quedaron durables. Si una petición se interrumpe antes del 202, el reenvío con la misma clave retoma la reserva incompleta y la misma clave S3 opaca. `demorada` es una condición operacional calculada sobre el estado y la edad del trabajo, no un estado terminal.
 
 ```mermaid
 stateDiagram-v2
-    [*] --> recibida
-    recibida --> subiendo: transmitir contenido
-    subiendo --> en_cola: objeto y transacción durables
+    [*] --> recibida: reservar clave idempotente
+    recibida --> subiendo: foto o audio; transmitir contenido
+    subiendo --> en_cola: objeto, captura y trabajo durables
+    recibida --> en_cola: texto, captura y trabajo durables
     en_cola --> transcribiendo: trabajo de audio
     en_cola --> procesando: trabajo de foto o texto
     transcribiendo --> procesando: transcripción terminada
@@ -128,6 +129,7 @@ stateDiagram-v2
     lista_para_revisar --> confirmada: confirmación humana
     revision_manual --> confirmada: evaluación manual
     recibida --> descartada
+    subiendo --> descartada: carga abandonada según política
     en_cola --> descartada
     lista_para_revisar --> descartada
     pendiente_asignacion --> descartada
@@ -183,8 +185,10 @@ sequenceDiagram
         W->>W: Detectar recuperación de conectividad
     end
     W->>A: POST /api/capturas con la misma Idempotency-Key
-    A->>S: Transmitir audio sin disco local
-    A->>D: Transacción: captura y trabajo en cola
+    A->>D: Reservar idempotentemente captura en recibida
+    A->>D: Cambiar captura a subiendo
+    A->>S: Transmitir audio con clave opaca estable y sin disco local
+    A->>D: Transacción: clave S3, captura y trabajo en en_cola
     A-->>W: 202 con id_captura y estado en_cola
     W->>I: Marcar entrega aceptada
     W-->>T: Volver a la app y permitir más capturas
@@ -228,16 +232,17 @@ sequenceDiagram
     par foto
         T->>W: Tomar foto
         W->>A: POST /api/capturas
-        A->>S: Transmitir foto
-        A->>D: Encolar
-        A-->>W: 202
+        A->>D: Reservar captura en recibida y pasar a subiendo
+        A->>S: Transmitir foto con clave opaca estable
+        A->>D: Transacción: clave S3, captura y trabajo en en_cola
+        A-->>W: 202 con estado en_cola
         Q->>B: Procesar foto desde referencia autorizada
         B-->>Q: Propuestas
     and texto
         T->>W: Escribir post-it
         W->>A: POST /api/capturas
-        A->>D: Guardar texto y encolar
-        A-->>W: 202
+        A->>D: Transacción: reservar, guardar texto y dejar trabajo en en_cola
+        A-->>W: 202 con estado en_cola
         Q->>B: Procesar texto
         B-->>Q: Propuestas
     end
@@ -260,7 +265,7 @@ sequenceDiagram
     Q->>D: Completar etapa o programar proximo_intento_en
 ```
 
-## Components and Interfaces
+## Componentes e interfaces
 
 ### Componente 1: sesión y shell
 
@@ -414,11 +419,11 @@ Los componentes compartidos muestran nombre de pila, icono y color; nunca apelli
 
 Reclama filas con bloqueo, arrendamiento y heartbeat; respeta máximo 3 trabajos activos por defecto; registra intentos, `proximo_intento_en`, error sanitizado, proveedor, modelo y IDs externos. Tras reinicio retoma trabajos vencidos. Audio, foto y texto pueden procesarse a la vez.
 
-## Data Models
+## Modelos de datos
 
 ### Esquema relacional
 
-Las siete primeras entidades corresponden al dataset histórico sin cambios; las demás son extensiones.
+Las siete primeras entidades corresponden al dataset histórico sin cambios; las demás son extensiones. En contratos y migraciones, las entidades operativas se materializan como `captura`, `captura_transcripcion`, `transcripcion_item`, `cola_procesamiento` y `sugerencia_ia`.
 
 ```mermaid
 erDiagram
@@ -635,16 +640,23 @@ ALGORITHM aceptarCaptura(sesion, formato, flujo, metadatos, clave)
 BEGIN
   IF formato NOT IN (foto, audio, texto) THEN RETURN HTTP 422 END IF
   validarMimeTamanoYDuracion(formato, metadatos)
-  existente ← buscarPorClave(sesion.id_usuario, clave)
-  IF existente IS NOT NULO THEN RETURN HTTP 202 existente.id END IF
+  captura ← reservarCapturaIdempotente(
+    sesion.id_usuario, clave, estado = recibida, clave_s3 = claveS3OpacaDeterminista(clave))
+  IF captura.estado NOT IN (recibida, subiendo) THEN
+    RETURN HTTP 202 captura.id, captura.estado
+  END IF
+
+  IF formato IN (foto, audio) THEN
+    cambiarEstado(captura, subiendo)
+    transmitirAS3Privado(flujo, captura.clave_s3)  // sin disco local; la misma clave permite retomar
+  END IF
+
   INICIAR TRANSACCIÓN
-    IF formato IN (foto, audio) THEN
-      clave_s3 ← transmitirAS3Privado(flujo)  // sin disco local
-    END IF
-    captura ← insertarCaptura(recibida, clave_s3, clave)
-    insertarTrabajo(captura.id, en_cola, intentos = 0)
+    IF formato = texto THEN guardarTextoFuente(captura.id, flujo) END IF
+    actualizarCaptura(captura.id, estado = en_cola)
+    insertarTrabajoIdempotente(captura.id, estado = en_cola, intentos = 0)
   CONFIRMAR TRANSACCIÓN
-  RETURN HTTP 202 captura.id
+  RETURN HTTP 202 captura.id, en_cola
 END
 
 ALGORITHM reclamarTrabajo(trabajador)
@@ -802,7 +814,7 @@ Si dos niñas se llaman Sofía, la propuesta muestra ambas con su icono/color y 
 
 El caso `NINO-00002` conserva sus 6 observaciones con niveles 3, 4, 4, 4, 4 y 5 entre 2025-03-03 y 2025-08-03.
 
-## Correctness Properties
+## Propiedades de correctitud
 
 - **P1 Alcance:** toda fila devuelta pertenece al jardín y, para una tía, a una sala autorizada.
 - **P2 Resumen:** total de niños activos y suma de semáforos coinciden.
@@ -832,7 +844,7 @@ El caso `NINO-00002` conserva sus 6 observaciones con niveles 3, 4, 4, 4, 4 y 5 
 - **P26 Retención:** las purgas se ejecutan dentro de la política configurada y conservan solo evidencia mínima autorizada.
 - **P27 Ejecución externa:** puede haber más de un intento físico, pero los manejadores y efectos internos son idempotentes.
 
-## Error Handling
+## Manejo de errores
 
 | Escenario | Respuesta visible/HTTP | Estado y recuperación |
 |---|---|---|
@@ -855,7 +867,7 @@ El caso `NINO-00002` conserva sus 6 observaciones con niveles 3, 4, 4, 4, 4 y 5 
 | Acceso fuera de alcance | 403 sin revelar existencia | Sin recuperación automática. |
 | Sesión vencida | 401 | Reautenticar; IndexedDB conserva pendientes no aceptados. |
 
-## Testing Strategy
+## Estrategia de pruebas
 
 ### Unitarias y propiedades
 
