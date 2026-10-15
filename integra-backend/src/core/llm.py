@@ -136,6 +136,11 @@ def _tool_config(esquema: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _es_error_temperatura(e: Exception) -> bool:
+    """True si el error indica que el modelo no acepta `temperature`."""
+    return "temperature" in str(e).lower()
+
+
 def _extraer_tool_input(respuesta: dict[str, Any]) -> dict[str, Any] | None:
     """Saca el input del bloque toolUse de la respuesta Converse, si existe."""
     contenido = respuesta.get("output", {}).get("message", {}).get("content", [])
@@ -153,7 +158,11 @@ def _converse(
     temperature: float | None,
     max_tokens: int,
 ) -> dict[str, Any]:
-    """Una llamada Converse con tool use forzado, con backoff ante throttling."""
+    """Una llamada Converse con tool use forzado, con backoff ante throttling.
+
+    Algunos modelos (p. ej. Claude Sonnet 5 / Haiku 4.5 en Bedrock) rechazan
+    `temperature`. Si el modelo lo marca como no soportado, se reintenta sin el.
+    """
     inference: dict[str, Any] = {"maxTokens": max_tokens}
     if temperature is not None:
         inference["temperature"] = temperature
@@ -172,6 +181,10 @@ def _converse(
         except Exception as e:
             nombre = type(e).__name__
             codigo = getattr(e, "response", {}).get("Error", {}).get("Code", "") if hasattr(e, "response") else ""
+            # Modelo que no acepta temperature: quitarla y reintentar de inmediato.
+            if "temperature" in inference and _es_error_temperatura(e):
+                del inference["temperature"]
+                continue
             if nombre in _ERRORES_REINTENTABLES or codigo in _ERRORES_REINTENTABLES:
                 ultimo_error = e
                 if intento < MAX_INTENTOS_THROTTLE:
