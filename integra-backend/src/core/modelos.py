@@ -55,6 +55,14 @@ class EstadoObservacion(StrEnum):
     SUGERIDO = "SUGERIDO"
 
 
+class EstadoRegistro(StrEnum):
+    RECIBIDO = "RECIBIDO"
+    PROCESANDO = "PROCESANDO"
+    PROCESADO = "PROCESADO"
+    SIN_TEXTO = "SIN_TEXTO"
+    ERROR = "ERROR"
+
+
 class ErrorCaptura(StrEnum):
     TEXTO_VACIO = "TEXTO_VACIO"
     EDUCADORA_DESCONOCIDA = "EDUCADORA_DESCONOCIDA"
@@ -182,6 +190,7 @@ class Observacion(_Modelo):
 
     # Metadatos
     fecha_en_texto: str | None = None
+    archivo_s3: str | None = None  # clave S3 del archivo original de la parte, si existe
     error_evaluacion: ErrorEvaluacion | None = None
     estado: EstadoObservacion = EstadoObservacion.SUGERIDO
 
@@ -192,3 +201,39 @@ class Resultado(_Modelo):
     id_captura: str
     advertencias: list[str] = Field(default_factory=list)
     observaciones: list[Observacion] = Field(default_factory=list)
+
+
+# --- Captura (entrada por S3) ---
+
+class Meta(_Modelo):
+    """Contexto de la captura (capturas/{id}/meta.json). Manda sobre las partes."""
+
+    id_educadora: str
+    sala_grupo: str
+    fecha_observacion: date
+    tipo: str | None = None  # tipo de nota (opcional; informativo)
+
+
+class Parte(_Modelo):
+    """Una parte de texto de la captura. `archivo` es relativo a la carpeta de la captura."""
+
+    texto: str
+    archivo: str | None = None
+
+
+class TextoCaptura(_Modelo):
+    """Contenido de capturas/{id}/texto.json."""
+
+    id_captura: str | None = None
+    fuente: str | None = None  # ocr | audio | manual
+    partes: list[Parte] = Field(default_factory=list)
+    # Caso compacto: {"texto": "..."} sin partes -> una unica parte sin archivo.
+    texto: str | None = None
+
+    def partes_normalizadas(self) -> list[Parte]:
+        """Lista de partes a procesar; si vino solo `texto`, es una parte sin archivo."""
+        if self.partes:
+            return self.partes
+        if self.texto is not None:
+            return [Parte(texto=self.texto)]
+        return []

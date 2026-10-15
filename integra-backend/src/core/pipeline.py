@@ -16,6 +16,7 @@ from datetime import date
 
 from ulid import ULID
 
+from . import capturas as capturas_mod
 from . import edad as edad_mod
 from . import nombres as nombres_mod
 from . import validaciones as val
@@ -399,10 +400,23 @@ def procesar_nota(
     rubrica: Rubrica,
     retriever: Retriever,
     fewshot: dict,
+    *,
+    id_captura: str | None = None,
+    n_parte: int = 0,
+    archivo_s3: str | None = None,
 ) -> Resultado:
-    """Procesa una nota completa y devuelve el Resultado (tambien guarda las observaciones)."""
+    """Procesa una nota (una parte de la captura) y devuelve el Resultado.
+
+    - `id_captura`: viene de la ruta S3; si es None (pruebas directas) se genera.
+    - `n_parte`: indice de la parte dentro de la captura (para IDs deterministas).
+    - `archivo_s3`: clave S3 del archivo original de esta parte; se copia a cada observacion.
+    Guarda las observaciones y actualiza `Ninos`.
+    """
     global _rubrica_actual
     _rubrica_actual = rubrica
+
+    if id_captura is None:
+        id_captura = f"CAP-{_ulid()}"
 
     # 1. Validar entrada.
     if not entrada.texto or entrada.texto.strip() == "":
@@ -432,8 +446,9 @@ def procesar_nota(
         ejemplos=_formato_ejemplos(fewshot),
     )
 
-    id_captura = f"CAP-{_ulid()}"
     advertencias: list[str] = []
+    # Contador de observaciones para IDs deterministas dentro de esta parte.
+    contador = [0]
 
     # 3. Separar e identificar.
     texto_nomina, _refs = _formato_nomina(nomina)
@@ -458,7 +473,11 @@ def procesar_nota(
 
     observaciones: list[Observacion] = []
     for frag in fragmentos:
-        observaciones.extend(_procesar_fragmento(ctx, frag, nomina, resto, entrada.fecha))
+        observaciones.extend(
+            _procesar_fragmento(
+                ctx, frag, nomina, resto, entrada.fecha, id_captura, n_parte, contador, archivo_s3
+            )
+        )
 
     resultado = Resultado(id_captura=id_captura, advertencias=advertencias, observaciones=observaciones)
     cabecera = {
@@ -472,18 +491,32 @@ def procesar_nota(
 
 
 def _procesar_fragmento(
-    ctx: Contexto, frag: dict, nomina: list[Nino], resto: list[Nino], fecha_nota: date
+    ctx: Contexto,
+    frag: dict,
+    nomina: list[Nino],
+    resto: list[Nino],
+    fecha_nota: date,
+    id_captura: str,
+    n_parte: int,
+    contador: list[int],
+    archivo_s3: str | None,
 ) -> list[Observacion]:
     texto = frag["texto_literal"]
     fecha_en_texto = frag.get("fecha_en_texto")
 
+    def nuevo_id() -> str:
+        oid = capturas_mod.id_obs(id_captura, n_parte, contador[0])
+        contador[0] += 1
+        return oid
+
     if frag.get("tipo") == "GENERAL":
         return [
             Observacion(
-                id_obs=f"OBS-{_ulid()}",
+                id_obs=nuevo_id(),
                 tipo=TipoObservacion.GENERAL,
                 texto_literal=texto,
                 fecha_en_texto=fecha_en_texto,
+                archivo_s3=archivo_s3,
             )
         ]
 
@@ -492,11 +525,12 @@ def _procesar_fragmento(
         # PARTICULAR sin sujetos resolubles: se trata como no identificado.
         return [
             Observacion(
-                id_obs=f"OBS-{_ulid()}",
+                id_obs=nuevo_id(),
                 tipo=TipoObservacion.NO_IDENTIFICADO,
                 texto_literal=texto,
                 error_identificacion=nombres_mod.ErrorIdentificacion.NO_ENCONTRADO,
                 fecha_en_texto=fecha_en_texto,
+                archivo_s3=archivo_s3,
             )
         ]
 
@@ -507,23 +541,25 @@ def _procesar_fragmento(
         if resol.resuelto:
             nino = next(n for n in nomina if n.id_nino == resol.id_nino)
             obs = Observacion(
-                id_obs=f"OBS-{_ulid()}",
+                id_obs=nuevo_id(),
                 tipo=TipoObservacion.PARTICULAR,
                 texto_literal=texto,
                 id_nino=nino.id_nino,
                 fecha_en_texto=fecha_en_texto,
+                archivo_s3=archivo_s3,
             )
             obs = _evaluar_particular(ctx, obs, nombre, nino, fecha_nota)
             salida.append(obs)
         else:
             salida.append(
                 Observacion(
-                    id_obs=f"OBS-{_ulid()}",
+                    id_obs=nuevo_id(),
                     tipo=TipoObservacion.NO_IDENTIFICADO,
                     texto_literal=texto,
                     error_identificacion=resol.error,
                     candidatos=list(resol.candidatos),
                     fecha_en_texto=fecha_en_texto,
+                    archivo_s3=archivo_s3,
                 )
             )
     return salida
