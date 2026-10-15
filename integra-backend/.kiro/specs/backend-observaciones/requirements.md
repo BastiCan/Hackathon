@@ -27,7 +27,7 @@ sobre la rúbrica. Alcance mínimo: ver `product.md` (sin API, sin frontend, sin
 
 #### Acceptance Criteria
 1. THE SYSTEM SHALL dividir la nota con el LLM en fragmentos `GENERAL` o `PARTICULAR`, cada uno con `texto_literal` copiado del original.
-2. THE SYSTEM SHALL verificar que cada `texto_literal` exista en el original (comparación normalizada) y registrar `TEXTO_NO_CUBIERTO` si queda texto sustantivo sin asignar.
+2. THE SYSTEM SHALL verificar que cada `texto_literal` exista en el original (comparación normalizada) y registrar `TEXTO_NO_CUBIERTO` en `advertencias` de la captura (no por fragmento) si queda texto sustantivo sin asignar.
 3. THE SYSTEM SHALL guardar cada fragmento como su propio registro en la tabla `Observaciones` (los `GENERAL` sin evaluación).
 
 ### Requirement 4: Identificación del niño/a

@@ -15,7 +15,8 @@ confunden; la dificultad real está entre **niveles vecinos** y se resuelve con 
 - `edad_meses` = meses completos entre `fecha_nacimiento` y la fecha de la nota (fórmula del diccionario:
   `12*(a2-a1)+(m2-m1)-1[d2<d1]`, mínimo 0).
 - `niveles_esperados` = niveles cuyo rango `[edad_min_meses, edad_max_meses]` contiene la edad (bordes inclusivos, así que
-  en un borde hay dos: 12 meses → [5, 6]). Si la edad supera 36 meses → [9] con `fuera_de_rango_rubrica = true`.
+  en un borde hay dos: 12 meses → [5, 6]). Si la edad supera 36 meses → [9] con `fuera_de_rango_rubrica = true`; en ese caso
+  un nivel 9 se marca `ACORDE` (con la bandera) y uno menor `BAJO_LO_ESPERADO`.
 - `comparacion_edad` del nivel sugerido: `BAJO_LO_ESPERADO` (nivel < mín), `ACORDE`, `SOBRE_LO_ESPERADO` (nivel > máx).
 - Es **información, no alarma**: una sola observación muestra lo que el niño/a hizo ese día (un piso), no su techo. Un niño de
   30 meses que "camina" no está atrasado; la tía solo anotó que caminaba. Las alertas de rezago vendrán después, con varias

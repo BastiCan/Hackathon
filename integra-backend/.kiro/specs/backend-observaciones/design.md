@@ -78,7 +78,10 @@ def handler(event, context) -> dict   # acepta el evento directo o {"body": "<js
  "niveles":[{"nivel":1,"nombre_nivel":"...","edad_min_meses":0,"edad_max_meses":2,"descripcion":"..."}],
  "manifestaciones":{"MAN-L01-CO-01":{"nivel":1,"dominio":"cognitivo","texto_observable":"..."}, ...}}
 ```
-`fewshot.json` (ya generado): 9 ejemplos `{protagonista, nota, respuesta:{manifestaciones:[{id_manifestacion, frase_evidencia}], comentario}}`.
+`fewshot.json` (ya generado): 9 ejemplos `{protagonista, nota, respuesta}` donde `respuesta` cumple exactamente el esquema
+`clasificar.json` (`manifestaciones`, `otro_codigo_viable`, `comentario`, `sin_correspondencia`). Se insertan en `{{ejemplos}}`
+con el formato de `fewshot.json._formato` (Protagonista / Observación / Respuesta en JSON compacto). En los 9 ejemplos
+`otro_codigo_viable` es null a propósito: cualquier código alternativo sería de la validación y la contaminaría.
 Embeddings: se embebe `"<dominio>: <texto_observable>"` de cada código (sin el número de nivel, para no sesgar).
 
 ### Nombres de demo (ya escritos, no generar otros)
@@ -98,7 +101,7 @@ Salida:
 ```json
 {"id_captura":"CAP-01J...","advertencias":[],
  "observaciones":[
-  {"id_obs":"OBS-1","tipo":"PARTICULAR","id_nino":"NINO-00123","texto_literal":"Sofi y Pedro clasificaron hojas por tamaño",
+  {"id_obs":"OBS-01JA…","tipo":"PARTICULAR","id_nino":"NINO-00123","texto_literal":"Sofi y Pedro clasificaron hojas por tamaño",
    "edad_meses":31,"evaluabilidad":"EVALUABLE",
    "nivel":9,"certeza":"alta","manifestaciones":[{"id_manifestacion":"MAN-L09-CO-02","nivel":9,"dominio":"cognitivo",
      "texto_observable":"Clasifica objetos por una característica visible…","certeza":"alta",
@@ -106,12 +109,22 @@ Salida:
      "comentario":"Clasifica por una característica visible (tamaño) tras la actividad: nivel 9. Para su edad (31 meses) lo esperado es el nivel 9.",
      "niveles_esperados":[9],"comparacion_edad":"ACORDE",
    "estado":"SUGERIDO"},
-  {"id_obs":"OBS-2","tipo":"NO_IDENTIFICADO","texto_literal":"Sofi y Pedro clasificaron hojas por tamaño",
+  {"id_obs":"OBS-01JB…","tipo":"NO_IDENTIFICADO","texto_literal":"Sofi y Pedro clasificaron hojas por tamaño",
    "error_identificacion":"AMBIGUO",
    "candidatos":[{"id_nino":"NINO-00145","nombre":"Pedro A.","score":95},{"id_nino":"NINO-00160","nombre":"Pedro R.","score":95}]},
-  {"id_obs":"OBS-3","tipo":"GENERAL","texto_literal":"Hoy bajó la asistencia, mucha tos."}]}
+  {"id_obs":"OBS-01JC…","tipo":"GENERAL","texto_literal":"Hoy bajó la asistencia, mucha tos."}]}
 ```
 Error de captura: `{"error":{"codigo":"SALA_DESCONOCIDA","mensaje":"..."}}`.
+
+### Formato de las variables de los prompts (strings que arma `pipeline.py`)
+- `{{nomina}}`: una línea por niño/a: `N1: Sofía M. — apodos: Sofi, la Sofi` (sin apodos: `N5: Pascal`). Las refs N1… son
+  internas a la llamada; nunca se envía el `id_nino`.
+- `{{niveles_descripcion}}`: una línea por nivel: `Nivel 8 — Combinación y participación: <descripcion>`. **Sin rangos de
+  edad** (el LLM no debe tener pistas de edad).
+- `{{candidatas}}`: una línea por código: `MAN-L08-LC-01 | lenguaje_comunicacion | <texto_observable>`, barajadas por corrida.
+- `{{conductas_json}}`: la lista `conductas` devuelta por `extraer_conductas`, en JSON compacto.
+- `{{ejemplos}}`: según `fewshot.json._formato`, separados por una línea en blanco.
+- IDs: `CAP-<ulid>` y `OBS-<ulid>` (los del contrato son ilustrativos).
 
 ## Manejo de errores
 | Situación | Comportamiento |

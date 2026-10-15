@@ -65,6 +65,7 @@ API Gateway o URL de la función · conexión con el frontend · validación de 
 carga del historial de observaciones · métricas de precisión · Cognito.
 
 ## Preguntas abiertas para Integra
+(Se refieren a la rúbrica REAL de Integra, de 8 niveles. El sistema actual usa la rúbrica E-1 de 9 niveles y lee todo desde `rubrica.json`.)
 1. ¿Nos pasan la rúbrica real (núcleos × 8 niveles × tramos, con conductas observables)?
 2. ¿Los 8 niveles son una escala por tramo o continua entre tramos?
 3. ¿Cómo manejan las salas heterogéneas?

@@ -1,0 +1,41 @@
+[project]
+name = "integra-backend"
+version = "0.1.0"
+description = "Procesador de notas de sala con LLM (Desafio 1 - Fundacion Integra)"
+requires-python = ">=3.13"
+dependencies = [
+    "boto3",
+    "pydantic>=2",
+    "jsonschema",
+    "rapidfuzz",
+    "python-ulid",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ruff",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "llm: pruebas que llaman a Bedrock (no corren por defecto)",
+]
+# Por defecto no se corren las pruebas marcadas con 'llm'.
+addopts = "-m 'not llm'"
+
+[tool.ruff]
+target-version = "py313"
+line-length = 120
+src = ["src", "tests", "scripts"]

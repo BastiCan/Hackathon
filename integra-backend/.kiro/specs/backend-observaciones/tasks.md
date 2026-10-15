@@ -10,7 +10,7 @@
 - [ ] 2. Datos procesados (YA GENERADOS: `data/processed/rubrica.json`, `data/processed/fewshot.json`; NO regenerarlos)
   - `src/core/rubrica.py`: carga `rubrica.json` y cruza código → nivel, dominio, texto_observable
   - NO generar nombres: usar `tests/fixtures/nomina_demo.json` (ya escrito; nombres de demo sobre niños/as reales de JAR-0001)
-  - Test: `rubrica.json` tiene 9 niveles, 5 dominios y 90 códigos; `fewshot.json` tiene 9 ejemplos (1 por nivel) con códigos válidos
+  - Test: `rubrica.json` tiene 9 niveles, 5 dominios y 90 códigos; `fewshot.json` tiene 9 ejemplos (1 por nivel) y **cada `respuesta` valida contra `src/schemas/clasificar.json`** (con los enums ya resueltos, igual que en `llm.py`)
   - _Requirements: 4.4, 4.5, 9.1_
 
 - [ ] 3. Dominio puro con tests unitarios

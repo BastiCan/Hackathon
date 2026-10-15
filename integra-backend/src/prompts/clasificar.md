@@ -27,7 +27,7 @@ Cómo decidir:
    de la observación lo definiría (ej.: "Podría ser MAN-L08-LC-02 si la instrucción era de dos acciones.").
 8. Si ninguna candidata corresponde, devuelve `manifestaciones: []` y `sin_correspondencia: true`.
 
-Ejemplos resueltos:
+Ejemplos resueltos (tu respuesta debe tener exactamente el mismo formato JSON):
 {{ejemplos}}
 
 ## USER

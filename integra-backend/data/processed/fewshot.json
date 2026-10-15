@@ -12,7 +12,9 @@
             "frase_evidencia": "le hablé despacito y lo apegué a mi pecho, y se fue calmando"
           }
         ],
-        "comentario": "Se calma con la voz y el contacto de la tía: nivel 1."
+        "otro_codigo_viable": null,
+        "comentario": "Se calma con la voz y el contacto de la tía: nivel 1.",
+        "sin_correspondencia": false
       }
     },
     {
@@ -26,7 +28,9 @@
             "frase_evidencia": "le pegaba con la mano una y otra vez"
           }
         ],
-        "comentario": "Golpea varias veces un objeto que tiene a su alcance: nivel 2."
+        "otro_codigo_viable": null,
+        "comentario": "Golpea varias veces un objeto que tiene a su alcance: nivel 2.",
+        "sin_correspondencia": false
       }
     },
     {
@@ -40,7 +44,9 @@
             "frase_evidencia": "lo volvió a sacudir varias veces para que sonara de nuevo"
           }
         ],
-        "comentario": "Repite una acción simple para volver a producir el sonido: nivel 3."
+        "otro_codigo_viable": null,
+        "comentario": "Repite una acción simple para volver a producir el sonido: nivel 3.",
+        "sin_correspondencia": false
       }
     },
     {
@@ -54,7 +60,9 @@
             "frase_evidencia": "cada vez que lo llamo por su nombre"
           }
         ],
-        "comentario": "Responde de forma consistente cuando lo llaman por su nombre: nivel 4."
+        "otro_codigo_viable": null,
+        "comentario": "Responde de forma consistente cuando lo llaman por su nombre: nivel 4.",
+        "sin_correspondencia": false
       }
     },
     {
@@ -68,7 +76,9 @@
             "frase_evidencia": "metió los cubitos en el tarro grande y después metía la mano para sacarlos"
           }
         ],
-        "comentario": "Mete objetos en un recipiente amplio y los vuelve a sacar: nivel 5."
+        "otro_codigo_viable": null,
+        "comentario": "Mete objetos en un recipiente amplio y los vuelve a sacar: nivel 5.",
+        "sin_correspondencia": false
       }
     },
     {
@@ -82,7 +92,9 @@
             "frase_evidencia": "empezó a echar algunos también, igual que ella"
           }
         ],
-        "comentario": "Imita a la tía en una acción social sencilla (guardar). Si guardara por iniciativa propia una parte de la rutina sería nivel 9."
+        "otro_codigo_viable": null,
+        "comentario": "Imita a la tía en una acción social sencilla (guardar): nivel 6.",
+        "sin_correspondencia": false
       }
     },
     {
@@ -96,7 +108,9 @@
             "frase_evidencia": "la dio vuelta y probó por otro lado hasta que entró"
           }
         ],
-        "comentario": "Cuando la primera forma no resulta, prueba otra para encajar: nivel 7."
+        "otro_codigo_viable": null,
+        "comentario": "Cuando la primera forma no resulta, prueba otra para encajar: nivel 7.",
+        "sin_correspondencia": false
       }
     },
     {
@@ -110,7 +124,9 @@
             "frase_evidencia": "pateó la pelota que estaba quieta"
           }
         ],
-        "comentario": "Patea una pelota detenida sin sostenerse: nivel 8."
+        "otro_codigo_viable": null,
+        "comentario": "Patea una pelota detenida sin sostenerse: nivel 8.",
+        "sin_correspondencia": false
       }
     },
     {
@@ -124,8 +140,11 @@
             "frase_evidencia": "ensartó las cuentas grandes en el cordón"
           }
         ],
-        "comentario": "Ensarta piezas grandes y completa un encaje de varias piezas: nivel 9."
+        "otro_codigo_viable": null,
+        "comentario": "Ensarta piezas grandes y completa un encaje de varias piezas: nivel 9.",
+        "sin_correspondencia": false
       }
     }
-  ]
+  ],
+  "_formato": "Cada 'respuesta' cumple exactamente src/schemas/clasificar.json (mismos campos y orden que la salida esperada). pipeline.py los inserta en {{ejemplos}} del prompt clasificar así, uno tras otro:\nProtagonista: <protagonista>\nObservación: \"<nota>\"\nRespuesta: <respuesta en JSON compacto>"
 }

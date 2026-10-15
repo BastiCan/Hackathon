@@ -30,6 +30,8 @@ Infraestructura como código: **AWS SAM** (`template.yaml`). No agregar otros se
   reemplazan en `llm.py` por `enum` / `minimum`-`maximum` tomados de la rúbrica cargada.
 - IDs de modelo SOLO por variables de entorno: `MODEL_ID_SEPARAR`, `MODEL_ID_CONDUCTAS`, `MODEL_ID_EVALUAR`, `MODEL_ID_EMBEDDINGS`.
 - Reintentos con backoff ante `ThrottlingException`/`ServiceUnavailableException`; 1 reintento si el JSON no valida.
+- **Nunca hardcodear la cantidad de niveles ni de códigos** (ni 9 ni 8): todo sale de `rubrica.json`. El dataset E-1 tiene
+  9 niveles; la rúbrica real de Integra tendrá 8 por nivel educativo y llegará como otro `rubrica.json`.
 - Toda salida del LLM se valida en código (refs de nómina, frases literales, manifestaciones del nivel).
 - Paralelismo con `ThreadPoolExecutor` (máx. 5): fragmentos en paralelo y corridas de evaluación en paralelo.
 

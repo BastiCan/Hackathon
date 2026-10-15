@@ -1,5 +1,5 @@
 {
-  "_descripcion": "Notas de prueba sobre la sala real JAR-0001 / SG-A (nombres de demo en nomina_demo.json). C* = notas reales de la PPT de Integra; I* = identificación; P1 = post-it completo. 'esperado' es orientativo: listas = cualquiera de esos valores es aceptable. La edad se calcula a la fecha de la nota (2026-10-15). Revisar en equipo en el checkpoint (tarea 7).",
+  "_descripcion": "Notas de prueba sobre la sala real JAR-0001 / SG-A (nombres de demo en nomina_demo.json). C* = notas reales de la PPT de Integra; I* = identificación; P1 = post-it completo. 'esperado' es orientativo: listas = cualquiera de esos valores es aceptable. La edad se calcula a la fecha de la nota (2026-10-15). Revisar en equipo en el checkpoint (tarea 7). Criterio de comparación: 'dominios' = deben ESTAR INCLUIDOS en lo obtenido (pueden aparecer otros); 'nivel' se compara con el nivel del código de ese dominio; listas = cualquiera de esos valores es aceptable.",
   "contexto": {
     "id_educadora": "EDU-0001",
     "sala_grupo": "SG-A",
@@ -18,7 +18,7 @@
             "socioemocional"
           ],
           "nivel": 9,
-          "nota": "Puede sumar motor grueso; no debe quedar SOLO como motor grueso nivel 6 (trampa de similitud). Nayara tiene 40 meses: fuera del rango de la rúbrica, esperado [9]"
+          "nota": "Al menos socioemocional nivel 9 (puede sumar motor grueso). No debe quedar SOLO como motor grueso nivel 6 (trampa de similitud). Nayara tiene 40 meses: fuera del rango de la rúbrica, esperado [9]"
         }
       ]
     },

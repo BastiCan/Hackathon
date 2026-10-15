@@ -1,0 +1,22 @@
+# Entorno y credenciales (nunca versionar)
+.env
+.env.*
+
+# AWS SAM
+.aws-sam/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+
+# Entornos virtuales
+.venv/
+venv/
+
+# Salidas de evaluacion generadas
+data/eval/
