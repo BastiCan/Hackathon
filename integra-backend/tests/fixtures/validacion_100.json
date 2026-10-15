@@ -1,0 +1,2420 @@
+{
+  "_descripcion": "100 casos de validación (11-12 por nivel) desde consolidado.json. 'nota' = la misma conducta escrita como la anotaría una tía (entrada principal); 'texto_control' = texto_observable literal (solo para detectar errores de código: debería acertar casi todo). 'esperado' viene del dataset. Métrica principal: acierto del código de manifestación; nivel y dominio se derivan del código. No usar para ajustar prompts.",
+  "few_shot_excluido": {
+    "codigos": [
+      "MAN-L01-SE-02",
+      "MAN-L02-MF-02",
+      "MAN-L03-CO-02",
+      "MAN-L04-LC-02",
+      "MAN-L05-MF-02",
+      "MAN-L06-SE-02",
+      "MAN-L07-CO-02",
+      "MAN-L08-MG-02",
+      "MAN-L09-MF-01"
+    ],
+    "observaciones": [
+      "OBS-0000162",
+      "OBS-0000931",
+      "OBS-0001857",
+      "OBS-0002110",
+      "OBS-0002275",
+      "OBS-0002626",
+      "OBS-0002706",
+      "OBS-0002735",
+      "OBS-0002900"
+    ],
+    "ninos": [
+      "NINO-00029",
+      "NINO-00168",
+      "NINO-00317",
+      "NINO-00358",
+      "NINO-00389",
+      "NINO-00450",
+      "NINO-00461",
+      "NINO-00466",
+      "NINO-00491"
+    ]
+  },
+  "casos": [
+    {
+      "id_caso": "V000",
+      "id_observacion": "OBS-0000805",
+      "id_nino": "NINO-00146",
+      "id_jardin": "JAR-0019",
+      "sala_grupo": "SG-B",
+      "id_educadora": "EDU-0075",
+      "fecha": "2025-03-13",
+      "edad_meses": 1,
+      "protagonista": "Mateo",
+      "nota": "Mateo: cuando prendí la lamparita al lado del mudador giró los ojos y la cabecita hacia la luz.",
+      "texto_control": "Orienta ojos o cabeza hacia un estímulo nuevo de luz o sonido cercano.",
+      "contexto_captura": "Registro obtenido con materiales seguros disponibles en la sala.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L01-CO-02"
+        ],
+        "nivel": 1,
+        "dominios": [
+          "cognitivo"
+        ]
+      }
+    },
+    {
+      "id_caso": "V001",
+      "id_observacion": "OBS-0001550",
+      "id_nino": "NINO-00268",
+      "id_jardin": "JAR-0010",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0037",
+      "fecha": "2025-04-03",
+      "edad_meses": 1,
+      "protagonista": "Amanda",
+      "nota": "Amanda despierta en la colchoneta pataleaba y movía los bracitos sola; cuando la tomé en brazos se quedó mirándome a la cara un ratito.",
+      "texto_control": "Mueve brazos y piernas espontáneamente durante un periodo de alerta. Mantiene por unos segundos la mirada hacia el rostro de la persona que lo sostiene o acompaña.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L01-MG-02",
+          "MAN-L01-SE-01"
+        ],
+        "nivel": 1,
+        "dominios": [
+          "motor_grueso",
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V002",
+      "id_observacion": "OBS-0002055",
+      "id_nino": "NINO-00349",
+      "id_jardin": "JAR-0002",
+      "sala_grupo": "SG-D",
+      "id_educadora": "EDU-0005",
+      "fecha": "2025-04-08",
+      "edad_meses": 3,
+      "protagonista": "Colomba",
+      "nota": "Colomba, con material de la sala: en el mudador se llevaba la manito a la boca y se tocaba la cara.",
+      "texto_control": "Lleva una mano hacia la cara o la boca durante la observación.",
+      "contexto_captura": "Registro obtenido con materiales seguros disponibles en la sala.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L01-MF-02"
+        ],
+        "nivel": 1,
+        "dominios": [
+          "motor_fino"
+        ]
+      }
+    },
+    {
+      "id_caso": "V003",
+      "id_observacion": "OBS-0000180",
+      "id_nino": "NINO-00032",
+      "id_jardin": "JAR-0002",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0005",
+      "fecha": "2025-05-08",
+      "edad_meses": 1,
+      "protagonista": "León",
+      "nota": "León tranquilo después de la mamadera hacía soniditos cortos, no lloraba, como conversando; y abría las manitos, no las tenía empuñadas.",
+      "texto_control": "Emite sonidos breves distintos del llanto durante un intercambio tranquilo. Abre una o ambas manos por momentos, sin mantenerlas cerradas todo el periodo observado.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L01-LC-02",
+          "MAN-L01-MF-01"
+        ],
+        "nivel": 1,
+        "dominios": [
+          "lenguaje_comunicacion",
+          "motor_fino"
+        ]
+      }
+    },
+    {
+      "id_caso": "V004",
+      "id_observacion": "OBS-0000722",
+      "id_nino": "NINO-00131",
+      "id_jardin": "JAR-0005",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0014",
+      "fecha": "2025-03-08",
+      "edad_meses": 1,
+      "protagonista": "Vicente",
+      "nota": "Vicente siguió con los ojos un ratito la tarjeta blanco y negro que le moví despacio frente a la cara.",
+      "texto_control": "Sigue brevemente con la mirada un rostro u objeto de alto contraste que se desplaza lentamente.",
+      "contexto_captura": "Se observó la conducta en una interacción breve y espontánea.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L01-CO-01"
+        ],
+        "nivel": 1,
+        "dominios": [
+          "cognitivo"
+        ]
+      }
+    },
+    {
+      "id_caso": "V005",
+      "id_observacion": "OBS-0002207",
+      "id_nino": "NINO-00377",
+      "id_jardin": "JAR-0009",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0034",
+      "fecha": "2025-05-08",
+      "edad_meses": 1,
+      "protagonista": "Renata",
+      "nota": "Renata de guatita en la colchoneta alzó la cabeza un poquito y la bajó otra vez; despierta movía brazos y piernas harto.",
+      "texto_control": "En posición boca abajo y despierto, levanta brevemente la cabeza y vuelve a apoyarla. Mueve brazos y piernas espontáneamente durante un periodo de alerta.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L01-MG-01",
+          "MAN-L01-MG-02"
+        ],
+        "nivel": 1,
+        "dominios": [
+          "motor_grueso"
+        ]
+      }
+    },
+    {
+      "id_caso": "V006",
+      "id_observacion": "OBS-0001731",
+      "id_nino": "NINO-00298",
+      "id_jardin": "JAR-0007",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0026",
+      "fecha": "2025-05-13",
+      "edad_meses": 1,
+      "protagonista": "Valentina",
+      "nota": "Valentina: sonó el cascabel al lado de la cuna y movió la cabeza buscando de dónde venía.",
+      "texto_control": "Orienta ojos o cabeza hacia un estímulo nuevo de luz o sonido cercano.",
+      "contexto_captura": "Se observó la conducta en una interacción breve y espontánea.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L01-CO-02"
+        ],
+        "nivel": 1,
+        "dominios": [
+          "cognitivo"
+        ]
+      }
+    },
+    {
+      "id_caso": "V007",
+      "id_observacion": "OBS-0000327",
+      "id_nino": "NINO-00058",
+      "id_jardin": "JAR-0019",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0075",
+      "fecha": "2025-01-18",
+      "edad_meses": 1,
+      "protagonista": "Gaspar",
+      "nota": "Gaspar: cuando le hablé cerquita se quedó quieto y le cambió la carita; después hizo unos ruiditos cortitos, sin llorar.",
+      "texto_control": "Cambia su movimiento o expresión al oír una voz cercana. Emite sonidos breves distintos del llanto durante un intercambio tranquilo.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L01-LC-01",
+          "MAN-L01-LC-02"
+        ],
+        "nivel": 1,
+        "dominios": [
+          "lenguaje_comunicacion"
+        ]
+      }
+    },
+    {
+      "id_caso": "V008",
+      "id_observacion": "OBS-0001470",
+      "id_nino": "NINO-00255",
+      "id_jardin": "JAR-0015",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0055",
+      "fecha": "2025-04-08",
+      "edad_meses": 1,
+      "protagonista": "Sami",
+      "nota": "Sami, en juego libre: siguió un poco con la mirada mi cara cuando me fui corriendo lento hacia el lado.",
+      "texto_control": "Sigue brevemente con la mirada un rostro u objeto de alto contraste que se desplaza lentamente.",
+      "contexto_captura": "Registro realizado durante una actividad de juego libre.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L01-CO-01"
+        ],
+        "nivel": 1,
+        "dominios": [
+          "cognitivo"
+        ]
+      }
+    },
+    {
+      "id_caso": "V009",
+      "id_observacion": "OBS-0001238",
+      "id_nino": "NINO-00221",
+      "id_jardin": "JAR-0003",
+      "sala_grupo": "SG-B",
+      "id_educadora": "EDU-0008",
+      "fecha": "2025-05-23",
+      "edad_meses": 1,
+      "protagonista": "Fernanda",
+      "nota": "Fernanda con materiales de la sala: por momentos abría las manos y se las llevaba a la boca.",
+      "texto_control": "Abre una o ambas manos por momentos, sin mantenerlas cerradas todo el periodo observado. Lleva una mano hacia la cara o la boca durante la observación.",
+      "contexto_captura": "Registro obtenido con materiales seguros disponibles en la sala.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L01-MF-01",
+          "MAN-L01-MF-02"
+        ],
+        "nivel": 1,
+        "dominios": [
+          "motor_fino"
+        ]
+      }
+    },
+    {
+      "id_caso": "V010",
+      "id_observacion": "OBS-0000707",
+      "id_nino": "NINO-00128",
+      "id_jardin": "JAR-0008",
+      "sala_grupo": "SG-D",
+      "id_educadora": "EDU-0028",
+      "fecha": "2026-08-08",
+      "edad_meses": 1,
+      "protagonista": "Tomás",
+      "nota": "Tomás, en la rutina de guatita: levantó la cabeza un segundito y la dejó caer de nuevo en la colchoneta.",
+      "texto_control": "En posición boca abajo y despierto, levanta brevemente la cabeza y vuelve a apoyarla.",
+      "contexto_captura": "La evidencia apareció durante una rutina cotidiana del grupo.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L01-MG-01"
+        ],
+        "nivel": 1,
+        "dominios": [
+          "motor_grueso"
+        ]
+      }
+    },
+    {
+      "id_caso": "V011",
+      "id_observacion": "OBS-0000806",
+      "id_nino": "NINO-00146",
+      "id_jardin": "JAR-0019",
+      "sala_grupo": "SG-B",
+      "id_educadora": "EDU-0075",
+      "fecha": "2025-05-03",
+      "edad_meses": 3,
+      "protagonista": "Lucas",
+      "nota": "Lucas despierto en la colchoneta juntaba sus manitos al medio del pecho y jugaba con ellas.",
+      "texto_control": "Junta las manos en la línea media mientras está despierto.",
+      "contexto_captura": "Se documentó evidencia positiva en un momento de exploración.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L02-MF-01"
+        ],
+        "nivel": 2,
+        "dominios": [
+          "motor_fino"
+        ]
+      }
+    },
+    {
+      "id_caso": "V012",
+      "id_observacion": "OBS-0002371",
+      "id_nino": "NINO-00404",
+      "id_jardin": "JAR-0006",
+      "sala_grupo": "SG-D",
+      "id_educadora": "EDU-0019",
+      "fecha": "2025-06-13",
+      "edad_meses": 3,
+      "protagonista": "Cristóbal",
+      "nota": "Cristóbal en juego libre: le hablé y me contestó con 'aaa, ooo'; yo le respondía y él volvía a hacer su sonido, como turnándonos.",
+      "texto_control": "Responde a la voz con arrullos, vocalizaciones o cambios de expresión. Alterna al menos una emisión sonora con la persona adulta durante un intercambio.",
+      "contexto_captura": "Registro realizado durante una actividad de juego libre.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L02-LC-01",
+          "MAN-L02-LC-02"
+        ],
+        "nivel": 2,
+        "dominios": [
+          "lenguaje_comunicacion"
+        ]
+      }
+    },
+    {
+      "id_caso": "V013",
+      "id_observacion": "OBS-0000169",
+      "id_nino": "NINO-00030",
+      "id_jardin": "JAR-0006",
+      "sala_grupo": "SG-B",
+      "id_educadora": "EDU-0018",
+      "fecha": "2025-02-23",
+      "edad_meses": 3,
+      "protagonista": "Antonia",
+      "nota": "Antonia: cada vez que me acerco y le sonrío, me sonríe de vuelta. Lo hizo varias veces.",
+      "texto_control": "Sonríe en respuesta a la sonrisa, voz o acercamiento de una persona.",
+      "contexto_captura": "La manifestación se observó más de una vez durante la actividad.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L02-SE-01"
+        ],
+        "nivel": 2,
+        "dominios": [
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V014",
+      "id_observacion": "OBS-0000338",
+      "id_nino": "NINO-00059",
+      "id_jardin": "JAR-0011",
+      "sala_grupo": "SG-D",
+      "id_educadora": "EDU-0038",
+      "fecha": "2025-02-28",
+      "edad_meses": 3,
+      "protagonista": "Emilia",
+      "nota": "Emilia: en brazos, afirmándole la espalda, mantuvo la cabeza derechita varios segundos. De guatita se apoyó en los antebrazos y levantó la cabeza y el pecho.",
+      "texto_control": "Sostiene la cabeza alineada durante varios segundos cuando se le carga con apoyo de tronco. Apoya antebrazos y eleva cabeza y parte superior del pecho estando boca abajo.",
+      "contexto_captura": "Se documentó evidencia positiva en un momento de exploración.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L02-MG-01",
+          "MAN-L02-MG-02"
+        ],
+        "nivel": 2,
+        "dominios": [
+          "motor_grueso"
+        ]
+      }
+    },
+    {
+      "id_caso": "V015",
+      "id_observacion": "OBS-0002906",
+      "id_nino": "NINO-00492",
+      "id_jardin": "JAR-0012",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0043",
+      "fecha": "2025-05-03",
+      "edad_meses": 3,
+      "protagonista": "Alonso",
+      "nota": "Alonso pateaba el móvil colgado y al ver que se movía volvía a patear; también se queda mirándose las manos.",
+      "texto_control": "Observa sus manos o repite un movimiento que produjo un resultado visible cercano.",
+      "contexto_captura": "La manifestación se observó más de una vez durante la actividad.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L02-CO-02"
+        ],
+        "nivel": 2,
+        "dominios": [
+          "cognitivo"
+        ]
+      }
+    },
+    {
+      "id_caso": "V016",
+      "id_observacion": "OBS-0001495",
+      "id_nino": "NINO-00259",
+      "id_jardin": "JAR-0003",
+      "sala_grupo": "SG-B",
+      "id_educadora": "EDU-0007",
+      "fecha": "2025-02-08",
+      "edad_meses": 3,
+      "protagonista": "Felipe",
+      "nota": "Felipe siguió con los ojos el pato de goma que pasé despacito de izquierda a derecha frente a su cara. Cuando me di vuelta un momento, me buscó la cara de nuevo.",
+      "texto_control": "Sigue visualmente un objeto lento de un lado al otro cruzando la línea media. Busca nuevamente el rostro cuando la interacción se interrumpe por unos segundos.",
+      "contexto_captura": "Registro obtenido con materiales seguros disponibles en la sala.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L02-CO-01",
+          "MAN-L02-SE-02"
+        ],
+        "nivel": 2,
+        "dominios": [
+          "cognitivo",
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V017",
+      "id_observacion": "OBS-0000780",
+      "id_nino": "NINO-00142",
+      "id_jardin": "JAR-0018",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0068",
+      "fecha": "2025-04-03",
+      "edad_meses": 3,
+      "protagonista": "Isidora",
+      "nota": "Isidora: le hablo y responde con gorjeos y cambia la cara, como contestando.",
+      "texto_control": "Responde a la voz con arrullos, vocalizaciones o cambios de expresión.",
+      "contexto_captura": "Se observó la conducta en una interacción breve y espontánea.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L02-LC-01"
+        ],
+        "nivel": 2,
+        "dominios": [
+          "lenguaje_comunicacion"
+        ]
+      }
+    },
+    {
+      "id_caso": "V018",
+      "id_observacion": "OBS-0002545",
+      "id_nino": "NINO-00434",
+      "id_jardin": "JAR-0002",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0005",
+      "fecha": "2025-02-08",
+      "edad_meses": 3,
+      "protagonista": "Joaquín",
+      "nota": "Joaquín de guatita se afirmó en los antebrazos y levantó la cabeza y el pecho; cuando la tía le sonrió, él sonrió.",
+      "texto_control": "Apoya antebrazos y eleva cabeza y parte superior del pecho estando boca abajo. Sonríe en respuesta a la sonrisa, voz o acercamiento de una persona.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L02-MG-02",
+          "MAN-L02-SE-01"
+        ],
+        "nivel": 2,
+        "dominios": [
+          "motor_grueso",
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V019",
+      "id_observacion": "OBS-0000287",
+      "id_nino": "NINO-00050",
+      "id_jardin": "JAR-0015",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0058",
+      "fecha": "2025-03-03",
+      "edad_meses": 3,
+      "protagonista": "Matías",
+      "nota": "Matías despierto juntaba las manos delante del pecho, en la colchoneta.",
+      "texto_control": "Junta las manos en la línea media mientras está despierto.",
+      "contexto_captura": "Se observó la conducta en una interacción breve y espontánea.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L02-MF-01"
+        ],
+        "nivel": 2,
+        "dominios": [
+          "motor_fino"
+        ]
+      }
+    },
+    {
+      "id_caso": "V020",
+      "id_observacion": "OBS-0002426",
+      "id_nino": "NINO-00413",
+      "id_jardin": "JAR-0016",
+      "sala_grupo": "SG-B",
+      "id_educadora": "EDU-0061",
+      "fecha": "2025-04-03",
+      "edad_meses": 3,
+      "protagonista": "Diego",
+      "nota": "Diego: le moví despacio el sonajero de un costado a otro y lo siguió con la vista pasando por el medio. Cuando dejé de hablarle unos segundos, me buscaba la cara.",
+      "texto_control": "Sigue visualmente un objeto lento de un lado al otro cruzando la línea media. Busca nuevamente el rostro cuando la interacción se interrumpe por unos segundos.",
+      "contexto_captura": "La manifestación se observó más de una vez durante la actividad.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L02-CO-01",
+          "MAN-L02-SE-02"
+        ],
+        "nivel": 2,
+        "dominios": [
+          "cognitivo",
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V021",
+      "id_observacion": "OBS-0002599",
+      "id_nino": "NINO-00445",
+      "id_jardin": "JAR-0017",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0067",
+      "fecha": "2025-07-03",
+      "edad_meses": 3,
+      "protagonista": "Benjamín",
+      "nota": "Benja con material de la sala: yo le hacía un sonido, él respondía con otro y así nos fuimos turnando un rato.",
+      "texto_control": "Alterna al menos una emisión sonora con la persona adulta durante un intercambio.",
+      "contexto_captura": "Registro obtenido con materiales seguros disponibles en la sala.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L02-LC-02"
+        ],
+        "nivel": 2,
+        "dominios": [
+          "lenguaje_comunicacion"
+        ]
+      }
+    },
+    {
+      "id_caso": "V022",
+      "id_observacion": "OBS-0001327",
+      "id_nino": "NINO-00235",
+      "id_jardin": "JAR-0019",
+      "sala_grupo": "SG-D",
+      "id_educadora": "EDU-0074",
+      "fecha": "2025-02-23",
+      "edad_meses": 5,
+      "protagonista": "Alex",
+      "nota": "Alex: en el baño se ríe y patalea feliz, pero cuando lo vestimos se queja y llora; se nota qué le gusta y qué no.",
+      "texto_control": "Expresa agrado o desagrado de manera diferenciada ante actividades distintas.",
+      "contexto_captura": "Se documentó evidencia positiva en un momento de exploración.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L03-SE-02"
+        ],
+        "nivel": 3,
+        "dominios": [
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V023",
+      "id_observacion": "OBS-0000271",
+      "id_nino": "NINO-00047",
+      "id_jardin": "JAR-0016",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0061",
+      "fecha": "2026-09-03",
+      "edad_meses": 5,
+      "protagonista": "Agustina",
+      "nota": "Agustina jugando hacía grititos suaves y 'aaaa-eeee' seguidos; cuando su mamá le habló desde el lado, giró la cabeza hacia ella.",
+      "texto_control": "Produce series de vocales, chillidos suaves o sonidos guturales durante el juego. Gira hacia la voz de una persona conocida cuando esta habla desde un costado.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L03-LC-01",
+          "MAN-L03-LC-02"
+        ],
+        "nivel": 3,
+        "dominios": [
+          "lenguaje_comunicacion"
+        ]
+      }
+    },
+    {
+      "id_caso": "V024",
+      "id_observacion": "OBS-0001499",
+      "id_nino": "NINO-00259",
+      "id_jardin": "JAR-0003",
+      "sala_grupo": "SG-B",
+      "id_educadora": "EDU-0007",
+      "fecha": "2025-04-18",
+      "edad_meses": 5,
+      "protagonista": "Gaspar",
+      "nota": "Gaspar en la colchoneta se dio vuelta solo de espalda a guata mientras jugaba.",
+      "texto_control": "Rueda de costado o cambia de boca arriba a boca abajo, o a la inversa, durante el juego.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L03-MG-01"
+        ],
+        "nivel": 3,
+        "dominios": [
+          "motor_grueso"
+        ]
+      }
+    },
+    {
+      "id_caso": "V025",
+      "id_observacion": "OBS-0000783",
+      "id_nino": "NINO-00142",
+      "id_jardin": "JAR-0018",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0071",
+      "fecha": "2025-06-08",
+      "edad_meses": 5,
+      "protagonista": "Julieta",
+      "nota": "Julieta estiró la mano, agarró el sonajero que veía, después lo cambió a la otra mano y se lo llevó a la boca.",
+      "texto_control": "Alcanza intencionalmente un objeto visible y lo toma con una o ambas manos. Pasa un objeto de una mano a la otra o lo lleva a la boca para explorarlo.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L03-MF-01",
+          "MAN-L03-MF-02"
+        ],
+        "nivel": 3,
+        "dominios": [
+          "motor_fino"
+        ]
+      }
+    },
+    {
+      "id_caso": "V026",
+      "id_observacion": "OBS-0001131",
+      "id_nino": "NINO-00202",
+      "id_jardin": "JAR-0015",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0058",
+      "fecha": "2025-01-08",
+      "edad_meses": 5,
+      "protagonista": "Ignacio",
+      "nota": "Ignacio exploró el cubo de tela: lo miraba, lo mordía y lo daba vueltas de distintas formas.",
+      "texto_control": "Explora un objeto mirándolo, llevándolo a la boca o moviéndolo de más de una manera.",
+      "contexto_captura": "Se observó la conducta en una interacción breve y espontánea.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L03-CO-01"
+        ],
+        "nivel": 3,
+        "dominios": [
+          "cognitivo"
+        ]
+      }
+    },
+    {
+      "id_caso": "V027",
+      "id_observacion": "OBS-0001864",
+      "id_nino": "NINO-00318",
+      "id_jardin": "JAR-0003",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0007",
+      "fecha": "2025-05-18",
+      "edad_meses": 5,
+      "protagonista": "Simón",
+      "nota": "Simón sentado con un cojín en la espalda tuvo la cabeza firme; en el juego de '¿dónde está?... ¡acá está!' se reía para que lo siguiéramos haciendo.",
+      "texto_control": "Mantiene la cabeza estable al sentarse con apoyo de tronco. Ríe o vocaliza para prolongar un juego social repetido.",
+      "contexto_captura": "Se documentó evidencia positiva en un momento de exploración.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L03-MG-02",
+          "MAN-L03-SE-01"
+        ],
+        "nivel": 3,
+        "dominios": [
+          "motor_grueso",
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V028",
+      "id_observacion": "OBS-0002189",
+      "id_nino": "NINO-00373",
+      "id_jardin": "JAR-0009",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0034",
+      "fecha": "2025-08-18",
+      "edad_meses": 5,
+      "protagonista": "Maite",
+      "nota": "Maite rodó de lado y quedó de guatita jugando con el peluche.",
+      "texto_control": "Rueda de costado o cambia de boca arriba a boca abajo, o a la inversa, durante el juego.",
+      "contexto_captura": "Se observó la conducta en una interacción breve y espontánea.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L03-MG-01"
+        ],
+        "nivel": 3,
+        "dominios": [
+          "motor_grueso"
+        ]
+      }
+    },
+    {
+      "id_caso": "V029",
+      "id_observacion": "OBS-0000204",
+      "id_nino": "NINO-00036",
+      "id_jardin": "JAR-0005",
+      "sala_grupo": "SG-D",
+      "id_educadora": "EDU-0014",
+      "fecha": "2025-06-18",
+      "edad_meses": 5,
+      "protagonista": "Rafaela",
+      "nota": "Rafaela: la llamé desde el costado y giró hacia mi voz; después estiró el brazo y tomó el aro que tenía delante.",
+      "texto_control": "Gira hacia la voz de una persona conocida cuando esta habla desde un costado. Alcanza intencionalmente un objeto visible y lo toma con una o ambas manos.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L03-LC-02",
+          "MAN-L03-MF-01"
+        ],
+        "nivel": 3,
+        "dominios": [
+          "lenguaje_comunicacion",
+          "motor_fino"
+        ]
+      }
+    },
+    {
+      "id_caso": "V030",
+      "id_observacion": "OBS-0001322",
+      "id_nino": "NINO-00234",
+      "id_jardin": "JAR-0013",
+      "sala_grupo": "SG-B",
+      "id_educadora": "EDU-0048",
+      "fecha": "2025-06-08",
+      "edad_meses": 5,
+      "protagonista": "León",
+      "nota": "León se cambiaba la cuchara de goma entre sus dos manitos y la chupaba.",
+      "texto_control": "Pasa un objeto de una mano a la otra o lo lleva a la boca para explorarlo.",
+      "contexto_captura": "La manifestación se observó más de una vez durante la actividad.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L03-MF-02"
+        ],
+        "nivel": 3,
+        "dominios": [
+          "motor_fino"
+        ]
+      }
+    },
+    {
+      "id_caso": "V031",
+      "id_observacion": "OBS-0000740",
+      "id_nino": "NINO-00134",
+      "id_jardin": "JAR-0019",
+      "sala_grupo": "SG-D",
+      "id_educadora": "EDU-0072",
+      "fecha": "2025-04-08",
+      "edad_meses": 5,
+      "protagonista": "Facundo",
+      "nota": "Facundo en el juego de las cosquillas se reía y gritaba para que siguiera; al sentarlo en la sillita para comer se molestó y lloró, en cambio con las burbujas se ríe.",
+      "texto_control": "Ríe o vocaliza para prolongar un juego social repetido. Expresa agrado o desagrado de manera diferenciada ante actividades distintas.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L03-SE-01",
+          "MAN-L03-SE-02"
+        ],
+        "nivel": 3,
+        "dominios": [
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V032",
+      "id_observacion": "OBS-0002550",
+      "id_nino": "NINO-00434",
+      "id_jardin": "JAR-0002",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0003",
+      "fecha": "2025-04-08",
+      "edad_meses": 5,
+      "protagonista": "Bastián",
+      "nota": "Bastián sentado con apoyo atrás, la cabeza se le mantuvo firme todo el rato.",
+      "texto_control": "Mantiene la cabeza estable al sentarse con apoyo de tronco.",
+      "contexto_captura": "La manifestación se observó más de una vez durante la actividad.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L03-MG-02"
+        ],
+        "nivel": 3,
+        "dominios": [
+          "motor_grueso"
+        ]
+      }
+    },
+    {
+      "id_caso": "V033",
+      "id_observacion": "OBS-0002458",
+      "id_nino": "NINO-00418",
+      "id_jardin": "JAR-0005",
+      "sala_grupo": "SG-B",
+      "id_educadora": "EDU-0013",
+      "fecha": "2025-07-03",
+      "edad_meses": 7,
+      "protagonista": "Mateo",
+      "nota": "Mateo pasó de estar sentado a gatas apoyándose en las manos, y luego volvió a sentarse afirmado del mueble bajo.",
+      "texto_control": "Cambia entre sentado y otra postura con apoyo de manos o del mobiliario bajo.",
+      "contexto_captura": "Registro obtenido con materiales seguros disponibles en la sala.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L04-MG-02"
+        ],
+        "nivel": 4,
+        "dominios": [
+          "motor_grueso"
+        ]
+      }
+    },
+    {
+      "id_caso": "V034",
+      "id_observacion": "OBS-0001224",
+      "id_nino": "NINO-00219",
+      "id_jardin": "JAR-0010",
+      "sala_grupo": "SG-B",
+      "id_educadora": "EDU-0036",
+      "fecha": "2025-05-03",
+      "edad_meses": 7,
+      "protagonista": "Trinidad",
+      "nota": "Trinidad: escondí la pelota debajo del pañal dejando un pedacito afuera y la buscó con la mano. Con la tía de siempre se ríe; con la tía nueva se puso seria.",
+      "texto_control": "Busca con la mirada o la mano un objeto que quedó parcialmente oculto. Reacciona de manera distinta ante una persona habitual y una menos familiar.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L04-CO-01",
+          "MAN-L04-SE-02"
+        ],
+        "nivel": 4,
+        "dominios": [
+          "cognitivo",
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V035",
+      "id_observacion": "OBS-0000553",
+      "id_nino": "NINO-00099",
+      "id_jardin": "JAR-0007",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0025",
+      "fecha": "2025-08-13",
+      "edad_meses": 7,
+      "protagonista": "Valentina",
+      "nota": "Valentina en juego libre agarró un pedacito de galleta con los dedos y la palma, con harta intención.",
+      "texto_control": "Recoge un objeto pequeño seguro usando dedos y palma con intención.",
+      "contexto_captura": "Registro realizado durante una actividad de juego libre.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L04-MF-02"
+        ],
+        "nivel": 4,
+        "dominios": [
+          "motor_fino"
+        ]
+      }
+    },
+    {
+      "id_caso": "V036",
+      "id_observacion": "OBS-0001019",
+      "id_nino": "NINO-00181",
+      "id_jardin": "JAR-0010",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0037",
+      "fecha": "2025-08-03",
+      "edad_meses": 7,
+      "protagonista": "Renata",
+      "nota": "Renata: cuando ve el babero se acerca a la silla porque sabe que viene la comida; y dice 'ba-ba-ba', 'ma-ma-ma' mientras le hablo.",
+      "texto_control": "Anticipa una acción de una rutina conocida mediante movimiento, mirada o vocalización. Balbucea secuencias repetidas de consonante y vocal durante la interacción.",
+      "contexto_captura": "Registro realizado durante una actividad de juego libre.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L04-CO-02",
+          "MAN-L04-LC-01"
+        ],
+        "nivel": 4,
+        "dominios": [
+          "cognitivo",
+          "lenguaje_comunicacion"
+        ]
+      }
+    },
+    {
+      "id_caso": "V037",
+      "id_observacion": "OBS-0001619",
+      "id_nino": "NINO-00280",
+      "id_jardin": "JAR-0003",
+      "sala_grupo": "SG-B",
+      "id_educadora": "EDU-0007",
+      "fecha": "2025-05-03",
+      "edad_meses": 7,
+      "protagonista": "Lucas",
+      "nota": "Lucas: le pasé dos bloques y los chocó entre ellos después que le mostré cómo.",
+      "texto_control": "Golpea dos objetos entre sí después de recibirlos o ver una demostración.",
+      "contexto_captura": "Registro obtenido con materiales seguros disponibles en la sala.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L04-MF-01"
+        ],
+        "nivel": 4,
+        "dominios": [
+          "motor_fino"
+        ]
+      }
+    },
+    {
+      "id_caso": "V038",
+      "id_observacion": "OBS-0001011",
+      "id_nino": "NINO-00180",
+      "id_jardin": "JAR-0019",
+      "sala_grupo": "SG-D",
+      "id_educadora": "EDU-0072",
+      "fecha": "2025-01-13",
+      "edad_meses": 7,
+      "protagonista": "Colomba",
+      "nota": "Colomba pasó de sentada a gatas con las manos y se volvió a sentar; me estiraba los brazos y me sonreía para que la tomara.",
+      "texto_control": "Cambia entre sentado y otra postura con apoyo de manos o del mobiliario bajo. Inicia un intercambio mediante mirada, sonido, sonrisa o extensión de brazos.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L04-MG-02",
+          "MAN-L04-SE-01"
+        ],
+        "nivel": 4,
+        "dominios": [
+          "motor_grueso",
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V039",
+      "id_observacion": "OBS-0001925",
+      "id_nino": "NINO-00328",
+      "id_jardin": "JAR-0002",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0003",
+      "fecha": "2025-07-13",
+      "edad_meses": 7,
+      "protagonista": "Fernanda",
+      "nota": "Fernanda se quedó sentadita sin cojines jugando con el tambor un buen rato.",
+      "texto_control": "Permanece sentado sin apoyo durante el tiempo necesario para manipular un juguete.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L04-MG-01"
+        ],
+        "nivel": 4,
+        "dominios": [
+          "motor_grueso"
+        ]
+      }
+    },
+    {
+      "id_caso": "V040",
+      "id_observacion": "OBS-0002595",
+      "id_nino": "NINO-00444",
+      "id_jardin": "JAR-0007",
+      "sala_grupo": "SG-E",
+      "id_educadora": "EDU-0022",
+      "fecha": "2026-09-03",
+      "edad_meses": 7,
+      "protagonista": "Emilia",
+      "nota": "Emilia sentada sola, sin cojines, tomó la bolita de lana con los dedos y la palma, a propósito.",
+      "texto_control": "Recoge un objeto pequeño seguro usando dedos y palma con intención. Permanece sentado sin apoyo durante el tiempo necesario para manipular un juguete.",
+      "contexto_captura": "Se observó la conducta en una interacción breve y espontánea.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L04-MF-02",
+          "MAN-L04-MG-01"
+        ],
+        "nivel": 4,
+        "dominios": [
+          "motor_fino",
+          "motor_grueso"
+        ]
+      }
+    },
+    {
+      "id_caso": "V041",
+      "id_observacion": "OBS-0000619",
+      "id_nino": "NINO-00109",
+      "id_jardin": "JAR-0006",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0020",
+      "fecha": "2025-07-03",
+      "edad_meses": 7,
+      "protagonista": "Tomás",
+      "nota": "Tomás: tapé el auto con la manta, se veía una rueda, y lo buscó con la mirada y la mano.",
+      "texto_control": "Busca con la mirada o la mano un objeto que quedó parcialmente oculto.",
+      "contexto_captura": "Se observó la conducta en una interacción breve y espontánea.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L04-CO-01"
+        ],
+        "nivel": 4,
+        "dominios": [
+          "cognitivo"
+        ]
+      }
+    },
+    {
+      "id_caso": "V042",
+      "id_observacion": "OBS-0002358",
+      "id_nino": "NINO-00403",
+      "id_jardin": "JAR-0014",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0052",
+      "fecha": "2025-03-03",
+      "edad_meses": 7,
+      "protagonista": "Isidora",
+      "nota": "Isidora: al escuchar la canción de dormir se tira al cojín; mientras jugamos repite 'da-da-da'.",
+      "texto_control": "Anticipa una acción de una rutina conocida mediante movimiento, mirada o vocalización. Balbucea secuencias repetidas de consonante y vocal durante la interacción.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L04-CO-02",
+          "MAN-L04-LC-01"
+        ],
+        "nivel": 4,
+        "dominios": [
+          "cognitivo",
+          "lenguaje_comunicacion"
+        ]
+      }
+    },
+    {
+      "id_caso": "V043",
+      "id_observacion": "OBS-0002149",
+      "id_nino": "NINO-00365",
+      "id_jardin": "JAR-0008",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0029",
+      "fecha": "2025-06-03",
+      "edad_meses": 7,
+      "protagonista": "Antonia",
+      "nota": "Antonia: con la tía Carmen se ríe y le estira los brazos, pero con el apoderado nuevo se quedó seria y se escondió.",
+      "texto_control": "Reacciona de manera distinta ante una persona habitual y una menos familiar.",
+      "contexto_captura": "La evidencia apareció durante una rutina cotidiana del grupo.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L04-SE-02"
+        ],
+        "nivel": 4,
+        "dominios": [
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V044",
+      "id_observacion": "OBS-0000941",
+      "id_nino": "NINO-00170",
+      "id_jardin": "JAR-0014",
+      "sala_grupo": "SG-F",
+      "id_educadora": "EDU-0051",
+      "fecha": "2025-01-03",
+      "edad_meses": 10,
+      "protagonista": "Cristóbal",
+      "nota": "Cristóbal en juego libre me mostró el auto estirando el brazo, y se despidió con la mano cuando se fue la mamá de otro niño.",
+      "texto_control": "Usa un gesto convencional, como señalar, mostrar o despedirse, para comunicar una intención.",
+      "contexto_captura": "Registro realizado durante una actividad de juego libre.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L05-LC-01"
+        ],
+        "nivel": 5,
+        "dominios": [
+          "lenguaje_comunicacion"
+        ]
+      }
+    },
+    {
+      "id_caso": "V045",
+      "id_observacion": "OBS-0000277",
+      "id_nino": "NINO-00048",
+      "id_jardin": "JAR-0006",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0021",
+      "fecha": "2025-10-08",
+      "edad_meses": 14,
+      "protagonista": "Martina",
+      "nota": "Martina vio cómo escondí la pelota entera debajo del balde y levantó el balde para sacarla. Cuando el peluche quedó lejos, primero estiró el brazo y después tiró la manta para acercarlo.",
+      "texto_control": "Busca un objeto que vio ocultarse completamente bajo una tela o recipiente. Prueba más de una acción para alcanzar un objeto cercano fuera de alcance directo.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L05-CO-01",
+          "MAN-L05-CO-02"
+        ],
+        "nivel": 5,
+        "dominios": [
+          "cognitivo"
+        ]
+      }
+    },
+    {
+      "id_caso": "V046",
+      "id_observacion": "OBS-0000430",
+      "id_nino": "NINO-00075",
+      "id_jardin": "JAR-0009",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0034",
+      "fecha": "2025-05-03",
+      "edad_meses": 10,
+      "protagonista": "Catalina",
+      "nota": "Catalina: cuando digo 'agua' mira hacia su vaso; al decir 'zapatos' se toca los pies.",
+      "texto_control": "Responde con acción o mirada a una palabra frecuente dentro de una rutina.",
+      "contexto_captura": "Registro obtenido con materiales seguros disponibles en la sala.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L05-LC-02"
+        ],
+        "nivel": 5,
+        "dominios": [
+          "lenguaje_comunicacion"
+        ]
+      }
+    },
+    {
+      "id_caso": "V047",
+      "id_observacion": "OBS-0000099",
+      "id_nino": "NINO-00017",
+      "id_jardin": "JAR-0019",
+      "sala_grupo": "SG-D",
+      "id_educadora": "EDU-0074",
+      "fecha": "2025-05-23",
+      "edad_meses": 10,
+      "protagonista": "Julieta",
+      "nota": "Julieta gateó hasta la pelota que estaba al fondo; después se paró afirmada del mueble y se quedó de pie un rato.",
+      "texto_control": "Se desplaza para alcanzar un objeto mediante gateo, arrastre u otra estrategia coordinada. Se pone de pie con apoyo y se mantiene mientras sostiene una superficie estable.",
+      "contexto_captura": "La manifestación se observó más de una vez durante la actividad.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L05-MG-01",
+          "MAN-L05-MG-02"
+        ],
+        "nivel": 5,
+        "dominios": [
+          "motor_grueso"
+        ]
+      }
+    },
+    {
+      "id_caso": "V048",
+      "id_observacion": "OBS-0000526",
+      "id_nino": "NINO-00094",
+      "id_jardin": "JAR-0018",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0068",
+      "fecha": "2025-04-13",
+      "edad_meses": 10,
+      "protagonista": "Dani",
+      "nota": "Dani: llegó una persona desconocida a la sala y se vino gateando donde mí y se me pegó.",
+      "texto_control": "Busca proximidad o apoyo de una persona familiar ante una situación nueva.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L05-SE-02"
+        ],
+        "nivel": 5,
+        "dominios": [
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V049",
+      "id_observacion": "OBS-0001802",
+      "id_nino": "NINO-00307",
+      "id_jardin": "JAR-0007",
+      "sala_grupo": "SG-B",
+      "id_educadora": "EDU-0023",
+      "fecha": "2025-05-03",
+      "edad_meses": 11,
+      "protagonista": "Alonso",
+      "nota": "Alonso se puso de pie agarrado de la baranda y se mantuvo; miraba el gato de peluche, me miraba a mí y volvía a mirar el gato.",
+      "texto_control": "Se pone de pie con apoyo y se mantiene mientras sostiene una superficie estable. Comparte atención alternando la mirada entre una persona y un objeto de interés.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L05-MG-02",
+          "MAN-L05-SE-01"
+        ],
+        "nivel": 5,
+        "dominios": [
+          "motor_grueso",
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V050",
+      "id_observacion": "OBS-0000815",
+      "id_nino": "NINO-00147",
+      "id_jardin": "JAR-0014",
+      "sala_grupo": "SG-F",
+      "id_educadora": "EDU-0052",
+      "fecha": "2025-06-03",
+      "edad_meses": 10,
+      "protagonista": "Maite",
+      "nota": "Maite tomó una pasa con el pulgar y el índice.",
+      "texto_control": "Toma un objeto pequeño seguro entre pulgar y otro dedo.",
+      "contexto_captura": "Se observó la conducta en una interacción breve y espontánea.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L05-MF-01"
+        ],
+        "nivel": 5,
+        "dominios": [
+          "motor_fino"
+        ]
+      }
+    },
+    {
+      "id_caso": "V051",
+      "id_observacion": "OBS-0000077",
+      "id_nino": "NINO-00013",
+      "id_jardin": "JAR-0003",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0007",
+      "fecha": "2025-12-03",
+      "edad_meses": 12,
+      "protagonista": "Amanda",
+      "nota": "Amanda apuntó con el dedo la ventana para que viera el pájaro. Cuando digo 'a lavarse las manos' se va al lavamanos.",
+      "texto_control": "Usa un gesto convencional, como señalar, mostrar o despedirse, para comunicar una intención. Responde con acción o mirada a una palabra frecuente dentro de una rutina.",
+      "contexto_captura": "Registro realizado durante una actividad de juego libre.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L05-LC-01",
+          "MAN-L05-LC-02"
+        ],
+        "nivel": 5,
+        "dominios": [
+          "lenguaje_comunicacion"
+        ]
+      }
+    },
+    {
+      "id_caso": "V052",
+      "id_observacion": "OBS-0001936",
+      "id_nino": "NINO-00330",
+      "id_jardin": "JAR-0012",
+      "sala_grupo": "SG-B",
+      "id_educadora": "EDU-0042",
+      "fecha": "2025-09-03",
+      "edad_meses": 10,
+      "protagonista": "Matías",
+      "nota": "Matías se arrastró por el piso hasta alcanzar el sonajero, en juego libre.",
+      "texto_control": "Se desplaza para alcanzar un objeto mediante gateo, arrastre u otra estrategia coordinada.",
+      "contexto_captura": "Registro realizado durante una actividad de juego libre.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L05-MG-01"
+        ],
+        "nivel": 5,
+        "dominios": [
+          "motor_grueso"
+        ]
+      }
+    },
+    {
+      "id_caso": "V053",
+      "id_observacion": "OBS-0002841",
+      "id_nino": "NINO-00483",
+      "id_jardin": "JAR-0020",
+      "sala_grupo": "SG-E",
+      "id_educadora": "EDU-0080",
+      "fecha": "2025-06-08",
+      "edad_meses": 10,
+      "protagonista": "Felipe",
+      "nota": "Felipe: le tapé el auto entero con un paño y lo buscó levantando el paño; con la pelota debajo de la silla probó con la mano y luego con un palito.",
+      "texto_control": "Busca un objeto que vio ocultarse completamente bajo una tela o recipiente. Prueba más de una acción para alcanzar un objeto cercano fuera de alcance directo.",
+      "contexto_captura": "La manifestación se observó más de una vez durante la actividad.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L05-CO-01",
+          "MAN-L05-CO-02"
+        ],
+        "nivel": 5,
+        "dominios": [
+          "cognitivo"
+        ]
+      }
+    },
+    {
+      "id_caso": "V054",
+      "id_observacion": "OBS-0000025",
+      "id_nino": "NINO-00005",
+      "id_jardin": "JAR-0011",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0038",
+      "fecha": "2025-07-03",
+      "edad_meses": 10,
+      "protagonista": "Isidora",
+      "nota": "Isidora: en la actividad con pintura nueva se asustó y se vino donde la tía a buscar apoyo.",
+      "texto_control": "Busca proximidad o apoyo de una persona familiar ante una situación nueva.",
+      "contexto_captura": "Registro obtenido con materiales seguros disponibles en la sala.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L05-SE-02"
+        ],
+        "nivel": 5,
+        "dominios": [
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V055",
+      "id_observacion": "OBS-0002925",
+      "id_nino": "NINO-00495",
+      "id_jardin": "JAR-0004",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0011",
+      "fecha": "2025-09-08",
+      "edad_meses": 14,
+      "protagonista": "Simón",
+      "nota": "Simón: le mostré una pelota y una cuchara y le pedí 'pásame la pelota'; eligió la pelota.",
+      "texto_control": "Identifica un objeto conocido al elegirlo entre dos cuando se le solicita.",
+      "contexto_captura": "Se observó la conducta en una interacción breve y espontánea.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L06-CO-02"
+        ],
+        "nivel": 6,
+        "dominios": [
+          "cognitivo"
+        ]
+      }
+    },
+    {
+      "id_caso": "V056",
+      "id_observacion": "OBS-0002169",
+      "id_nino": "NINO-00369",
+      "id_jardin": "JAR-0020",
+      "sala_grupo": "SG-F",
+      "id_educadora": "EDU-0076",
+      "fecha": "2025-03-03",
+      "edad_meses": 14,
+      "protagonista": "Benjamín",
+      "nota": "Benja dice 'agua', 'papá' y 'no', siempre para lo mismo. Le dije 'trae el zapato' apuntándolo y lo trajo.",
+      "texto_control": "Usa de manera consistente al menos tres palabras, aproximaciones o señas con significado. Sigue una instrucción cotidiana de un paso acompañada, si hace falta, por gesto.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L06-LC-01",
+          "MAN-L06-LC-02"
+        ],
+        "nivel": 6,
+        "dominios": [
+          "lenguaje_comunicacion"
+        ]
+      }
+    },
+    {
+      "id_caso": "V057",
+      "id_observacion": "OBS-0001685",
+      "id_nino": "NINO-00291",
+      "id_jardin": "JAR-0008",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0029",
+      "fecha": "2026-01-03",
+      "edad_meses": 14,
+      "protagonista": "Diego",
+      "nota": "Diego, después de ver cómo lo hacía yo, puso un bloque encima de otro y no se cayó.",
+      "texto_control": "Apila dos bloques u objetos estables después de explorar o ver el ejemplo.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L06-MF-01"
+        ],
+        "nivel": 6,
+        "dominios": [
+          "motor_fino"
+        ]
+      }
+    },
+    {
+      "id_caso": "V058",
+      "id_observacion": "OBS-0000852",
+      "id_nino": "NINO-00156",
+      "id_jardin": "JAR-0015",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0057",
+      "fecha": "2025-10-03",
+      "edad_meses": 14,
+      "protagonista": "Josefa",
+      "nota": "Josefa en la colación intentó comer sola con la cuchara y tomar del vaso; caminó sola unos pasos hasta la mesa.",
+      "texto_control": "Intenta usar cuchara, vaso u otro objeto cotidiano según su función. Da varios pasos sin apoyo o recorre una distancia breve de forma independiente.",
+      "contexto_captura": "La evidencia apareció durante una rutina cotidiana del grupo.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L06-MF-02",
+          "MAN-L06-MG-01"
+        ],
+        "nivel": 6,
+        "dominios": [
+          "motor_fino",
+          "motor_grueso"
+        ]
+      }
+    },
+    {
+      "id_caso": "V059",
+      "id_observacion": "OBS-0000016",
+      "id_nino": "NINO-00003",
+      "id_jardin": "JAR-0014",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0053",
+      "fecha": "2025-12-13",
+      "edad_meses": 14,
+      "protagonista": "Renata",
+      "nota": "Renata se agachó a tomar la pelota del suelo y se paró sola.",
+      "texto_control": "Se agacha para recoger un objeto y vuelve a incorporarse con o sin apoyo cercano.",
+      "contexto_captura": "Registro obtenido con materiales seguros disponibles en la sala.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L06-MG-02"
+        ],
+        "nivel": 6,
+        "dominios": [
+          "motor_grueso"
+        ]
+      }
+    },
+    {
+      "id_caso": "V060",
+      "id_observacion": "OBS-0000715",
+      "id_nino": "NINO-00130",
+      "id_jardin": "JAR-0012",
+      "sala_grupo": "SG-B",
+      "id_educadora": "EDU-0042",
+      "fecha": "2025-02-03",
+      "edad_meses": 14,
+      "protagonista": "Lucas",
+      "nota": "Lucas usó el peine para peinarse un ratito; y cuando le pedí el vaso, entre el vaso y el auto eligió el vaso.",
+      "texto_control": "Usa un objeto cotidiano de manera funcional en una actividad breve. Identifica un objeto conocido al elegirlo entre dos cuando se le solicita.",
+      "contexto_captura": "La manifestación se observó más de una vez durante la actividad.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L06-CO-01",
+          "MAN-L06-CO-02"
+        ],
+        "nivel": 6,
+        "dominios": [
+          "cognitivo"
+        ]
+      }
+    },
+    {
+      "id_caso": "V061",
+      "id_observacion": "OBS-0002127",
+      "id_nino": "NINO-00360",
+      "id_jardin": "JAR-0014",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0051",
+      "fecha": "2025-02-03",
+      "edad_meses": 14,
+      "protagonista": "Facundo",
+      "nota": "Facundo en el patio se alejaba a explorar las plantas y cada tanto se daba vuelta a mirarme o volvía donde mí.",
+      "texto_control": "Se aleja para explorar y vuelve o mira a la persona adulta como referencia.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L06-SE-01"
+        ],
+        "nivel": 6,
+        "dominios": [
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V062",
+      "id_observacion": "OBS-0000761",
+      "id_nino": "NINO-00138",
+      "id_jardin": "JAR-0009",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0034",
+      "fecha": "2025-08-03",
+      "edad_meses": 14,
+      "protagonista": "Valentina",
+      "nota": "Valentina en el almuerzo trató de usar la cuchara sola; además ya da varios pasitos sin afirmarse.",
+      "texto_control": "Intenta usar cuchara, vaso u otro objeto cotidiano según su función. Da varios pasos sin apoyo o recorre una distancia breve de forma independiente.",
+      "contexto_captura": "La evidencia apareció durante una rutina cotidiana del grupo.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L06-MF-02",
+          "MAN-L06-MG-01"
+        ],
+        "nivel": 6,
+        "dominios": [
+          "motor_fino",
+          "motor_grueso"
+        ]
+      }
+    },
+    {
+      "id_caso": "V063",
+      "id_observacion": "OBS-0001568",
+      "id_nino": "NINO-00270",
+      "id_jardin": "JAR-0014",
+      "sala_grupo": "SG-D",
+      "id_educadora": "EDU-0052",
+      "fecha": "2025-04-18",
+      "edad_meses": 14,
+      "protagonista": "Sami",
+      "nota": "Sami jugando con los bloques dice 'mamá', 'tete' y 'chao', siempre para lo mismo.",
+      "texto_control": "Usa de manera consistente al menos tres palabras, aproximaciones o señas con significado.",
+      "contexto_captura": "Registro obtenido con materiales seguros disponibles en la sala.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L06-LC-01"
+        ],
+        "nivel": 6,
+        "dominios": [
+          "lenguaje_comunicacion"
+        ]
+      }
+    },
+    {
+      "id_caso": "V064",
+      "id_observacion": "OBS-0000598",
+      "id_nino": "NINO-00105",
+      "id_jardin": "JAR-0010",
+      "sala_grupo": "SG-B",
+      "id_educadora": "EDU-0035",
+      "fecha": "2026-01-03",
+      "edad_meses": 14,
+      "protagonista": "Trinidad",
+      "nota": "Trinidad en juego libre: le dije 'guarda el auto' mostrándole la caja y lo guardó; también puso un cubo arriba de otro después de mirarme.",
+      "texto_control": "Sigue una instrucción cotidiana de un paso acompañada, si hace falta, por gesto. Apila dos bloques u objetos estables después de explorar o ver el ejemplo.",
+      "contexto_captura": "Registro realizado durante una actividad de juego libre.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L06-LC-02",
+          "MAN-L06-MF-01"
+        ],
+        "nivel": 6,
+        "dominios": [
+          "lenguaje_comunicacion",
+          "motor_fino"
+        ]
+      }
+    },
+    {
+      "id_caso": "V065",
+      "id_observacion": "OBS-0000983",
+      "id_nino": "NINO-00175",
+      "id_jardin": "JAR-0010",
+      "sala_grupo": "SG-B",
+      "id_educadora": "EDU-0036",
+      "fecha": "2025-08-08",
+      "edad_meses": 14,
+      "protagonista": "Catalina",
+      "nota": "Catalina se agachó a recoger su chupete y se paró afirmándose de la silla.",
+      "texto_control": "Se agacha para recoger un objeto y vuelve a incorporarse con o sin apoyo cercano.",
+      "contexto_captura": "La manifestación se observó más de una vez durante la actividad.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L06-MG-02"
+        ],
+        "nivel": 6,
+        "dominios": [
+          "motor_grueso"
+        ]
+      }
+    },
+    {
+      "id_caso": "V066",
+      "id_observacion": "OBS-0002721",
+      "id_nino": "NINO-00463",
+      "id_jardin": "JAR-0004",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0010",
+      "fecha": "2026-03-03",
+      "edad_meses": 14,
+      "protagonista": "Emilia",
+      "nota": "Emilia se secó las manos con la toalla; y cuando le pedí la cuchara, entre la cuchara y la pelota me pasó la cuchara.",
+      "texto_control": "Usa un objeto cotidiano de manera funcional en una actividad breve. Identifica un objeto conocido al elegirlo entre dos cuando se le solicita.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L06-CO-01",
+          "MAN-L06-CO-02"
+        ],
+        "nivel": 6,
+        "dominios": [
+          "cognitivo"
+        ]
+      }
+    },
+    {
+      "id_caso": "V067",
+      "id_observacion": "OBS-0000966",
+      "id_nino": "NINO-00173",
+      "id_jardin": "JAR-0012",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0044",
+      "fecha": "2026-04-03",
+      "edad_meses": 19,
+      "protagonista": "Colomba",
+      "nota": "Colomba subió los dos escalones del resbalín afirmada de la baranda.",
+      "texto_control": "Sube uno o más peldaños con apoyo de mano, baranda o gateando.",
+      "contexto_captura": "Registro realizado durante una actividad de juego libre.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L07-MG-02"
+        ],
+        "nivel": 7,
+        "dominios": [
+          "motor_grueso"
+        ]
+      }
+    },
+    {
+      "id_caso": "V068",
+      "id_observacion": "OBS-0000765",
+      "id_nino": "NINO-00138",
+      "id_jardin": "JAR-0009",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0033",
+      "fecha": "2026-01-03",
+      "edad_meses": 19,
+      "protagonista": "Antonia",
+      "nota": "Antonia le daba de comer a la muñeca con la cuchara de juguete, al lado de la Isi que hacía lo mismo; se quedaron juntas un rato.",
+      "texto_control": "Realiza una acción de juego representacional, como dar de comer a un muñeco o simular hablar. Permanece cerca de otro niño o niña realizando una actividad similar por un periodo breve.",
+      "contexto_captura": "Registro obtenido con materiales seguros disponibles en la sala.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L07-CO-01",
+          "MAN-L07-SE-02"
+        ],
+        "nivel": 7,
+        "dominios": [
+          "cognitivo",
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V069",
+      "id_observacion": "OBS-0001806",
+      "id_nino": "NINO-00308",
+      "id_jardin": "JAR-0015",
+      "sala_grupo": "SG-B",
+      "id_educadora": "EDU-0055",
+      "fecha": "2025-10-08",
+      "edad_meses": 19,
+      "protagonista": "Gaspar",
+      "nota": "Gaspar pide 'más' para la leche, dice 'auto' cuando ve uno y 'no' cuando no quiere; lo hace varias veces al día.",
+      "texto_control": "Usa palabras, aproximaciones o señas diferentes para pedir, nombrar o rechazar en varias ocasiones.",
+      "contexto_captura": "La manifestación se observó más de una vez durante la actividad.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L07-LC-01"
+        ],
+        "nivel": 7,
+        "dominios": [
+          "lenguaje_comunicacion"
+        ]
+      }
+    },
+    {
+      "id_caso": "V070",
+      "id_observacion": "OBS-0001878",
+      "id_nino": "NINO-00322",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-B",
+      "id_educadora": "EDU-0001",
+      "fecha": "2025-03-03",
+      "edad_meses": 19,
+      "protagonista": "Bastián",
+      "nota": "Bastián: le pregunté '¿dónde está tu nariz?' y se la tocó. En la mesa rayó el papel con crayón grueso y quedaron marcas.",
+      "texto_control": "Señala al menos una parte del cuerpo u objeto conocido cuando se le pregunta. Hace trazos visibles con crayón grueso después de recibir papel y material seguro.",
+      "contexto_captura": "Se documentó evidencia positiva en un momento de exploración.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L07-LC-02",
+          "MAN-L07-MF-01"
+        ],
+        "nivel": 7,
+        "dominios": [
+          "lenguaje_comunicacion",
+          "motor_fino"
+        ]
+      }
+    },
+    {
+      "id_caso": "V071",
+      "id_observacion": "OBS-0001623",
+      "id_nino": "NINO-00280",
+      "id_jardin": "JAR-0003",
+      "sala_grupo": "SG-B",
+      "id_educadora": "EDU-0007",
+      "fecha": "2026-05-03",
+      "edad_meses": 19,
+      "protagonista": "Ignacio",
+      "nota": "Ignacio pasó varias hojas del libro de cartón él solo, buscando al perro.",
+      "texto_control": "Pasa varias páginas de cartón o manipula tapas grandes con intención.",
+      "contexto_captura": "Se observó la conducta en una interacción breve y espontánea.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L07-MF-02"
+        ],
+        "nivel": 7,
+        "dominios": [
+          "motor_fino"
+        ]
+      }
+    },
+    {
+      "id_caso": "V072",
+      "id_observacion": "OBS-0001561",
+      "id_nino": "NINO-00269",
+      "id_jardin": "JAR-0007",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0026",
+      "fecha": "2025-06-03",
+      "edad_meses": 19,
+      "protagonista": "Mateo",
+      "nota": "Mateo subió el escalón gateando; después jugó a barrer con la escoba chica como la tía.",
+      "texto_control": "Sube uno o más peldaños con apoyo de mano, baranda o gateando. Imita una tarea cotidiana de otra persona durante el juego.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L07-MG-02",
+          "MAN-L07-SE-01"
+        ],
+        "nivel": 7,
+        "dominios": [
+          "motor_grueso",
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V073",
+      "id_observacion": "OBS-0001117",
+      "id_nino": "NINO-00199",
+      "id_jardin": "JAR-0012",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0041",
+      "fecha": "2025-01-08",
+      "edad_meses": 19,
+      "protagonista": "Tomás",
+      "nota": "Tomás caminó firme por la sala llevando su peluche en los brazos.",
+      "texto_control": "Camina con estabilidad mientras transporta un objeto liviano.",
+      "contexto_captura": "Registro obtenido con materiales seguros disponibles en la sala.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L07-MG-01"
+        ],
+        "nivel": 7,
+        "dominios": [
+          "motor_grueso"
+        ]
+      }
+    },
+    {
+      "id_caso": "V074",
+      "id_observacion": "OBS-0001058",
+      "id_nino": "NINO-00187",
+      "id_jardin": "JAR-0016",
+      "sala_grupo": "SG-B",
+      "id_educadora": "EDU-0061",
+      "fecha": "2025-11-18",
+      "edad_meses": 19,
+      "protagonista": "Fernanda",
+      "nota": "Fernanda: '¿dónde está la pelota?' y la apuntó. Hizo rayas con el crayón grueso en el papel.",
+      "texto_control": "Señala al menos una parte del cuerpo u objeto conocido cuando se le pregunta. Hace trazos visibles con crayón grueso después de recibir papel y material seguro.",
+      "contexto_captura": "Registro obtenido con materiales seguros disponibles en la sala.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L07-LC-02",
+          "MAN-L07-MF-01"
+        ],
+        "nivel": 7,
+        "dominios": [
+          "lenguaje_comunicacion",
+          "motor_fino"
+        ]
+      }
+    },
+    {
+      "id_caso": "V075",
+      "id_observacion": "OBS-0000358",
+      "id_nino": "NINO-00063",
+      "id_jardin": "JAR-0016",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0061",
+      "fecha": "2025-11-03",
+      "edad_meses": 19,
+      "protagonista": "Alex",
+      "nota": "Alex en juego libre dice 'agua' para pedir, 'guau' cuando ve al perro y 'no' para rechazar, varias veces.",
+      "texto_control": "Usa palabras, aproximaciones o señas diferentes para pedir, nombrar o rechazar en varias ocasiones.",
+      "contexto_captura": "Registro realizado durante una actividad de juego libre.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L07-LC-01"
+        ],
+        "nivel": 7,
+        "dominios": [
+          "lenguaje_comunicacion"
+        ]
+      }
+    },
+    {
+      "id_caso": "V076",
+      "id_observacion": "OBS-0000457",
+      "id_nino": "NINO-00082",
+      "id_jardin": "JAR-0007",
+      "sala_grupo": "SG-D",
+      "id_educadora": "EDU-0022",
+      "fecha": "2025-06-03",
+      "edad_meses": 19,
+      "protagonista": "Martina",
+      "nota": "Martina jugó a cocinar revolviendo la olla como hace su mamá; estuvo al lado del Lucas, que también cocinaba, un ratito.",
+      "texto_control": "Imita una tarea cotidiana de otra persona durante el juego. Permanece cerca de otro niño o niña realizando una actividad similar por un periodo breve.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L07-SE-01",
+          "MAN-L07-SE-02"
+        ],
+        "nivel": 7,
+        "dominios": [
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V077",
+      "id_observacion": "OBS-0002001",
+      "id_nino": "NINO-00340",
+      "id_jardin": "JAR-0006",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0017",
+      "fecha": "2025-10-18",
+      "edad_meses": 19,
+      "protagonista": "Agustina",
+      "nota": "Agustina hizo que hablaba por teléfono con el bloque en la oreja.",
+      "texto_control": "Realiza una acción de juego representacional, como dar de comer a un muñeco o simular hablar.",
+      "contexto_captura": "Se observó la conducta en una interacción breve y espontánea.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L07-CO-01"
+        ],
+        "nivel": 7,
+        "dominios": [
+          "cognitivo"
+        ]
+      }
+    },
+    {
+      "id_caso": "V078",
+      "id_observacion": "OBS-0000115",
+      "id_nino": "NINO-00019",
+      "id_jardin": "JAR-0009",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0033",
+      "fecha": "2026-04-13",
+      "edad_meses": 24,
+      "protagonista": "Isidora",
+      "nota": "Isidora armó una torre de 5 bloques y no se le cayó.",
+      "texto_control": "Construye una torre de cuatro o más bloques estables.",
+      "contexto_captura": "La evidencia apareció durante una rutina cotidiana del grupo.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L08-MF-01"
+        ],
+        "nivel": 8,
+        "dominios": [
+          "motor_fino"
+        ]
+      }
+    },
+    {
+      "id_caso": "V079",
+      "id_observacion": "OBS-0000412",
+      "id_nino": "NINO-00071",
+      "id_jardin": "JAR-0020",
+      "sala_grupo": "SG-D",
+      "id_educadora": "EDU-0078",
+      "fecha": "2026-01-23",
+      "edad_meses": 24,
+      "protagonista": "Felipe",
+      "nota": "Felipe juntó las tarjetas iguales del memorice entre varias; cuando no pudo abrir la mochila me dijo 'ayuda tía'.",
+      "texto_control": "Empareja dos o más objetos o imágenes iguales entre varias opciones. Comunica una necesidad de ayuda, pausa o consuelo mediante palabra, seña o gesto claro.",
+      "contexto_captura": "Registro obtenido con materiales seguros disponibles en la sala.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L08-CO-01",
+          "MAN-L08-SE-02"
+        ],
+        "nivel": 8,
+        "dominios": [
+          "cognitivo",
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V080",
+      "id_observacion": "OBS-0000459",
+      "id_nino": "NINO-00082",
+      "id_jardin": "JAR-0007",
+      "sala_grupo": "SG-D",
+      "id_educadora": "EDU-0026",
+      "fecha": "2025-10-03",
+      "edad_meses": 23,
+      "protagonista": "Renata",
+      "nota": "Renata: le dije 'a lavarse las manos' y fue, se las lavó y se las secó sola.",
+      "texto_control": "Completa una secuencia cotidiana de dos pasos después de una indicación inicial.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L08-CO-02"
+        ],
+        "nivel": 8,
+        "dominios": [
+          "cognitivo"
+        ]
+      }
+    },
+    {
+      "id_caso": "V081",
+      "id_observacion": "OBS-0002747",
+      "id_nino": "NINO-00467",
+      "id_jardin": "JAR-0007",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0023",
+      "fecha": "2026-02-03",
+      "edad_meses": 23,
+      "protagonista": "Simón",
+      "nota": "Simón dice 'más agua' y 'mamá vino'. Le pedí 'saca tu chaqueta y cuélgala' y lo hizo.",
+      "texto_control": "Combina dos palabras, aproximaciones o señas para expresar una relación o intención. Sigue una instrucción de dos acciones relacionadas dentro de una rutina conocida.",
+      "contexto_captura": "La manifestación se observó más de una vez durante la actividad.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L08-LC-01",
+          "MAN-L08-LC-02"
+        ],
+        "nivel": 8,
+        "dominios": [
+          "lenguaje_comunicacion"
+        ]
+      }
+    },
+    {
+      "id_caso": "V082",
+      "id_observacion": "OBS-0001725",
+      "id_nino": "NINO-00297",
+      "id_jardin": "JAR-0018",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0070",
+      "fecha": "2025-06-08",
+      "edad_meses": 23,
+      "protagonista": "Diego",
+      "nota": "Diego giró la tapa del frasco grande hasta abrirlo para sacar los autos.",
+      "texto_control": "Gira una tapa grande, perilla o pieza rotatoria para lograr un resultado.",
+      "contexto_captura": "Registro realizado durante una actividad de juego libre.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L08-MF-02"
+        ],
+        "nivel": 8,
+        "dominios": [
+          "motor_fino"
+        ]
+      }
+    },
+    {
+      "id_caso": "V083",
+      "id_observacion": "OBS-0002617",
+      "id_nino": "NINO-00448",
+      "id_jardin": "JAR-0006",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0021",
+      "fecha": "2025-06-03",
+      "edad_meses": 23,
+      "protagonista": "Josefa",
+      "nota": "Josefa abrió el tarro girando la tapa; en el patio corrió hasta la reja, un poco tambaleándose.",
+      "texto_control": "Gira una tapa grande, perilla o pieza rotatoria para lograr un resultado. Corre una distancia breve, aunque todavía ajuste velocidad o equilibrio.",
+      "contexto_captura": "La manifestación se observó más de una vez durante la actividad.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L08-MF-02",
+          "MAN-L08-MG-01"
+        ],
+        "nivel": 8,
+        "dominios": [
+          "motor_fino",
+          "motor_grueso"
+        ]
+      }
+    },
+    {
+      "id_caso": "V084",
+      "id_observacion": "OBS-0001358",
+      "id_nino": "NINO-00239",
+      "id_jardin": "JAR-0010",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0037",
+      "fecha": "2025-07-18",
+      "edad_meses": 24,
+      "protagonista": "Amanda",
+      "nota": "Amanda participó con otros niños en la mesa de plasticina, compartiendo los moldes con ayuda de la tía.",
+      "texto_control": "Participa en una actividad junto a pares y tolera compartir espacio o materiales con apoyo adulto.",
+      "contexto_captura": "Se observó la conducta en una interacción breve y espontánea.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L08-SE-01"
+        ],
+        "nivel": 8,
+        "dominios": [
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V085",
+      "id_observacion": "OBS-0002835",
+      "id_nino": "NINO-00482",
+      "id_jardin": "JAR-0005",
+      "sala_grupo": "SG-D",
+      "id_educadora": "EDU-0013",
+      "fecha": "2025-10-03",
+      "edad_meses": 23,
+      "protagonista": "Valentina",
+      "nota": "Valentina buscó entre varias láminas los dos gatos iguales; cuando se cayó me pidió 'upa' estirando los brazos.",
+      "texto_control": "Empareja dos o más objetos o imágenes iguales entre varias opciones. Comunica una necesidad de ayuda, pausa o consuelo mediante palabra, seña o gesto claro.",
+      "contexto_captura": "La manifestación se observó más de una vez durante la actividad.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L08-CO-01",
+          "MAN-L08-SE-02"
+        ],
+        "nivel": 8,
+        "dominios": [
+          "cognitivo",
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V086",
+      "id_observacion": "OBS-0002016",
+      "id_nino": "NINO-00343",
+      "id_jardin": "JAR-0020",
+      "sala_grupo": "SG-B",
+      "id_educadora": "EDU-0078",
+      "fecha": "2025-12-08",
+      "edad_meses": 23,
+      "protagonista": "Matías",
+      "nota": "Matías, en la colación: 'toma el vaso y llévalo a la mesa', y lo hizo.",
+      "texto_control": "Sigue una instrucción de dos acciones relacionadas dentro de una rutina conocida.",
+      "contexto_captura": "La manifestación se observó más de una vez durante la actividad.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L08-LC-02"
+        ],
+        "nivel": 8,
+        "dominios": [
+          "lenguaje_comunicacion"
+        ]
+      }
+    },
+    {
+      "id_caso": "V087",
+      "id_observacion": "OBS-0000537",
+      "id_nino": "NINO-00096",
+      "id_jardin": "JAR-0014",
+      "sala_grupo": "SG-E",
+      "id_educadora": "EDU-0051",
+      "fecha": "2025-10-03",
+      "edad_meses": 23,
+      "protagonista": "Catalina",
+      "nota": "Catalina: le dije 'a guardar' y metió los bloques en la caja y después dejó la caja en el estante. Dijo 'caja aquí'.",
+      "texto_control": "Completa una secuencia cotidiana de dos pasos después de una indicación inicial. Combina dos palabras, aproximaciones o señas para expresar una relación o intención.",
+      "contexto_captura": "Registro obtenido con materiales seguros disponibles en la sala.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L08-CO-02",
+          "MAN-L08-LC-01"
+        ],
+        "nivel": 8,
+        "dominios": [
+          "cognitivo",
+          "lenguaje_comunicacion"
+        ]
+      }
+    },
+    {
+      "id_caso": "V088",
+      "id_observacion": "OBS-0002669",
+      "id_nino": "NINO-00456",
+      "id_jardin": "JAR-0016",
+      "sala_grupo": "SG-E",
+      "id_educadora": "EDU-0061",
+      "fecha": "2025-07-03",
+      "edad_meses": 23,
+      "protagonista": "Maite",
+      "nota": "Maite corrió un tramo corto en el patio, se le notaba ajustando el equilibrio.",
+      "texto_control": "Corre una distancia breve, aunque todavía ajuste velocidad o equilibrio.",
+      "contexto_captura": "Registro obtenido con materiales seguros disponibles en la sala.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L08-MG-01"
+        ],
+        "nivel": 8,
+        "dominios": [
+          "motor_grueso"
+        ]
+      }
+    },
+    {
+      "id_caso": "V089",
+      "id_observacion": "OBS-0002270",
+      "id_nino": "NINO-00388",
+      "id_jardin": "JAR-0019",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0072",
+      "fecha": "2026-08-03",
+      "edad_meses": 29,
+      "protagonista": "Lucas",
+      "nota": "Lucas, en el juego del sapito, saltó con los dos pies juntos y se despegó del piso.",
+      "texto_control": "Salta con ambos pies despegándolos del suelo durante el juego.",
+      "contexto_captura": "La evidencia apareció durante una rutina cotidiana del grupo.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L09-MG-01"
+        ],
+        "nivel": 9,
+        "dominios": [
+          "motor_grueso"
+        ]
+      }
+    },
+    {
+      "id_caso": "V090",
+      "id_observacion": "OBS-0001275",
+      "id_nino": "NINO-00226",
+      "id_jardin": "JAR-0008",
+      "sala_grupo": "SG-G",
+      "id_educadora": "EDU-0029",
+      "fecha": "2026-09-13",
+      "edad_meses": 29,
+      "protagonista": "Agustina",
+      "nota": "Agustina subió la escalera del patio afirmada de la baranda, un pie en cada escalón; luego jugó a la pelota con la Isi: se la tiraba y esperaba que se la devolviera.",
+      "texto_control": "Sube peldaños con apoyo de baranda o mano, alternando o reuniendo los pies de forma estable. Participa en al menos un turno de ida y vuelta con un par o una persona adulta durante un juego.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L09-MG-02",
+          "MAN-L09-SE-01"
+        ],
+        "nivel": 9,
+        "dominios": [
+          "motor_grueso",
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V091",
+      "id_observacion": "OBS-0001365",
+      "id_nino": "NINO-00240",
+      "id_jardin": "JAR-0019",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0073",
+      "fecha": "2026-03-08",
+      "edad_meses": 29,
+      "protagonista": "Facundo",
+      "nota": "Facundo en la rutina de orden: le tocó guardar los lápices en su caja y lo hizo solo de principio a fin.",
+      "texto_control": "Colabora en una rutina de autonomía, como guardar, lavarse o vestirse, realizando una parte identificable.",
+      "contexto_captura": "Se observó la conducta en una interacción breve y espontánea.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L09-SE-02"
+        ],
+        "nivel": 9,
+        "dominios": [
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V092",
+      "id_observacion": "OBS-0000372",
+      "id_nino": "NINO-00065",
+      "id_jardin": "JAR-0020",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0076",
+      "fecha": "2026-04-13",
+      "edad_meses": 29,
+      "protagonista": "Bastián",
+      "nota": "Bastián contó 'el perro hizo guau guau fuerte'. Le pregunté '¿quién vino a buscarte?' y dijo 'mi papá'.",
+      "texto_control": "Produce combinaciones de tres o más palabras, aproximaciones o señas para relatar, pedir o comentar. Responde una pregunta sencilla sobre quién, qué o dónde dentro de una situación conocida.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L09-LC-01",
+          "MAN-L09-LC-02"
+        ],
+        "nivel": 9,
+        "dominios": [
+          "lenguaje_comunicacion"
+        ]
+      }
+    },
+    {
+      "id_caso": "V093",
+      "id_observacion": "OBS-0002341",
+      "id_nino": "NINO-00400",
+      "id_jardin": "JAR-0017",
+      "sala_grupo": "SG-D",
+      "id_educadora": "EDU-0067",
+      "fecha": "2025-12-18",
+      "edad_meses": 29,
+      "protagonista": "Ignacio",
+      "nota": "Ignacio jugó a la casita: le dio comida al osito, lo bañó y lo acostó. Después separó los bloques rojos de los azules cuando se lo pedí.",
+      "texto_control": "Representa una secuencia de dos o más acciones relacionadas en el juego simbólico. Clasifica objetos por una característica visible, como forma, color o tamaño, después de una consigna simple.",
+      "contexto_captura": "Registro realizado durante una actividad de juego libre.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L09-CO-01",
+          "MAN-L09-CO-02"
+        ],
+        "nivel": 9,
+        "dominios": [
+          "cognitivo"
+        ]
+      }
+    },
+    {
+      "id_caso": "V094",
+      "id_observacion": "OBS-0002333",
+      "id_nino": "NINO-00399",
+      "id_jardin": "JAR-0015",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0055",
+      "fecha": "2025-12-08",
+      "edad_meses": 29,
+      "protagonista": "Mateo",
+      "nota": "Mateo hizo una línea parada con el lápiz después de verme hacerla; en el patio saltó con los dos pies juntos.",
+      "texto_control": "Copia un trazo vertical o circular aproximado después de observar un modelo. Salta con ambos pies despegándolos del suelo durante el juego.",
+      "contexto_captura": "La evidencia apareció durante una rutina cotidiana del grupo.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L09-MF-02",
+          "MAN-L09-MG-01"
+        ],
+        "nivel": 9,
+        "dominios": [
+          "motor_fino",
+          "motor_grueso"
+        ]
+      }
+    },
+    {
+      "id_caso": "V095",
+      "id_observacion": "OBS-0002038",
+      "id_nino": "NINO-00346",
+      "id_jardin": "JAR-0001",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0002",
+      "fecha": "2026-02-13",
+      "edad_meses": 29,
+      "protagonista": "Tomás",
+      "nota": "Tomás subió la escalera del resbalín con la baranda, poniendo un pie en cada escalón; jugando a la pelota con la tía esperaba su turno y la devolvía.",
+      "texto_control": "Sube peldaños con apoyo de baranda o mano, alternando o reuniendo los pies de forma estable. Participa en al menos un turno de ida y vuelta con un par o una persona adulta durante un juego.",
+      "contexto_captura": "Se documentó evidencia positiva en un momento de exploración.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L09-MG-02",
+          "MAN-L09-SE-01"
+        ],
+        "nivel": 9,
+        "dominios": [
+          "motor_grueso",
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V096",
+      "id_observacion": "OBS-0000178",
+      "id_nino": "NINO-00031",
+      "id_jardin": "JAR-0014",
+      "sala_grupo": "SG-C",
+      "id_educadora": "EDU-0052",
+      "fecha": "2026-07-18",
+      "edad_meses": 29,
+      "protagonista": "Simón",
+      "nota": "Simón en el rincón de la cocina preparó la sopa, la sirvió y se la dio a la muñeca. Después en el baño se lavó las manos solo y se las secó.",
+      "texto_control": "Representa una secuencia de dos o más acciones relacionadas en el juego simbólico. Colabora en una rutina de autonomía, como guardar, lavarse o vestirse, realizando una parte identificable.",
+      "contexto_captura": "Se observó la conducta en una interacción breve y espontánea.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L09-CO-01",
+          "MAN-L09-SE-02"
+        ],
+        "nivel": 9,
+        "dominios": [
+          "cognitivo",
+          "socioemocional"
+        ]
+      }
+    },
+    {
+      "id_caso": "V097",
+      "id_observacion": "OBS-0002607",
+      "id_nino": "NINO-00446",
+      "id_jardin": "JAR-0012",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0041",
+      "fecha": "2026-04-03",
+      "edad_meses": 29,
+      "protagonista": "Julieta",
+      "nota": "Julieta: 'tía, la Martina me quitó el auto'. Le pregunté '¿dónde está tu mochila?' y dijo 'allá en la silla'.",
+      "texto_control": "Produce combinaciones de tres o más palabras, aproximaciones o señas para relatar, pedir o comentar. Responde una pregunta sencilla sobre quién, qué o dónde dentro de una situación conocida.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L09-LC-01",
+          "MAN-L09-LC-02"
+        ],
+        "nivel": 9,
+        "dominios": [
+          "lenguaje_comunicacion"
+        ]
+      }
+    },
+    {
+      "id_caso": "V098",
+      "id_observacion": "OBS-0002672",
+      "id_nino": "NINO-00456",
+      "id_jardin": "JAR-0016",
+      "sala_grupo": "SG-E",
+      "id_educadora": "EDU-0061",
+      "fecha": "2026-01-13",
+      "edad_meses": 29,
+      "protagonista": "Colomba",
+      "nota": "Colomba separó las fichas por color cuando se lo pedí, y dijo 'estas son las verdes'.",
+      "texto_control": "Clasifica objetos por una característica visible, como forma, color o tamaño, después de una consigna simple. Produce combinaciones de tres o más palabras, aproximaciones o señas para relatar, pedir o comentar.",
+      "contexto_captura": "Se documentó evidencia positiva en un momento de exploración.",
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L09-CO-02",
+          "MAN-L09-LC-01"
+        ],
+        "nivel": 9,
+        "dominios": [
+          "cognitivo",
+          "lenguaje_comunicacion"
+        ]
+      }
+    },
+    {
+      "id_caso": "V099",
+      "id_observacion": "OBS-0001315",
+      "id_nino": "NINO-00233",
+      "id_jardin": "JAR-0005",
+      "sala_grupo": "SG-A",
+      "id_educadora": "EDU-0014",
+      "fecha": "2026-09-18",
+      "edad_meses": 29,
+      "protagonista": "Fernanda",
+      "nota": "Fernanda hizo un círculo con el plumón después de mirar cómo lo hacía yo, y jugando al canguro saltaba con los dos pies.",
+      "texto_control": "Copia un trazo vertical o circular aproximado después de observar un modelo. Salta con ambos pies despegándolos del suelo durante el juego.",
+      "contexto_captura": null,
+      "esperado": {
+        "manifestaciones": [
+          "MAN-L09-MF-02",
+          "MAN-L09-MG-01"
+        ],
+        "nivel": 9,
+        "dominios": [
+          "motor_fino",
+          "motor_grueso"
+        ]
+      }
+    }
+  ]
+}

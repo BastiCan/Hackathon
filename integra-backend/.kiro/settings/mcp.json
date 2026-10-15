@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "aws-docs": {
+      "command": "npx",
+      "args": ["-y", "@aws/aws-documentation-mcp-server"],
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}
