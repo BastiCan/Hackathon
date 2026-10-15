@@ -1,0 +1,125 @@
+[
+ {
+  "sala_grupo": {
+   "S": "SG-A"
+  },
+  "errores": {
+   "L": []
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "tipo": {
+   "S": "manual"
+  },
+  "clave_texto": {
+   "S": "capturas/CAP-01M503FN5942S3MNAFA14C07AQ/texto.json"
+  },
+  "estado": {
+   "S": "PROCESADO"
+  },
+  "actualizado_en": {
+   "S": "2026-10-15T12:39:40-03:00"
+  },
+  "fecha_observacion": {
+   "S": "2026-10-15"
+  },
+  "subido_en": {
+   "S": "2026-10-15T12:39:27-03:00"
+  },
+  "id_captura": {
+   "S": "CAP-01M503FN5942S3MNAFA14C07AQ"
+  },
+  "procesado_en": {
+   "S": "2026-10-15T12:39:40-03:00"
+  },
+  "clave_meta": {
+   "S": "capturas/CAP-01M503FN5942S3MNAFA14C07AQ/meta.json"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-A"
+  }
+ },
+ {
+  "sala_grupo": {
+   "S": "SG-A"
+  },
+  "id_captura": {
+   "S": "CAP-01M508E1WXXYXW3KAP0S99M9Z5"
+  },
+  "errores": {
+   "L": []
+  },
+  "subido_en": {
+   "S": "2026-10-15T14:05:57-03:00"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "estado": {
+   "S": "PROCESADO"
+  },
+  "fecha_observacion": {
+   "S": "2026-10-15"
+  },
+  "actualizado_en": {
+   "S": "2026-10-15T14:06:25-03:00"
+  },
+  "clave_texto": {
+   "S": "capturas/CAP-01M508E1WXXYXW3KAP0S99M9Z5/texto.json"
+  },
+  "tipo": {
+   "S": "audio"
+  },
+  "procesado_en": {
+   "S": "2026-10-15T14:06:25-03:00"
+  },
+  "clave_meta": {
+   "S": "capturas/CAP-01M508E1WXXYXW3KAP0S99M9Z5/meta.json"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-A"
+  }
+ },
+ {
+  "id_captura": {
+   "S": "CAP-01M50AKPA2BHDCXSJATACZ6N3W"
+  },
+  "sala_grupo": {
+   "S": "SG-A"
+  },
+  "subido_en": {
+   "S": "2026-10-15T14:43:58-03:00"
+  },
+  "errores": {
+   "L": []
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "estado": {
+   "S": "PROCESADO"
+  },
+  "fecha_observacion": {
+   "S": "2026-10-15"
+  },
+  "clave_meta": {
+   "S": "capturas/CAP-01M50AKPA2BHDCXSJATACZ6N3W/meta.json"
+  },
+  "procesado_en": {
+   "S": "2026-10-15T14:44:26-03:00"
+  },
+  "tipo": {
+   "S": "audio"
+  },
+  "clave_texto": {
+   "S": "capturas/CAP-01M50AKPA2BHDCXSJATACZ6N3W/texto.json"
+  },
+  "actualizado_en": {
+   "S": "2026-10-15T14:44:26-03:00"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-A"
+  }
+ }
+]

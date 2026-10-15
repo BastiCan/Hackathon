@@ -1,0 +1,24 @@
+[
+ {
+  "id_educadora": {
+   "S": "EDU-0002"
+  },
+  "rol": {
+   "S": "educadora_parvulos"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  }
+ },
+ {
+  "rol": {
+   "S": "educadora_parvulos"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  }
+ }
+]
