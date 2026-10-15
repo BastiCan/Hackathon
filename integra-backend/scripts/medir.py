@@ -129,10 +129,29 @@ def _metricas(resultados: list[dict]) -> dict:
         matriz.setdefault(ne, {})
         matriz[ne][col] = matriz[ne].get(col, 0) + 1
 
+    # Confusiones de CODIGO: una matriz 90x90 seria ilegible, asi que se listan los pares
+    # (esperado -> obtenido) mas frecuentes cuando NO coinciden. Por caso: cada codigo
+    # esperado que falto se empareja con cada codigo obtenido no esperado (producto),
+    # o con "sin" si no se obtuvo ningun codigo.
+    confusiones: dict[tuple[str, str], int] = {}
+    for r in validos:
+        esp = set(r["codigos_esperados"])
+        obt = set(r["codigos_obtenidos"])
+        faltantes = esp - obt
+        sobrantes = obt - esp
+        if not faltantes:
+            continue
+        destinos = sorted(sobrantes) if sobrantes else ["sin"]
+        for e in sorted(faltantes):
+            for d in destinos:
+                confusiones[(e, d)] = confusiones.get((e, d), 0) + 1
+    top_confusiones = sorted(confusiones.items(), key=lambda kv: (-kv[1], kv[0]))
+
     return {
         "n": n,
         "n_total": len(resultados),
         "matriz_confusion_nivel": matriz,
+        "confusiones_codigo": top_confusiones,
         "n_error": len(resultados) - n,
         "accuracy_codigo_exacto": pct(cod_exacto, n),
         "recall_codigos": pct(recall_num, recall_den),
@@ -169,7 +188,28 @@ def _render_matriz(matriz: dict[int, dict[int, int]]) -> list[str]:
     return filas
 
 
-def _escribir_reporte(m: dict, depurar: bool) -> None:
+def _etiqueta_codigo(codigo: str, rubrica) -> str:
+    """`MAN-L07-MG-02 (n7 motor_grueso)` para leer las confusiones con contexto."""
+    if codigo == "sin":
+        return "sin (ningun codigo)"
+    try:
+        c = rubrica.cruzar(codigo)
+        return f"{codigo} (n{c.nivel} {c.dominio})"
+    except KeyError:
+        return codigo
+
+
+def _render_confusiones(confusiones, rubrica, tope: int = 20) -> list[str]:
+    """Lista los pares esperado->obtenido mas frecuentes (confusiones de codigo)."""
+    if not confusiones:
+        return ["(sin confusiones: todos los codigos esperados salieron)"]
+    filas = ["esperado -> obtenido | veces", "---|---"]
+    for (esp, obt), veces in confusiones[:tope]:
+        filas.append(f"{_etiqueta_codigo(esp, rubrica)} -> {_etiqueta_codigo(obt, rubrica)} | {veces}")
+    return filas
+
+
+def _escribir_reporte(m: dict, depurar: bool, rubrica) -> None:
     EVAL_DIR.mkdir(parents=True, exist_ok=True)
     lineas = [
         "# Reporte de medicion (validacion_100.json)",
@@ -198,6 +238,12 @@ def _escribir_reporte(m: dict, depurar: bool) -> None:
     lineas.append("La diagonal (**negrita**) son los aciertos exactos.")
     lineas.append("")
     lineas.extend(_render_matriz(m.get("matriz_confusion_nivel", {})))
+    lineas.append("")
+    lineas.append("## Confusiones de codigo (mas frecuentes)")
+    lineas.append("")
+    lineas.append("Codigo esperado que no salio -> codigo que salio en su lugar (`sin` = ninguno).")
+    lineas.append("")
+    lineas.extend(_render_confusiones(m.get("confusiones_codigo", []), rubrica))
     if depurar:
         lineas.append("")
         lineas.append("> NOTA: corrida con --depurar (texto_control). No es resultado reportable.")
@@ -239,7 +285,7 @@ def main() -> int:
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
 
     m = _metricas(resultados)
-    _escribir_reporte(m, args.depurar)
+    _escribir_reporte(m, args.depurar, rubrica)
 
     print("\n=== RESUMEN ===")
     print(f"accuracy codigo (exacto): {m.get('accuracy_codigo_exacto', 0)}%")
@@ -249,6 +295,9 @@ def main() -> int:
     print("\nMatriz de confusion de nivel (fila=esperado, col=obtenido, sin=sin codigo):")
     for linea in _render_matriz(m.get("matriz_confusion_nivel", {})):
         print("  " + linea.replace("**", ""))
+    print("\nConfusiones de codigo mas frecuentes (esperado -> obtenido):")
+    for linea in _render_confusiones(m.get("confusiones_codigo", []), rubrica, tope=10):
+        print("  " + linea)
     print(f"\nreporte -> {EVAL_DIR / 'reporte.md'}")
     return 0
 
