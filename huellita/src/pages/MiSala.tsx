@@ -153,7 +153,7 @@ export function MiSala({ soloLectura = false }: { soloLectura?: boolean }) {
       )}
 
       <p className="mt-4 rounded-tarjeta border border-dashed border-linea bg-papel p-[14px] text-[15px] text-tinta-2">
-        Observados este mes: <strong className="text-tinta">{partesResumen.observados}</strong> ·
+        Observados en 30 días: <strong className="text-tinta">{partesResumen.observados}</strong> ·
         Menos registrado: <strong className="text-tinta">{partesResumen.menos}</strong>
       </p>
 

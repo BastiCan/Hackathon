@@ -276,7 +276,7 @@ describe('con los datos de la demo (data/semilla.json)', () => {
     const ninos = semilla.ninos.filter((n) => n.salaId === 'SALA-MMA');
     const resumen = resumenSala(ninos, evaluaciones, HOY);
     expect(resumen.total).toBe(18);
-    expect(resumen.observadosMes).toBe(14);
+    expect(resumen.observadosMes).toBe(16);
     expect(resumen.nucleoMenosCubierto).toBe('CC');
   });
 });

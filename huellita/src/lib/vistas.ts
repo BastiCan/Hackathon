@@ -167,7 +167,7 @@ export function filtrarTarjetas(
 /** Línea de resumen de la sala, con los textos del prototipo. */
 export function textoResumenSala(resumen: ResumenSala): string {
   const partes = partesResumenSala(resumen);
-  return `Observados este mes: ${partes.observados} · Menos registrado: ${partes.menos}`;
+  return `Observados en 30 días: ${partes.observados} · Menos registrado: ${partes.menos}`;
 }
 
 /**
@@ -282,11 +282,32 @@ export function resumenFicha(
   if (conEvidencia.length === 0) {
     return `Todavía no hay registros de ${nombre}. Registra algo que le hayas visto hacer y Huellita lo ordena.`;
   }
-  const mejor = conEvidencia.reduce((a, b) => ((b.nivel ?? 0) > (a.nivel ?? 0) ? b : a));
-  const porObservar = observar ? nombreNucleo(observar.nucleo) : null;
+  const marcado = nucleos.find((n) => n.revisarAvance);
+  const candidatos = conEvidencia.filter((n) => !n.revisarAvance);
+  const mejor = (candidatos.length > 0 ? candidatos : conEvidencia).reduce((a, b) =>
+    (b.nivel ?? 0) > (a.nivel ?? 0) ? b : a,
+  );
   const primera = `Avanza bien en ${mejor.nombre}.`;
+  // Si un núcleo está en "revisar avance", eso es lo primero que la tía debe ver.
+  if (marcado && marcado.nucleo !== mejor.nucleo) {
+    return `${primera} Conviene acompañar de cerca ${marcado.nombre}.`;
+  }
+  const porObservar = observar ? nombreNucleo(observar.nucleo) : null;
   if (!porObservar || porObservar === mejor.nombre) return primera;
   return `${primera} Conviene observar más ${porObservar}.`;
+}
+
+/**
+ * Orden de "Cómo va": primero los núcleos en "revisar avance", luego los que
+ * tienen registros y al final los que aún no tienen. Dentro de cada grupo se
+ * mantiene el orden de la rúbrica.
+ */
+export function ordenarNucleosFicha(nucleos: NucleoVista[]): NucleoVista[] {
+  const grupo = (n: NucleoVista) => (n.revisarAvance ? 0 : n.nivel !== null ? 1 : 2);
+  return nucleos
+    .map((n, i) => ({ n, i }))
+    .sort((a, b) => grupo(a.n) - grupo(b.n) || a.i - b.i)
+    .map(({ n }) => n);
 }
 
 export interface RegistroVista {

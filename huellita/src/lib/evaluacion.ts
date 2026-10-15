@@ -201,9 +201,11 @@ export function observarAhora(
 }
 
 /**
- * Resumen de la sala: cuántos niños/as se observaron en el mes calendario de
- * `hoy` y cuál es el núcleo menos cubierto (el que tiene evidencia validada de
- * menos niños/as distintos; empate por el orden de la rúbrica).
+ * Resumen de la sala: cuántos niños/as tienen un registro validado en los
+ * últimos 30 días (el mismo corte del semáforo y de la vista directora, para
+ * que ambas pantallas den el mismo número) y cuál es el núcleo menos cubierto
+ * (el que tiene evidencia validada de menos niños/as distintos; empate por el
+ * orden de la rúbrica). `observadosMes` conserva su nombre por compatibilidad.
  */
 export function resumenSala(
   ninos: Nino[],
@@ -214,8 +216,9 @@ export function resumenSala(
   const idsActivos = new Set(activos.map((n) => n.id));
   const delaSala = evaluaciones.filter((e) => idsActivos.has(e.ninoId));
 
-  const mes = hoy.slice(0, 7);
-  const observados = new Set(delaSala.filter((e) => e.fecha.slice(0, 7) === mes).map((e) => e.ninoId));
+  const observados = new Set(
+    delaSala.filter((e) => diasEntre(e.fecha, hoy) <= 30).map((e) => e.ninoId),
+  );
 
   let nucleoMenosCubierto: NucleoId | null = null;
   let menor = Number.POSITIVE_INFINITY;

@@ -317,7 +317,7 @@ export class DataServiceLocal implements DataService {
     const evidencia: Evidencia = {
       ...e,
       id: this.nuevoId('EVI'),
-      creadaEn: this.ahoraISO(),
+      creadaEn: this.marcaNuevaEvidencia(),
       estado: 'procesando',
     };
     this.estado.evidencias.push(evidencia);
@@ -411,6 +411,24 @@ export class DataServiceLocal implements DataService {
    * Marca de tiempo de la demo: el día de `fechaDemo` con la hora real, para que
    * las evidencias nuevas aparezcan como de hoy en el recorrido.
    */
+  /**
+   * Marca de una evidencia recién capturada: la hora de la demo, pero siempre
+   * posterior a la evidencia más reciente. Así lo que la tía acaba de capturar
+   * queda primero en Revisar aunque la demo sea a las 9 de la mañana y la semilla
+   * tenga notas de ese mismo día más tarde.
+   */
+  private marcaNuevaEvidencia(): string {
+    const candidata = this.ahoraISO();
+    const ultima = this.estado.evidencias.reduce(
+      (max, ev) => (ev.creadaEn > max ? ev.creadaEn : max),
+      '',
+    );
+    if (!ultima || candidata > ultima) return candidata;
+    const siguiente = new Date(`${ultima.slice(0, 19)}Z`);
+    siguiente.setUTCMinutes(siguiente.getUTCMinutes() + 1, 0);
+    return siguiente.toISOString().slice(0, 19);
+  }
+
   private ahoraISO(): string {
     const ahora = new Date();
     const hhmmss = [ahora.getHours(), ahora.getMinutes(), ahora.getSeconds()]

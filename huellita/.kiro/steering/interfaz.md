@@ -27,7 +27,7 @@ Barra inferior fija con 3 destinos: **Mi sala** · **Revisar** (con contador de 
   - una etiqueta con el **nivel general** ("N4");
   - una **bandera** si algún núcleo está en "revisar avance".
   - Al tocarla se abre `/nino/:id`.
-- **Resumen de la sala** en una línea: "Observados este mes: X de Y · Núcleo menos cubierto: Z".
+- **Resumen de la sala** en una línea: "Observados en 30 días: X de Y · Menos registrado: Z" (mismo corte de 30 días que el semáforo y la vista directora).
 - **Barra de captura**: 3 botones grandes, **Foto** · **Audio** (botón primario, destacado) · **Texto**.
 
 ## Pantalla 2: Revisar (ruta `/revisar`)

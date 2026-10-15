@@ -14,7 +14,7 @@ import {
   observarAhora,
   resumenSala,
 } from '../lib/evaluacion';
-import { conductas } from '../lib/rubrica';
+import { conductas, nivelSiguiente } from '../lib/rubrica';
 import type {
   Evidencia,
   Jardin,
@@ -32,6 +32,7 @@ import {
   historialVista,
   iniciales,
   nucleosDeFicha,
+  ordenarNucleosFicha,
   partesResumenSala,
   resumenFicha,
   tarjetaSala,
@@ -261,8 +262,11 @@ export function useRevisar(): Consulta<VistaRevisar> {
           inicialesNino: nombre ? iniciales(nombre) : undefined,
         };
       })
-      // De la más reciente a la más antigua (requisito 3.1).
-      .sort((a, b) => ((a.evidencia?.creadaEn ?? '') < (b.evidencia?.creadaEn ?? '') ? 1 : -1));
+      // De la más reciente a la más antigua (requisito 3.1). Las sugerencias de
+      // una misma nota mantienen su orden (`sort` es estable si el empate da 0).
+      .sort((a, b) =>
+        (b.evidencia?.creadaEn ?? '').localeCompare(a.evidencia?.creadaEn ?? ''),
+      );
 
     const conError: NotaConError[] = evidencias
       .filter((e) => e.estado === 'error')
@@ -315,7 +319,15 @@ export function useFicha(ninoId: string | undefined): Consulta<VistaFicha> {
       const nucleos = nucleosDeFicha(suyas, nino.fechaNacimiento);
       const niveles = nivelActualPorNucleo(suyas);
       const esperado = nivelEsperado(edadMeses(nino.fechaNacimiento, hoy));
-      const observar = observarAhora(suyas, niveles, esperado);
+      // Si un núcleo está en "revisar avance", lo que hay que observar es el
+      // siguiente paso en ese núcleo; si no, la regla general de la rúbrica.
+      const marcado = nucleos.find((n) => n.revisarAvance && n.nivel !== null);
+      const observar: SugerenciaObservacion | null = marcado?.nivel
+        ? (() => {
+            const nivel = nivelSiguiente(marcado.nivel);
+            return { nucleo: marcado.nucleo, nivel, conductas: conductas(marcado.nucleo, nivel).slice(0, 2) };
+          })()
+        : observarAhora(suyas, niveles, esperado);
       const tarjeta = tarjetasDeSala([nino], suyas, hoy)[0];
 
       return {
@@ -326,7 +338,7 @@ export function useFicha(ninoId: string | undefined): Consulta<VistaFicha> {
         frescura: tarjeta.frescura,
         nivelGeneral: tarjeta.nivelGeneral,
         resumen: resumenFicha(nino.nombre, nucleos, observar),
-        nucleos,
+        nucleos: ordenarNucleosFicha(nucleos),
         observar,
         nivelEsperadoEdad: esperado,
         conductasObservar: observar ? conductas(observar.nucleo, observar.nivel).slice(0, 2) : [],

@@ -32,7 +32,7 @@ Qué mostrar:
   hace cuánto no se registra algo, **no** cómo le va al niño o niña;
 - **Josefa**, con la **bandera ámbar** de "revisar avance" (2 registros seguidos
   bajo lo esperado para su edad, en Lenguaje Verbal);
-- abajo: "Observados este mes: **14 de 18** · Menos registrado: …".
+- abajo: "Observados en 30 días: **16 de 18** · Menos registrado: …" (el mismo número que ve la directora).
 
 Frase: *la tía abre la app y en 2 segundos sabe a quién le falta observar.*
 
@@ -93,8 +93,8 @@ luego **Deshacer**. Cuando no queda nada: **"¡Todo al día!"**.
 
 ### 6. Entrar como directora (20 s)
 
-Menú de la tía → **Cambiar de usuaria** → **"Directora Carmen"** → destino
-**Directora** en la barra inferior.
+Menú de la tía → **Cambiar de usuaria** → **"Directora Carmen"**. Entra directo
+al resumen de todas las salas (destino **Directora** en la barra inferior).
 
 - Una tarjeta por sala: **observados en los últimos 30 días**, cuántos están por
   **revisar avance** y el **núcleo menos registrado**.

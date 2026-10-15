@@ -13,6 +13,7 @@ import {
   iniciales,
   inicialesUsuaria,
   nucleosDeFicha,
+  ordenarNucleosFicha,
   partesResumenSala,
   resumenFicha,
   tarjetaSala,
@@ -140,13 +141,13 @@ describe('tarjetas de la sala', () => {
 describe('resumen de la sala', () => {
   it('usa los textos del prototipo', () => {
     const texto = textoResumenSala(resumenSala(ninosSala, evaluaciones, HOY));
-    expect(texto).toContain('Observados este mes: 14 de 18');
+    expect(texto).toContain('Observados en 30 días: 16 de 18');
     expect(texto).toContain('Menos registrado:');
   });
 
   it('separa las dos partes que van en negrita', () => {
     const partes = partesResumenSala(resumenSala(ninosSala, evaluaciones, HOY));
-    expect(partes.observados).toBe('14 de 18');
+    expect(partes.observados).toBe('16 de 18');
     expect(partes.menos.length).toBeGreaterThan(0);
   });
 });
@@ -189,8 +190,29 @@ describe('ficha', () => {
   it('escribe el resumen por plantilla, sin lenguaje clínico', () => {
     const texto = resumenFicha(josefa.nombre, nucleos, { nucleo: 'CC', nivel: 5, conductas: [] });
     expect(texto).toContain('Avanza bien en');
-    expect(texto).toContain('Conviene observar más');
     expect(texto.toLowerCase()).not.toContain('rezago');
+  });
+
+  it('si hay un núcleo en revisar avance, el resumen lo nombra primero', () => {
+    const texto = resumenFicha(josefa.nombre, nucleos, { nucleo: 'CC', nivel: 5, conductas: [] });
+    expect(texto).toContain('Conviene acompañar de cerca Lenguaje Verbal');
+    expect(texto).not.toContain('Avanza bien en Lenguaje Verbal');
+  });
+
+  it('sin núcleos marcados, sugiere el núcleo por observar', () => {
+    const sinMarca = nucleos.map((n) => ({ ...n, revisarAvance: false }));
+    const texto = resumenFicha(josefa.nombre, sinMarca, { nucleo: 'PM', nivel: 4, conductas: [] });
+    expect(texto).toContain('Conviene observar más Pensamiento Matemático');
+  });
+
+  it('ordena Cómo va: marcados, con registros y luego sin registros', () => {
+    const orden = ordenarNucleosFicha(nucleos);
+    expect(orden[0].nucleo).toBe('LV');
+    const primeraSinRegistro = orden.findIndex((n) => n.nivel === null);
+    if (primeraSinRegistro >= 0) {
+      expect(orden.slice(primeraSinRegistro).every((n) => n.nivel === null)).toBe(true);
+    }
+    expect(orden).toHaveLength(8);
   });
 
   it('invita a registrar cuando no hay evidencia', () => {

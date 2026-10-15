@@ -21,10 +21,7 @@ fase. Aquí quedan anotadas para no agregarlas por cuenta propia
 
 ## Dudas para Integra
 
-4. **"Observados este mes" vs. "últimos 30 días"**: el panel de la sala usa el
-   mes calendario (14 de 18 en Medio Menor A) y la vista directora usa 30 días
-   (16 de 18), porque así lo piden `interfaz.md` y `tasks.md` 14. Conviene
-   unificar el criterio.
+4. ~~"Observados este mes" vs. "últimos 30 días"~~ **Resuelto en la revisión final:** Mi sala y la vista directora usan los últimos 30 días (16 de 18 en Medio Menor A).
 5. **"Núcleo menos cubierto"**: hoy es el núcleo con evidencia validada de menos
    niños/as distintos, con empates resueltos por el orden de la rúbrica. Si se
    contaran evaluaciones en vez de niños/as, en Medio Menor A cambiaría de CC a

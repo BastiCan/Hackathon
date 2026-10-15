@@ -114,6 +114,18 @@ describe('DataServiceLocal', () => {
   });
 });
 
+describe('orden de las evidencias nuevas', () => {
+  it('una captura queda siempre como la evidencia más reciente, a cualquier hora', async () => {
+    const { datos } = servicios();
+    const antes = await datos.evidencias({});
+    const ultima = antes.reduce((m, e) => (e.creadaEn > m ? e.creadaEn : m), '');
+    const nueva = await datos.guardarEvidencia({ salaId: 'SALA-MMA', autorId: 'USR-ANA', formato: 'texto' });
+    expect(nueva.creadaEn > ultima).toBe(true);
+    const otra = await datos.guardarEvidencia({ salaId: 'SALA-MMA', autorId: 'USR-ANA', formato: 'texto' });
+    expect(otra.creadaEn > nueva.creadaEn).toBe(true);
+  });
+});
+
 describe('capturar', () => {
   it('devuelve de inmediato una evidencia en proceso y deja las sugerencias pendientes', async () => {
     const { datos, ia } = servicios();

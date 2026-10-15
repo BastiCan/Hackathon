@@ -474,3 +474,23 @@ guarda una nota de sala y termina entrando como directora.
    líneas o se usa Lighthouse.
 7. Lo que no corresponde a la Fase 1 quedó anotado en **`PENDIENTES.md`**
    (íconos PNG de la PWA, cola sin conexión, dudas de criterio para Integra).
+
+## Revisión final (hecha por Claude Code, 15-10-2026)
+
+La revisión final de Kiro (orden `fase1-d.md`) se cortó dos veces antes de cambiar código: una porque se detuvo a pedido y otra por una falla del servicio de Kiro. Kiro alcanzó a medir la app contra el prototipo (`medidas.txt`): la fidelidad visual ya era casi exacta, así que esta revisión se concentró en errores funcionales y de experiencia de uso.
+
+### Corregido
+1. **Las notas nuevas no siempre aparecían primero en Revisar.** Se fechaban con el día de la demo y la hora real; a primera hora de la mañana (o pasada la medianoche) quedaban debajo de las notas de ejemplo de ese día. Ahora una captura siempre queda como la evidencia más reciente (`DataServiceLocal.marcaNuevaEvidencia`). La prueba de la demo había empezado a fallar justo por esto.
+2. **Notas con dos niños/as en orden invertido.** El orden de Revisar no era estable para sugerencias de la misma nota, y la IA simulada no respetaba el orden de mención. Ahora sale primero quien aparece primero en la nota (por ejemplo, Tomás antes que Gaspar).
+3. **Ficha incoherente con la bandera.** Si un núcleo está en "revisar avance", ahora el resumen lo nombra ("Conviene acompañar de cerca Lenguaje Verbal"), "Para observar esta semana" propone el siguiente paso en ese núcleo y "Cómo va" lo muestra primero (marcados, luego con registros y al final sin registros).
+4. **"Observados" con dos números distintos.** Mi sala decía "este mes: 14 de 18" y la directora "16 de 18 en 30 días" para la misma sala. Ahora ambas usan los últimos 30 días (el mismo corte del semáforo): "Observados en 30 días: 16 de 18". Esto resuelve el punto 4 de `PENDIENTES.md`.
+5. **La directora entraba a la sala de una tía.** Ahora entra directo a su resumen de salas (`/directora`).
+
+### Resultado
+- `npm test`: **115 pruebas en 9 archivos, todas en verde** (5 nuevas: resumen y orden de la ficha, orden de mención, marca de las evidencias nuevas).
+- `npm run build`: sin errores.
+- Revisado en el navegador en 375 px (Mi sala, captura de texto, Revisar y ficha) y en 1280 px (directora), sin desplazamiento horizontal.
+
+### Sin tocar
+- La fidelidad visual al prototipo (las medidas de Kiro coinciden al píxel o con 1–3 px de diferencia).
+- La IA simulada sigue eligiendo la conducta por palabras en común; la clasificación real la hará el backend.

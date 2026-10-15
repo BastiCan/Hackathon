@@ -71,6 +71,13 @@ describe('IAServiceSimulado', () => {
     expect(sugerencias.find((s) => s.ninoId === 'NINO-00009')?.cita).toContain('Isidora');
   });
 
+  it('ordena las sugerencias según quién aparece primero en la nota', async () => {
+    const texto = 'Tomás armó un puzzle de 6 piezas y le explicó a Gaspar cómo hacerlo.';
+    const sugerencias = await ia().procesar(evidencia('texto', texto), undefined, contexto);
+    const nombres = sugerencias.map((s) => s.nombreDetectado);
+    expect(nombres).toEqual(['Tomás', 'Gaspar']);
+  });
+
   it('un texto grupal o no evaluativo queda como nota de sala', async () => {
     const texto = 'Hoy bajó la asistencia y los niños estuvieron con tos toda la jornada.';
     const sugerencias = await ia().procesar(evidencia('texto', texto), undefined, contexto);

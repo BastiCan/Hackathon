@@ -77,7 +77,7 @@ describe('Mi sala', () => {
     expect(texto()).toContain('notas por revisar');
     expect(texto()).toContain('Huellita ya las ordenó');
     expect(texto()).toContain('Josefa');
-    expect(texto()).toContain('Observados este mes');
+    expect(texto()).toContain('Observados en 30 días');
     // 18 niños/as activos de la sala, con avatar de iniciales y sin fotos.
     expect(contenedor.querySelectorAll('.grid-cols-3 > button')).toHaveLength(18);
     expect(contenedor.querySelectorAll('img')).toHaveLength(0);

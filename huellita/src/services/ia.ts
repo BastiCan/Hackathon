@@ -208,7 +208,14 @@ export class IAServiceSimulado implements IAService {
     if (guionCalzado) return this.desdeGuion(evidencia, guionCalzado, texto);
 
     // 3. Nota libre: se buscan nombres de la sala.
-    const mencionados = contexto.ninos.filter((n) => mencionaNombre(texto, n.nombre));
+    // En el orden en que aparecen en la nota: el primero suele ser el protagonista.
+    const palabrasNota = normalizar(texto).split(' ');
+    const mencionados = contexto.ninos
+      .filter((n) => mencionaNombre(texto, n.nombre))
+      .sort(
+        (a, b) =>
+          palabrasNota.indexOf(normalizar(a.nombre)) - palabrasNota.indexOf(normalizar(b.nombre)),
+      );
     if (mencionados.length > 0) {
       return mencionados.map((nino, i) => this.evaluacionDe(evidencia, texto, nino, i));
     }

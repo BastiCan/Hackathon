@@ -23,6 +23,7 @@ export function Entrada() {
       opciones: usuarias.map((u) => ({
         id: u.id,
         nombre: u.nombre,
+        rol: u.rol,
         iniciales: inicialesUsuaria(u.nombre),
         detalle:
           u.rol === 'directora'
@@ -36,7 +37,9 @@ export function Entrada() {
 
   const entrar = async (id: string) => {
     await datos.cambiarUsuaria(id);
-    navegar('/', { replace: true });
+    // La directora parte en el resumen de todas las salas; la tía, en su sala.
+    const rol = consulta.valor?.opciones.find((u) => u.id === id)?.rol;
+    navegar(rol === 'directora' ? '/directora' : '/', { replace: true });
   };
 
   return (
