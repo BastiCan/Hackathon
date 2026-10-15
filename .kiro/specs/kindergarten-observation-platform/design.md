@@ -735,9 +735,9 @@ END
 
 ALGORITHM confirmarCaptura(sesion, captura, items)
 BEGIN
-  ASSERT captura.estado IN (lista_para_revisar, revision_manual)
   autorizarSala(sesion, captura)
   IF captura.estado = confirmada THEN RETURN observacionesExistentes(captura.id) END IF
+  ASSERT captura.estado IN (lista_para_revisar, revision_manual)
   INICIAR TRANSACCIÓN
     FOR each item IN items DO
       validarNivelManifestacionesNotaYSala(item)
@@ -748,6 +748,8 @@ BEGIN
   CONFIRMAR TRANSACCIÓN
 END
 ```
+
+Una repetición autorizada después del éxito devuelve las mismas observaciones sin crear filas nuevas. La autorización se evalúa antes de ese retorno para no revelar resultados fuera del alcance; solo la primera confirmación exige estado revisable y ejecuta la transacción atómica.
 
 Una palabra es dudosa si `confianza < umbral_confianza_palabra`, cuyo valor inicial es 0,60. La corrección queda auditada y reprocesa únicamente sugerencias aún no confirmadas.
 
@@ -771,7 +773,7 @@ El traslado exige destino distinto del mismo jardín, conserva todas las observa
 | `consultarTranscripcion` | Captura de audio autorizada | Devuelve texto completo, items, idioma, proveedor/modelo y tiempos. |
 | `corregirTranscripcion` | Rol autorizado y captura no confirmada | Guarda auditoría y encola nuevamente Bedrock de forma idempotente. |
 | `asignarNinos` | Roster activo de la sala | Candidatos solo de la sala; homónimos requieren selección. |
-| `confirmarCaptura` | Estado revisable e items válidos | Operación atómica e idempotente; crea observaciones solo aquí. |
+| `confirmarCaptura` | Captura autorizada en estado revisable o ya `confirmada`; items válidos para la primera confirmación | La primera ejecución crea observaciones atómicamente; las repeticiones autorizadas devuelven las mismas sin duplicarlas. |
 | `recomendarArea` | Niño/a existente | Cinco núcleos, sin repetición y orden determinista. |
 | `trasladarNino` | Destino válido del mismo jardín | Auditoría completa y observaciones intactas. |
 
@@ -871,7 +873,8 @@ El caso `NINO-00002` conserva sus 6 observaciones con niveles 3, 4, 4, 4, 4 y 5 
 
 ### Unitarias y propiedades
 
-- Edad, niveles, semáforo, recomendador, validación y conteos históricos P2–P4, P7, P9, P12–P16.
+- Edad, niveles, semáforo, recomendador, validación y conteos históricos P2–P4, P7, P12–P16.
+- Confirmación P9: primera ejecución atómica y repetición autorizada que devuelve las mismas observaciones sin duplicar filas; repetición fuera de alcance devuelve 403.
 - Asignación por `nombre_pila`: coincidencia limitada a sala, homónimos, icono/color y confirmación P5–P6.
 - MediaRecorder por WebM/Ogg/MP4/M4A disponibles, `timeslice`, máximo 300 s, rechazo de configuración menor a 240 s, Wake Lock presente/ausente y selector de archivo.
 - IndexedDB: persistencia antes de red, recarga, `esperando_conexion`, recuperación y misma clave P18–P19.
