@@ -1,0 +1,13 @@
+dist/
+*.zip
+capturas_equipo.py
+__pycache__/
+.env
+*.jpg
+*.jpeg
+*.png
+*.wav
+*.m4a
+*.mp3
+*.ogg
+*.webm

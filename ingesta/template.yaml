@@ -1,0 +1,176 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >-
+  integra-ingesta - entrada unica de fotos y audios. Firma la subida, escribe meta.json y llama a postits-ocr (foto)
+  o al transcriptor (audio). Solo lee DynamoDB; no cambia recursos del equipo.
+
+# Se despliega con ingesta/desplegar.py (boto3; CloudFormation aplica la transformacion de SAM).
+# Con SAM CLI: sam deploy --stack-name integra-ingesta --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND
+#   --parameter-overrides CodigoClave=ingesta/ingesta-<sha>.zip (el zip lo arma y sube desplegar.py).
+
+Parameters:
+  CodigoBucket:
+    Type: String
+    Default: postits-ocr-despliegue-277702547089
+    Description: Bucket con el zip de la Lambda
+  CodigoClave:
+    Type: String
+    AllowedPattern: '^ingesta/[A-Za-z0-9._-]+\.zip$'
+    Description: Clave del zip (desplegar.py usa ingesta/ingesta-<sha256[:16]>.zip)
+  BucketCapturas:
+    Type: String
+    Default: integra-capturas-277702547089
+    AllowedPattern: '^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$'
+  TablaEducadoras:
+    Type: String
+    Default: integra-procesador-TablaEducadoras-PMJ55I44WU75
+  TablaNinos:
+    Type: String
+    Default: integra-procesador-TablaNinos-11AMEMFM7SFST
+  TablaRegistros:
+    Type: String
+    Default: integra-procesador-TablaRegistros-P238ZZKPTQ51
+  TablaObservaciones:
+    Type: String
+    Default: integra-procesador-TablaObservaciones-1MP6ZR2QT9JAU
+  FuncionOcr:
+    Type: String
+    Default: postits-ocr
+  UrlTranscriptor:
+    Type: String
+    Default: https://289khkzbpd.execute-api.us-east-1.amazonaws.com/v1
+  IdClaveTranscriptor:
+    Type: String
+    Default: 14b8weklf1
+    Description: ID de la clave del transcriptor; la Lambda lee el valor en tiempo de ejecucion
+  LimiteDiario:
+    Type: Number
+    Default: 2000
+    MinValue: 1
+
+Resources:
+  LogsIngesta:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /aws/lambda/integra-ingesta
+      RetentionInDays: 7
+      Tags:
+        - Key: proyecto
+          Value: integra-ingesta
+
+  # REST API (no HTTP API) porque solo REST tiene claves de API y planes de uso, igual que el transcriptor.
+  ApiIngesta:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: integra-ingesta-api
+      StageName: v1
+      OpenApiVersion: "3.0.1"
+      EndpointConfiguration:
+        Type: REGIONAL
+      Auth:
+        ApiKeyRequired: true
+        UsagePlan:
+          CreateUsagePlan: PER_API
+          Description: Limite de uso de integra-ingesta
+          Throttle:
+            RateLimit: 5
+            BurstLimit: 10
+          Quota:
+            Limit: !Ref LimiteDiario
+            Period: DAY
+      Tags:
+        proyecto: integra-ingesta
+
+  FuncionIngesta:
+    Type: AWS::Serverless::Function
+    DependsOn: LogsIngesta
+    Properties:
+      FunctionName: integra-ingesta
+      Description: Entrada unica de fotos y audios (meta.json y enrutador a postits-ocr o al transcriptor)
+      CodeUri:
+        Bucket: !Ref CodigoBucket
+        Key: !Ref CodigoClave
+      Handler: ingesta.handler
+      Runtime: python3.13
+      Architectures:
+        - arm64
+      Timeout: 29  # el limite de la integracion de API Gateway
+      MemorySize: 512
+      Environment:
+        Variables:
+          BUCKET_CAPTURAS: !Ref BucketCapturas
+          TABLA_EDUCADORAS: !Ref TablaEducadoras
+          TABLA_NINOS: !Ref TablaNinos
+          TABLA_REGISTROS: !Ref TablaRegistros
+          TABLA_OBSERVACIONES: !Ref TablaObservaciones
+          FUNCION_OCR: !Ref FuncionOcr
+          URL_TRANSCRIPTOR: !Ref UrlTranscriptor
+          ID_CLAVE_TRANSCRIPTOR: !Ref IdClaveTranscriptor
+      Policies:
+        # SAM agrega AWSLambdaBasicExecutionRole (logs). Nada de escritura en DynamoDB.
+        - Statement:
+            - Sid: LeerYEscribirCapturas
+              Effect: Allow
+              Action:
+                - s3:GetObject
+                - s3:PutObject
+              Resource: !Sub "arn:aws:s3:::${BucketCapturas}/capturas/*"
+            - Sid: ListarCapturas
+              Effect: Allow
+              Action: s3:ListBucket
+              Resource: !Sub "arn:aws:s3:::${BucketCapturas}"
+              Condition:
+                StringLike:
+                  s3:prefix:
+                    - "capturas/*"
+            - Sid: LeerEducadoraYRegistro
+              Effect: Allow
+              Action: dynamodb:GetItem
+              Resource:
+                - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${TablaEducadoras}"
+                - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${TablaRegistros}"
+            - Sid: ConsultarNinosYObservaciones
+              Effect: Allow
+              Action: dynamodb:Query
+              Resource:
+                - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${TablaNinos}"
+                - !Sub "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${TablaObservaciones}"
+            - Sid: InvocarPostitsOcr
+              Effect: Allow
+              Action: lambda:InvokeFunction
+              Resource: !Sub "arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:${FuncionOcr}"
+            - Sid: LeerClaveTranscriptor
+              Effect: Allow
+              Action: apigateway:GET
+              Resource: !Sub "arn:aws:apigateway:${AWS::Region}::/apikeys/${IdClaveTranscriptor}"
+      Tags:
+        proyecto: integra-ingesta
+      Events:
+        Crear:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiIngesta
+            Path: /capturas
+            Method: POST
+        Procesar:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiIngesta
+            Path: /capturas/{id}/procesar
+            Method: POST
+        Consultar:
+          Type: Api
+          Properties:
+            RestApiId: !Ref ApiIngesta
+            Path: /capturas/{id}
+            Method: GET
+
+Outputs:
+  UrlApi:
+    Description: URL base de la API de ingesta
+    Value: !Sub "https://${ApiIngesta}.execute-api.${AWS::Region}.amazonaws.com/v1"
+  IdClaveApi:
+    Description: ID de la clave de API (el valor con apigateway get-api-key --include-value)
+    Value: !Ref ApiIngestaApiKey
+  NombreFuncion:
+    Value: !Ref FuncionIngesta
