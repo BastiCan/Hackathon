@@ -40,7 +40,7 @@ export function HojaMenu({
                 onClick={() => {
                   void datos.cambiarSala(s.id).then(onCerrar);
                 }}
-                className={`flex min-h-tactil items-center rounded-tarjeta border px-3 py-2 text-left font-bold ${
+                className={`flex min-h-tactil items-center rounded-[12px] border-[1.5px] px-3 py-2 text-left font-bold ${
                   s.id === salaActual.id ? 'border-integra bg-integra-claro' : 'border-linea'
                 }`}
               >
@@ -55,7 +55,7 @@ export function HojaMenu({
         <button
           type="button"
           onClick={() => navegar('/entrada')}
-          className="flex min-h-tactil items-center gap-3 rounded-tarjeta border border-linea px-3 py-2 text-left font-bold"
+          className="flex min-h-tactil items-center gap-3 rounded-[12px] border-[1.5px] border-linea px-3 py-2 text-left font-bold"
         >
           <Users aria-hidden="true" className="h-[22px] w-[22px] text-tinta-2" />
           Cambiar de usuaria
@@ -68,7 +68,7 @@ export function HojaMenu({
               navegar('/entrada', { replace: true });
             });
           }}
-          className="flex min-h-tactil items-center gap-3 rounded-tarjeta border border-linea px-3 py-2 text-left font-bold"
+          className="flex min-h-tactil items-center gap-3 rounded-[12px] border-[1.5px] border-linea px-3 py-2 text-left font-bold"
         >
           <RotateCcw aria-hidden="true" className="h-[22px] w-[22px] text-tinta-2" />
           Reiniciar demo
@@ -76,7 +76,7 @@ export function HojaMenu({
         <button
           type="button"
           onClick={onCerrar}
-          className="flex min-h-tactil items-center gap-3 rounded-tarjeta px-3 py-2 text-left font-bold text-tinta-2"
+          className="flex min-h-tactil items-center gap-3 rounded-[12px] px-3 py-2 text-left font-bold text-tinta-2"
         >
           <DoorOpen aria-hidden="true" className="h-[22px] w-[22px]" />
           Seguir en mi sala

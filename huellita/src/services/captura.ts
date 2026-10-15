@@ -4,7 +4,6 @@
  * la IA (requisito 1.5 e `interfaz.md`).
  */
 import { evaluacionesDe, evaluacionesValidadas, nivelActualPorNucleo, nivelEsperado, edadMeses } from '../lib/evaluacion';
-import { reducirFoto } from '../lib/fotos';
 import type { Evidencia, Formato, Sugerencia } from '../lib/tipos';
 import { servicioDatos, type DataService } from './datos';
 import { servicioIA, type ContextoIA, type IAService } from './ia';
@@ -47,8 +46,7 @@ async function contextoDeSala(datos: DataService, salaId: string): Promise<Conte
 /**
  * Captura una evidencia en la sala actual.
  * @param formato foto, audio o texto.
- * @param archivo foto o audio. El audio queda solo en memoria; la foto del
- *   post-it se guarda reducida en la evidencia para que la tía la vea.
+ * @param archivo foto o audio; queda solo en memoria, no se persiste.
  * @param texto lo que escribió la tía (solo en formato texto).
  * @param ninoId niño/a asociado si la captura empezó en su ficha.
  */
@@ -62,7 +60,6 @@ export async function capturar(
   const { datos, ia } = servicios;
   const [usuaria, sala] = await Promise.all([datos.sesion(), datos.salaActual()]);
 
-  const foto = formato === 'foto' && archivo ? await reducirFoto(archivo) : undefined;
   const evidencia = await datos.guardarEvidencia(
     {
       salaId: sala.id,
@@ -70,7 +67,6 @@ export async function capturar(
       formato,
       ninoIdSugerido: ninoId,
       textoExtraido: texto?.trim() ? texto.trim() : undefined,
-      ...(foto ? { foto } : {}),
     },
     archivo,
   );
@@ -84,10 +80,7 @@ export async function capturar(
         ninoId && s.tipo === 'evaluacion' && !s.ninoId ? { ...s, ninoId } : s,
       );
       await datos.guardarSugerencias(ajustadas);
-      // Se guarda lo que se leyó. En la demo, si la nota venía de un guion con
-      // foto de ejemplo, se usa esa foto para que calce con el texto leído.
-      const lectura = ia.lecturaDe?.(evidencia.id);
-      await datos.marcarEvidencia(evidencia.id, 'lista', lectura?.texto, lectura?.foto);
+      await datos.marcarEvidencia(evidencia.id, 'lista');
       return ajustadas;
     } catch {
       // Sin trazas técnicas ni datos de niños: la evidencia queda en error y

@@ -101,21 +101,15 @@ export function etiquetaFormato(formato: Formato): string {
 
 /** Certeza en palabras de la tía; nunca porcentajes (requisito 3.7). */
 export function textoCerteza(certeza: Certeza): string {
-  if (certeza === 'alta') return 'Alta';
-  if (certeza === 'media') return 'Media';
-  return 'Baja';
+  if (certeza === 'alta') return 'Segura';
+  if (certeza === 'media') return 'Revisar';
+  return 'Poco segura';
 }
 
 export interface TarjetaNinoVista {
   id: string;
   nombre: string;
-  /** "Josefa R." para la planilla. */
-  nombreCorto: string;
   iniciales: string;
-  /** Nivel actual de cada núcleo (planilla de la sala). */
-  niveles: Record<NucleoId, Nivel | null>;
-  /** Núcleos en "revisar avance". */
-  marcados: NucleoId[];
   frescura: ColorFrescura;
   /** Días desde la última evaluación validada; `null` si no tiene ninguna. */
   dias: number | null;
@@ -133,19 +127,14 @@ export function tarjetasDeSala(
     .filter((n) => n.activo)
     .map((nino) => {
       const suyas = evaluacionesDe(evaluaciones, nino.id);
-      const niveles = nivelActualPorNucleo(suyas);
-      const marcados = revisarAvance(suyas, nino.fechaNacimiento);
       return {
         id: nino.id,
         nombre: nino.nombre,
-        nombreCorto: nino.apellidoInicial ? `${nino.nombre} ${nino.apellidoInicial}` : nino.nombre,
         iniciales: iniciales(nino.nombre),
-        niveles,
-        marcados,
         frescura: frescura(suyas, hoy),
         dias: diasDesdeUltimaEvaluacion(suyas, hoy),
-        nivelGeneral: nivelGeneral(niveles),
-        revisarAvance: marcados.length > 0,
+        nivelGeneral: nivelGeneral(nivelActualPorNucleo(suyas)),
+        revisarAvance: revisarAvance(suyas, nino.fechaNacimiento).length > 0,
       };
     });
 }
@@ -331,9 +320,6 @@ export interface RegistroVista {
   color: string;
   autora: string;
   cita: string;
-  /** Tipo y foto de la evidencia, para la tira de registros de la ficha. */
-  formato?: Formato;
-  foto?: string;
 }
 
 /**
@@ -343,11 +329,8 @@ export interface RegistroVista {
 export function historialVista(
   evaluaciones: EvaluacionValidada[],
   nombreAutora: (id: string | undefined) => string,
-  evidenciaDe: (id: string) => { formato: Formato; foto?: string } | undefined = () => undefined,
 ): RegistroVista[] {
   return evaluaciones.map((e) => ({
-    formato: evidenciaDe(e.evidenciaId)?.formato,
-    foto: evidenciaDe(e.evidenciaId)?.foto,
     id: e.sugerenciaId,
     fecha: e.fecha,
     fechaCorta: fechaCorta(e.fecha),

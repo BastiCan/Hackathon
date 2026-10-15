@@ -55,7 +55,7 @@ export function HojaInferior({
 
   return (
     <div
-      className="fixed inset-0 z-20 flex items-end justify-center bg-[rgba(27,42,68,0.42)]"
+      className="fixed inset-0 z-20 flex items-end justify-center bg-[rgba(30,42,85,0.42)]"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) onCerrar();
       }}
@@ -66,7 +66,7 @@ export function HojaInferior({
         role="dialog"
         aria-modal="true"
         aria-label={etiqueta ?? titulo}
-        className="max-h-[88%] w-full max-w-tia animate-sube overflow-auto rounded-t-hoja bg-papel shadow-[0_-4px_16px_rgba(27,42,68,0.12)] px-[18px] pb-7 pt-[10px] outline-none"
+        className="max-h-[88%] w-full max-w-tia animate-sube overflow-auto rounded-t-hoja bg-papel px-[18px] pb-7 pt-[10px] outline-none"
       >
         {/* El asa del prototipo, que además es el botón para cerrar: así la
             hoja siempre tiene un control alcanzable con teclado. */}

@@ -19,7 +19,7 @@ import { ProveedorServicios } from './servicios';
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
 
-const RUTAS_TIA = ['/', '/sala', '/revisar', '/nino/NINO-00001', '/entrada'];
+const RUTAS_TIA = ['/', '/revisar', '/nino/NINO-00001', '/entrada'];
 const RUTAS_DIRECTORA = ['/directora', '/directora/sala/SALA-MMA'];
 
 /** Clases con las que un control declara al menos 44 px de alto. */
@@ -104,7 +104,7 @@ describe('nombre accesible', () => {
   });
 
   it('las hojas inferiores declaran su nombre y son modales', async () => {
-    await montar('/sala');
+    await montar('/');
     const ayuda = contenedor.querySelector<HTMLButtonElement>(
       '[aria-label="Qué significan los colores"]',
     );
@@ -124,37 +124,28 @@ describe('áreas táctiles', () => {
     });
   }
 
-  it('la barra de captura tiene 3 botones grandes y Grabar destacado', async () => {
+  it('el dock de captura mantiene los tamaños del prototipo', async () => {
     await montar('/');
     const dock = contenedor.querySelector('[aria-label="Registrar"]');
     expect(dock).not.toBeNull();
-    const botones = dock!.querySelectorAll('button');
-    expect(botones).toHaveLength(3);
-    botones.forEach((b) => expect(b.className).toContain('min-h-[48px]'));
-    expect(dock!.querySelectorAll('.bg-grabar')).toHaveLength(1);
+    // Foto y Texto de 54 px; Audio al centro de 76 px.
+    expect(dock!.querySelectorAll('.h-\\[54px\\]')).toHaveLength(2);
+    expect(dock!.querySelectorAll('.h-\\[76px\\]')).toHaveLength(1);
   });
 });
 
 describe('privacidad en pantalla', () => {
   for (const ruta of RUTAS_TIA) {
-    it(`${ruta} solo muestra fotos de notas, nunca de niños ni niñas`, async () => {
+    it(`${ruta} no muestra imágenes de niños ni niñas`, async () => {
       await montar(ruta);
-      const imagenes = [...contenedor.querySelectorAll('img')];
-      for (const img of imagenes) {
-        expect(img.getAttribute('alt') ?? '').toMatch(/Foto (de la nota|del post-it)/);
-      }
+      expect(contenedor.querySelectorAll('img')).toHaveLength(0);
     });
   }
-
-  it('la planilla de la sala no muestra ninguna imagen', async () => {
-    await montar('/sala');
-    expect(contenedor.querySelectorAll('img')).toHaveLength(0);
-  });
 });
 
 describe('foco', () => {
   it('el tabulador se queda dentro de la hoja abierta', async () => {
-    await montar('/sala');
+    await montar('/');
     await tocar(
       contenedor.querySelector<HTMLButtonElement>('[aria-label="Qué significan los colores"]')!,
     );
@@ -173,7 +164,7 @@ describe('foco', () => {
   });
 
   it('Escape cierra la hoja', async () => {
-    await montar('/sala');
+    await montar('/');
     await tocar(
       contenedor.querySelector<HTMLButtonElement>('[aria-label="Qué significan los colores"]')!,
     );

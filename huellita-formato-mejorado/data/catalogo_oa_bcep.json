@@ -1,0 +1,1331 @@
+{
+ "fuente": "Bases Curriculares de la Educación Parvularia 2018 (MINEDUC), cap. 2",
+ "total_oa": 206,
+ "tramos": [
+  {
+   "codigo": "SC",
+   "nombre": "1° Nivel (Sala Cuna)",
+   "logro_esperado": "hacia los 2 años"
+  },
+  {
+   "codigo": "ME",
+   "nombre": "2° Nivel (Medio)",
+   "logro_esperado": "hacia los 4 años"
+  },
+  {
+   "codigo": "TR",
+   "nombre": "3° Nivel (Transición)",
+   "logro_esperado": "hacia los 6 años"
+  }
+ ],
+ "nucleos": [
+  {
+   "codigo": "IA",
+   "nombre": "Identidad y Autonomía",
+   "ambito": "Desarrollo Personal y Social",
+   "transversal": true,
+   "proposito": "A través de la Identidad y Autonomía se espera potenciar en las niñas y en los niños habilidades, actitudes y conocimientos que les permitan la construcción gradual de su identidad como sujetos únicos y valiosos, y a la vez adquieran progresiva independencia, confianza, autovalencia y autorregulación, en los distintos planos de su actuar. De esta manera, amplían la conciencia de sí mismos y sus recursos de autoestima e iniciativa.",
+   "oa": [
+    {
+     "id": "IA-SC-01",
+     "tramo": "SC",
+     "numero": 1,
+     "texto": "Expresar vocal, gestual o corporalmente distintas necesidades o emociones (alegría, miedo, pena, entre otras)."
+    },
+    {
+     "id": "IA-SC-02",
+     "tramo": "SC",
+     "numero": 2,
+     "texto": "Manifestar satisfacción cuando percibe que adultos significativos le expresan afecto."
+    },
+    {
+     "id": "IA-SC-03",
+     "tramo": "SC",
+     "numero": 3,
+     "texto": "Reconocer algunas emociones en adultos significativos, reaccionando frente a ellas."
+    },
+    {
+     "id": "IA-SC-04",
+     "tramo": "SC",
+     "numero": 4,
+     "texto": "Manifestar sus preferencias por algunas situaciones, objetos y juegos."
+    },
+    {
+     "id": "IA-SC-05",
+     "tramo": "SC",
+     "numero": 5,
+     "texto": "Manifestar interés por nuevas situaciones u objetos, ampliando su campo y repertorio de acción habitual."
+    },
+    {
+     "id": "IA-SC-06",
+     "tramo": "SC",
+     "numero": 6,
+     "texto": "Reconocer algunos rasgos distintivos de su identidad, tales como: su nombre y su imagen física en el espejo."
+    },
+    {
+     "id": "IA-SC-07",
+     "tramo": "SC",
+     "numero": 7,
+     "texto": "Incorporar rutinas básicas vinculadas a la alimentación, vigilia, sueño, higiene, y vestuario dentro de un contexto diferente a su hogar y sensible a sus necesidades personales."
+    },
+    {
+     "id": "IA-ME-01",
+     "tramo": "ME",
+     "numero": 1,
+     "texto": "Representar verbal y corporalmente diferentes emociones y sentimientos, en sus juegos."
+    },
+    {
+     "id": "IA-ME-02",
+     "tramo": "ME",
+     "numero": 2,
+     "texto": "Manifestar disposición y confianza al separarse de los adultos significativos."
+    },
+    {
+     "id": "IA-ME-03",
+     "tramo": "ME",
+     "numero": 3,
+     "texto": "Reconocer en sí mismo, en otras personas y en personajes de cuentos, emociones tales como: tristeza, miedo, alegría, pena y rabia."
+    },
+    {
+     "id": "IA-ME-04",
+     "tramo": "ME",
+     "numero": 4,
+     "texto": "Manifestar disposición para regular sus emociones y sentimientos, en función de las necesidades propias, de los demás y de algunos acuerdos para el funcionamiento grupal."
+    },
+    {
+     "id": "IA-ME-05",
+     "tramo": "ME",
+     "numero": 5,
+     "texto": "Manifestar sus preferencias cuando participa o cuando solicita participar, en diversas situaciones cotidianas y juegos."
+    },
+    {
+     "id": "IA-ME-06",
+     "tramo": "ME",
+     "numero": 6,
+     "texto": "Actuar con progresiva independencia, ampliando su repertorio de acciones, acorde a sus necesidades e intereses."
+    },
+    {
+     "id": "IA-ME-07",
+     "tramo": "ME",
+     "numero": 7,
+     "texto": "Comunicar algunos rasgos de su identidad, como su nombre, sus características corporales, género y otros."
+    },
+    {
+     "id": "IA-ME-08",
+     "tramo": "ME",
+     "numero": 8,
+     "texto": "Apreciar sus características identitarias, fortalezas y habilidades."
+    },
+    {
+     "id": "IA-ME-09",
+     "tramo": "ME",
+     "numero": 9,
+     "texto": "Manifestar progresiva independencia en sus prácticas de alimentación, vigilia y sueño, vestimenta, higiene corporal, bucal y evacuación."
+    },
+    {
+     "id": "IA-ME-10",
+     "tramo": "ME",
+     "numero": 10,
+     "texto": "Manifestar satisfacción y confianza por su autovalía, comunicando algunos desafíos alcanzados, tales como: saltar, hacer torres, sacar cáscara de huevos, entre otros."
+    },
+    {
+     "id": "IA-ME-11",
+     "tramo": "ME",
+     "numero": 11,
+     "texto": "Identificar alimentos que se consumen en algunas celebraciones propias de su familia y comunidad."
+    },
+    {
+     "id": "IA-ME-12",
+     "tramo": "ME",
+     "numero": 12,
+     "texto": "Representar sus pensamientos y experiencias, atribuyendo significados a objetos o elementos de su entorno, usando la imaginación en situaciones de juego."
+    },
+    {
+     "id": "IA-TR-01",
+     "tramo": "TR",
+     "numero": 1,
+     "texto": "Comunicar a los demás, emociones y sentimientos tales como: amor, miedo, alegría, ira, que le provocan diversas narraciones o situaciones observadas en forma directa o a través de TICs."
+    },
+    {
+     "id": "IA-TR-02",
+     "tramo": "TR",
+     "numero": 2,
+     "texto": "Manifestar disposición y confianza para relacionarse con algunos adultos y pares que no son parte del grupo o curso."
+    },
+    {
+     "id": "IA-TR-03",
+     "tramo": "TR",
+     "numero": 3,
+     "texto": "Reconocer emociones y sentimientos en otras personas, observadas en forma directa o a través de TICs."
+    },
+    {
+     "id": "IA-TR-04",
+     "tramo": "TR",
+     "numero": 4,
+     "texto": "Expresar sus emociones y sentimientos autorregulándose en función de las necesidades propias, de los demás y las normas de funcionamiento grupal."
+    },
+    {
+     "id": "IA-TR-05",
+     "tramo": "TR",
+     "numero": 5,
+     "texto": "Comunicar sus preferencias, opiniones, ideas, en diversas situaciones cotidianas y juegos."
+    },
+    {
+     "id": "IA-TR-06",
+     "tramo": "TR",
+     "numero": 6,
+     "texto": "Planificar proyectos y juegos, en función de sus ideas e intereses, proponiendo actividades, organizando los recursos, incorporando los ajustes necesarios e iniciándose en la apreciación de sus resultados."
+    },
+    {
+     "id": "IA-TR-07",
+     "tramo": "TR",
+     "numero": 7,
+     "texto": "Comunicar rasgos de su identidad de género, roles (nieta/o, vecino/a, entre otros), sentido de pertenencia y cualidades personales."
+    },
+    {
+     "id": "IA-TR-08",
+     "tramo": "TR",
+     "numero": 8,
+     "texto": "Comunicar sus características identitarias, fortalezas, habilidades y desafíos personales."
+    },
+    {
+     "id": "IA-TR-09",
+     "tramo": "TR",
+     "numero": 9,
+     "texto": "Cuidar su bienestar personal, llevando a cabo sus prácticas de higiene, alimentación y vestuario, con independencia y progresiva responsabilidad."
+    },
+    {
+     "id": "IA-TR-10",
+     "tramo": "TR",
+     "numero": 10,
+     "texto": "Comunicar a otras personas desafíos alcanzados, identificando acciones que aportaron a su logro y definiendo nuevas metas."
+    },
+    {
+     "id": "IA-TR-11",
+     "tramo": "TR",
+     "numero": 11,
+     "texto": "Distinguir parámetros establecidos para la regulación de alimentos, tales como: etiquetado de sellos, fechas de vencimiento, entre otros."
+    },
+    {
+     "id": "IA-TR-12",
+     "tramo": "TR",
+     "numero": 12,
+     "texto": "Anticipar acciones y prever algunas situaciones o desafíos que se pueden presentar, en juegos, proyectos, sucesos que experimenta o que observa a través de TICs."
+    },
+    {
+     "id": "IA-TR-13",
+     "tramo": "TR",
+     "numero": 13,
+     "texto": "Representar en juegos sociodramáticos, sus pensamientos y experiencias atribuyendo significados a objetos, personas y situaciones."
+    }
+   ]
+  },
+  {
+   "codigo": "CC",
+   "nombre": "Convivencia y Ciudadanía",
+   "ambito": "Desarrollo Personal y Social",
+   "transversal": true,
+   "proposito": "A través de Convivencia y Ciudadanía, se espera potenciar en los niños y las niñas, las habilidades, actitudes y conocimientos que les permitan convivir en armonía, descubriendo y ejerciendo progresivamente su ciudadanía y generando identificación con una comunidad inclusiva sobre la base de los derechos propios y los de los demás.",
+   "oa": [
+    {
+     "id": "CC-SC-01",
+     "tramo": "SC",
+     "numero": 1,
+     "texto": "Interactuar con pares y adultos significativos (a través de gestos y vocalizaciones, entre otros), en diferentes situaciones y juegos."
+    },
+    {
+     "id": "CC-SC-02",
+     "tramo": "SC",
+     "numero": 2,
+     "texto": "Disfrutar de la cercanía de niños, niñas y adultos en juegos y situaciones cotidianas."
+    },
+    {
+     "id": "CC-SC-03",
+     "tramo": "SC",
+     "numero": 3,
+     "texto": "Manifestar interés por lo que le sucede a otros niños y niñas, a través de acciones tales como: abrazar a quien está llorando, hacer cariños, entre otros."
+    },
+    {
+     "id": "CC-SC-04",
+     "tramo": "SC",
+     "numero": 4,
+     "texto": "Manifestar interés por participar en celebraciones de su entorno significativo."
+    },
+    {
+     "id": "CC-SC-05",
+     "tramo": "SC",
+     "numero": 5,
+     "texto": "Practicar algunas normas de convivencia, tales como: sentarse en su silla para almorzar, saludar, despedirse, y colaborar en acciones cotidianas."
+    },
+    {
+     "id": "CC-SC-06",
+     "tramo": "SC",
+     "numero": 6,
+     "texto": "Manifestar disposición para responder positivamente o cambiar su comportamiento, frente a requerimientos del adulto, asociados a su seguridad y bienestar."
+    },
+    {
+     "id": "CC-ME-01",
+     "tramo": "ME",
+     "numero": 1,
+     "texto": "Participar en actividades y juegos grupales con sus pares, conversando, intercambiando pertenencias, cooperando."
+    },
+    {
+     "id": "CC-ME-02",
+     "tramo": "ME",
+     "numero": 2,
+     "texto": "Disfrutar de instancias de interacción social con diversas personas de la comunidad."
+    },
+    {
+     "id": "CC-ME-03",
+     "tramo": "ME",
+     "numero": 3,
+     "texto": "Colaborar en situaciones cotidianas y de juego, proponiendo acciones simples frente a necesidades que presentan sus pares."
+    },
+    {
+     "id": "CC-ME-04",
+     "tramo": "ME",
+     "numero": 4,
+     "texto": "Colaborar en actividades, conmemoraciones o celebraciones culturales de su familia y comunidad."
+    },
+    {
+     "id": "CC-ME-05",
+     "tramo": "ME",
+     "numero": 5,
+     "texto": "Iniciarse en la resolución pacífica de conflictos, dialogando respecto de la situación, escuchando, opinando y proponiendo acciones para resolver."
+    },
+    {
+     "id": "CC-ME-06",
+     "tramo": "ME",
+     "numero": 6,
+     "texto": "Manifestar disposición para practicar acuerdos de convivencia básica que regulan situaciones cotidianas y juegos."
+    },
+    {
+     "id": "CC-ME-07",
+     "tramo": "ME",
+     "numero": 7,
+     "texto": "Identificar objetos, comportamientos y situaciones de riesgo que pueden atentar contra su seguridad, bienestar y el de los demás."
+    },
+    {
+     "id": "CC-ME-08",
+     "tramo": "ME",
+     "numero": 8,
+     "texto": "Reconocer acciones correctas e incorrectas para la convivencia armónica del grupo, que se presentan en diferentes situaciones cotidianas y juegos."
+    },
+    {
+     "id": "CC-ME-09",
+     "tramo": "ME",
+     "numero": 9,
+     "texto": "Manifestar interés por algunos de sus derechos, tales como: ser escuchados, tener un nombre, jugar, entre otros."
+    },
+    {
+     "id": "CC-ME-10",
+     "tramo": "ME",
+     "numero": 10,
+     "texto": "Manifestar interés para interactuar con niños y niñas, reconociendo la diversidad de sus características y formas de vida (costumbres, fisonomía, lingüística, entre otras)."
+    },
+    {
+     "id": "CC-TR-01",
+     "tramo": "TR",
+     "numero": 1,
+     "texto": "Participar en actividades y juegos colaborativos, planificando, acordando estrategias para un propósito común y asumiendo progresivamente responsabilidades en ellos."
+    },
+    {
+     "id": "CC-TR-02",
+     "tramo": "TR",
+     "numero": 2,
+     "texto": "Participar en actividades solidarias, que integran a las familias, la comunidad educativa y local."
+    },
+    {
+     "id": "CC-TR-03",
+     "tramo": "TR",
+     "numero": 3,
+     "texto": "Manifestar empatía y solidaridad frente a situaciones que vivencian sus pares, o que observa en textos o TICs, practicando acciones de escucha, apoyo y colaboración."
+    },
+    {
+     "id": "CC-TR-04",
+     "tramo": "TR",
+     "numero": 4,
+     "texto": "Apreciar el significado que tienen para las personas y las comunidades, diversas manifestaciones culturales que se desarrollan en su entorno."
+    },
+    {
+     "id": "CC-TR-05",
+     "tramo": "TR",
+     "numero": 5,
+     "texto": "Aplicar estrategias pacíficas frente a la resolución de conflictos cotidianos con otros niños y niñas."
+    },
+    {
+     "id": "CC-TR-06",
+     "tramo": "TR",
+     "numero": 6,
+     "texto": "Respetar normas y acuerdos creados colaborativamente con pares y adultos, para el bienestar del grupo."
+    },
+    {
+     "id": "CC-TR-07",
+     "tramo": "TR",
+     "numero": 7,
+     "texto": "Identificar objetos, comportamientos y situaciones de riesgo que pueden atentar contra su bienestar y seguridad, o la de los demás, proponiendo alternativas para enfrentarlas."
+    },
+    {
+     "id": "CC-TR-08",
+     "tramo": "TR",
+     "numero": 8,
+     "texto": "Comprender que algunas de sus acciones y decisiones respecto al desarrollo de juegos y proyectos colectivos, influyen en las de sus pares."
+    },
+    {
+     "id": "CC-TR-09",
+     "tramo": "TR",
+     "numero": 9,
+     "texto": "Reconocer, y progresivamente hacer respetar el derecho a expresarse libremente, a ser escuchado y a que su opinión sea tomada en cuenta."
+    },
+    {
+     "id": "CC-TR-10",
+     "tramo": "TR",
+     "numero": 10,
+     "texto": "Reconocer progresivamente requerimientos esenciales de las prácticas de convivencia democrática, tales como: escucha de opiniones divergentes, el respeto por los demás, de los turnos, de los acuerdos de las mayorías."
+    },
+    {
+     "id": "CC-TR-11",
+     "tramo": "TR",
+     "numero": 11,
+     "texto": "Apreciar la diversidad de las personas y sus formas de vida, tales como: singularidades fisonómicas, lingüísticas, religiosas, de género, entre otras."
+    }
+   ]
+  },
+  {
+   "codigo": "CM",
+   "nombre": "Corporalidad y Movimiento",
+   "ambito": "Desarrollo Personal y Social",
+   "transversal": true,
+   "proposito": "A través de corporalidad y movimiento, se espera potenciar en las niñas y los niños, habilidades, actitudes y conocimientos que le permitan reconocer y apreciar sus atributos corporales, descubrir sus posibilidades motrices, adquirir una progresiva autonomía para desplazarse y moverse, y que contribuyan a expandir sus procesos de pensamiento, satisfacer sus intereses de exploración, fortalecer su identidad, resolver problemas prácticos y expresar su creatividad. De esta manera, ampliarán sus recursos para actuar en el entorno, desarrollando un sentido de autonomía, bienestar, confianza y seguridad.",
+   "oa": [
+    {
+     "id": "CM-SC-01",
+     "tramo": "SC",
+     "numero": 1,
+     "texto": "Manifestar su agrado, al sentirse cómodo, seguro y contenido corporalmente."
+    },
+    {
+     "id": "CM-SC-02",
+     "tramo": "SC",
+     "numero": 2,
+     "texto": "Descubrir partes de su cuerpo y algunas de sus características físicas, a través de diversas experiencias sensoriomotrices."
+    },
+    {
+     "id": "CM-SC-03",
+     "tramo": "SC",
+     "numero": 3,
+     "texto": "Manifestar interés y satisfacción al moverse libremente en situaciones cotidianas y lúdicas."
+    },
+    {
+     "id": "CM-SC-04",
+     "tramo": "SC",
+     "numero": 4,
+     "texto": "Ampliar sus posibilidades de exploración sensoriomotriz, adquiriendo control de la prensión palmar voluntaria (toma objetos, se pasa objetos de una mano a otra, entre otros) y la postura sedente."
+    },
+    {
+     "id": "CM-SC-05",
+     "tramo": "SC",
+     "numero": 5,
+     "texto": "Adquirir desplazamiento gradual en sus distintas formas (girar, reptar, ponerse de pie, caminar), para disfrutar la ampliación de sus posibilidades de movimiento, exploración y juego."
+    },
+    {
+     "id": "CM-SC-06",
+     "tramo": "SC",
+     "numero": 6,
+     "texto": "Coordinar movimientos de manipulación ubicando objetos en relación a su propio cuerpo, tales como: acercar objetos pequeños utilizando índice y pulgar en oposición."
+    },
+    {
+     "id": "CM-SC-07",
+     "tramo": "SC",
+     "numero": 7,
+     "texto": "Explorar la alternancia de posturas y movimientos en acciones tales como: trepar, lanzar objetos o hacer ronda, adquiriendo control gradual de su cuerpo al jugar."
+    },
+    {
+     "id": "CM-ME-01",
+     "tramo": "ME",
+     "numero": 1,
+     "texto": "Reconocer situaciones en que se siente cómodo corporalmente, manifestando al adulto su bienestar y su interés por mantener estas condiciones."
+    },
+    {
+     "id": "CM-ME-02",
+     "tramo": "ME",
+     "numero": 2,
+     "texto": "Reconocer las principales partes, características físicas de su cuerpo y sus funciones en situaciones cotidianas y de juego."
+    },
+    {
+     "id": "CM-ME-03",
+     "tramo": "ME",
+     "numero": 3,
+     "texto": "Experimentar diversas posibilidades de acción con su cuerpo, en situaciones cotidianas y de juego, identificando progresivamente el vocabulario asociado."
+    },
+    {
+     "id": "CM-ME-04",
+     "tramo": "ME",
+     "numero": 4,
+     "texto": "Reconocer el bienestar que le produce el movimiento libre en situaciones cotidianas y lúdicas, manifestando su interés por desarrollarlo en forma frecuente."
+    },
+    {
+     "id": "CM-ME-05",
+     "tramo": "ME",
+     "numero": 5,
+     "texto": "Perfeccionar su coordinación visomotriz fina, a través del uso de diversos objetos, juguetes y utensilios."
+    },
+    {
+     "id": "CM-ME-06",
+     "tramo": "ME",
+     "numero": 6,
+     "texto": "Adquirir control y equilibrio en movimientos, posturas y desplazamientos que realiza en diferentes direcciones y en variadas situaciones cotidianas y juegos, con y sin implementos."
+    },
+    {
+     "id": "CM-ME-07",
+     "tramo": "ME",
+     "numero": 7,
+     "texto": "Resolver desafíos prácticos en situaciones cotidianas y juegos, incorporando mayor precisión y coordinación en la realización de posturas, movimientos y desplazamientos, tales como: esquivar obstáculos o mantener equilibrio al subir escalas."
+    },
+    {
+     "id": "CM-ME-08",
+     "tramo": "ME",
+     "numero": 8,
+     "texto": "Utilizar categorías de ubicación espacial y temporal, tales como: adelante/atrás, arriba/ abajo, adentro/afuera, antes/ después, rápido/lento, en situaciones cotidianas y lúdicas."
+    },
+    {
+     "id": "CM-TR-01",
+     "tramo": "TR",
+     "numero": 1,
+     "texto": "Manifestar iniciativa para resguardar el autocuidado de su cuerpo y su confortabilidad, en función de su propio bienestar."
+    },
+    {
+     "id": "CM-TR-02",
+     "tramo": "TR",
+     "numero": 2,
+     "texto": "Apreciar sus características corporales, manifestando interés y cuidado por su bienestar y apariencia personal."
+    },
+    {
+     "id": "CM-TR-03",
+     "tramo": "TR",
+     "numero": 3,
+     "texto": "Tomar conciencia de su cuerpo, de algunas de sus características internas (tales como: ritmo cardíaco, de respiración), de su esquema y progresivamente de su tono corporal y lateralidad, por medio de juegos."
+    },
+    {
+     "id": "CM-TR-04",
+     "tramo": "TR",
+     "numero": 4,
+     "texto": "Comunicar nuevas posibilidades de acción logradas a través de su cuerpo en situaciones cotidianas y de juego, empleando vocabulario preciso."
+    },
+    {
+     "id": "CM-TR-05",
+     "tramo": "TR",
+     "numero": 5,
+     "texto": "Comunicar el bienestar que le produce el movimiento, al ejercitar y recrear su cuerpo en forma habitual, con y sin implementos u obstáculos."
+    },
+    {
+     "id": "CM-TR-06",
+     "tramo": "TR",
+     "numero": 6,
+     "texto": "Coordinar con precisión y eficiencia sus habilidades psicomotrices finas en función de sus intereses de exploración y juego."
+    },
+    {
+     "id": "CM-TR-07",
+     "tramo": "TR",
+     "numero": 7,
+     "texto": "Resolver desafíos prácticos manteniendo control, equilibrio y coordinación al combinar diversos movimientos, posturas y desplazamientos tales como: lanzar y recibir, desplazarse en planos inclinados, seguir ritmos, en una variedad de juegos."
+    },
+    {
+     "id": "CM-TR-08",
+     "tramo": "TR",
+     "numero": 8,
+     "texto": "Coordinar sus habilidades psicomotoras practicando posturas y movimientos de fuerza, resistencia y tracción tales como: tirar la cuerda, transportar objetos, utilizar implementos, en situaciones cotidianas y de juego."
+    },
+    {
+     "id": "CM-TR-09",
+     "tramo": "TR",
+     "numero": 9,
+     "texto": "Utilizar categorías de ubicación espacial y temporal, tales como: adelante/atrás/al lado/entre, día/noche, hoy/ mañana, antes/durante/después, en situaciones cotidianas y lúdicas."
+    }
+   ]
+  },
+  {
+   "codigo": "LV",
+   "nombre": "Lenguaje Verbal",
+   "ambito": "Comunicación Integral",
+   "transversal": false,
+   "proposito": "A través de Lenguaje Verbal, se espera potenciar en las niñas y los niños, las habilidades, actitudes y conocimientos que les posibiliten desarrollar su pensamiento, comprender el entorno que habitan y comunicarse, relacionándose con otras personas, construyendo e intercambiando significados. De esta manera, amplían progresivamente sus recursos comunicativos verbales y paraverbales para expresar sus sensaciones, vivencias, emociones, sentimientos, necesidades, ideas y opiniones, construyendo una base sólida sobre la cual asimilar otros aprendizajes presentes y futuros.",
+   "oa": [
+    {
+     "id": "LV-SC-01",
+     "tramo": "SC",
+     "numero": 1,
+     "texto": "Expresar oralmente sus emociones y necesidades, a través de balbuceos, vocalizaciones y diversos recursos gestuales."
+    },
+    {
+     "id": "LV-SC-02",
+     "tramo": "SC",
+     "numero": 2,
+     "texto": "Expresar oralmente sus necesidades e intereses, mediante la combinación de palabras y gestos, el uso de palabra-frase y progresivamente el empleo de frases simples."
+    },
+    {
+     "id": "LV-SC-03",
+     "tramo": "SC",
+     "numero": 3,
+     "texto": "Identificar progresivamente la intención comunicativa de las distintas personas de su entorno a partir de sus expresiones verbales, no verbales y paraverbales."
+    },
+    {
+     "id": "LV-SC-04",
+     "tramo": "SC",
+     "numero": 4,
+     "texto": "Comprender mensajes simples y breves en juegos y situaciones comunicativas cotidianas, respondiendo en forma gestual y corporal."
+    },
+    {
+     "id": "LV-SC-05",
+     "tramo": "SC",
+     "numero": 5,
+     "texto": "Reconocer sonidos de diferentes fuentes sonoras de su entorno cotidiano, tales como objetos, artefactos, instrumentos musicales, animales, naturaleza."
+    },
+    {
+     "id": "LV-SC-06",
+     "tramo": "SC",
+     "numero": 6,
+     "texto": "Incorporar nuevas palabras a su repertorio lingüístico para comunicarse con otros, en juegos y conversaciones."
+    },
+    {
+     "id": "LV-SC-07",
+     "tramo": "SC",
+     "numero": 7,
+     "texto": "Disfrutar de distintos textos gráficos (libros de cuentos, láminas, entre otros) al manipularlos y observar sus imágenes."
+    },
+    {
+     "id": "LV-SC-08",
+     "tramo": "SC",
+     "numero": 8,
+     "texto": "Comprender progresivamente, a partir de la escucha atenta, algunos contenidos explícitos de textos literarios y no literarios, respondiendo preguntas simples, en forma oral o gestual (¿qué es?, ¿quién es?, ¿dónde está?)."
+    },
+    {
+     "id": "LV-ME-01",
+     "tramo": "ME",
+     "numero": 1,
+     "texto": "Expresarse oralmente, empleando estructuras oracionales simples y respetando patrones gramaticales básicos, en distintas situaciones cotidianas y juegos."
+    },
+    {
+     "id": "LV-ME-02",
+     "tramo": "ME",
+     "numero": 2,
+     "texto": "Comprender mensajes simples como instrucciones explícitas, explicaciones y preguntas relativas a objetos, personas, acciones, tiempo y lugar, identificando la intencionalidad comunicativa de diversos interlocutores."
+    },
+    {
+     "id": "LV-ME-03",
+     "tramo": "ME",
+     "numero": 3,
+     "texto": "Identificar algunos atributos de los sonidos de diferentes fuentes sonoras como intensidad (fuerte/suave), velocidad (rápido/lento)."
+    },
+    {
+     "id": "LV-ME-04",
+     "tramo": "ME",
+     "numero": 4,
+     "texto": "Incorporar progresivamente nuevas palabras, al comunicar oralmente temas variados de su interés e información básica, en distintas situaciones cotidianas."
+    },
+    {
+     "id": "LV-ME-05",
+     "tramo": "ME",
+     "numero": 5,
+     "texto": "Manifestar interés por descubrir el contenido de textos de diferentes formatos, a través de la manipulación, la exploración, la escucha atenta y la formulación de preguntas."
+    },
+    {
+     "id": "LV-ME-06",
+     "tramo": "ME",
+     "numero": 6,
+     "texto": "Comprender a partir de la escucha atenta, contenidos explícitos de textos literarios y no literarios, reconociendo ideas centrales, señalando preferencias, realizando sencillas descripciones, preguntando sobre el contenido."
+    },
+    {
+     "id": "LV-ME-07",
+     "tramo": "ME",
+     "numero": 7,
+     "texto": "Reconocer progresivamente el significado de diversas imágenes, logos, símbolos de su entorno cotidiano, en diversos soportes (incluye uso de TICs)."
+    },
+    {
+     "id": "LV-ME-08",
+     "tramo": "ME",
+     "numero": 8,
+     "texto": "Producir sus propios signos gráficos en situaciones lúdicas."
+    },
+    {
+     "id": "LV-TR-01",
+     "tramo": "TR",
+     "numero": 1,
+     "texto": "Expresarse oralmente en forma clara y comprensible, empleando estructuras oracionales completas, conjugaciones verbales adecuadas y precisas con los tiempos, personas e intenciones comunicativas."
+    },
+    {
+     "id": "LV-TR-02",
+     "tramo": "TR",
+     "numero": 2,
+     "texto": "Comprender textos orales como preguntas, explicaciones, relatos, instrucciones y algunos conceptos abstractos en distintas situaciones comunicativas, identificando la intencionalidad comunicativa de diversos interlocutores."
+    },
+    {
+     "id": "LV-TR-03",
+     "tramo": "TR",
+     "numero": 3,
+     "texto": "Descubrir en contextos lúdicos, atributos fonológicos de palabras conocidas, tales como conteo de palabras, segmentación y conteo de sílabas, identificación de sonidos finales e iniciales."
+    },
+    {
+     "id": "LV-TR-04",
+     "tramo": "TR",
+     "numero": 4,
+     "texto": "Comunicar oralmente temas de su interés, empleando un vocabulario variado e incorporando palabras nuevas y pertinentes a las distintas situaciones comunicativas e interlocutores."
+    },
+    {
+     "id": "LV-TR-05",
+     "tramo": "TR",
+     "numero": 5,
+     "texto": "Manifestar interés por descubrir el contenido y algunos propósitos de diferentes textos escritos (manipulando, explorando, realizando descripciones y conjeturas) a través del contacto cotidiano con algunos de ellos, o del uso de TICs."
+    },
+    {
+     "id": "LV-TR-06",
+     "tramo": "TR",
+     "numero": 6,
+     "texto": "Comprender contenidos explícitos de textos literarios y no literarios, a partir de la escucha atenta, describiendo información y realizando progresivamente inferencias y predicciones."
+    },
+    {
+     "id": "LV-TR-07",
+     "tramo": "TR",
+     "numero": 7,
+     "texto": "Reconocer palabras que se encuentran en diversos soportes asociando algunos fonemas a sus correspondientes grafemas."
+    },
+    {
+     "id": "LV-TR-08",
+     "tramo": "TR",
+     "numero": 8,
+     "texto": "Representar gráficamente algunos trazos, letras, signos, palabras significativas y mensajes simples legibles, utilizando diferentes recursos y soportes en situaciones auténticas."
+    },
+    {
+     "id": "LV-TR-09",
+     "tramo": "TR",
+     "numero": 9,
+     "texto": "Comunicar mensajes simples en la lengua indígena pertinente a la comunidad donde habita."
+    },
+    {
+     "id": "LV-TR-10",
+     "tramo": "TR",
+     "numero": 10,
+     "texto": "Reconocer algunas palabras o mensajes sencillos de lenguas maternas de sus pares, distintas al castellano."
+    }
+   ]
+  },
+  {
+   "codigo": "LA",
+   "nombre": "Lenguajes Artísticos",
+   "ambito": "Comunicación Integral",
+   "transversal": false,
+   "proposito": "A través de Lenguajes Artísticos, se espera potenciar en las niñas y los niños, habilidades, actitudes y conocimientos para la expresión creativa de la realidad, y la adquisición de la sensibilidad y apreciación estética. De esta manera, amplían sus posibilidades de percibir, disfrutar y representar tanto su mundo interno como la relación con el entorno cultural y natural, empleando progresivamente diversos medios y recursos.",
+   "oa": [
+    {
+     "id": "LA-SC-01",
+     "tramo": "SC",
+     "numero": 1,
+     "texto": "Manifestar interés por los sonidos, las texturas, los colores y la luminosidad de su entorno, respondiendo a través de diversas formas, tales como balbuceo, gestos, sonrisas, entre otros."
+    },
+    {
+     "id": "LA-SC-02",
+     "tramo": "SC",
+     "numero": 2,
+     "texto": "Producir sonidos con su voz, su cuerpo y diversos objetos sonoros, en forma espontánea o por imitación."
+    },
+    {
+     "id": "LA-SC-03",
+     "tramo": "SC",
+     "numero": 3,
+     "texto": "Imitar gestos, movimientos, sonidos de su entorno significativo, a través de diversos medios."
+    },
+    {
+     "id": "LA-SC-04",
+     "tramo": "SC",
+     "numero": 4,
+     "texto": "Manifestar sus preferencias por recursos expresivos presentes en piezas musicales, visuales, y escénicas, a través de gestos, movimientos, palabras, entre otros."
+    },
+    {
+     "id": "LA-SC-05",
+     "tramo": "SC",
+     "numero": 5,
+     "texto": "Expresar corporalmente las emociones y sensaciones que le provocan algunas piezas musicales, bailando, cantando e intentando seguir el ritmo."
+    },
+    {
+     "id": "LA-SC-06",
+     "tramo": "SC",
+     "numero": 6,
+     "texto": "Experimentar sus posibilidades de expresión plástica a través de diversos recursos, produciendo sus primeros garabateos espontáneos."
+    },
+    {
+     "id": "LA-ME-01",
+     "tramo": "ME",
+     "numero": 1,
+     "texto": "Manifestar interés por diversas producciones artísticas (arquitectura, modelado, piezas musicales, pintura, dibujos, títeres, obras de teatro, danzas, entre otras), describiendo algunas características."
+    },
+    {
+     "id": "LA-ME-02",
+     "tramo": "ME",
+     "numero": 2,
+     "texto": "Expresar sus preferencias, sensaciones y emociones relacionadas con diferentes recursos expresivos que se encuentran en sencillas obras visuales (colorido, formas), musicales (fuente, intensidad del sonido) o escénicas (desplazamiento, vestimenta, carácter expresivo)."
+    },
+    {
+     "id": "LA-ME-03",
+     "tramo": "ME",
+     "numero": 3,
+     "texto": "Interpretar canciones y juegos musicales, experimentando con diversos recursos tales como, la voz, el cuerpo, instrumentos musicales y objetos."
+    },
+    {
+     "id": "LA-ME-04",
+     "tramo": "ME",
+     "numero": 4,
+     "texto": "Expresar corporalmente sensaciones y emociones experimentando con mímica, juegos teatrales, rondas, bailes y danzas."
+    },
+    {
+     "id": "LA-ME-05",
+     "tramo": "ME",
+     "numero": 5,
+     "texto": "Expresar emociones, ideas y experiencias por medio de la plástica experimentando con recursos pictóricos, gráficos y de modelado."
+    },
+    {
+     "id": "LA-ME-06",
+     "tramo": "ME",
+     "numero": 6,
+     "texto": "Experimentar diversas posibilidades de expresión, combinando lenguajes artísticos en sus producciones."
+    },
+    {
+     "id": "LA-ME-07",
+     "tramo": "ME",
+     "numero": 7,
+     "texto": "Representar a través del dibujo, diversos elementos de su entorno, incorporando figuras cerradas, trazos intencionados y primeros esbozos de la figura humana."
+    },
+    {
+     "id": "LA-TR-01",
+     "tramo": "TR",
+     "numero": 1,
+     "texto": "Apreciar producciones artísticas de diversos contextos (en forma directa o a través de medios tecnológicos), describiendo y comparando algunas características visuales, musicales o escénicas (desplazamiento, ritmo, carácter expresivo, colorido, formas, diseño, entre otros)."
+    },
+    {
+     "id": "LA-TR-02",
+     "tramo": "TR",
+     "numero": 2,
+     "texto": "Comunicar sus impresiones, emociones e ideas respecto de diversas obras de arte, producciones propias y de sus pares (artesanías, piezas musicales, obras plásticas y escénicas, entre otras)."
+    },
+    {
+     "id": "LA-TR-03",
+     "tramo": "TR",
+     "numero": 3,
+     "texto": "Interpretar canciones y juegos musicales, utilizando de manera integrada diversos recursos tales como, la voz, el cuerpo, instrumentos musicales y objetos."
+    },
+    {
+     "id": "LA-TR-04",
+     "tramo": "TR",
+     "numero": 4,
+     "texto": "Expresar corporalmente sensaciones, emociones e ideas a partir de la improvisación de escenas dramáticas, juegos teatrales, mímica y danza."
+    },
+    {
+     "id": "LA-TR-05",
+     "tramo": "TR",
+     "numero": 5,
+     "texto": "Representar plásticamente emociones, ideas, experiencias e intereses, a través de líneas, formas, colores, texturas, con recursos y soportes en plano y volumen."
+    },
+    {
+     "id": "LA-TR-06",
+     "tramo": "TR",
+     "numero": 6,
+     "texto": "Experimentar diversas combinaciones de expresión plástica, corporal y musical, comunicando las razones del proceso realizado."
+    },
+    {
+     "id": "LA-TR-07",
+     "tramo": "TR",
+     "numero": 7,
+     "texto": "Representar a través del dibujo, sus ideas, intereses y experiencias, incorporando detalles a las figuras humanas y a objetos de su entorno, ubicándolos en parámetros básicos de organización espacial (arriba/abajo, dentro/fuera)."
+    }
+   ]
+  },
+  {
+   "codigo": "EN",
+   "nombre": "Exploración del Entorno Natural",
+   "ambito": "Interacción y Comprensión del Entorno",
+   "transversal": false,
+   "proposito": "A través de Exploración del Entorno Natural, se espera potenciar en las niñas y los niños, las habilidades, actitudes y conocimientos que les permitan comprender, apreciar y cuidar su entorno natural, potenciando su curiosidad y capacidad de asombro. De esta manera, amplían sus recursos personales favoreciendo el desarrollo de personas activas, que exploran, descubren, aprecian, respetan y se involucran afectivamente con el contexto natural en el que habitan, desarrollando el pensamiento científico.",
+   "oa": [
+    {
+     "id": "EN-SC-01",
+     "tramo": "SC",
+     "numero": 1,
+     "texto": "Manifestar curiosidad y asombro por algunos elementos, situaciones y fenómenos que ocurren en su entorno natural cercano, tales como: arena, lluvia, viento, entre otros."
+    },
+    {
+     "id": "EN-SC-02",
+     "tramo": "SC",
+     "numero": 2,
+     "texto": "Reconocer algunos elementos representativos de su entorno natural, tales como: animales, plantas, ríos, cerros, desierto."
+    },
+    {
+     "id": "EN-SC-03",
+     "tramo": "SC",
+     "numero": 3,
+     "texto": "Explorar su entorno, observando, manipulando y experimentando con diversos materiales de su interés, tales como: mezclar agua con tierra, recoger hojas o ramas, trasladar piedras, hacer huellas."
+    },
+    {
+     "id": "EN-SC-04",
+     "tramo": "SC",
+     "numero": 4,
+     "texto": "Descubrir características de animales al observarlos en forma directa, en textos y en imágenes."
+    },
+    {
+     "id": "EN-SC-05",
+     "tramo": "SC",
+     "numero": 5,
+     "texto": "Colaborar en actividades sencillas de cuidado de la naturaleza, tales como: regar, recoger hojas, trasladar ramitas, entre otras."
+    },
+    {
+     "id": "EN-ME-01",
+     "tramo": "ME",
+     "numero": 1,
+     "texto": "Manifestar interés y asombro por diversos elementos, situaciones y fenómenos del entorno natural, explorando, observando, preguntando, describiendo, agrupando, entre otros."
+    },
+    {
+     "id": "EN-ME-02",
+     "tramo": "ME",
+     "numero": 2,
+     "texto": "Comunicar verbalmente características de elementos y paisajes de su entorno natural, tales como cuerpos celestes, cerros, desierto, flora; y de fenómenos como marejadas, sismos, tormentas, sequías."
+    },
+    {
+     "id": "EN-ME-03",
+     "tramo": "ME",
+     "numero": 3,
+     "texto": "Descubrir que el sol es fuente de luz y calor para el planeta, a través de experiencias directas o TICs."
+    },
+    {
+     "id": "EN-ME-04",
+     "tramo": "ME",
+     "numero": 4,
+     "texto": "Comunicar algunas propiedades básicas de los elementos naturales que explora, tales como: colores, texturas, tamaños, temperaturas entre otras."
+    },
+    {
+     "id": "EN-ME-05",
+     "tramo": "ME",
+     "numero": 5,
+     "texto": "Distinguir una variedad progresivamente más amplia de animales y plantas, respecto a sus características (tamaño, color, textura y morfología), sus necesidades básicas y los lugares que habitan, al observarlos en forma directa, en libros ilustrados o en TICs."
+    },
+    {
+     "id": "EN-ME-06",
+     "tramo": "ME",
+     "numero": 6,
+     "texto": "Colaborar en situaciones cotidianas, en acciones que contribuyen al desarrollo de ambientes sostenibles, tales como cerrar las llaves de agua, apagar aparatos eléctricos, entre otras."
+    },
+    {
+     "id": "EN-ME-07",
+     "tramo": "ME",
+     "numero": 7,
+     "texto": "Emplear instrumentos y herramientas de observación y recolección (lupas, frascos, recipientes, botellas, cucharas, embudos, pinzas, entre otros) en la exploración del entorno natural."
+    },
+    {
+     "id": "EN-ME-08",
+     "tramo": "ME",
+     "numero": 8,
+     "texto": "Experimentar mezclas y disoluciones con materiales cotidianos tales como: burbujas de jabón, agua salada, gelatina, describiendo los cambios observados."
+    },
+    {
+     "id": "EN-ME-09",
+     "tramo": "ME",
+     "numero": 9,
+     "texto": "Reconocer que el aire y el agua son elementos vitales para las personas, los animales y las plantas, y que estos elementos pueden encontrarse con o sin contaminación."
+    },
+    {
+     "id": "EN-TR-01",
+     "tramo": "TR",
+     "numero": 1,
+     "texto": "Manifestar interés y asombro al ampliar información sobre cambios que ocurren en el entorno natural, a las personas, animales, plantas, lugares y cuerpos celestes, utilizando diversas fuentes y procedimientos."
+    },
+    {
+     "id": "EN-TR-02",
+     "tramo": "TR",
+     "numero": 2,
+     "texto": "Formular conjeturas y predicciones acerca de las causas o consecuencias de fenómenos naturales que observa, a partir de sus conocimientos y experiencias previas."
+    },
+    {
+     "id": "EN-TR-03",
+     "tramo": "TR",
+     "numero": 3,
+     "texto": "Reconocer la importancia del agua y la energía solar para la vida humana, los animales y las plantas, a partir de experiencias directas o TICs."
+    },
+    {
+     "id": "EN-TR-04",
+     "tramo": "TR",
+     "numero": 4,
+     "texto": "Comunicar propiedades básicas de los objetos y elementos naturales que explora, tales como: transparencia/opacidad, flexibilidad/rigidez, rugosidad/lisura, relacionándolos con posibles usos."
+    },
+    {
+     "id": "EN-TR-05",
+     "tramo": "TR",
+     "numero": 5,
+     "texto": "Explorar los cambios o efectos que se producen en los materiales al aplicarles fuerza, calor o agua."
+    },
+    {
+     "id": "EN-TR-06",
+     "tramo": "TR",
+     "numero": 6,
+     "texto": "Establecer relaciones de semejanzas y diferencias de animales y plantas, a partir de algunas características (tamaño, color, textura y morfología), sus necesidades básicas (formas de alimentación y abrigo), y los lugares que habitan, al observarlos en forma directa, en libros ilustrados o en TICs."
+    },
+    {
+     "id": "EN-TR-07",
+     "tramo": "TR",
+     "numero": 7,
+     "texto": "Describir semejanzas y diferencias respecto a características, necesidades básicas y cambios que ocurren en el proceso de crecimiento, en personas, animales y plantas."
+    },
+    {
+     "id": "EN-TR-08",
+     "tramo": "TR",
+     "numero": 8,
+     "texto": "Practicar algunas acciones cotidianas, que contribuyen al cuidado de ambientes sostenibles, tales como manejo de desechos en paseos al aire libre, separación de residuos, utilizar envases o papeles, plantar flores o árboles."
+    },
+    {
+     "id": "EN-TR-09",
+     "tramo": "TR",
+     "numero": 9,
+     "texto": "Comunicar sus observaciones, los instrumentos utilizados y los hallazgos obtenidos en experiencias de indagación en el entorno natural, mediante relatos, representaciones gráficas o fotografías."
+    },
+    {
+     "id": "EN-TR-10",
+     "tramo": "TR",
+     "numero": 10,
+     "texto": "Formular conjeturas a partir de los cambios observados en mezclas y disoluciones, estableciendo relaciones de posible causalidad y comunicándolas a través de diferentes medios."
+    },
+    {
+     "id": "EN-TR-11",
+     "tramo": "TR",
+     "numero": 11,
+     "texto": "Identificar las condiciones que caracterizan los ambientes saludables, tales como: aire y agua limpia, combustión natural, reciclaje, reutilización y reducción de basura, tomando conciencia progresiva de cómo estas contribuyen a su salud."
+    },
+    {
+     "id": "EN-TR-12",
+     "tramo": "TR",
+     "numero": 12,
+     "texto": "Comprender que la acción humana puede aportar al desarrollo de ambientes sostenibles y también al deterioro de estos."
+    }
+   ]
+  },
+  {
+   "codigo": "ES",
+   "nombre": "Comprensión del Entorno Sociocultural",
+   "ambito": "Interacción y Comprensión del Entorno",
+   "transversal": false,
+   "proposito": "A través de Comprensión del Entorno Sociocultural, se espera potenciar en los niños y las niñas, las habilidades, actitudes y conocimientos que les permitan comprender y apreciar la dimensión social y cultural de su contexto. De esta manera, amplían sus recursos personales para actuar en él y transformarlo al convivir con otros, reconociendo y respetando su diversidad.",
+   "oa": [
+    {
+     "id": "ES-SC-01",
+     "tramo": "SC",
+     "numero": 1,
+     "texto": "Imitar gestos y acciones que realizan personas de su entorno cercano."
+    },
+    {
+     "id": "ES-SC-02",
+     "tramo": "SC",
+     "numero": 2,
+     "texto": "Identificar algunas actividades habituales que se realizan en su vida cotidiana, tales como: preparación de alimentos, rutinas antes de dormir, entre otras."
+    },
+    {
+     "id": "ES-SC-03",
+     "tramo": "SC",
+     "numero": 3,
+     "texto": "Manifestar interés por canciones, juegos y bailes que forman parte de su cotidianeidad."
+    },
+    {
+     "id": "ES-SC-04",
+     "tramo": "SC",
+     "numero": 4,
+     "texto": "Explorar utensilios domésticos y objetos tecnológicos que forman parte de su vida cotidiana, tales como: pocillos, envases de botellas, escobas, cucharas, teléfonos, entre otros, utilizándolos progresivamente en situaciones cotidianas y juegos."
+    },
+    {
+     "id": "ES-SC-05",
+     "tramo": "SC",
+     "numero": 5,
+     "texto": "Reconocer objetos y personas, asociándolos a ciertos lugares, tales como: educadora/ técnico y jardín infantil; mamá/papá y casa; cama y dormir, recinto de cocina y comida, de su entorno sociocultural."
+    },
+    {
+     "id": "ES-ME-01",
+     "tramo": "ME",
+     "numero": 1,
+     "texto": "Describir actividades habituales de su comunidad, como ir de compras, jugar en la plaza, viajar en bus, entre otras, señalando su participación en ellas."
+    },
+    {
+     "id": "ES-ME-02",
+     "tramo": "ME",
+     "numero": 2,
+     "texto": "Describir características de las formas de vida de su comunidad (viviendas, paisajes, costumbres), a través de canciones, juegos, relatos y fotos familiares, entre otras."
+    },
+    {
+     "id": "ES-ME-03",
+     "tramo": "ME",
+     "numero": 3,
+     "texto": "Seleccionar utensilios domésticos y objetos tecnológicos que les permiten resolver problemas en contextos sociales auténticos."
+    },
+    {
+     "id": "ES-ME-04",
+     "tramo": "ME",
+     "numero": 4,
+     "texto": "Reconocer sucesos significativos de su historia personal y familiar, en diversas situaciones, tales como: conversaciones familiares, relatos de un agente comunitario, visitas a lugares, observación de fotografías, entre otros."
+    },
+    {
+     "id": "ES-ME-05",
+     "tramo": "ME",
+     "numero": 5,
+     "texto": "Identificar instituciones significativas de su entorno, describiendo actividades y rutinas representativas que en ellas se realizan."
+    },
+    {
+     "id": "ES-ME-06",
+     "tramo": "ME",
+     "numero": 6,
+     "texto": "Identificar algunas normas de protección y seguridad de su entorno cotidiano referidas a alimentación, tránsito y sismos, y otras pertinentes a su contexto geográfico."
+    },
+    {
+     "id": "ES-ME-07",
+     "tramo": "ME",
+     "numero": 7,
+     "texto": "Distinguir en paisajes de su localidad, elementos naturales (bosque, cerros, ríos), y culturales (caminos, edificios, puentes)."
+    },
+    {
+     "id": "ES-TR-01",
+     "tramo": "TR",
+     "numero": 1,
+     "texto": "Comprender los roles que desarrollan miembros de su familia y de su comunidad, y su aporte para el bienestar común."
+    },
+    {
+     "id": "ES-TR-02",
+     "tramo": "TR",
+     "numero": 2,
+     "texto": "Apreciar diversas formas de vida de comunidades, del país y del mundo, en el pasado y en el presente, tales como: viviendas, paisajes, alimentación, costumbres, identificando mediante diversas fuentes de documentación gráfica y audiovisual, sus características relevantes."
+    },
+    {
+     "id": "ES-TR-03",
+     "tramo": "TR",
+     "numero": 3,
+     "texto": "Comparar características de diseño, funcionamiento, utilidad, precaución de uso e impacto en el entorno, de diferentes objetos tecnológicos."
+    },
+    {
+     "id": "ES-TR-04",
+     "tramo": "TR",
+     "numero": 4,
+     "texto": "Formular interpretaciones respecto de las necesidades y situaciones que dieron origen a creaciones e inventos, tales como: refrigerador, radio, avión, naves espaciales, cámara fotográfica, entre otros."
+    },
+    {
+     "id": "ES-TR-05",
+     "tramo": "TR",
+     "numero": 5,
+     "texto": "Comunicar algunos relatos sociales sobre hechos significativos del pasado de su comunidad y país, apoyándose en recursos tales como: fotografías, videos, utensilios u objetos representativos."
+    },
+    {
+     "id": "ES-TR-06",
+     "tramo": "TR",
+     "numero": 6,
+     "texto": "Reconocer diversas acciones para el cuidado del patrimonio cultural material (construcciones, obras de carácter arqueológico, lugares) e inmaterial (tradiciones, celebraciones), de su comunidad local."
+    },
+    {
+     "id": "ES-TR-07",
+     "tramo": "TR",
+     "numero": 7,
+     "texto": "Reconocer la importancia del servicio que prestan instituciones, organizaciones, lugares y obras de interés patrimonial, tales como: escuelas, transporte público, empresas, iglesias, museos, bibliotecas, entre otros."
+    },
+    {
+     "id": "ES-TR-08",
+     "tramo": "TR",
+     "numero": 8,
+     "texto": "Conocer sobre la vida de algunas mujeres y hombres, que han realizado en el pasado y en el presente, aportes diversos en su comunidad, país, y el mundo, a través de relatos, o con apoyo de TICs."
+    },
+    {
+     "id": "ES-TR-09",
+     "tramo": "TR",
+     "numero": 9,
+     "texto": "Ampliar sus estrategias de indagación utilizando diversas fuentes, instrumentos y tecnologías de la información y comunicación, que le permitan expandir su entorno."
+    },
+    {
+     "id": "ES-TR-10",
+     "tramo": "TR",
+     "numero": 10,
+     "texto": "Comprender normas de protección y seguridad referidas a tránsito, incendios, inundaciones, sismos, y otras pertinentes a su contexto geográfico."
+    },
+    {
+     "id": "ES-TR-11",
+     "tramo": "TR",
+     "numero": 11,
+     "texto": "Identificar lugares de su entorno a través de su representación geográfica, tales como: maquetas, fotografías aéreas, dibujos y planos."
+    }
+   ]
+  },
+  {
+   "codigo": "PM",
+   "nombre": "Pensamiento Matemático",
+   "ambito": "Interacción y Comprensión del Entorno",
+   "transversal": false,
+   "proposito": "A través de Pensamiento Matemático, se espera potenciar en los niños y las niñas, las habilidades, actitudes y conocimientos relacionados con el pensar lógico y los números, que les posibiliten comunicar y resolver situaciones prácticas cotidianas. De esta manera, amplían sus recursos para comprender y actuar en el entorno, intercambiando significados con otras personas.",
+   "oa": [
+    {
+     "id": "PM-SC-01",
+     "tramo": "SC",
+     "numero": 1,
+     "texto": "Adquirir la noción de permanencia de objetos y de personas significativas, mediante juegos con diversos objetos de uso cotidiano."
+    },
+    {
+     "id": "PM-SC-02",
+     "tramo": "SC",
+     "numero": 2,
+     "texto": "Explorar a través de sus experiencias sensoriales y motrices, atributos de los objetos tales como: tamaño, textura y dureza."
+    },
+    {
+     "id": "PM-SC-03",
+     "tramo": "SC",
+     "numero": 3,
+     "texto": "Experimentar con los objetos, resolviendo situaciones concretas, tales como: alcanzar objetos, apretar botones en aparatos sonoros, sacar juguetes de contenedores, juntar objetos, entre otros."
+    },
+    {
+     "id": "PM-SC-04",
+     "tramo": "SC",
+     "numero": 4,
+     "texto": "Utilizar en situaciones lúdicas, nociones de ubicación en relación con su propio cuerpo tales como: dentro/fuera; encima/debajo."
+    },
+    {
+     "id": "PM-SC-05",
+     "tramo": "SC",
+     "numero": 5,
+     "texto": "Orientarse temporalmente en situaciones cotidianas, siguiendo secuencias breves tales como: antes/después."
+    },
+    {
+     "id": "PM-SC-06",
+     "tramo": "SC",
+     "numero": 6,
+     "texto": "Emplear cuantificadores (más/menos, mucho/poco), en situaciones cotidianas."
+    },
+    {
+     "id": "PM-ME-01",
+     "tramo": "ME",
+     "numero": 1,
+     "texto": "Reproducir patrones sonoros, visuales, gestuales, corporales u otros, de dos o tres elementos."
+    },
+    {
+     "id": "PM-ME-02",
+     "tramo": "ME",
+     "numero": 2,
+     "texto": "Experimentar con diversos objetos, estableciendo relaciones al clasificar por dos atributos a la vez (forma, color, entre otros) y seriar por altura o longitud."
+    },
+    {
+     "id": "PM-ME-03",
+     "tramo": "ME",
+     "numero": 3,
+     "texto": "Describir la posición de objetos y personas, respecto de un punto u objeto de referencia, empleando conceptos de ubicación y distancia tales como: dentro/fuera; encima/debajo; cerca /lejos."
+    },
+    {
+     "id": "PM-ME-04",
+     "tramo": "ME",
+     "numero": 4,
+     "texto": "Orientarse temporalmente en situaciones cotidianas, mediante la utilización progresiva de algunas nociones y relaciones de secuencias, tales como: antes/ después, día/noche, hoy/mañana."
+    },
+    {
+     "id": "PM-ME-05",
+     "tramo": "ME",
+     "numero": 5,
+     "texto": "Emplear cuantificadores, tales como: más/menos, mucho/poco, todo/ninguno, al comparar cantidades de objetos en situaciones cotidianas."
+    },
+    {
+     "id": "PM-ME-06",
+     "tramo": "ME",
+     "numero": 6,
+     "texto": "Emplear progresivamente los números, para contar, identificar, cuantificar y comparar cantidades, hasta el 10 e indicar orden o posición de algunos elementos en situaciones cotidianas o juegos."
+    },
+    {
+     "id": "PM-ME-07",
+     "tramo": "ME",
+     "numero": 7,
+     "texto": "Representar progresivamente, números y cantidades en forma concreta y pictórica hasta el 10."
+    },
+    {
+     "id": "PM-ME-08",
+     "tramo": "ME",
+     "numero": 8,
+     "texto": "Resolver progresivamente problemas simples, de manera concreta y pictórica, agregando o quitando hasta 5 elementos."
+    },
+    {
+     "id": "PM-ME-09",
+     "tramo": "ME",
+     "numero": 9,
+     "texto": "Descubrir atributos de figuras 3D, mediante la exploración de objetos presentes en su entorno."
+    },
+    {
+     "id": "PM-ME-10",
+     "tramo": "ME",
+     "numero": 10,
+     "texto": "Identificar algunas acciones que se llevaron a cabo para resolver problemas."
+    },
+    {
+     "id": "PM-TR-01",
+     "tramo": "TR",
+     "numero": 1,
+     "texto": "Crear patrones sonoros, visuales, gestuales, corporales u otros, de dos o tres elementos."
+    },
+    {
+     "id": "PM-TR-02",
+     "tramo": "TR",
+     "numero": 2,
+     "texto": "Experimentar con diversos objetos estableciendo relaciones al clasificar por dos o tres atributos a la vez (forma, color, tamaño, función, masa, materialidad, entre otros) y seriar por altura, ancho, longitud o capacidad para contener."
+    },
+    {
+     "id": "PM-TR-03",
+     "tramo": "TR",
+     "numero": 3,
+     "texto": "Comunicar la posición de objetos y personas respecto de un punto u objeto de referencia, empleando conceptos de ubicación (dentro/fuera; encima/debajo/entre; al frente de/detrás de); distancia (cerca/lejos) y dirección (adelante/atrás/hacia el lado), en situaciones lúdicas."
+    },
+    {
+     "id": "PM-TR-04",
+     "tramo": "TR",
+     "numero": 4,
+     "texto": "Emplear cuantificadores, tales como: “más que”, “menos que”, “igual que”, al comparar cantidades de objetos en situaciones cotidianas."
+    },
+    {
+     "id": "PM-TR-05",
+     "tramo": "TR",
+     "numero": 5,
+     "texto": "Orientarse temporalmente en situaciones cotidianas, empleando nociones y relaciones de secuencia (antes/ahora/después/al mismo tiempo, día/noche), frecuencia (siempre/a veces/ nunca) y duración (larga/corta)."
+    },
+    {
+     "id": "PM-TR-06",
+     "tramo": "TR",
+     "numero": 6,
+     "texto": "Emplear los números, para contar, identificar, cuantificar y comparar cantidades hasta el 20 e indicar orden o posición de algunos elementos en situaciones cotidianas o juegos."
+    },
+    {
+     "id": "PM-TR-07",
+     "tramo": "TR",
+     "numero": 7,
+     "texto": "Representar números y cantidades hasta el 10, en forma concreta, pictórica y simbólica."
+    },
+    {
+     "id": "PM-TR-08",
+     "tramo": "TR",
+     "numero": 8,
+     "texto": "Resolver problemas simples de manera concreta y pictórica agregando o quitando hasta 10 elementos, comunicando las acciones llevadas a cabo."
+    },
+    {
+     "id": "PM-TR-09",
+     "tramo": "TR",
+     "numero": 9,
+     "texto": "Representar objetos desde arriba, del lado, abajo, a través de dibujos, fotografías o TICs, formulando conjeturas frente a sus descubrimientos."
+    },
+    {
+     "id": "PM-TR-10",
+     "tramo": "TR",
+     "numero": 10,
+     "texto": "Identificar atributos de figuras 2D y 3D, tales como: forma, cantidad de lados, vértices, caras, que observa en forma directa o a través de TICs."
+    },
+    {
+     "id": "PM-TR-11",
+     "tramo": "TR",
+     "numero": 11,
+     "texto": "Emplear medidas no estandarizadas, para determinar longitud de objetos, registrando datos, en diversas situaciones lúdicas o actividades cotidianas."
+    },
+    {
+     "id": "PM-TR-12",
+     "tramo": "TR",
+     "numero": 12,
+     "texto": "Comunicar el proceso desarrollado en la resolución de problemas concretos, identificando la pregunta, acciones y posibles respuestas."
+    }
+   ]
+  }
+ ]
+}

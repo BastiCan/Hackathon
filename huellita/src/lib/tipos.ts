@@ -65,13 +65,6 @@ export interface Evidencia {
   ninoIdSugerido?: string;
   /** Texto leído del post-it, transcrito del audio o escrito por la tía. */
   textoExtraido?: string;
-  /**
-   * Foto del post-it o de la nota: URL de datos (JPEG reducido en el
-   * dispositivo) o la clave de una foto de ejemplo de la demo. Solo fotos de
-   * notas; las fotos con caras de niños/as se difuminan antes de guardarse
-   * (privacidad.md 2).
-   */
-  foto?: string;
   estado: EstadoEvidencia;
 }
 
@@ -177,8 +170,6 @@ export interface SugerenciaDemo {
 export interface DemoCaptura {
   formato: Formato;
   texto: string;
-  /** Clave de la foto de ejemplo del post-it (ver `lib/fotos.ts`). */
-  foto?: string;
   sugerencias: SugerenciaDemo[];
 }
 

@@ -39,9 +39,7 @@ function texto(): string {
 
 function botonPor(nombre: string): HTMLButtonElement {
   const botones = [...contenedor.querySelectorAll('button')];
-  const encontrado =
-    botones.find((b) => (b.textContent ?? '').trim() === nombre) ??
-    botones.find((b) => (b.textContent ?? '').includes(nombre));
+  const encontrado = botones.find((b) => (b.textContent ?? '').includes(nombre));
   if (!encontrado) throw new Error(`No hay botón con el texto "${nombre}"`);
   return encontrado as HTMLButtonElement;
 }
@@ -72,54 +70,28 @@ afterEach(() => {
   contenedor.remove();
 });
 
-describe('Agenda', () => {
-  it('muestra el encabezado oficial, la semana, el aviso y la jornada', async () => {
+describe('Mi sala', () => {
+  it('muestra la sala, la pila de pendientes, la grilla y el resumen', async () => {
     await montar('/');
-    expect(texto()).toContain('Gobierno');
-    expect(texto()).toContain('INTEGRA');
-    expect(texto()).toContain('Agenda · Medio Menor A');
-    expect(texto()).toContain('Jueves 15 de octubre');
-    expect(texto()).toContain('por revisar');
-    expect(texto()).toContain('registro IEA (noviembre)');
-    expect(texto()).toContain('Experiencia de aprendizaje');
-    expect(contenedor.querySelectorAll('[aria-label="Días de la semana"] button')).toHaveLength(5);
-    // La foto real del post-it de las tortugas aparece en la agenda de hoy.
-    expect(contenedor.querySelectorAll('img[alt="Foto de la nota"]').length).toBeGreaterThan(0);
-  });
-
-  it('cambia de día con la semana', async () => {
-    await montar('/');
-    const lunes = contenedor.querySelector<HTMLButtonElement>('[aria-label^="lun 12"]');
-    expect(lunes).not.toBeNull();
-    await tocar(lunes!);
-    expect(texto()).toContain('Lunes 12 de octubre');
-    expect(texto()).toContain('Volver a hoy');
-  });
-});
-
-describe('Sala', () => {
-  it('muestra la planilla con una fila por niño/a y su nivel por núcleo', async () => {
-    await montar('/sala');
-    expect(texto()).toContain('Planilla de la sala');
     expect(texto()).toContain('Medio Menor A');
+    expect(texto()).toContain('notas por revisar');
+    expect(texto()).toContain('Huellita ya las ordenó');
     expect(texto()).toContain('Josefa');
     expect(texto()).toContain('Observados en 30 días');
-    expect(contenedor.querySelectorAll('tbody tr')).toHaveLength(18);
-    // Una columna por núcleo.
-    expect(contenedor.querySelectorAll('thead th')).toHaveLength(10);
-    // Nunca fotos de niños ni niñas.
+    // 18 niños/as activos de la sala, con avatar de iniciales y sin fotos.
+    expect(contenedor.querySelectorAll('.grid-cols-3 > button')).toHaveLength(18);
     expect(contenedor.querySelectorAll('img')).toHaveLength(0);
   });
 
   it('filtra por revisar avance', async () => {
-    await montar('/sala');
+    await montar('/');
     await tocar(botonPor('Revisar avance'));
-    expect(contenedor.querySelectorAll('tbody tr')).toHaveLength(1);
+    expect(contenedor.querySelectorAll('.grid-cols-3 > button')).toHaveLength(1);
     expect(texto()).toContain('Josefa');
   });
 
-  it('abre la leyenda de los colores', async () => {
-    await montar('/sala');
+  it('abre la leyenda del semáforo', async () => {
+    await montar('/');
     const ayuda = contenedor.querySelector<HTMLButtonElement>(
       '[aria-label="Qué significan los colores"]',
     );
@@ -133,22 +105,20 @@ describe('Sala', () => {
 describe('Revisar', () => {
   it('muestra las notas con su cita, certeza y acciones', async () => {
     await montar('/revisar');
-    expect(texto()).toContain('¿Está bien lo que leyó Huellita?');
-    expect(texto()).toContain('Huellita leyó');
-    expect(texto()).toContain('Confianza');
-    expect(texto()).toContain('Confirmar');
-    expect(texto()).toContain('Corregir');
-    expect(texto()).toContain('Descartar');
-    // Nombre que no calzó exacto: queda lo que estaba escrito en la nota.
-    expect(texto()).toContain('escrito “Agus”');
-    expect(texto()).toContain('Baja');
-    expect(texto()).toMatch(/N\.º \d{4}/);
+    expect(texto()).toContain('Confirma lo que Huellita leyó de tus notas.');
+    expect(texto()).toContain('Segura');
+    expect(texto()).toContain('Guardar');
+    expect(texto()).toContain('Cambiar');
+    // Nombre que no calzó exacto: queda con la cita de lo que decía la nota.
+    expect(texto()).toContain('decía');
+    expect(texto()).toContain('Poco segura');
+    expect(contenedor.querySelectorAll('.postit').length).toBeGreaterThan(0);
   });
 
   it('al guardar una nota, sale de la lista y avisa', async () => {
     await montar('/revisar');
     const antes = (await datos.sugerencias({ estado: ['pendiente'] })).length;
-    await tocar(botonPor('Confirmar'));
+    await tocar(botonPor('Guardar'));
     await esperarSalida();
     const despues = (await datos.sugerencias({ estado: ['pendiente'] })).length;
     expect(despues).toBe(antes - 1);
@@ -158,7 +128,7 @@ describe('Revisar', () => {
 
   it('acepta todas las seguras de una vez', async () => {
     await montar('/revisar');
-    await tocar(botonPor('Confirmar los de confianza alta'));
+    await tocar(botonPor('Aceptar las seguras'));
     await esperarSalida();
     const pendientes = await datos.sugerencias({ estado: ['pendiente'] });
     expect(pendientes.every((s) => s.certeza !== 'alta' || s.tipo === 'nota_sala')).toBe(true);
@@ -171,14 +141,12 @@ describe('Ficha', () => {
     await montar('/nino/NINO-00001');
     expect(texto()).toContain('Josefa');
     expect(texto()).toContain('Para observar esta semana');
-    expect(texto()).toContain('Conviene acompañar de cerca Lenguaje Verbal');
-    expect(texto()).toContain('Cómo va · por ámbito');
-    expect(texto()).toContain('Desarrollo personal y social');
-    expect(texto()).toContain('Comunicación integral');
-    expect(texto()).toContain('Pensamiento Matemático');
-    expect(texto()).toContain('revisar avance (esperado 4)');
+    expect(texto()).toContain('Cómo va');
     expect(texto()).toContain('Registros');
     expect(texto()).toContain('Registrar para Josefa');
+    // 4 núcleos visibles y el botón para ver los 8.
+    await tocar(botonPor('Ver los 8'));
+    expect(texto()).toContain('Pensamiento Matemático');
   });
 
   it('abre el detalle de un núcleo con el nivel actual y el siguiente', async () => {
@@ -196,7 +164,7 @@ describe('Directora', () => {
 
   it('muestra una tarjeta por sala con los observados de 30 días', async () => {
     await montar('/directora');
-    expect(texto()).toContain('Salas del jardín');
+    expect(texto()).toContain('Salas');
     expect(texto()).toContain('Medio Menor A');
     expect(texto()).toContain('Medio Menor B');
     expect(texto()).toContain('Sala Cuna Mayor');
@@ -211,8 +179,9 @@ describe('Directora', () => {
     await montar('/directora/sala/SALA-MMA');
     expect(texto()).toContain('Vista de la directora · solo lectura');
     expect(texto()).toContain('Medio Menor A');
+    expect(texto()).not.toContain('notas por revisar');
     expect(contenedor.querySelector('[aria-label="Registrar"]')).toBeNull();
-    expect(contenedor.querySelectorAll('tbody tr')).toHaveLength(18);
+    expect(contenedor.querySelectorAll('.grid-cols-3 > button')).toHaveLength(18);
   });
 
   it('mueve de sala a un niño/a con confirmación', async () => {
@@ -241,9 +210,10 @@ describe('Directora', () => {
 describe('Acceso por rol', () => {
   it('una tía no entra a la vista directora', async () => {
     await montar('/directora');
-    // Redirige a su agenda.
-    expect(texto()).toContain('Agenda · Medio Menor A');
+    // Redirige a Mi sala.
+    expect(texto()).toContain('Medio Menor A');
     expect(texto()).not.toContain('Salas del jardín');
+    expect(texto()).toContain('notas por revisar');
   });
 
   it('la barra inferior solo muestra Directora a la directora', async () => {

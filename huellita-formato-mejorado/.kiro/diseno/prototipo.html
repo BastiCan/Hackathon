@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Huellita · prototipo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --tinta:#1E2A55; --tinta-2:#56618A; --tinta-3:#8A93B2;
+  --papel:#FFFFFF; --fondo:#F3F6FB; --cuadricula:#E2E8F4; --linea:#DCE3EF;
+  --integra:#1F4E9A; --integra-claro:#E7EEFA; --integra-osc:#163A75;
+  --postit-amarillo:#FFE873; --postit-rosa:#FFB8D2; --postit-lima:#D6F27C;
+  --verde:#2E9E5B; --amarillo:#E0A800; --rojo:#D64545; --ambar:#B86E00;
+  --n1:#E8664F; --n2:#F08A3E; --n3:#F2C14E; --n4:#9BC53D; --n5:#5A9E3A; --n6:#3A9E9A; --n7:#3D7DD8; --n8:#1F3B6B;
+  --display:'Bricolage Grotesque',system-ui,sans-serif;
+  --texto:'Atkinson Hyperlegible',system-ui,sans-serif;
+  --mano:'Kalam','Comic Sans MS',cursive;
+  --r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--texto);font-size:16px;line-height:1.45;color:var(--tinta);background:#D9E1EE;display:flex;justify-content:center;align-items:center;min-height:100vh}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:3px solid var(--integra);outline-offset:2px;border-radius:8px}
+.telefono{position:relative;width:390px;height:844px;max-height:100vh;background:var(--fondo);border-radius:36px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 60px -30px rgba(30,42,85,.45),0 0 0 10px #1E2A55}
+@media (max-width:440px){body{background:var(--fondo)}.telefono{width:100%;height:100dvh;max-height:none;border-radius:0;box-shadow:none}}
+.pantalla{flex:1;overflow-y:auto;padding:18px 16px 190px}
+.pantalla.sin-dock{padding-bottom:96px}
+h1{font-family:var(--display);font-weight:800;font-size:26px;letter-spacing:-.02em;line-height:1.1}
+h2{font-family:var(--display);font-weight:600;font-size:18px;letter-spacing:-.01em}
+.sub{color:var(--tinta-2);font-size:14px}
+.ico{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.fila{display:flex;align-items:center;gap:8px}
+.entre{justify-content:space-between}
+
+/* encabezado */
+.cabeza{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+.yo{width:44px;height:44px;border-radius:50%;background:var(--integra);color:#fff;font-family:var(--display);font-weight:600;display:grid;place-items:center}
+
+/* pila de post-its pendientes */
+.pila{position:relative;display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:14px 16px;margin:6px 0 18px;background:var(--postit-amarillo);border-radius:4px 4px 4px 18px;transform:rotate(-.6deg);box-shadow:5px 5px 0 var(--postit-rosa),-4px 9px 0 var(--postit-lima),0 16px 22px -14px rgba(30,42,85,.5)}
+.pila b{font-family:var(--mano);font-size:26px;line-height:1}
+.pila .flecha{margin-left:auto}
+
+/* chips de filtro */
+.chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:0 -16px 14px;padding:0 16px 2px}
+.chip{flex:none;min-height:40px;padding:8px 14px;border-radius:999px;background:var(--papel);border:1px solid var(--linea);font-size:15px;color:var(--tinta-2)}
+.chip[aria-pressed=true]{background:var(--tinta);border-color:var(--tinta);color:#fff}
+
+/* grilla de niños */
+.grilla{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.nino{background:var(--papel);border:1px solid var(--linea);border-radius:var(--r);padding:12px 6px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;min-height:124px}
+.nino:active{transform:scale(.98)}
+.avatar{--aro:var(--verde);width:54px;height:54px;border-radius:50%;background:var(--integra-claro);color:var(--integra-osc);font-family:var(--display);font-weight:600;font-size:18px;display:grid;place-items:center;box-shadow:0 0 0 3px var(--papel),0 0 0 6px var(--aro)}
+.avatar.amarillo{--aro:var(--amarillo)}.avatar.rojo{--aro:var(--rojo)}
+.nino .nom{font-weight:700;font-size:15px}
+.nivel-chip{font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;color:#fff;letter-spacing:.02em}
+.bandera{position:absolute;top:8px;right:8px;color:var(--ambar)}
+.resumen-sala{margin-top:16px;padding:14px;border-radius:var(--r);background:var(--papel);border:1px dashed var(--linea);font-size:15px;color:var(--tinta-2)}
+.resumen-sala strong{color:var(--tinta)}
+
+/* dock de captura */
+.dock{position:absolute;left:0;right:0;bottom:72px;padding:12px 24px 14px;display:flex;align-items:center;justify-content:center;gap:28px;background:linear-gradient(to top,var(--fondo) 70%,rgba(243,246,251,0))}
+.cap{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:13px;font-weight:700;color:var(--tinta-2)}
+.cap .bola{width:54px;height:54px;border-radius:50%;background:var(--papel);border:1.5px solid var(--linea);display:grid;place-items:center;color:var(--tinta)}
+.cap.principal .bola{width:76px;height:76px;background:var(--integra);border:0;color:#fff;box-shadow:0 0 0 6px var(--integra-claro)}
+.cap.principal .ico{width:30px;height:30px}
+
+/* barra inferior */
+.nav{position:absolute;left:0;right:0;bottom:0;height:72px;background:var(--papel);border-top:1px solid var(--linea);display:flex}
+.nav button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:12px;font-weight:700;color:var(--tinta-3);position:relative}
+.nav button[aria-current=page]{color:var(--integra)}
+.nav .badge{position:absolute;top:8px;left:calc(50% + 6px);min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:var(--rojo);color:#fff;font-size:12px;display:grid;place-items:center}
+
+/* Revisar: cuaderno cuadriculado */
+.cuaderno{background-color:var(--papel);background-image:linear-gradient(var(--cuadricula) 1px,transparent 1px),linear-gradient(90deg,var(--cuadricula) 1px,transparent 1px);background-size:22px 22px}
+.lote{display:flex;justify-content:space-between;align-items:center;margin:6px 0 18px;gap:10px}
+.btn{min-height:44px;padding:10px 16px;border-radius:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn.sec{background:var(--papel);border:1.5px solid var(--linea)}
+.btn.pri{background:var(--integra);color:#fff}
+.btn.ok{background:var(--verde);color:#fff}
+.nota{margin-bottom:26px}
+.postit{position:relative;padding:22px 18px 18px;border-radius:3px 3px 3px 16px;box-shadow:0 1px 0 rgba(30,42,85,.08),0 12px 20px -14px rgba(30,42,85,.55)}
+.postit::before{content:"";position:absolute;top:-9px;left:50%;width:74px;height:20px;transform:translateX(-50%) rotate(-3deg);background:rgba(255,255,255,.55);border:1px solid rgba(30,42,85,.06)}
+.postit .origen{font-size:13px;color:rgba(30,42,85,.7);display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.postit .ico{width:16px;height:16px}
+.postit q{font-family:var(--mano);font-size:20px;line-height:1.35;display:block;quotes:none}
+.lectura{position:relative;margin:-6px 10px 0;background:var(--papel);border:1px solid var(--linea);border-radius:0 0 var(--r) var(--r);padding:14px;display:flex;flex-direction:column;gap:10px}
+.lectura .eti{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--tinta-3)}
+.persona{display:inline-flex;align-items:center;gap:8px;font-weight:700}
+.persona .mini{width:30px;height:30px;border-radius:50%;background:var(--integra-claro);color:var(--integra-osc);font-family:var(--display);font-size:13px;display:grid;place-items:center}
+.nivel-linea{display:flex;align-items:center;gap:10px}
+.nivel-num{width:38px;height:38px;border-radius:10px;color:#fff;font-family:var(--display);font-weight:800;font-size:20px;display:grid;place-items:center;flex:none}
+.certeza{font-size:13px;font-weight:700;padding:3px 10px;border-radius:999px}
+.certeza.alta{background:#E3F4EA;color:#1D6B3E}.certeza.media{background:#FFF3CF;color:#7A5600}.certeza.baja{background:#ECEFF5;color:#56618A}
+.conducta{font-size:15px;color:var(--tinta-2);border-left:3px solid var(--linea);padding-left:10px}
+.acciones{display:grid;grid-template-columns:1.4fr 1fr 48px;gap:8px}
+.acciones .x{background:var(--papel);border:1.5px solid var(--linea);border-radius:12px;display:grid;place-items:center}
+.vacio{text-align:center;padding:60px 20px;color:var(--tinta-2)}
+.vacio .mano{font-family:var(--mano);font-size:28px;color:var(--tinta);display:block;margin-bottom:6px}
+
+/* ficha */
+.volver{display:inline-flex;align-items:center;gap:4px;min-height:44px;color:var(--tinta-2);font-weight:700;margin:-8px 0 4px -6px;padding:0 6px}
+.ficha-cab{display:flex;gap:14px;align-items:center;margin-bottom:14px}
+.ficha-cab .avatar{width:64px;height:64px;font-size:22px}
+.tarjeta{background:var(--papel);border:1px solid var(--linea);border-radius:var(--r);padding:14px;margin-bottom:12px}
+.resumen{font-size:15px;color:var(--tinta-2)}
+.nucleo{display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:end;padding:10px 0;border-bottom:1px solid var(--linea);width:100%;text-align:left}
+.nucleo:last-of-type{border-bottom:0}
+.nucleo .n{font-weight:700;font-size:15px;display:flex;align-items:center;gap:6px}
+.nucleo .lv{font-size:13px;color:var(--tinta-2);grid-column:1}
+.escalera{display:flex;align-items:flex-end;gap:3px;grid-row:1/3;grid-column:2;height:26px}
+.escalera i{display:block;width:9px;border-radius:2px;background:var(--cuadricula)}
+.observar{background:var(--postit-lima);border:0;transform:rotate(.4deg)}
+.observar h2{display:flex;align-items:center;gap:6px;font-size:16px;margin-bottom:6px}
+.observar li{font-family:var(--mano);font-size:19px;line-height:1.3;margin-left:18px}
+.hist{list-style:none;position:relative;padding-left:18px}
+.hist::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:var(--linea)}
+.hist li{position:relative;padding:0 0 14px}
+.hist li::before{content:"";position:absolute;left:-17px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--c,var(--tinta-3))}
+.hist .meta{font-size:13px;color:var(--tinta-2)}
+.hist q{font-family:var(--mano);font-size:17px;quotes:none}
+
+/* directora */
+.sala-card{display:block;width:100%;text-align:left}
+.barra{height:8px;border-radius:99px;background:var(--cuadricula);overflow:hidden;margin:8px 0 6px}
+.barra span{display:block;height:100%;background:var(--integra)}
+
+/* hojas */
+.velo{position:absolute;inset:0;background:rgba(30,42,85,.42);display:flex;align-items:flex-end;z-index:20}
+.hoja{width:100%;background:var(--papel);border-radius:24px 24px 0 0;padding:10px 18px 26px;max-height:88%;overflow:auto;animation:sube .22s ease-out}
+.hoja .asa{width:44px;height:5px;border-radius:9px;background:var(--linea);margin:0 auto 14px}
+@keyframes sube{from{transform:translateY(30px);opacity:.4}to{transform:none;opacity:1}}
+textarea{width:100%;min-height:130px;border:1.5px solid var(--linea);border-radius:12px;padding:12px;font:inherit;color:inherit;resize:vertical}
+.grabando{display:flex;flex-direction:column;align-items:center;gap:14px;padding:16px 0}
+.pulso{width:96px;height:96px;border-radius:50%;background:var(--rojo);display:grid;place-items:center;color:#fff;animation:late 1.2s ease-in-out infinite}
+@keyframes late{50%{box-shadow:0 0 0 14px rgba(214,69,69,.15)}}
+.reloj{font-family:var(--display);font-size:34px;font-weight:800;font-variant-numeric:tabular-nums}
+.niveles{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.opcion{display:flex;gap:12px;align-items:center;text-align:left;padding:10px;border:1.5px solid var(--linea);border-radius:12px}
+.opcion[aria-checked=true]{border-color:var(--integra);background:var(--integra-claro)}
+.opcion small{display:block;color:var(--tinta-2);font-size:13px}
+select{width:100%;min-height:44px;border:1.5px solid var(--linea);border-radius:12px;padding:8px 10px;font:inherit;color:inherit;background:var(--papel)}
+.leyenda li{display:flex;gap:12px;align-items:center;padding:8px 0;list-style:none}
+.punto{width:16px;height:16px;border-radius:50%;flex:none}
+.toast{position:absolute;left:16px;right:16px;bottom:170px;background:var(--tinta);color:#fff;padding:14px 16px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;z-index:30;animation:sube .2s ease-out}
+.toast button{color:var(--postit-amarillo);font-weight:700}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="telefono" id="app" aria-live="polite"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <symbol id="i-camara" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+ <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+ <symbol id="i-lapiz" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3"/></symbol>
+ <symbol id="i-sala" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></symbol>
+ <symbol id="i-revisar" viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M9 12l2 2 4-4"/></symbol>
+ <symbol id="i-dir" viewBox="0 0 24 24"><path d="M4 20V10l8-6 8 6v10"/><path d="M10 20v-6h4v6"/></symbol>
+ <symbol id="i-bandera" viewBox="0 0 24 24"><path d="M6 21V4M6 4h11l-2 4 2 4H6"/></symbol>
+ <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
+ <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+ <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z"/></symbol>
+ <symbol id="i-atras" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+ <symbol id="i-flecha" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+ <symbol id="i-ojo" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+ <symbol id="i-ayuda" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.5V14M12 17h.01"/></symbol>
+ <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+</svg>
+
+<script>
+const NIVELES=['','Comenzando','Explorando','Desarrollando','Afianzando','Integrando','Ampliando','Consolidando','Profundizando'];
+const NUC={IA:'Identidad y autonomía',CC:'Convivencia y ciudadanía',CM:'Corporalidad y movimiento',LV:'Lenguaje verbal',LA:'Lenguajes artísticos',EN:'Entorno natural',ES:'Entorno sociocultural',PM:'Pensamiento matemático'};
+const col=n=>`var(--n${n})`;
+const ico=(id,c='')=>`<svg class="ico ${c}" aria-hidden="true"><use href="#i-${id}"/></svg>`;
+const ini=n=>n.slice(0,2).toUpperCase();
+const fres=d=>d<14?'verde':d<=30?'amarillo':'rojo';
+
+const ninos=[
+ ['Josefa',2,3,true,34],['Emilio',5,4,false,32],['Sofía',6,3,false,25],['Martina',11,4,false,33],['Tomás',40,4,false,34],['Benjamín',52,3,false,28],
+ ['Agustina',20,3,false,28],['Maximiliano',1,3,false,25],['Isidora',6,3,false,30],['Vicente',12,4,false,34],['Florencia',3,3,false,25],['Joaquín',2,4,false,33],
+ ['Antonia',6,3,false,26],['Lucas',17,4,false,35],['Catalina',4,3,false,25],['Mateo',10,3,false,28],['Emilia',5,4,false,32],['Gaspar',12,4,false,32]
+].map(([nombre,dias,nivel,revisar,meses],i)=>({id:'NINO-'+String(i+1).padStart(5,'0'),nombre,dias,nivel,revisar,meses}));
+
+let pendientes=[
+ {id:1,tipo:'evaluacion',formato:'foto',cuando:'Ayer, 15:20',autor:'Tía Rosa',color:'amarillo',nino:'Emilio',nucleo:'LA',nivel:4,certeza:'alta',
+  cita:'Emilio pintó con témpera a su familia y explicó: "este es mi papá y este mi perro".',conducta:'Experimenta con pintura, modelado o dibujo para expresar ideas.'},
+ {id:2,tipo:'evaluacion',formato:'audio',cuando:'Ayer, 11:05',autor:'Tía Ana',color:'rosa',nino:'Sofía',nucleo:'CM',nivel:4,certeza:'media',
+  cita:'Sofía subió la escalera del patio sola, alternando los pies y afirmándose de la baranda.',conducta:'Mantiene el equilibrio al desplazarse en distintas direcciones.'},
+ {id:3,tipo:'evaluacion',formato:'texto',cuando:'Hoy, 09:12',autor:'Tía Ana',color:'lima',nino:'Agustina',detectado:'Agus',nucleo:'IA',nivel:3,certeza:'baja',
+  cita:'Agus se despidió de su mamá sin llorar hoy.',conducta:'Se despide de su familia con contención de la tía.'},
+ {id:4,tipo:'nota_sala',formato:'audio',cuando:'Hoy, 08:40',autor:'Tía Rosa',color:'amarillo',certeza:'alta',
+  cita:'Hoy bajó la asistencia, los niños comenzaron a resfriarse y han estado con mucha tos.'}
+];
+
+const fichaJosefa={niveles:{IA:4,CC:4,CM:3,LV:2,LA:3,EN:null,ES:4,PM:3},revisar:['LV'],
+ resumen:'Ayuda a otros y participa con ganas en las rutinas. Conviene observar más cómo se expresa con palabras.',
+ observar:['¿Usa oraciones simples, como "yo quiero jugar"?','¿Sigue una instrucción de dos pasos?'],
+ historial:[['13 oct','CC',4,'Tía Ana','Se agacha, recoge los individuales y se los pasa a la tía.'],['6 oct','LV',2,'Tía Ana','En el círculo responde con gestos y palabras sueltas.'],['15 sep','LV',2,'Tía Ana','Señala lo que quiere y dice "agua" o "más".'],['9 sep','IA',4,'Tía Rosa','Se lava las manos sola y avisa cuando termina.']]};
+
+const st={pantalla:'sala',filtro:'todos',nino:null,hoja:null,toast:null,rol:'tia'};
+const app=document.getElementById('app');
+function ir(p,extra={}){Object.assign(st,{pantalla:p,hoja:null},extra);render();app.querySelector('.pantalla')?.scrollTo(0,0)}
+function hoja(h){st.hoja=h;render()}
+function toast(t,deshacer){st.toast={t,deshacer};render();clearTimeout(toast.k);toast.k=setTimeout(()=>{st.toast=null;render()},5000)}
+
+function tarjetaNino(n){
+ return `<button class="nino" onclick="ir('ficha',{nino:'${n.id}'})" aria-label="${n.nombre}, nivel ${n.nivel}, ${n.dias} días desde el último registro${n.revisar?', revisar avance':''}">
+  ${n.revisar?`<span class="bandera" title="Revisar avance">${ico('bandera')}</span>`:''}
+  <span class="avatar ${fres(n.dias)}">${ini(n.nombre)}</span>
+  <span class="nom">${n.nombre}</span>
+  <span class="nivel-chip" style="background:${col(n.nivel)}">N${n.nivel}</span></button>`}
+
+function vSala(){
+ const sin=ninos.filter(n=>fres(n.dias)==='rojo'), rev=ninos.filter(n=>n.revisar);
+ const lista=st.filtro==='sin'?sin:st.filtro==='rev'?rev:ninos;
+ const obs=ninos.filter(n=>n.dias<=30).length;
+ return `<main class="pantalla">
+  <header class="cabeza"><div><p class="sub">Jueves 15 de octubre</p><h1>Medio Menor A</h1></div>
+   <button class="yo" aria-label="Menú de Tía Ana">TA</button></header>
+  ${pendientes.length?`<button class="pila" onclick="ir('revisar')"><b>${pendientes.length}</b><span><strong>notas por revisar</strong><br><span class="sub" style="color:var(--tinta)">Huellita ya las ordenó</span></span>${ico('flecha','flecha')}</button>`:''}
+  <div class="chips" role="toolbar" aria-label="Filtrar niños">
+   <button class="chip" aria-pressed="${st.filtro==='todos'}" onclick="st.filtro='todos';render()">Todos ${ninos.length}</button>
+   <button class="chip" aria-pressed="${st.filtro==='sin'}" onclick="st.filtro='sin';render()">Sin registro ${sin.length}</button>
+   <button class="chip" aria-pressed="${st.filtro==='rev'}" onclick="st.filtro='rev';render()">Revisar avance ${rev.length}</button>
+   <button class="chip" onclick="hoja('leyenda')" aria-label="Qué significan los colores">${ico('ayuda')}</button>
+  </div>
+  <section class="grilla" aria-label="Niños y niñas de la sala">${lista.map(tarjetaNino).join('')}</section>
+  <p class="resumen-sala">Observados este mes: <strong>${obs} de ${ninos.length}</strong> · Menos registrado: <strong>Entorno natural</strong></p>
+ </main>${dock()}`}
+
+function dock(nombre){return `<div class="dock" role="group" aria-label="Registrar${nombre?' para '+nombre:''}">
+  <button class="cap" onclick="hoja('foto')"><span class="bola">${ico('camara')}</span>Foto</button>
+  <button class="cap principal" onclick="hoja('audio')"><span class="bola">${ico('mic')}</span>Audio</button>
+  <button class="cap" onclick="hoja('texto')"><span class="bola">${ico('lapiz')}</span>Texto</button></div>`}
+
+function vRevisar(){
+ const altas=pendientes.filter(p=>p.tipo==='evaluacion'&&p.certeza==='alta').length;
+ return `<main class="pantalla sin-dock cuaderno">
+  <h1>Revisar</h1><p class="sub">Confirma lo que Huellita leyó de tus notas.</p>
+  ${pendientes.length?`<div class="lote"><span class="sub">${pendientes.length} pendientes</span>${altas?`<button class="btn sec" onclick="aceptarAltas()">${ico('check')}Aceptar las seguras (${altas})</button>`:''}</div>`:''}
+  ${pendientes.map((p,i)=>nota(p,i)).join('')||`<div class="vacio"><span class="mano">¡Todo al día!</span>Cuando registres algo nuevo, aparecerá aquí.</div>`}
+ </main>`}
+
+function nota(p,i){
+ const rot=[-1.2,.9,-.5,1.1][i%4], fondo={amarillo:'--postit-amarillo',rosa:'--postit-rosa',lima:'--postit-lima'}[p.color];
+ const icon={foto:'camara',audio:'mic',texto:'lapiz'}[p.formato], etiqueta={foto:'Foto de post-it',audio:'Audio',texto:'Nota escrita'}[p.formato];
+ const cert={alta:'Segura',media:'Revisar',baja:'Poco segura'}[p.certeza];
+ const cuerpo=p.tipo==='nota_sala'?`
+   <span class="eti">Nota de la sala</span>
+   <p class="conducta">No es una evaluación de un niño o niña. Se guarda en el diario de la sala.</p>
+   <div class="acciones" style="grid-template-columns:1fr 48px"><button class="btn pri" onclick="resolver(${p.id},'Nota guardada')">Guardar en la sala</button><button class="x" aria-label="Descartar" onclick="resolver(${p.id},'Descartada')">${ico('x')}</button></div>`:`
+   <div class="fila entre"><span class="persona"><span class="mini">${ini(p.nino)}</span>${p.nino}${p.detectado?` <span class="sub">(decía "${p.detectado}")</span>`:''}</span><span class="certeza ${p.certeza}">${cert}</span></div>
+   <div class="nivel-linea"><span class="nivel-num" style="background:${col(p.nivel)}">${p.nivel}</span><div><strong>${NIVELES[p.nivel]}</strong><br><span class="sub">${NUC[p.nucleo]}</span></div></div>
+   <p class="conducta">${p.conducta}</p>
+   <div class="acciones"><button class="btn ok" onclick="resolver(${p.id},'Guardado en la ficha de ${p.nino}')">${ico('check')}Guardar</button>
+    <button class="btn sec" onclick="hoja({cambiar:${p.id}})">${ico('edit')}Cambiar</button>
+    <button class="x" aria-label="Descartar" onclick="resolver(${p.id},'Descartada')">${ico('x')}</button></div>`;
+ return `<article class="nota"><div class="postit" style="background:var(${fondo});transform:rotate(${rot}deg)">
+   <p class="origen">${ico(icon)}${etiqueta} · ${p.cuando} · ${p.autor}</p><q>${p.cita}</q></div>
+  <div class="lectura">${cuerpo}</div></article>`}
+
+function resolver(id,msg){const prev=[...pendientes];pendientes=pendientes.filter(p=>p.id!==id);toast(msg,()=>{pendientes=prev;st.toast=null;render()})}
+function aceptarAltas(){const prev=[...pendientes];const n=pendientes.filter(p=>p.tipo==='evaluacion'&&p.certeza==='alta').length;pendientes=pendientes.filter(p=>!(p.tipo==='evaluacion'&&p.certeza==='alta'));toast(`${n} ${n===1?'guardada':'guardadas'}`,()=>{pendientes=prev;st.toast=null;render()})}
+
+function escalera(n){return `<span class="escalera" aria-hidden="true">${[1,2,3,4,5,6,7,8].map(k=>`<i style="height:${6+k*2.5}px;${n&&k<=n?`background:${col(n)}`:''}"></i>`).join('')}</span>`}
+
+function vFicha(){
+ const n=ninos.find(x=>x.id===st.nino), f=n.nombre==='Josefa'?fichaJosefa:{niveles:{IA:n.nivel,CC:n.nivel,CM:n.nivel,LV:n.nivel,LA:n.nivel-1,EN:null,ES:n.nivel,PM:n.nivel},revisar:[],resumen:'Avanza bien en sus rutinas y juegos. Conviene registrar algo del entorno natural.',observar:['¿Pregunta por elementos de la naturaleza que le llaman la atención?'],historial:[['10 oct','PM',n.nivel,'Tía Ana','Cuenta los vasos de la mesa antes de la colación.']]};
+ const años=Math.floor(n.meses/12), m=n.meses%12;
+ return `<main class="pantalla">
+  <button class="volver" onclick="ir('sala')">${ico('atras')}Mi sala</button>
+  <header class="ficha-cab"><span class="avatar ${fres(n.dias)}">${ini(n.nombre)}</span><div><h1>${n.nombre}</h1><p class="sub">${años} años ${m} meses · Medio Menor A</p></div></header>
+  <section class="tarjeta"><p class="resumen">${f.resumen}</p></section>
+  <section class="tarjeta observar"><h2>${ico('ojo')}Para observar esta semana</h2><ul>${f.observar.map(o=>`<li>${o}</li>`).join('')}</ul></section>
+  <section class="tarjeta" aria-label="Nivel por núcleo"><h2 style="margin-bottom:4px">Cómo va</h2>
+   ${Object.entries(f.niveles).map(([k,v])=>`<button class="nucleo" onclick="hoja({nucleo:'${k}',nivel:${v}})">
+     <span class="n">${NUC[k]}${f.revisar.includes(k)?`<span style="color:var(--ambar)" title="Revisar avance">${ico('bandera')}</span>`:''}</span>
+     ${escalera(v)}<span class="lv">${v?`Nivel ${v} · ${NIVELES[v]}`:'Sin registros aún'}</span></button>`).join('')}
+  </section>
+  <section class="tarjeta"><h2 style="margin-bottom:10px">Registros</h2><ol class="hist">
+   ${f.historial.map(([d,k,v,a,c])=>`<li style="--c:${col(v)}"><p class="meta">${d} · ${NUC[k]} · Nivel ${v} · ${a}</p><q>${c}</q></li>`).join('')}</ol></section>
+ </main>${dock(n.nombre)}`}
+
+function vDirectora(){
+ const salas=[['Medio Menor A',18,16,1,'Entorno natural'],['Medio Menor B',10,7,0,'Lenguajes artísticos'],['Sala Cuna Mayor',8,6,0,'Pensamiento matemático']];
+ return `<main class="pantalla sin-dock"><p class="sub">Jardín Huellitas del Sur</p><h1 style="margin-bottom:14px">Salas</h1>
+  ${salas.map(([s,t,o,r,nuc])=>`<button class="tarjeta sala-card" onclick="ir('sala')"><div class="fila entre"><h2>${s}</h2>${ico('flecha')}</div>
+   <div class="barra" aria-hidden="true"><span style="width:${Math.round(o/t*100)}%"></span></div>
+   <p class="sub">${o} de ${t} observados en 30 días · ${r?`<span style="color:var(--ambar);font-weight:700">${r} por revisar avance</span>`:'Ninguno por revisar'}</p>
+   <p class="sub">Menos registrado: ${nuc}</p></button>`).join('')}</main>`}
+
+function vHoja(){
+ const h=st.hoja; if(!h) return '';
+ let c='';
+ if(h==='audio') c=`<div class="grabando"><h2>Grabando…</h2><div class="pulso">${ico('mic')}</div><span class="reloj" id="reloj">0:00</span><p class="sub">Cuenta qué hizo y quién. Máximo 60 segundos.</p><button class="btn pri" style="width:100%" onclick="enviar()">Listo, enviar</button></div>`;
+ if(h==='foto') c=`<h2>Foto de tu nota</h2><p class="sub" style="margin:4px 0 14px">Encuadra el post-it o la hoja completa.</p><div style="aspect-ratio:4/3;border-radius:14px;background:var(--postit-amarillo);display:grid;place-items:center;font-family:var(--mano);font-size:20px;margin-bottom:14px">Vista previa</div><button class="btn pri" style="width:100%" onclick="enviar()">Enviar foto</button>`;
+ if(h==='texto') c=`<h2>Escribe lo que viste</h2><label class="sr" for="t">Nota</label><textarea id="t" style="margin:12px 0" placeholder="Martina armó una torre de 6 bloques y contó hasta 5"></textarea><button class="btn pri" style="width:100%" onclick="enviar()">Enviar</button>`;
+ if(h==='leyenda') c=`<h2>Qué significan los colores</h2><ul class="leyenda" style="margin-top:8px">
+   <li><span class="punto" style="background:var(--verde)"></span>Registrado en las últimas 2 semanas</li>
+   <li><span class="punto" style="background:var(--amarillo)"></span>Entre 2 semanas y 1 mes sin registro</li>
+   <li><span class="punto" style="background:var(--rojo)"></span>Más de 1 mes sin registro</li>
+   <li><span style="color:var(--ambar)">${ico('bandera')}</span>Revisar avance: dos registros seguidos bajo lo esperado para su edad</li></ul>
+   <p class="sub" style="margin-top:8px">El color del aro solo indica hace cuánto no se registra algo. No mide cómo le va al niño o niña.</p>`;
+ if(h.nucleo){const v=h.nivel||1;c=`<h2>${NUC[h.nucleo]}</h2><p class="sub" style="margin:4px 0 12px">Lo que se espera en este nivel y en el siguiente.</p>
+   ${[v,Math.min(8,v+1)].map((k,i)=>`<div class="tarjeta"><div class="nivel-linea"><span class="nivel-num" style="background:${col(k)}">${k}</span><strong>${i?'Siguiente: ':'Ahora: '}${NIVELES[k]}</strong></div></div>`).join('')}`}
+ if(h.cambiar){const p=pendientes.find(x=>x.id===h.cambiar);c=`<h2>Cambiar evaluación</h2>
+   <label class="sub" style="display:block;margin-top:10px">Niño o niña<select>${ninos.map(n=>`<option ${n.nombre===p.nino?'selected':''}>${n.nombre}</option>`).join('')}</select></label>
+   <label class="sub" style="display:block;margin-top:10px">Núcleo<select>${Object.entries(NUC).map(([k,v])=>`<option ${k===p.nucleo?'selected':''}>${v}</option>`).join('')}</select></label>
+   <div class="niveles" role="radiogroup" aria-label="Nivel">${[1,2,3,4,5,6,7,8].map(k=>`<button class="opcion" role="radio" aria-checked="${k===p.nivel}" onclick="this.parentNode.querySelectorAll('.opcion').forEach(o=>o.setAttribute('aria-checked','false'));this.setAttribute('aria-checked','true')"><span class="nivel-num" style="background:${col(k)}">${k}</span><span><strong>${NIVELES[k]}</strong></span></button>`).join('')}</div>
+   <button class="btn pri" style="width:100%" onclick="resolver(${p.id},'Cambiado y guardado')">Guardar cambio</button>`}
+ return `<div class="velo" onclick="if(event.target===this)hoja(null)"><div class="hoja" role="dialog" aria-modal="true"><div class="asa"></div>${c}</div></div>`}
+
+function enviar(){st.hoja=null;toast('Listo, lo verás en Revisar')}
+function nav(){return `<nav class="nav" aria-label="Principal">
+  <button onclick="ir('sala')" ${['sala','ficha'].includes(st.pantalla)?'aria-current="page"':''}>${ico('sala')}Mi sala</button>
+  <button onclick="ir('revisar')" ${st.pantalla==='revisar'?'aria-current="page"':''}>${ico('revisar')}Revisar${pendientes.length?`<span class="badge">${pendientes.length}</span>`:''}</button>
+  <button onclick="ir('directora')" ${st.pantalla==='directora'?'aria-current="page"':''}>${ico('dir')}Directora</button></nav>`}
+
+function render(){
+ const v={sala:vSala,revisar:vRevisar,ficha:vFicha,directora:vDirectora}[st.pantalla]();
+ app.innerHTML=v+nav()+vHoja()+(st.toast?`<div class="toast" role="status"><span>${st.toast.t}</span>${st.toast.deshacer?'<button onclick="st.toast.deshacer()">Deshacer</button>':''}</div>`:'');
+ if(st.hoja==='audio'){let s=0;clearInterval(render.r);render.r=setInterval(()=>{const r=document.getElementById('reloj');if(!r)return clearInterval(render.r);s++;r.textContent=`0:${String(s).padStart(2,'0')}`;if(s>=60)enviar()},1000)}
+}
+render();
+</script>
+</body>
+</html>

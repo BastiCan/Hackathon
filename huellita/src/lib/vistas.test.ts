@@ -93,9 +93,9 @@ describe('textos de la interfaz', () => {
   });
 
   it('dice la certeza en palabras, nunca en porcentajes', () => {
-    expect(textoCerteza('alta')).toBe('Alta');
-    expect(textoCerteza('media')).toBe('Media');
-    expect(textoCerteza('baja')).toBe('Baja');
+    expect(textoCerteza('alta')).toBe('Segura');
+    expect(textoCerteza('media')).toBe('Revisar');
+    expect(textoCerteza('baja')).toBe('Poco segura');
   });
 });
 

@@ -1,25 +1,19 @@
-import { Camera, Check, Mic, Pencil, PencilLine } from 'lucide-react';
-import { useState, type ReactNode } from 'react';
+import { Camera, Check, Mic, Pencil, PencilLine, X } from 'lucide-react';
+import type { ReactNode } from 'react';
 import type { NotaConError, NotaPendiente } from '../app/hooks';
-import { urlFoto } from '../lib/fotos';
-import { nombreNivel } from '../lib/rubrica';
-import type { Certeza, Evidencia, Formato } from '../lib/tipos';
+import { nombreNivel, nombreNucleo } from '../lib/rubrica';
+import type { Certeza, Formato } from '../lib/tipos';
 import { textoCerteza } from '../lib/vistas';
 import { Boton } from './Boton';
 import { NumeroNivel } from './ChipNivel';
-import { HojaInferior } from './HojaInferior';
-import { EtiquetaNucleo } from './Miniatura';
+
+const COLORES_POSTIT = ['#FFE873', '#FFB8D2', '#D6F27C'];
+const ROTACIONES = [-1.2, 0.9, -0.5, 1.1];
 
 const CLASE_CERTEZA: Record<Certeza, string> = {
-  alta: 'text-[#1E6B3A]',
-  media: 'text-[#7A5600]',
-  baja: 'text-[#8A3A00]',
-};
-
-const EXPLICACION_CERTEZA: Record<Certeza, string> = {
-  alta: '',
-  media: ': revisa el nivel',
-  baja: ': revisa el nombre y el nivel',
+  alta: 'bg-[#E3F4EA] text-[#1D6B3E]',
+  media: 'bg-[#FFF3CF] text-[#7A5600]',
+  baja: 'bg-[#ECEFF5] text-[#56618A]',
 };
 
 function IconoFormato({ formato }: { formato: Formato }) {
@@ -27,82 +21,58 @@ function IconoFormato({ formato }: { formato: Formato }) {
   return <Icono aria-hidden="true" className="h-4 w-4 flex-none" />;
 }
 
-/** "EVI-00325" → "0325": número del registro, como en un libro de registro. */
-function numeroRegistro(evidencia?: Evidencia): string | null {
-  const m = evidencia ? /(\d+)$/.exec(evidencia.id) : null;
-  return m ? m[1].slice(-4).padStart(4, '0') : null;
-}
-
-/**
- * Cabecera de un registro: número, tipo y origen, la foto real del post-it (si
- * la hay) y lo que Huellita leyó. La foto se puede ampliar.
- */
-function Original({
-  evidencia,
-  formato,
+/** Post-it con la nota original de la tía, tal como la escribió. */
+function PostIt({
+  indice,
   origen,
-  leido,
+  formato,
+  cita,
 }: {
-  evidencia?: Evidencia;
-  formato: Formato;
+  indice: number;
   origen: string;
-  leido: string;
+  formato: Formato;
+  cita: string;
 }) {
-  const [ampliada, setAmpliada] = useState(false);
-  const url = urlFoto(evidencia?.foto);
-  const numero = numeroRegistro(evidencia);
   return (
-    <div className="border-b border-linea bg-fondo px-3 pb-3 pt-[10px]">
-      <p className="mb-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] text-tinta-2">
+    <div
+      className="postit px-[18px] pb-[18px] pt-[22px]"
+      style={{
+        background: COLORES_POSTIT[indice % COLORES_POSTIT.length],
+        transform: `rotate(${ROTACIONES[indice % ROTACIONES.length]}deg)`,
+      }}
+    >
+      {/* 0,82 de opacidad: con 0,7 el origen no llega a AA sobre el post-it rosa. */}
+      <p className="mb-[6px] flex items-center gap-[6px] text-[13px] text-[rgba(30,42,85,0.82)]">
         <IconoFormato formato={formato} />
-        {numero ? <span className="font-rotulo font-medium uppercase">N.º {numero}</span> : null}
-        <span>{origen}</span>
+        {origen}
       </p>
-      {url ? (
-        <button
-          type="button"
-          onClick={() => setAmpliada(true)}
-          aria-label="Ver la foto en grande"
-          className="mb-2 block min-h-tactil w-full overflow-hidden rounded-[4px] border border-linea bg-papel"
-        >
-          <img src={url} alt="Foto del post-it" className="mx-auto block max-h-[220px] w-auto" />
-        </button>
-      ) : null}
-      <p className="rotulo mb-1">Huellita leyó</p>
-      <p className="border-l-[3px] border-[#C9D2DE] pl-[10px] text-[15px] text-[#33415C]">
-        “{leido}”
-      </p>
-      {ampliada && url ? (
-        <HojaInferior titulo="Foto del post-it" onCerrar={() => setAmpliada(false)}>
-          <img src={url} alt="Foto del post-it en grande" className="mt-2 w-full rounded-[4px]" />
-        </HojaInferior>
-      ) : null}
+      <q className="block font-mano text-[20px] leading-[1.35]">{cita}</q>
     </div>
   );
 }
 
-function Fila({ etiqueta, children }: { etiqueta: string; children: ReactNode }) {
+function Lectura({ children }: { children: ReactNode }) {
   return (
-    <div className="grid grid-cols-[84px_1fr] items-start gap-2 py-[3px] text-[14px]">
-      <dt className="text-tinta-2">{etiqueta}</dt>
-      <dd>{children}</dd>
+    <div className="relative -mt-[6px] mx-[10px] flex flex-col gap-[10px] rounded-b-tarjeta border border-linea bg-papel p-[14px]">
+      {children}
     </div>
   );
 }
 
 /**
- * Un registro por revisar: la nota original (con su foto) arriba y lo que
- * Huellita propone abajo, como una ficha. La tía confirma, corrige o descarta.
+ * Una sugerencia: la nota original arriba y lo que Huellita leyó pegado debajo,
+ * con los 3 botones de la tía (Guardar, Cambiar y descartar).
  */
 export function TarjetaSugerencia({
   nota,
+  indice,
   saliendo = false,
   onGuardar,
   onCambiar,
   onDescartar,
 }: {
   nota: NotaPendiente;
-  indice?: number;
+  indice: number;
   /** Transición breve mientras la nota se guarda o se descarta. */
   saliendo?: boolean;
   onGuardar: () => void;
@@ -113,24 +83,21 @@ export function TarjetaSugerencia({
   const formato = nota.evidencia?.formato ?? 'texto';
   const esNota = s.tipo === 'nota_sala';
   const nombre = nota.nombreNino ?? s.nombreDetectado ?? 'Por confirmar';
-  const leido = nota.evidencia?.textoExtraido ?? s.cita;
 
   return (
-    <article
-      className={`mb-4 overflow-hidden rounded-tarjeta border border-linea bg-papel ${
-        saliendo ? 'saliendo' : ''
-      }`}
-    >
-      <Original evidencia={nota.evidencia} formato={formato} origen={nota.origen} leido={leido} />
-      <div className="px-3 pb-3 pt-2">
+    <article className={`mb-[26px] ${saliendo ? 'saliendo' : ''}`}>
+      <PostIt indice={indice} origen={nota.origen} formato={formato} cita={s.cita} />
+      <Lectura>
         {esNota ? (
           <>
-            <p className="rotulo mb-1">Nota de la sala</p>
-            <p className="mb-3 text-[14px] text-tinta-2">
+            <span className="text-[12px] font-bold uppercase tracking-[0.06em] text-tinta-2">
+              Nota de la sala
+            </span>
+            <p className="border-l-[3px] border-linea pl-[10px] text-[15px] text-tinta-2">
               No es una evaluación de un niño o niña. Se guarda en el diario de la sala.
             </p>
-            <div className="grid grid-cols-[1fr_auto] gap-2">
-              <Boton variante="pri" compacto onClick={onGuardar}>
+            <div className="grid grid-cols-[1fr_44px] gap-2">
+              <Boton variante="pri" compacto className="min-w-0 overflow-hidden" onClick={onGuardar}>
                 Guardar en la sala
               </Boton>
               <BotonDescartar onClick={onDescartar} />
@@ -138,52 +105,64 @@ export function TarjetaSugerencia({
           </>
         ) : (
           <>
-            <dl className="mb-3">
-              <Fila etiqueta="Niño/a">
-                <b>{nombre}</b>
-                {nota.nombreNino && s.nombreDetectado && s.nombreDetectado !== nota.nombreNino ? (
-                  <span className="text-tinta-2"> (escrito “{s.nombreDetectado}”)</span>
-                ) : null}
-              </Fila>
-              {s.nucleo ? (
-                <Fila etiqueta="Núcleo">
-                  <EtiquetaNucleo nucleo={s.nucleo} />
-                </Fila>
-              ) : null}
-              {s.nivel ? (
-                <Fila etiqueta="Nivel">
-                  <span className="inline-flex items-center gap-2">
-                    <NumeroNivel nivel={s.nivel} nucleo={s.nucleo} tamano={22} />
-                    {nombreNivel(s.nivel)}
-                  </span>
-                </Fila>
-              ) : null}
-              {s.conducta ? <Fila etiqueta="Conducta">{s.conducta}</Fila> : null}
-              <Fila etiqueta="Confianza">
-                <span className={`font-medium ${CLASE_CERTEZA[s.certeza]}`}>
-                  {textoCerteza(s.certeza)}
-                  <span className="font-normal">{EXPLICACION_CERTEZA[s.certeza]}</span>
+            <div className="flex items-center justify-between gap-2">
+              <span className="inline-flex items-center gap-2 font-bold">
+                <span
+                  aria-hidden="true"
+                  className="grid h-[30px] w-[30px] flex-none place-items-center rounded-full bg-integra-claro font-display text-[13px] text-integra-oscuro"
+                >
+                  {nota.inicialesNino ?? '?'}
                 </span>
-              </Fila>
-            </dl>
+                {nombre}
+                {nota.nombreNino && s.nombreDetectado && s.nombreDetectado !== nota.nombreNino ? (
+                  <span className="text-[14px] font-normal text-tinta-2">
+                    (decía “{s.nombreDetectado}”)
+                  </span>
+                ) : null}
+              </span>
+              <span
+                className={`flex-none rounded-full px-[10px] py-[3px] text-[13px] font-bold ${
+                  CLASE_CERTEZA[s.certeza]
+                }`}
+              >
+                {textoCerteza(s.certeza)}
+              </span>
+            </div>
 
-            <div className="grid grid-cols-3 gap-2">
+            {s.nivel && s.nucleo ? (
+              <div className="flex items-center gap-[10px]">
+                <NumeroNivel nivel={s.nivel} />
+                <div>
+                  <strong>{nombreNivel(s.nivel)}</strong>
+                  <br />
+                  <span className="text-[14px] text-tinta-2">{nombreNucleo(s.nucleo)}</span>
+                </div>
+              </div>
+            ) : null}
+
+            {s.conducta ? (
+              <p className="border-l-[3px] border-linea pl-[10px] text-[15px] text-tinta-2">
+                {s.conducta}
+              </p>
+            ) : null}
+
+            <div className="grid grid-cols-[1.2fr_1fr_44px] gap-2">
               <Boton variante="ok" compacto className="min-w-0 overflow-hidden" onClick={onGuardar}>
                 <Check aria-hidden="true" className="hidden h-[18px] w-[18px] min-[380px]:block" />
-                Confirmar
+                Guardar
               </Boton>
               <Boton variante="sec" compacto className="min-w-0 overflow-hidden" onClick={onCambiar}>
                 <PencilLine
                   aria-hidden="true"
                   className="hidden h-[18px] w-[18px] min-[380px]:block"
                 />
-                Corregir
+                Cambiar
               </Boton>
-              <BotonDescartar onClick={onDescartar} conTexto />
+              <BotonDescartar onClick={onDescartar} />
             </div>
           </>
         )}
-      </div>
+      </Lectura>
     </article>
   );
 }
@@ -191,46 +170,47 @@ export function TarjetaSugerencia({
 /** Evidencia que Huellita no pudo leer: escribirla o descartarla. */
 export function TarjetaError({
   nota,
+  indice,
   onEscribir,
   onDescartar,
 }: {
   nota: NotaConError;
-  indice?: number;
+  indice: number;
   onEscribir: () => void;
   onDescartar: () => void;
 }) {
   return (
-    <article className="mb-4 overflow-hidden rounded-tarjeta border border-linea bg-papel">
-      <Original
-        evidencia={nota.evidencia}
-        formato={nota.evidencia.formato}
+    <article className="mb-[26px]">
+      <PostIt
+        indice={indice}
         origen={nota.origen}
-        leido="No pudimos leer esta nota."
+        formato={nota.evidencia.formato}
+        cita="No pudimos leer esta nota."
       />
-      <div className="px-3 pb-3 pt-2">
-        <p className="mb-3 text-[14px] text-tinta-2">
+      <Lectura>
+        <p className="text-[15px] text-tinta-2">
           Puedes escribirla con tus palabras y Huellita la ordena igual.
         </p>
-        <div className="grid grid-cols-[1fr_auto] gap-2">
-          <Boton variante="pri" compacto onClick={onEscribir}>
+        <div className="grid grid-cols-[1fr_44px] gap-2">
+          <Boton variante="pri" compacto className="min-w-0 overflow-hidden" onClick={onEscribir}>
             Escribirla
           </Boton>
           <BotonDescartar onClick={onDescartar} />
         </div>
-      </div>
+      </Lectura>
     </article>
   );
 }
 
-function BotonDescartar({ onClick }: { onClick: () => void; conTexto?: boolean }) {
+function BotonDescartar({ onClick }: { onClick: () => void }) {
   return (
     <button
       type="button"
       onClick={onClick}
       aria-label="Descartar"
-      className="grid min-h-tactil place-items-center rounded-tarjeta border border-[#C9D2DE] bg-papel px-3 text-[14px] font-medium text-tinta-2"
+      className="grid min-h-tactil place-items-center rounded-[12px] border-[1.5px] border-linea bg-papel"
     >
-      Descartar
+      <X aria-hidden="true" className="h-[22px] w-[22px]" />
     </button>
   );
 }

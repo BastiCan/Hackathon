@@ -69,12 +69,7 @@ export interface DataService {
     e: Omit<Evidencia, 'id' | 'creadaEn' | 'estado'>,
     archivo?: Blob,
   ): Promise<Evidencia>;
-  marcarEvidencia(
-    id: string,
-    estado: Evidencia['estado'],
-    textoExtraido?: string,
-    foto?: string,
-  ): Promise<void>;
+  marcarEvidencia(id: string, estado: Evidencia['estado'], textoExtraido?: string): Promise<void>;
   guardarSugerencias(s: Sugerencia[]): Promise<void>;
   validar(id: string, cambios?: CambiosValidacion): Promise<void>;
   descartar(id: string): Promise<void>;
@@ -336,13 +331,11 @@ export class DataServiceLocal implements DataService {
     id: string,
     estado: Evidencia['estado'],
     textoExtraido?: string,
-    foto?: string,
   ): Promise<void> {
     const evidencia = this.estado.evidencias.find((x) => x.id === id);
     if (!evidencia) return;
     evidencia.estado = estado;
     if (textoExtraido !== undefined) evidencia.textoExtraido = textoExtraido;
-    if (foto !== undefined) evidencia.foto = foto;
     if (estado !== 'procesando') this.archivos.delete(id);
     this.guardar();
   }

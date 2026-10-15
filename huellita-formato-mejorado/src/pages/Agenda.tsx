@@ -166,7 +166,9 @@ export function Agenda() {
         <p className="mt-3 text-center text-[14px] text-tinta-2">
           {esHoy
             ? 'Todavía no hay registros hoy. Usa Foto, Grabar o Escribir.'
-            : 'Ese día no hubo registros.'}
+            : v.dia > v.hoy
+              ? 'Ese día todavía no llega.'
+              : 'Ese día no hubo registros.'}
         </p>
       ) : null}
     </>

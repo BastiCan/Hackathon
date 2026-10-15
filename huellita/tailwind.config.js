@@ -1,74 +1,74 @@
 /** @type {import('tailwindcss').Config} */
 /*
- * Tokens del diseño "agenda institucional" (`.kiro/steering/diseno-visual.md`):
- * una sola familia tipográfica (Roboto), el azul de Integra para la institución
- * y las acciones, y los otros tres colores del logo de Integra para los ámbitos
- * de las Bases Curriculares.
+ * Tokens de `.kiro/steering/diseno-visual.md`, que son los mismos del
+ * prototipo `.kiro/diseno/prototipo.html` (fuente de verdad visual).
  */
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {
+        // Texto: azul tinta de lápiz pasta.
         tinta: {
-          DEFAULT: '#1B2A44',
-          2: '#4E5B70',
-          3: '#8A93A6',
+          DEFAULT: '#1E2A55',
+          2: '#56618A',
+          3: '#8A93B2',
         },
-        fondo: '#F4F7FC',
+        fondo: '#F3F6FB',
         papel: '#FFFFFF',
-        cuadricula: '#E6EBF2',
+        cuadricula: '#E2E8F4',
         linea: '#DCE3EF',
         integra: {
           DEFAULT: '#1F4E9A',
-          claro: '#E8EEF8',
+          claro: '#E7EEFA',
           oscuro: '#163A75',
         },
-        // Los 4 colores del logo de Integra (franja superior y ámbitos).
-        logo: {
-          rojo: '#E5432F',
-          amarillo: '#F5B800',
-          azul: '#1F4E9A',
-          verde: '#4C9A2A',
+        // Solo para notas originales, la pila de pendientes y "Para observar".
+        postit: {
+          amarillo: '#FFE873',
+          rosa: '#FFB8D2',
+          lima: '#D6F27C',
         },
-        // Ámbitos de las BCEP: fondo suave + texto oscuro del mismo color (AA).
-        ambito: {
-          dps: '#FDE7E3',
-          'dps-texto': '#9A2414',
-          com: '#FFF3C4',
-          'com-texto': '#6B4A00',
-          ent: '#E3F2DA',
-          'ent-texto': '#2E5A12',
-        },
-        // Avisos: amarillo del logo, suavizado.
-        aviso: {
-          fondo: '#FFF8DC',
-          borde: '#F5B800',
-          globo: '#C83B3B',
-        },
-        // Solo en el punto de frescura y la leyenda.
+        // Solo en el aro del avatar y la leyenda.
         frescura: {
           verde: '#2E9E5B',
           amarillo: '#E0A800',
           rojo: '#D64545',
         },
-        // Bandera de "revisar avance".
+        // Solo en la bandera de "revisar avance".
         ambar: '#B86E00',
-        // Botón Confirmar: verde del logo oscurecido para texto blanco AA.
-        guardar: '#2F7A1E',
-        // Botón de grabar: rojo del logo oscurecido para texto blanco AA.
-        grabar: '#C8341F',
+        /*
+         * Dos tonos un punto más oscuros que los del prototipo, necesarios para
+         * que el texto blanco encima llegue al contraste AA (tarea 10):
+         * `guardar` es el verde del botón Guardar (frescura verde da 3,4:1) y
+         * `aviso` el rojo del globo con el número de pendientes.
+         * Los colores de frescura siguen intactos en el aro y la leyenda.
+         */
+        guardar: '#237A47',
+        aviso: '#C83B3B',
+        // Solo en chips, números y escaleras de nivel.
+        nivel: {
+          1: '#E8664F',
+          2: '#F08A3E',
+          3: '#F2C14E',
+          4: '#9BC53D',
+          5: '#5A9E3A',
+          6: '#3A9E9A',
+          7: '#3D7DD8',
+          8: '#1F3B6B',
+        },
       },
       fontFamily: {
-        // Una sola familia en toda la app (como los sistemas del Estado).
-        texto: ['Roboto', 'system-ui', 'sans-serif'],
-        display: ['Roboto', 'system-ui', 'sans-serif'],
-        // Rótulos pequeños en mayúscula (encabezados de sección).
-        rotulo: ['"Roboto Condensed"', 'Roboto', 'system-ui', 'sans-serif'],
+        // Títulos, iniciales de avatares y números de nivel.
+        display: ['"Bricolage Grotesque Variable"', '"Bricolage Grotesque"', 'system-ui', 'sans-serif'],
+        // Todo el texto de la interfaz.
+        texto: ['"Atkinson Hyperlegible"', 'system-ui', 'sans-serif'],
+        // Solo texto escrito por la tía (citas, historial, "Para observar").
+        mano: ['Kalam', '"Comic Sans MS"', 'cursive'],
       },
       borderRadius: {
-        tarjeta: '6px',
-        hoja: '14px',
+        tarjeta: '14px',
+        hoja: '24px',
       },
       maxWidth: {
         // Pantallas de la tía; la vista directora puede llegar a 1100 px.
@@ -87,7 +87,7 @@ export default {
           to: { transform: 'none', opacity: '1' },
         },
         late: {
-          '50%': { boxShadow: '0 0 0 14px rgba(200, 52, 31, 0.15)' },
+          '50%': { boxShadow: '0 0 0 14px rgba(214, 69, 69, 0.15)' },
         },
       },
       animation: {

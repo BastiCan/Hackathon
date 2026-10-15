@@ -118,25 +118,15 @@ describe('IAServiceSimulado', () => {
     expect(primera[0].ninoId).toBe('NINO-00001'); // Josefa, post-it de los individuales
     expect(primera[0].nucleo).toBe('CC');
 
-    // El guion no se repite: la siguiente foto toma el siguiente guion de foto
-    // (Emilio y las hojas de otoño), con su foto de ejemplo.
+    // El guion no se repite: la siguiente foto toma el otro guion de foto.
     const segunda = await servicio.procesar(evidencia('foto'), undefined, contexto);
-    expect(segunda[0].ninoId).toBe('NINO-00002');
-    expect(segunda[0].nucleo).toBe('PM');
-  });
-
-  it('recuerda lo leído y la foto de ejemplo del guion', async () => {
-    const servicio = ia();
-    const ev = evidencia('foto');
-    await servicio.procesar(ev, undefined, contexto);
-    const lectura = servicio.lecturaDe(ev.id);
-    expect(lectura?.texto).toContain('individuales');
-    expect(lectura?.foto).toBe('postit-individuales');
+    expect(segunda[0].tipo).toBe('nota_sala');
   });
 
   it('un audio sin texto toma el guion de audio de la demo', async () => {
     const [sug] = await ia().procesar(evidencia('audio'), undefined, contexto);
-    expect(sug.tipo).toBe('nota_sala'); // "Hoy bajó la asistencia…"
+    expect(sug.ninoId).toBe('NINO-00002'); // Emilio, hojas de otoño
+    expect(sug.nucleo).toBe('PM');
   });
 
   it('simula latencia antes de responder', async () => {

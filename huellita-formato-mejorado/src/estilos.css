@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    /* Nunca bajar de 16 px de texto base (interfaz.md). */
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-fondo font-texto text-base leading-[1.45] text-tinta;
+  }
+
+  /* En escritorio la app se centra como una columna sobre un gris azulado. */
+  @media (min-width: 560px) {
+    body {
+      background: #e3e9f2;
+    }
+  }
+
+  h1 {
+    @apply text-[21px] font-bold leading-[1.2];
+  }
+
+  h2 {
+    @apply text-[16px] font-bold;
+  }
+
+  /* Las citas ya traen su propio formato; sin comillas automáticas. */
+  q {
+    quotes: none;
+  }
+
+  :focus-visible {
+    outline: 3px solid #1f4e9a;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  /* Rótulo de sección: mayúscula pequeña, como en los formularios del Estado. */
+  .rotulo {
+    @apply font-rotulo text-[12px] font-medium uppercase tracking-[0.06em] text-tinta-2;
+  }
+
+  /* Aviso con borde de color a la izquierda (sin esquinas en ese lado). */
+  .aviso {
+    @apply border-l-4 border-aviso-borde bg-aviso-fondo;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* Punto de frescura junto a la fecha del último registro. */
+  .punto {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--punto, #8a93a6);
+  }
+
+  /* Nota resuelta: se despide antes de salir de la lista (tarea 10). */
+  .saliendo {
+    animation: sale 0.16s ease-in forwards;
+  }
+
+  @keyframes sale {
+    to {
+      opacity: 0;
+      transform: translateX(16px);
+    }
+  }
+
+  /* Línea de tiempo del historial. */
+  .linea-tiempo {
+    position: relative;
+    padding-left: 18px;
+  }
+
+  .linea-tiempo::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: #dce3ef;
+  }
+
+  .linea-tiempo > li {
+    position: relative;
+  }
+
+  .linea-tiempo > li::before {
+    content: '';
+    position: absolute;
+    left: -17px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--punto, #8a93a6);
+  }
+}
+
+@layer utilities {
+  /* Chips de filtro: se desplazan sin mostrar barra. */
+  .sin-barra {
+    scrollbar-width: none;
+  }
+
+  .sin-barra::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

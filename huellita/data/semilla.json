@@ -391,7 +391,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-08-10T10:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Josefa: clasifica por dos atributos (color y forma) y ordena por tamaño.",
    "estado": "lista"
   },
@@ -400,7 +400,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-08-27T09:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Josefa: dibuja figuras cerradas y primeros esbozos de figura humana.",
    "estado": "lista"
   },
@@ -436,7 +436,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-09-21T09:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Josefa: expresa preferencias sobre colores, formas o sonidos de una obra.",
    "estado": "lista"
   },
@@ -445,7 +445,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-09-29T12:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Josefa: mantiene el equilibrio al desplazarse en distintas direcciones.",
    "estado": "lista"
   },
@@ -454,7 +454,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-10-11T10:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Josefa: usa lupas, frascos o pinzas para explorar y recolectar.",
    "estado": "lista"
   },
@@ -462,8 +462,8 @@
    "id": "EVI-00011",
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
-   "creadaEn": "2026-10-15T08:50:00",
-   "formato": "texto",
+   "creadaEn": "2026-10-13T10:40:00",
+   "formato": "foto",
    "textoExtraido": "Josefa: clasifica por dos atributos (color y forma) y ordena por tamaño.",
    "estado": "lista"
   },
@@ -481,7 +481,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-08-03T10:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Emilio: come, se lava las manos o va al baño con mínima ayuda.",
    "estado": "lista"
   },
@@ -517,7 +517,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-09-24T15:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Emilio: ofrece ayuda a un compañero (le pasa un material, lo espera).",
    "estado": "lista"
   },
@@ -526,7 +526,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-10-04T10:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Emilio: reacciona ante la emoción de un adulto (se acerca si alguien llora).",
    "estado": "lista"
   },
@@ -544,7 +544,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-07-04T11:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Sofía: explora y usa utensilios cotidianos (cuchara, vaso).",
    "estado": "lista"
   },
@@ -571,7 +571,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-09-16T10:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Sofía: pide jugar con movimiento libre con frecuencia.",
    "estado": "lista"
   },
@@ -580,7 +580,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-10-04T15:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Sofía: distingue sonidos fuertes/suaves y rápidos/lentos.",
    "estado": "lista"
   },
@@ -589,7 +589,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-10-09T10:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Sofía: describe actividades de su comunidad en las que participa (ir a la feria, a la plaza).",
    "estado": "lista"
   },
@@ -598,7 +598,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-07-07T16:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Martina: usa palabras nuevas para contar temas de su interés.",
    "estado": "lista"
   },
@@ -616,7 +616,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-08-02T14:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Martina: se despide de su familia con contención de la tía.",
    "estado": "lista"
   },
@@ -652,7 +652,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-10-04T15:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Martina: cuenta con orgullo un logro (\"¡salté solito!\").",
    "estado": "lista"
   },
@@ -661,7 +661,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-06-04T10:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Tomás: se acerca y participa en celebraciones.",
    "estado": "lista"
   },
@@ -679,7 +679,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-06-29T14:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Tomás: garabatea espontáneamente con crayones o pintura.",
    "estado": "lista"
   },
@@ -688,7 +688,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-07-10T11:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Tomás: distingue sonidos fuertes/suaves y rápidos/lentos.",
    "estado": "lista"
   },
@@ -697,7 +697,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-07-18T12:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Tomás: sigue un acuerdo simple de convivencia cuando se lo recuerdan.",
    "estado": "lista"
   },
@@ -706,7 +706,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-08-04T13:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Tomás: usa mucho/poco y todo/ninguno al comparar.",
    "estado": "lista"
   },
@@ -715,7 +715,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-08-21T11:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Tomás: expresa preferencias sobre colores, formas o sonidos de una obra.",
    "estado": "lista"
   },
@@ -751,7 +751,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-05-12T15:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Benjamín: usa \"más\" u \"otro\" para pedir.",
    "estado": "lista"
   },
@@ -778,7 +778,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-06-18T15:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Benjamín: distingue sonidos fuertes/suaves y rápidos/lentos.",
    "estado": "lista"
   },
@@ -805,7 +805,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-07-22T15:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Benjamín: expresa preferencias sobre colores, formas o sonidos de una obra.",
    "estado": "lista"
   },
@@ -823,7 +823,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-08-21T16:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Benjamín: describe la posición de objetos (cerca/lejos, encima/debajo).",
    "estado": "lista"
   },
@@ -895,7 +895,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-09-25T09:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Agustina: juega junto a pares intercambiando juguetes con mediación.",
    "estado": "lista"
   },
@@ -904,7 +904,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-07-03T15:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Maximiliano: incorpora palabras nuevas en juegos.",
    "estado": "lista"
   },
@@ -931,7 +931,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-08-20T10:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Maximiliano: comunica propiedades de elementos naturales (color, textura, tamaño, temperatura).",
    "estado": "lista"
   },
@@ -958,7 +958,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-09-13T11:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Maximiliano: usa palabras nuevas para contar temas de su interés.",
    "estado": "lista"
   },
@@ -967,7 +967,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-09-29T10:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Maximiliano: expresa al adulto cuando está cómodo/a o incómodo/a.",
    "estado": "lista"
   },
@@ -976,7 +976,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-10-06T13:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Maximiliano: muestra interés por títeres, música o pinturas y describe algo de ellas.",
    "estado": "lista"
   },
@@ -985,7 +985,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-10-08T11:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Maximiliano: comunica propiedades de elementos naturales (color, textura, tamaño, temperatura).",
    "estado": "lista"
   },
@@ -993,7 +993,7 @@
    "id": "EVI-00070",
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
-   "creadaEn": "2026-10-15T14:40:00",
+   "creadaEn": "2026-10-14T10:40:00",
    "formato": "texto",
    "textoExtraido": "Maximiliano: asocia personas y objetos a lugares (tía–jardín, cama–dormir).",
    "estado": "lista"
@@ -1021,7 +1021,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-07-09T16:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Isidora: come, se lava las manos o va al baño con mínima ayuda.",
    "estado": "lista"
   },
@@ -1039,7 +1039,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-07-26T14:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Isidora: cuenta objetos hasta 10.",
    "estado": "lista"
   },
@@ -1057,7 +1057,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-09-10T10:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Isidora: colabora en rutinas: estira los brazos al vestirse, intenta comer con cuchara.",
    "estado": "lista"
   },
@@ -1084,7 +1084,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-09-28T10:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Isidora: expresa al adulto cuando está cómodo/a o incómodo/a.",
    "estado": "lista"
   },
@@ -1093,7 +1093,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-10-05T11:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Isidora: colabora en rutinas: estira los brazos al vestirse, intenta comer con cuchara.",
    "estado": "lista"
   },
@@ -1102,7 +1102,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-10-09T13:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Isidora: describe actividades de su comunidad en las que participa (ir a la feria, a la plaza).",
    "estado": "lista"
   },
@@ -1111,7 +1111,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-07-03T14:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Vicente: experimenta saltar, correr o rodar nombrando la acción con apoyo.",
    "estado": "lista"
   },
@@ -1120,7 +1120,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-07-16T10:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Vicente: juega junto a pares intercambiando juguetes con mediación.",
    "estado": "lista"
   },
@@ -1138,7 +1138,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-08-13T14:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Vicente: reconoce logos o símbolos de su entorno.",
    "estado": "lista"
   },
@@ -1147,7 +1147,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-08-26T09:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Vicente: describe paisajes o fenómenos (sismo, tormenta).",
    "estado": "lista"
   },
@@ -1165,7 +1165,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-09-16T14:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Vicente: acepta una estrategia del adulto para calmarse (respirar, abrazo, rincón).",
    "estado": "lista"
   },
@@ -1174,7 +1174,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-09-20T16:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Vicente: usa cuchara, crayones o encaja piezas con coordinación.",
    "estado": "lista"
   },
@@ -1192,7 +1192,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-10-03T14:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Vicente: cuenta objetos hasta 10.",
    "estado": "lista"
   },
@@ -1210,7 +1210,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-07-11T16:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Florencia: usa dentro/fuera y encima/debajo en juegos.",
    "estado": "lista"
   },
@@ -1228,7 +1228,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-07-31T16:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Florencia: manipula libros y observa imágenes con interés.",
    "estado": "lista"
   },
@@ -1255,7 +1255,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-09-07T12:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Florencia: se calma o sonríe cuando un adulto significativo le habla o lo contiene.",
    "estado": "lista"
   },
@@ -1264,7 +1264,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-09-19T12:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Florencia: usa \"más\" u \"otro\" para pedir.",
    "estado": "lista"
   },
@@ -1273,7 +1273,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-09-24T10:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Florencia: expresa al adulto cuando está cómodo/a o incómodo/a.",
    "estado": "lista"
   },
@@ -1300,7 +1300,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-10-12T10:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Florencia: experimenta con pintura, modelado o dibujo para expresar ideas.",
    "estado": "lista"
   },
@@ -1309,7 +1309,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-06-29T14:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Joaquín: comunica propiedades de elementos naturales (color, textura, tamaño, temperatura).",
    "estado": "lista"
   },
@@ -1327,7 +1327,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-07-18T13:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Joaquín: sigue instrucciones explícitas de uno o dos pasos.",
    "estado": "lista"
   },
@@ -1336,7 +1336,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-08-26T15:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Joaquín: se despide de su familia con contención de la tía.",
    "estado": "lista"
   },
@@ -1363,7 +1363,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-10-13T14:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Joaquín: hace preguntas sobre el contenido de un cuento.",
    "estado": "lista"
   },
@@ -1372,7 +1372,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-06-22T14:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Antonia: usa dentro/fuera y encima/debajo en juegos.",
    "estado": "lista"
   },
@@ -1381,7 +1381,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-06-24T14:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Antonia: explora con interés objetos o situaciones nuevas.",
    "estado": "lista"
   },
@@ -1390,7 +1390,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-07-10T14:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Antonia: describe actividades de su comunidad en las que participa (ir a la feria, a la plaza).",
    "estado": "lista"
   },
@@ -1399,7 +1399,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-07-28T15:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Antonia: sigue instrucciones explícitas de uno o dos pasos.",
    "estado": "lista"
   },
@@ -1408,7 +1408,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-08-05T10:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Antonia: clasifica por dos atributos (color y forma) y ordena por tamaño.",
    "estado": "lista"
   },
@@ -1435,7 +1435,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-08-17T14:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Antonia: usa palabra-frase o combina palabras con gestos (\"agua\" señalando).",
    "estado": "lista"
   },
@@ -1453,7 +1453,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-10-08T13:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Antonia: dice su nombre y algunas características propias.",
    "estado": "lista"
   },
@@ -1462,7 +1462,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-10-09T15:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Antonia: describe costumbres o viviendas de su comunidad a partir de fotos o relatos.",
    "estado": "lista"
   },
@@ -1471,7 +1471,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-07-01T11:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Lucas: distingue sonidos fuertes/suaves y rápidos/lentos.",
    "estado": "lista"
   },
@@ -1480,7 +1480,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-07-13T15:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Lucas: ofrece ayuda a un compañero (le pasa un material, lo espera).",
    "estado": "lista"
   },
@@ -1489,7 +1489,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-07-21T11:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Lucas: experimenta saltar, correr o rodar nombrando la acción con apoyo.",
    "estado": "lista"
   },
@@ -1534,7 +1534,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-09-22T09:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Lucas: menciona algún derecho propio (a jugar, a ser escuchado).",
    "estado": "lista"
   },
@@ -1552,7 +1552,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-06-30T14:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Catalina: produce sonidos con su voz o golpeando objetos.",
    "estado": "lista"
   },
@@ -1561,7 +1561,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-07-19T10:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Catalina: camina de forma autónoma y disfruta moverse libremente.",
    "estado": "lista"
   },
@@ -1570,7 +1570,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-07-26T16:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Catalina: se reconoce en el espejo o responde a su nombre.",
    "estado": "lista"
   },
@@ -1579,7 +1579,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-08-14T14:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Catalina: responde con el cuerpo a mensajes simples (\"ven\", \"dame\").",
    "estado": "lista"
   },
@@ -1588,7 +1588,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-08-25T13:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Catalina: describe costumbres o viviendas de su comunidad a partir de fotos o relatos.",
    "estado": "lista"
   },
@@ -1615,7 +1615,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-06-26T09:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Mateo: resuelve problemas concretos (saca juguetes de un contenedor, aprieta botones).",
    "estado": "lista"
   },
@@ -1633,7 +1633,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-07-07T11:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Mateo: hace preguntas sobre el contenido de un cuento.",
    "estado": "lista"
   },
@@ -1642,7 +1642,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-07-29T09:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Mateo: sigue un acuerdo simple de convivencia cuando se lo recuerdan.",
    "estado": "lista"
   },
@@ -1669,7 +1669,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-08-31T10:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Mateo: responde \"¿qué es?\", \"¿dónde está?\" señalando o nombrando.",
    "estado": "lista"
   },
@@ -1696,7 +1696,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-10-05T09:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Mateo: se reconoce en el espejo o responde a su nombre.",
    "estado": "lista"
   },
@@ -1705,7 +1705,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-06-29T14:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Emilia: ante un conflicto, dice lo que pasó y escucha al otro con apoyo del adulto.",
    "estado": "lista"
   },
@@ -1723,7 +1723,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-08-13T14:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Emilia: sigue instrucciones explícitas de uno o dos pasos.",
    "estado": "lista"
   },
@@ -1741,7 +1741,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-08-24T13:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Emilia: comunica propiedades de elementos naturales (color, textura, tamaño, temperatura).",
    "estado": "lista"
   },
@@ -1759,7 +1759,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-09-23T09:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Emilia: abraza o acaricia a un compañero que llora.",
    "estado": "lista"
   },
@@ -1777,7 +1777,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-10-10T14:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Emilia: produce signos gráficos con intención de \"escribir\".",
    "estado": "lista"
   },
@@ -1822,7 +1822,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-07-22T16:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Gaspar: expresa preferencias sobre colores, formas o sonidos de una obra.",
    "estado": "lista"
   },
@@ -1840,7 +1840,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
    "creadaEn": "2026-08-09T15:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Gaspar: reconoce animales o plantas en vivo o en imágenes (señala, nombra, imita su sonido).",
    "estado": "lista"
   },
@@ -1858,7 +1858,7 @@
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
    "creadaEn": "2026-09-18T11:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Gaspar: describe actividades de su comunidad en las que participa (ir a la feria, a la plaza).",
    "estado": "lista"
   },
@@ -1930,7 +1930,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-10-04T11:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Trinidad: clasifica por dos atributos (color y forma) y ordena por tamaño.",
    "estado": "lista"
   },
@@ -1948,7 +1948,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-06-21T14:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Clemente: anticipa actividades habituales (va a la mesa al ver la comida).",
    "estado": "lista"
   },
@@ -1957,7 +1957,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-07-17T10:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Clemente: reacciona ante la emoción de un adulto (se acerca si alguien llora).",
    "estado": "lista"
   },
@@ -1966,7 +1966,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-08-03T10:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Clemente: clasifica por dos atributos (color y forma) y ordena por tamaño.",
    "estado": "lista"
   },
@@ -1975,7 +1975,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-08-15T15:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Clemente: se acerca y participa en celebraciones.",
    "estado": "lista"
   },
@@ -1984,7 +1984,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-08-20T09:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Clemente: describe actividades de su comunidad en las que participa (ir a la feria, a la plaza).",
    "estado": "lista"
   },
@@ -2002,7 +2002,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-09-10T12:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Clemente: clasifica por dos atributos (color y forma) y ordena por tamaño.",
    "estado": "lista"
   },
@@ -2011,7 +2011,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-07-15T14:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Amanda: se expresa con oraciones simples (\"yo quiero jugar\").",
    "estado": "lista"
   },
@@ -2020,7 +2020,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-08-21T15:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Amanda: expresa al adulto cuando está cómodo/a o incómodo/a.",
    "estado": "lista"
   },
@@ -2029,7 +2029,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-09-22T12:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Amanda: expresa emociones con el cuerpo en rondas o bailes.",
    "estado": "lista"
   },
@@ -2038,7 +2038,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-10-02T12:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Amanda: comunica propiedades de elementos naturales (color, textura, tamaño, temperatura).",
    "estado": "lista"
   },
@@ -2065,7 +2065,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-07-19T10:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Bastián: manipula libros y observa imágenes con interés.",
    "estado": "lista"
   },
@@ -2083,7 +2083,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-09-06T13:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Bastián: colabora en el cuidado de la naturaleza (regar, recoger hojas).",
    "estado": "lista"
   },
@@ -2092,7 +2092,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-09-11T12:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Bastián: se orienta en la rutina (día/noche, hoy/mañana).",
    "estado": "lista"
   },
@@ -2101,7 +2101,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-09-13T15:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Bastián: saluda y se despide con gestos o palabras.",
    "estado": "lista"
   },
@@ -2119,7 +2119,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-10-07T10:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Bastián: expresa emociones con el cuerpo en rondas o bailes.",
    "estado": "lista"
   },
@@ -2137,7 +2137,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-07-22T10:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Renata: reacciona ante la emoción de un adulto (se acerca si alguien llora).",
    "estado": "lista"
   },
@@ -2173,7 +2173,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-09-23T11:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Renata: asocia personas y objetos a lugares (tía–jardín, cama–dormir).",
    "estado": "lista"
   },
@@ -2182,7 +2182,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-06-30T13:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Simón: distingue animales y plantas por sus características y por dónde viven.",
    "estado": "lista"
   },
@@ -2191,7 +2191,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-07-11T16:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Simón: describe la posición de objetos (cerca/lejos, encima/debajo).",
    "estado": "lista"
   },
@@ -2200,7 +2200,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-07-13T14:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Simón: canta canciones y juega con instrumentos u objetos sonoros.",
    "estado": "lista"
   },
@@ -2209,7 +2209,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-07-25T09:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Simón: disfruta interactuar con personas de la comunidad que visitan el jardín.",
    "estado": "lista"
   },
@@ -2218,7 +2218,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-09-05T13:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Simón: distingue animales y plantas por sus características y por dónde viven.",
    "estado": "lista"
   },
@@ -2254,7 +2254,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-07-12T10:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Javiera: se despide de su familia con contención de la tía.",
    "estado": "lista"
   },
@@ -2263,7 +2263,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-07-21T10:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Javiera: expresa al adulto cuando está cómodo/a o incómodo/a.",
    "estado": "lista"
   },
@@ -2272,7 +2272,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-07-23T11:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Javiera: canta canciones y juega con instrumentos u objetos sonoros.",
    "estado": "lista"
   },
@@ -2290,7 +2290,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-08-01T10:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Javiera: reproduce patrones simples de dos elementos (aplauso–pisada).",
    "estado": "lista"
   },
@@ -2299,7 +2299,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-08-11T16:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Javiera: intenta realizar solo/a prácticas de higiene o alimentación con apoyo.",
    "estado": "lista"
   },
@@ -2308,7 +2308,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-09-22T11:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Javiera: trepa, lanza objetos o participa en rondas.",
    "estado": "lista"
   },
@@ -2317,7 +2317,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-10-03T16:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Javiera: muestra interés por títeres, música o pinturas y describe algo de ellas.",
    "estado": "lista"
   },
@@ -2326,7 +2326,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-10-09T16:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Javiera: pregunta y describe elementos y fenómenos naturales que le llaman la atención.",
    "estado": "lista"
   },
@@ -2335,7 +2335,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-06-30T15:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Felipe: camina de forma autónoma y disfruta moverse libremente.",
    "estado": "lista"
   },
@@ -2353,7 +2353,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-08-03T09:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Felipe: muestra interés por títeres, música o pinturas y describe algo de ellas.",
    "estado": "lista"
   },
@@ -2371,7 +2371,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-09-08T16:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Felipe: juega junto a pares intercambiando juguetes con mediación.",
    "estado": "lista"
   },
@@ -2380,7 +2380,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-10-12T16:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Felipe: describe actividades de su comunidad en las que participa (ir a la feria, a la plaza).",
    "estado": "lista"
   },
@@ -2407,7 +2407,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-08-12T12:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Valentina: nombra partes principales del cuerpo y su función.",
    "estado": "lista"
   },
@@ -2416,7 +2416,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-08-14T14:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Valentina: cierra llaves de agua o apaga luces por iniciativa propia.",
    "estado": "lista"
   },
@@ -2443,7 +2443,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-09-02T16:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Valentina: usa adelante/atrás, arriba/abajo, rápido/lento en el juego.",
    "estado": "lista"
   },
@@ -2452,7 +2452,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-09-04T15:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Valentina: usa lupas, frascos o pinzas para explorar y recolectar.",
    "estado": "lista"
   },
@@ -2461,7 +2461,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-09-13T09:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Valentina: ante un conflicto, dice lo que pasó y escucha al otro con apoyo del adulto.",
    "estado": "lista"
   },
@@ -2470,7 +2470,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-09-18T09:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Valentina: usa objetos de forma simbólica en el juego (un bloque como teléfono).",
    "estado": "lista"
   },
@@ -2479,7 +2479,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-10-06T09:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Valentina: nombra partes principales del cuerpo y su función.",
    "estado": "lista"
   },
@@ -2524,7 +2524,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-08-17T13:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Cristóbal: intenta realizar solo/a prácticas de higiene o alimentación con apoyo.",
    "estado": "lista"
   },
@@ -2533,7 +2533,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-09-10T14:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Cristóbal: canta canciones y juega con instrumentos u objetos sonoros.",
    "estado": "lista"
   },
@@ -2542,7 +2542,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-09-11T10:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Cristóbal: usa mucho/poco y todo/ninguno al comparar.",
    "estado": "lista"
   },
@@ -2569,7 +2569,7 @@
    "salaId": "SALA-MMB",
    "autorId": "USR-PAULA",
    "creadaEn": "2026-10-13T11:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Cristóbal: representa emociones con gestos o palabras en sus juegos (hace como que llora o se ríe).",
    "estado": "lista"
   },
@@ -2578,7 +2578,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-06-30T13:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Pía: describe actividades de su comunidad en las que participa (ir a la feria, a la plaza).",
    "estado": "lista"
   },
@@ -2596,7 +2596,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-07-09T16:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Pía: explora materiales naturales manipulándolos (toca hojas, piedras).",
    "estado": "lista"
   },
@@ -2605,7 +2605,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-07-12T13:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Pía: saluda y se despide con gestos o palabras.",
    "estado": "lista"
   },
@@ -2632,7 +2632,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-07-22T14:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Pía: responde \"¿qué es?\", \"¿dónde está?\" señalando o nombrando.",
    "estado": "lista"
   },
@@ -2641,7 +2641,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-08-11T15:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Pía: anticipa actividades habituales (va a la mesa al ver la comida).",
    "estado": "lista"
   },
@@ -2659,7 +2659,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-09-28T15:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Pía: explora materiales naturales manipulándolos (toca hojas, piedras).",
    "estado": "lista"
   },
@@ -2677,7 +2677,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-10-14T16:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Pía: canta canciones y juega con instrumentos u objetos sonoros.",
    "estado": "lista"
   },
@@ -2695,7 +2695,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-07-08T11:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "León: toma objetos con la mano y los pasa de una mano a otra.",
    "estado": "lista"
   },
@@ -2722,7 +2722,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-08-10T16:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "León: colabora en el cuidado de la naturaleza (regar, recoger hojas).",
    "estado": "lista"
   },
@@ -2731,7 +2731,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-08-23T11:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "León: se mueve o baila al escuchar música, intentando seguir el ritmo.",
    "estado": "lista"
   },
@@ -2740,7 +2740,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-08-24T14:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "León: nombra partes principales del cuerpo y su función.",
    "estado": "lista"
   },
@@ -2749,7 +2749,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-10-06T10:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "León: usa palabra-frase o combina palabras con gestos (\"agua\" señalando).",
    "estado": "lista"
   },
@@ -2767,7 +2767,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-08-03T14:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Rafaela: reconoce animales o plantas en vivo o en imágenes (señala, nombra, imita su sonido).",
    "estado": "lista"
   },
@@ -2785,7 +2785,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-08-07T11:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Rafaela: describe costumbres o viviendas de su comunidad a partir de fotos o relatos.",
    "estado": "lista"
   },
@@ -2794,7 +2794,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-08-09T14:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Rafaela: responde con sonrisas, balbuceos o gestos a sonidos, colores y texturas.",
    "estado": "lista"
   },
@@ -2803,7 +2803,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-08-30T16:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Rafaela: muestra curiosidad o asombro ante arena, agua, viento o lluvia.",
    "estado": "lista"
   },
@@ -2812,7 +2812,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-10-03T09:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Rafaela: se sienta a almorzar o colabora en ordenar con guía.",
    "estado": "lista"
   },
@@ -2848,7 +2848,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-08-15T09:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Facundo: trepa, lanza objetos o participa en rondas.",
    "estado": "lista"
   },
@@ -2884,7 +2884,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-07-01T11:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Julieta: imita gestos y acciones de personas cercanas.",
    "estado": "lista"
   },
@@ -2920,7 +2920,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-08-20T13:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Julieta: anticipa actividades habituales (va a la mesa al ver la comida).",
    "estado": "lista"
   },
@@ -2929,7 +2929,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-08-25T15:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Julieta: explora materiales naturales manipulándolos (toca hojas, piedras).",
    "estado": "lista"
   },
@@ -2956,7 +2956,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-09-24T12:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Julieta: anticipa actividades habituales (va a la mesa al ver la comida).",
    "estado": "lista"
   },
@@ -2983,7 +2983,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-06-06T13:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Alonso: responde a la voz del adulto cuando se le advierte un peligro.",
    "estado": "lista"
   },
@@ -2992,7 +2992,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-06-08T13:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Alonso: busca o sostiene un objeto o juego que prefiere.",
    "estado": "lista"
   },
@@ -3010,7 +3010,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-07-04T12:20:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Alonso: responde con sonrisas, balbuceos o gestos a sonidos, colores y texturas.",
    "estado": "lista"
   },
@@ -3019,7 +3019,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-08-04T09:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Alonso: usa dentro/fuera y encima/debajo en juegos.",
    "estado": "lista"
   },
@@ -3028,7 +3028,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-08-23T12:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Alonso: explora partes de su cuerpo (manos, pies).",
    "estado": "lista"
   },
@@ -3037,7 +3037,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-08-31T16:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Alonso: reconoce animales o plantas en vivo o en imágenes (señala, nombra, imita su sonido).",
    "estado": "lista"
   },
@@ -3046,7 +3046,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-06-20T09:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Laura: muestra curiosidad o asombro ante arena, agua, viento o lluvia.",
    "estado": "lista"
   },
@@ -3055,7 +3055,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-07-03T12:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Laura: responde con el cuerpo a mensajes simples (\"ven\", \"dame\").",
    "estado": "lista"
   },
@@ -3091,7 +3091,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-08-23T10:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Laura: colabora en el cuidado de la naturaleza (regar, recoger hojas).",
    "estado": "lista"
   },
@@ -3109,7 +3109,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-09-05T11:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Laura: explora y usa utensilios cotidianos (cuchara, vaso).",
    "estado": "lista"
   },
@@ -3118,7 +3118,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-09-13T14:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Laura: busca la mirada o responde con sonrisas y balbuceos a pares y adultos.",
    "estado": "lista"
   },
@@ -3127,7 +3127,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-09-21T15:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Laura: colabora en rutinas: estira los brazos al vestirse, intenta comer con cuchara.",
    "estado": "lista"
   },
@@ -3136,7 +3136,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-10-08T12:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Laura: colabora en el cuidado de la naturaleza (regar, recoger hojas).",
    "estado": "lista"
   },
@@ -3145,7 +3145,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-06-24T12:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Damián: se calma o sonríe cuando un adulto significativo le habla o lo contiene.",
    "estado": "lista"
   },
@@ -3154,7 +3154,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-07-05T14:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Damián: colabora en el cuidado de la naturaleza (regar, recoger hojas).",
    "estado": "lista"
   },
@@ -3163,7 +3163,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-07-09T13:40:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Damián: se mueve o baila al escuchar música, intentando seguir el ritmo.",
    "estado": "lista"
   },
@@ -3172,7 +3172,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-07-12T09:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Damián: se calma o sonríe cuando un adulto significativo le habla o lo contiene.",
    "estado": "lista"
   },
@@ -3181,7 +3181,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-07-23T14:30:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Damián: muestra curiosidad o asombro ante arena, agua, viento o lluvia.",
    "estado": "lista"
   },
@@ -3199,7 +3199,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-08-25T13:10:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Damián: reacciona ante la emoción de un adulto (se acerca si alguien llora).",
    "estado": "lista"
   },
@@ -3235,7 +3235,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-10-01T12:50:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Damián: colabora en el cuidado de la naturaleza (regar, recoger hojas).",
    "estado": "lista"
   },
@@ -3244,7 +3244,7 @@
    "salaId": "SALA-SCM",
    "autorId": "USR-CARLA",
    "creadaEn": "2026-10-11T12:00:00",
-   "formato": "texto",
+   "formato": "foto",
    "textoExtraido": "Damián: muestra preferencia por una canción o imagen.",
    "estado": "lista"
   },
@@ -3270,8 +3270,8 @@
    "id": "EVI-00323",
    "salaId": "SALA-MMA",
    "autorId": "USR-ROSA",
-   "creadaEn": "2026-10-15T09:55:00",
-   "formato": "texto",
+   "creadaEn": "2026-10-14T15:50:00",
+   "formato": "foto",
    "textoExtraido": "Emilio pintó con témpera su familia y explicó: \"este es mi papá y este mi perro\".",
    "estado": "lista"
   },
@@ -3279,7 +3279,7 @@
    "id": "EVI-00324",
    "salaId": "SALA-MMA",
    "autorId": "USR-ANA",
-   "creadaEn": "2026-10-15T10:50:00",
+   "creadaEn": "2026-10-14T14:40:00",
    "formato": "audio",
    "textoExtraido": "Sofía subió la escalera del patio sola alternando los pies, afirmándose de la baranda.",
    "estado": "lista"
@@ -3292,16 +3292,6 @@
    "formato": "texto",
    "textoExtraido": "Agus se despidió de su mamá sin llorar hoy.",
    "estado": "lista"
-  },
-  {
-   "id": "EVI-00900",
-   "salaId": "SALA-MMA",
-   "autorId": "USR-ANA",
-   "creadaEn": "2026-10-15T09:40:00",
-   "formato": "foto",
-   "textoExtraido": "Durante la experiencia de la zona identifica las tortugas pequeñas, medianas y grandes; selecciona cantidades de piezas ordenando por colores y tamaños.",
-   "estado": "lista",
-   "foto": "postit-tortugas"
   }
  ],
  "sugerencias": [
@@ -3479,7 +3469,7 @@
    "certeza": "alta",
    "estado": "aceptada",
    "validadaPor": "USR-ROSA",
-   "validadaEn": "2026-10-15T08:50:00"
+   "validadaEn": "2026-10-13T10:40:00"
   },
   {
    "id": "SUG-00012",
@@ -4423,7 +4413,7 @@
    "certeza": "alta",
    "estado": "aceptada",
    "validadaPor": "USR-ANA",
-   "validadaEn": "2026-10-15T14:40:00"
+   "validadaEn": "2026-10-14T10:40:00"
   },
   {
    "id": "SUG-00071",
@@ -8498,28 +8488,12 @@
    "cita": "Agus se despidió de su mamá sin llorar hoy.",
    "certeza": "baja",
    "estado": "pendiente"
-  },
-  {
-   "id": "SUG-00900",
-   "evidenciaId": "EVI-00900",
-   "salaId": "SALA-MMA",
-   "tipo": "evaluacion",
-   "ninoId": "NINO-00008",
-   "nombreDetectado": "Maximiliano",
-   "nucleo": "PM",
-   "nivel": 3,
-   "conducta": "Reproduce patrones simples de dos elementos (aplauso–pisada).",
-   "cita": "identifica las tortugas pequeñas, medianas y grandes; selecciona cantidades de piezas ordenando por colores y tamaños",
-   "certeza": "alta",
-   "estado": "aceptada",
-   "validadaPor": "USR-ANA",
-   "validadaEn": "2026-10-15T09:41:00"
   }
  ],
  "demoCapturas": [
   {
    "formato": "foto",
-   "texto": "Josefa: cuando salía del baño se da cuenta que a la tía se le caen los individuales, ella se agacha y recoge los individuales, los ordena y se los pasa a la tía.",
+   "texto": "Josefa 25 de mayo: cuando salía del baño se da cuenta que a la tía se le caen los individuales, ella se agacha y recoge los individuales, los ordena y se los pasa a la tía.",
    "sugerencias": [
     {
      "tipo": "evaluacion",
@@ -8531,11 +8505,10 @@
      "cita": "se agacha y recoge los individuales, los ordena y se los pasa a la tía",
      "certeza": "alta"
     }
-   ],
-   "foto": "postit-individuales"
+   ]
   },
   {
-   "formato": "foto",
+   "formato": "audio",
    "texto": "Emilio clasificó las hojas del otoño por tres colores, y después las separó en grandes y pequeñas.",
    "sugerencias": [
     {
@@ -8548,8 +8521,7 @@
      "cita": "clasificó las hojas del otoño por tres colores, y después las separó en grandes y pequeñas",
      "certeza": "media"
     }
-   ],
-   "foto": "postit-hojas"
+   ]
   },
   {
    "formato": "foto",

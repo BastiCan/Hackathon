@@ -4,13 +4,12 @@ import { COLOR_FRESCURA } from './colores';
 
 /**
  * Avatar circular con iniciales. Nunca se muestran fotos de caras de niños o
- * niñas (privacidad.md 2). Si se indica la frescura, lleva un borde de ese
- * color: solo mide hace cuánto no hay registro, no cómo le va al niño/a.
+ * niñas (privacidad.md 2). El aro de color indica la frescura del registro.
  */
 export function Avatar({
   iniciales,
   frescura,
-  tamano = 44,
+  tamano = 54,
   className = '',
 }: {
   iniciales: string;
@@ -21,14 +20,16 @@ export function Avatar({
   const estilo: CSSProperties = {
     width: tamano,
     height: tamano,
-    fontSize: Math.round(tamano / 2.8),
-    ...(frescura ? { boxShadow: `0 0 0 2px #fff, 0 0 0 4px ${COLOR_FRESCURA[frescura]}` } : {}),
+    fontSize: Math.round(tamano / 3),
+    ...(frescura ? ({ '--aro': COLOR_FRESCURA[frescura] } as CSSProperties) : {}),
   };
   return (
     <span
       aria-hidden="true"
       style={estilo}
-      className={`grid flex-none place-items-center rounded-full bg-integra-claro font-bold text-integra-oscuro ${className}`}
+      className={`grid flex-none place-items-center rounded-full bg-integra-claro font-display font-semibold text-integra-oscuro ${
+        frescura ? 'aro' : ''
+      } ${className}`}
     >
       {iniciales}
     </span>

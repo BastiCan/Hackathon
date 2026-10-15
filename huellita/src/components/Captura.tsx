@@ -62,8 +62,8 @@ export function HojaFoto({
           className="mb-[14px] max-h-[46vh] w-full rounded-tarjeta border border-linea object-contain"
         />
       ) : (
-        <div className="mb-[14px] grid aspect-[4/3] place-items-center rounded-tarjeta border border-dashed border-[#C9D2DE] bg-fondo px-6 text-center text-[15px] text-tinta-2">
-          Saca una foto del post-it o de la nota. La foto queda guardada en el registro.
+        <div className="mb-[14px] grid aspect-[4/3] place-items-center rounded-tarjeta bg-postit-amarillo font-mano text-[20px]">
+          Vista previa
         </div>
       )}
       <Boton
@@ -180,10 +180,10 @@ export function HojaAudio({
     <HojaInferior etiqueta="Grabando audio" onCerrar={detener}>
       <div className="flex flex-col items-center gap-[14px] py-4">
         <h2>Grabando…</h2>
-        <div className="grid h-24 w-24 animate-late place-items-center rounded-full bg-grabar text-white">
+        <div className="grid h-24 w-24 animate-late place-items-center rounded-full bg-frescura-rojo text-white">
           <Mic aria-hidden="true" className="h-8 w-8" />
         </div>
-        <span className="text-[34px] font-bold tabular-nums" role="timer">
+        <span className="font-display text-[34px] font-extrabold tabular-nums" role="timer">
           {reloj}
         </span>
         <p className="text-center text-[14px] text-tinta-2">
@@ -223,7 +223,7 @@ export function HojaTexto({
         value={texto}
         onChange={(e) => setTexto(e.target.value)}
         placeholder="Martina armó una torre de 6 bloques y contó hasta 5"
-        className="my-3 min-h-[130px] w-full resize-y rounded-tarjeta border border-linea p-3 text-base text-tinta"
+        className="my-3 min-h-[130px] w-full resize-y rounded-[12px] border-[1.5px] border-linea p-3 text-base text-tinta"
       />
       <Boton ancho variante="pri" disabled={texto.trim().length === 0} onClick={() => onEnviar(texto)}>
         Enviar
