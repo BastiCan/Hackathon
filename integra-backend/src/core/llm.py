@@ -21,6 +21,7 @@ import json
 import re
 import time
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
 import boto3
@@ -28,11 +29,15 @@ from botocore.config import Config as BotoConfig
 from jsonschema import Draft202012Validator
 from pydantic import BaseModel
 
-from .config import RAIZ, config
+from .config import config
 from .rubrica import Rubrica, cargar_rubrica, resolver_esquema
 
-PROMPTS_DIR = RAIZ / "src" / "prompts"
-SCHEMAS_DIR = RAIZ / "src" / "schemas"
+# prompts/ y schemas/ viven junto al paquete `core` dentro de src/ (CodeUri). Se resuelven
+# relativos a ESTE archivo (src/core/llm.py -> src/) para que funcionen tanto en local como
+# en Lambda, donde `sam build` deja /var/task/core/llm.py con /var/task/prompts y /schemas.
+_PAQUETE = Path(__file__).resolve().parents[1]
+PROMPTS_DIR = _PAQUETE / "prompts"
+SCHEMAS_DIR = _PAQUETE / "schemas"
 
 MAX_INTENTOS_THROTTLE = 4
 _ERRORES_REINTENTABLES = {"ThrottlingException", "ServiceUnavailableException"}
