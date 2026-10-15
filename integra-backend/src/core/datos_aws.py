@@ -195,14 +195,23 @@ class DatosDynamo:
 
     # --- Escritura ---
 
-    def upsert_registro(self, id_captura: str, campos: dict[str, Any]) -> None:
+    def upsert_registro(
+        self,
+        id_captura: str,
+        campos: dict[str, Any],
+        conservar_si_existe: set[str] | None = None,
+    ) -> None:
         """Upsert de la tabla Registros (meta.json y texto.json llegan en cualquier orden).
 
-        Solo escribe los campos presentes en `campos` (ademas de `actualizado_en`), sin
-        pisar lo que ya este guardado. Si falta la tabla, no hace nada (pruebas directas).
+        Escribe los campos presentes en `campos` (mas `actualizado_en`). Los campos listados
+        en `conservar_si_existe` se escriben con `if_not_exists(campo, :valor)`: solo toman el
+        valor nuevo si el atributo aun no existe, para no pisar un estado mas avanzado cuando
+        `meta.json` llega despues de `texto.json` (S3 no garantiza el orden). Si falta la
+        tabla, no hace nada (pruebas directas).
         """
         if self._t_registros is None:
             return
+        conservar = conservar_si_existe or set()
         valores = {k: v for k, v in campos.items() if v is not None}
         valores.setdefault("actualizado_en", ahora_iso())
         valores = _a_item_dynamo(valores)
@@ -214,7 +223,11 @@ class DatosDynamo:
             n, a = f"#c{i}", f":v{i}"
             nombres[n] = clave
             atributos[a] = valor
-            asignaciones.append(f"{n} = {a}")
+            if clave in conservar:
+                # No pisar si ya existe (p. ej. estado mas avanzado o subido_en previo).
+                asignaciones.append(f"{n} = if_not_exists({n}, {a})")
+            else:
+                asignaciones.append(f"{n} = {a}")
 
         self._t_registros.update_item(
             Key={"id_captura": id_captura},

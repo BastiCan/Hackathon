@@ -35,8 +35,13 @@ class FakeDatos:
     def guardar_observaciones(self, observaciones, id_captura="", cabecera=None, **kw) -> None:
         self.guardadas.extend(observaciones)
 
-    def upsert_registro(self, id_captura: str, campos: dict) -> None:
-        self.registros.setdefault(id_captura, {}).update(campos)
+    def upsert_registro(self, id_captura, campos, conservar_si_existe=None):
+        reg = self.registros.setdefault(id_captura, {})
+        conservar = conservar_si_existe or set()
+        for k, v in campos.items():
+            if k in conservar and k in reg:
+                continue
+            reg[k] = v
 
 
 def _s3_event(sufijo: str) -> dict:
@@ -88,6 +93,23 @@ def test_meta_invalida(fake, monkeypatch) -> None:
     h.handler(_s3_event("meta.json"))
     assert fake.registros[ID_CAP]["estado"] == EstadoRegistro.ERROR.value
     assert fake.registros[ID_CAP]["error"] == "META_INVALIDA"
+
+
+def test_meta_despues_de_procesado_no_retrocede(fake, monkeypatch) -> None:
+    """Carrera S3: si texto.json ya dejo PROCESADO, el aviso de meta.json no lo pisa."""
+    # Estado previo: la captura ya fue procesada (texto.json llego primero).
+    fake.registros[ID_CAP] = {"estado": EstadoRegistro.PROCESADO.value, "subido_en": "2026-10-15T09:00:00-03:00"}
+
+    meta = {"id_educadora": "EDU-0001", "sala_grupo": "SG-A", "fecha_observacion": "2026-10-15", "tipo": "manual"}
+    monkeypatch.setattr(h, "leer_json_s3", lambda b, k: meta)
+    h.handler(_s3_event("meta.json"))
+
+    reg = fake.registros[ID_CAP]
+    # estado y subido_en se conservan (if_not_exists); el resto de meta si se escribe.
+    assert reg["estado"] == EstadoRegistro.PROCESADO.value
+    assert reg["subido_en"] == "2026-10-15T09:00:00-03:00"
+    assert reg["id_educadora"] == "EDU-0001"
+    assert reg["sala_key"] == "JAR-0001#SG-A"
 
 
 # --- texto.json ---

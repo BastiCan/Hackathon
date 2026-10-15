@@ -105,6 +105,7 @@ def _procesar_meta(datos: Any, bucket: str, id_captura: str, key: str) -> dict[s
         meta = Meta.model_validate(leer_json_s3(bucket, key))
     except Exception as e:  # noqa: BLE001 - meta ausente/invalido
         log.warning("meta.json invalido para %s: %s", id_captura, type(e).__name__)
+        # El aviso de meta.json no debe pisar un estado mas avanzado (carrera S3).
         datos.upsert_registro(
             id_captura,
             {
@@ -112,9 +113,11 @@ def _procesar_meta(datos: Any, bucket: str, id_captura: str, key: str) -> dict[s
                 "error": ErrorCaptura.META_INVALIDA.value,
                 "clave_meta": key,
             },
+            conservar_si_existe={"estado"},
         )
         return {"id_captura": id_captura, "estado": EstadoRegistro.ERROR.value}
 
+    # estado/subido_en con if_not_exists: si texto.json llego antes, no retrocede el estado.
     datos.upsert_registro(
         id_captura,
         {
@@ -127,6 +130,7 @@ def _procesar_meta(datos: Any, bucket: str, id_captura: str, key: str) -> dict[s
             "clave_meta": key,
             "subido_en": ahora_iso(),
         },
+        conservar_si_existe={"estado", "subido_en"},
     )
     log.info("captura %s recibida (meta.json)", id_captura)
     return {"id_captura": id_captura, "estado": EstadoRegistro.RECIBIDO.value}

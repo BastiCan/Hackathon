@@ -34,7 +34,9 @@ class Datos(Protocol):
         cabecera: dict | None = None,
     ) -> None: ...
 
-    def upsert_registro(self, id_captura: str, campos: dict) -> None: ...
+    def upsert_registro(
+        self, id_captura: str, campos: dict, conservar_si_existe: set[str] | None = None
+    ) -> None: ...
 
 
 def _parse_nino(d: dict) -> Nino:
@@ -79,9 +81,17 @@ class DatosLocal:
         # En local se ignora la cabecera de captura (solo se guarda en memoria).
         self.guardadas.extend(observaciones)
 
-    def upsert_registro(self, id_captura: str, campos: dict) -> None:
+    def upsert_registro(
+        self, id_captura: str, campos: dict, conservar_si_existe: set[str] | None = None
+    ) -> None:
         # En local no hay tabla Registros: se acumula en memoria (upsert simple).
-        self.registros.setdefault(id_captura, {}).update(campos)
+        # Respeta conservar_si_existe (no pisa un campo ya presente), como el if_not_exists de Dynamo.
+        reg = self.registros.setdefault(id_captura, {})
+        conservar = conservar_si_existe or set()
+        for k, v in campos.items():
+            if k in conservar and k in reg:
+                continue
+            reg[k] = v
 
 
 def crear_datos() -> Datos:
