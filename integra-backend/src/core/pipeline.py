@@ -311,6 +311,86 @@ def _niveles_esperados_cache(edad: int) -> tuple[list[int], bool]:
     return edad_mod.niveles_esperados(edad, _rubrica_actual)
 
 
+# --- Reutilizable por medir.py (clasificacion sola, protagonista conocido) ---
+
+def construir_contexto(datos: Datos, rubrica: Rubrica, retriever: Retriever, fewshot: dict) -> Contexto:
+    """Arma el Contexto del pipeline (esquemas + strings precomputados)."""
+    return Contexto(
+        rubrica=rubrica,
+        retriever=retriever,
+        fewshot=fewshot,
+        datos=datos,
+        schema_separar=cargar_esquema("separar_identificar"),
+        schema_conductas=cargar_esquema("extraer_conductas"),
+        schema_clasificar=cargar_esquema("clasificar"),
+        niveles_desc=_formato_niveles(rubrica),
+        ejemplos=_formato_ejemplos(fewshot),
+    )
+
+
+@dataclass
+class ResultadoClasificacion:
+    """Salida de clasificar_texto: lo que medir.py necesita (sin identificar/edad)."""
+
+    evaluable: bool
+    motivo_no_evaluable: str | None
+    conductas: list[dict]
+    sugerencias: list[Sugerencia]
+    nivel: int | None
+    certeza: object | None
+
+
+def clasificar_texto(ctx: Contexto, texto: str, protagonista: str) -> ResultadoClasificacion:
+    """Conductas -> recuperar -> N corridas -> consolidar -> cruzar. Sin identificar ni edad.
+
+    Usado por scripts/medir.py (protagonista conocido). Reusa los helpers del pipeline.
+    """
+    conductas_json, _ = _extraer_conductas(ctx, texto, protagonista)
+    conductas = conductas_json.get("conductas", [])
+
+    if not conductas_json.get("evaluable", False):
+        return ResultadoClasificacion(
+            evaluable=False,
+            motivo_no_evaluable=conductas_json.get("motivo_no_evaluable"),
+            conductas=conductas,
+            sugerencias=[],
+            nivel=None,
+            certeza=None,
+        )
+
+    candidatas = _recuperar_candidatas(ctx, conductas)
+    if not candidatas:
+        return ResultadoClasificacion(True, None, conductas, [], None, None)
+
+    corridas = _correr_clasificaciones(ctx, texto, protagonista, conductas, candidatas)
+    consolidado = consolidar(corridas)
+
+    sugerencias: list[Sugerencia] = []
+    for cc in consolidado.codigos:
+        if not ctx.rubrica.existe(cc.id_manifestacion):
+            continue
+        if not val.frase_evidencia_valida(cc.frase_evidencia, texto):
+            continue
+        cruce = ctx.rubrica.cruzar(cc.id_manifestacion)
+        sugerencias.append(
+            Sugerencia(
+                id_manifestacion=cc.id_manifestacion,
+                nivel=cruce.nivel,
+                dominio=cruce.dominio,
+                texto_observable=cruce.texto_observable,
+                frase_evidencia=cc.frase_evidencia,
+                certeza=cc.certeza,
+            )
+        )
+
+    if sugerencias:
+        principal = max(sugerencias, key=lambda s: _rango_certeza(s.certeza))
+        nivel, certeza = principal.nivel, principal.certeza
+    else:
+        nivel, certeza = None, None
+    return ResultadoClasificacion(True, None, conductas, sugerencias, nivel, certeza)
+
+
 # --- Entrada principal ---
 
 def procesar_nota(
