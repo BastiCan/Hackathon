@@ -220,7 +220,12 @@ class Resultado(_Modelo):
 # --- Captura (entrada por S3) ---
 
 class Meta(_Modelo):
-    """Contexto de la captura (capturas/{id}/meta.json). Manda sobre las partes."""
+    """Contexto de la captura (capturas/{id}/meta.json). Manda sobre las partes.
+
+    Lo produce otro equipo: toleramos campos de mas (extra="ignore").
+    """
+
+    model_config = ConfigDict(extra="ignore")
 
     id_educadora: str
     sala_grupo: str
@@ -229,14 +234,24 @@ class Meta(_Modelo):
 
 
 class Parte(_Modelo):
-    """Una parte de texto de la captura. `archivo` es relativo a la carpeta de la captura."""
+    """Una parte de texto de la captura. `archivo` es relativo a la carpeta de la captura.
+
+    Lo produce otro equipo: toleramos campos de mas (extra="ignore").
+    """
+
+    model_config = ConfigDict(extra="ignore")
 
     texto: str
     archivo: str | None = None
 
 
 class TextoCaptura(_Modelo):
-    """Contenido de capturas/{id}/texto.json."""
+    """Contenido de capturas/{id}/texto.json.
+
+    Lo produce otro equipo: toleramos campos de mas (extra="ignore").
+    """
+
+    model_config = ConfigDict(extra="ignore")
 
     id_captura: str | None = None
     fuente: str | None = None  # ocr | audio | manual

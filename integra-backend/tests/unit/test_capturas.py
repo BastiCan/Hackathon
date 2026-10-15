@@ -112,3 +112,52 @@ def test_meta_parsea_fecha() -> None:
         {"id_educadora": "EDU-0001", "sala_grupo": "SG-A", "fecha_observacion": "2026-10-15", "tipo": "manual"}
     )
     assert m.fecha_observacion == date(2026, 10, 15)
+
+
+def test_meta_ignora_campos_extra() -> None:
+    """meta.json de otro equipo con campos de mas se procesa igual (extra=ignore)."""
+    from datetime import date
+
+    from core.modelos import Meta
+
+    m = Meta.model_validate(
+        {
+            "id_educadora": "EDU-0001",
+            "sala_grupo": "SG-A",
+            "fecha_observacion": "2026-10-15",
+            "tipo": "ocr",
+            # Campos de mas que manda el otro equipo:
+            "version_app": "2.3.1",
+            "device_id": "tablet-07",
+            "metadatos": {"bateria": 80},
+        }
+    )
+    assert m.id_educadora == "EDU-0001"
+    assert m.fecha_observacion == date(2026, 10, 15)
+    assert not hasattr(m, "version_app")
+
+
+def test_texto_captura_ignora_campos_extra() -> None:
+    """texto.json de otro equipo con campos de mas (en raiz y en partes) se procesa igual."""
+    from core.modelos import TextoCaptura
+
+    tc = TextoCaptura.model_validate(
+        {
+            "id_captura": ID_OK,
+            "fuente": "ocr",
+            "modelo_ocr": "textract-v2",  # extra en raiz
+            "partes": [
+                {
+                    "texto": "Pedro apilo bloques",
+                    "archivo": "original/foto1.jpg",
+                    "confianza": 0.97,  # extra en la parte
+                    "bbox": [1, 2, 3, 4],
+                }
+            ],
+        }
+    )
+    partes = tc.partes_normalizadas()
+    assert len(partes) == 1
+    assert partes[0].texto == "Pedro apilo bloques"
+    assert partes[0].archivo == "original/foto1.jpg"
+    assert not hasattr(partes[0], "confianza")

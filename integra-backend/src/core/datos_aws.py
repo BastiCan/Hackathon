@@ -195,14 +195,23 @@ class DatosDynamo:
 
     # --- Escritura ---
 
-    def upsert_registro(self, id_captura: str, campos: dict[str, Any]) -> None:
+    def upsert_registro(
+        self,
+        id_captura: str,
+        campos: dict[str, Any],
+        conservar_si_existe: set[str] | None = None,
+    ) -> None:
         """Upsert de la tabla Registros (meta.json y texto.json llegan en cualquier orden).
 
-        Solo escribe los campos presentes en `campos` (ademas de `actualizado_en`), sin
-        pisar lo que ya este guardado. Si falta la tabla, no hace nada (pruebas directas).
+        Escribe los campos presentes en `campos` (mas `actualizado_en`). Los campos listados
+        en `conservar_si_existe` se escriben con `if_not_exists(campo, :valor)`: solo toman el
+        valor nuevo si el atributo aun no existe, para no pisar un estado mas avanzado cuando
+        `meta.json` llega despues de `texto.json` (S3 no garantiza el orden). Si falta la
+        tabla, no hace nada (pruebas directas).
         """
         if self._t_registros is None:
             return
+        conservar = conservar_si_existe or set()
         valores = {k: v for k, v in campos.items() if v is not None}
         valores.setdefault("actualizado_en", ahora_iso())
         valores = _a_item_dynamo(valores)
@@ -214,7 +223,11 @@ class DatosDynamo:
             n, a = f"#c{i}", f":v{i}"
             nombres[n] = clave
             atributos[a] = valor
-            asignaciones.append(f"{n} = {a}")
+            if clave in conservar:
+                # No pisar si ya existe (p. ej. estado mas avanzado o subido_en previo).
+                asignaciones.append(f"{n} = if_not_exists({n}, {a})")
+            else:
+                asignaciones.append(f"{n} = {a}")
 
         self._t_registros.update_item(
             Key={"id_captura": id_captura},
@@ -267,27 +280,64 @@ class DatosDynamo:
         tiene_nivel: bool,
         observaciones: list[Observacion],
     ) -> None:
-        nombres = {"#f": "ultima_obs_fecha"}
-        valores: dict[str, Any] = {":f": fecha}
-        sets = ["#f = :f"]
-        if tiene_nivel:
-            nivel = next(
-                (o.nivel for o in observaciones if o.id_nino == id_nino and o.nivel is not None),
-                None,
-            )
-            if nivel is not None:
-                nombres["#n"] = "ultimo_nivel"
-                nombres["#nf"] = "ultimo_nivel_fecha"
-                valores[":n"] = nivel
-                valores[":nf"] = fecha
-                sets.append("#n = :n")
-                sets.append("#nf = :nf")
-        self._t_ninos.update_item(
-            Key={"id_jardin": id_jardin, "id_nino": id_nino},
-            UpdateExpression="SET " + ", ".join(sets),
-            ExpressionAttributeNames=nombres,
-            ExpressionAttributeValues=valores,
+        """Dos UpdateItem condicionales que NO retroceden en el tiempo (observaciones en desorden).
+
+        - ultima_obs_fecha: solo si no existe o es <= :f.
+        - ultimo_nivel + ultimo_nivel_fecha: solo si ultimo_nivel_fecha no existe o es <= :f.
+        Si la condicion falla (llego una observacion mas vieja), se ignora sin error.
+        """
+        clave = {"id_jardin": id_jardin, "id_nino": id_nino}
+
+        # 1) ultima_obs_fecha (siempre que haya observacion).
+        self._update_condicional(
+            clave,
+            update="SET #f = :f",
+            condition="attribute_not_exists(#f) OR #f <= :f",
+            nombres={"#f": "ultima_obs_fecha"},
+            valores={":f": fecha},
         )
+
+        # 2) ultimo_nivel + ultimo_nivel_fecha (solo si alguna obs del nino trajo nivel).
+        if not tiene_nivel:
+            return
+        nivel = next(
+            (o.nivel for o in observaciones if o.id_nino == id_nino and o.nivel is not None),
+            None,
+        )
+        if nivel is None:
+            return
+        self._update_condicional(
+            clave,
+            update="SET #n = :n, #nf = :nf",
+            condition="attribute_not_exists(#nf) OR #nf <= :nf",
+            nombres={"#n": "ultimo_nivel", "#nf": "ultimo_nivel_fecha"},
+            valores={":n": nivel, ":nf": fecha},
+        )
+
+    def _update_condicional(
+        self,
+        clave: dict[str, Any],
+        *,
+        update: str,
+        condition: str,
+        nombres: dict[str, str],
+        valores: dict[str, Any],
+    ) -> None:
+        """UpdateItem con ConditionExpression; traga ConditionalCheckFailedException."""
+        from botocore.exceptions import ClientError
+
+        try:
+            self._t_ninos.update_item(
+                Key=clave,
+                UpdateExpression=update,
+                ConditionExpression=condition,
+                ExpressionAttributeNames=nombres,
+                ExpressionAttributeValues=_a_item_dynamo(valores),
+            )
+        except ClientError as e:
+            if e.response.get("Error", {}).get("Code") == "ConditionalCheckFailedException":
+                return  # llego una observacion mas vieja: no se pisa, sin error
+            raise
 
     # --- util ---
 
