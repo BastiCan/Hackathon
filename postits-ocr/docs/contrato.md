@@ -1112,3 +1112,24 @@ Para redesplegar: `python ingesta\desplegar.py --env <ruta del .env>`. Arma el z
 
 Las fuentes externas (SAM CLI, aws-lambda-builders y API Gateway) están enlazadas en 6.2 y 6.3. Su contenido está
 reformulado para cumplir con las restricciones de licencia.
+
+## 10. Cambios del 15-10 en la noche: giro, freno y prompt
+
+Commits `4dfe24b` y `4eb5a16`, ya desplegados en `postits-ocr` y en `integra-ingesta`.
+
+- **Giro sin el modelo.** `postits-ocr` calcula el eje de la letra con perfiles de tinta sobre todos los recortes.
+  - Si la letra es horizontal, o el resultado es dudoso, no gira.
+  - Si es vertical, el modelo elige solo entre 90° y 270°, con 2 recortes. Si los votos no coinciden, el giro queda en 0° con `ORIENTACION_INCIERTA` y todas las partes van a `no_leidos`.
+  - No se considera el giro de 180°.
+  - La respuesta sigue trayendo `giro_grados`.
+  - Antes se votaba con el modelo, y este giró una foto que ya estaba derecha: con la letra de lado, inventó nombres de la sala.
+- **Freno por lectura baja.**
+  - Toda parte con `legibilidad: "baja"` va a `texto.json` como `"[ilegible]"`, con su `archivo`, para que `ProcesarNota` no le asigne un niño.
+  - La respuesta suma `no_leidos: [{orden, archivo}]` y el aviso `LECTURA_BAJA: N`.
+  - `/procesar` de la ingesta reenvía `no_leidos`.
+  - La web tiene que mostrar esos recortes para que la tía escriba el texto a mano. Una parte que solo dice `[ilegible]` puede no dejar ninguna fila en `Observaciones`.
+- **Prompt sin la lista de niños.** Por defecto, la lectura ya no recibe los nombres de la sala.
+  - Con la lista, el modelo "corregía" nombres hacia los de la sala: "Juanita", que no existe, salía "Josefita", parecido a Josefa.
+  - Se vuelve a activar con `POSTITS_NOMBRES_EN_PROMPT=1`, que es el parámetro `NombresEnPrompt` de la plantilla.
+  - Sin la lista, algunos nombres se leen algo peor: "Benyra" por Benja y "Timao" por Tina. Un nombre mal leído queda `NO_ENCONTRADO` y lo resuelve la tía, en vez de ir a parar a otro niño.
+- **Pendiente.** El freno no ataja un nombre mal leído con legibilidad alta: "Juanita" salió "Oscarita", aunque ese nombre no se parece a nadie de la sala. Una letra de imprenta clara en el nombre y una foto más cercana ayudan.
