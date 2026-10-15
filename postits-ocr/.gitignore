@@ -1,0 +1,13 @@
+dist/
+tmp/
+salidas/
+almacen_local/
+*.zip
+*.jpg
+*.jpeg
+*.png
+*.heic
+*.heif
+capturas_equipo.py
+.env
+__pycache__/

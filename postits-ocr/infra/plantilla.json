@@ -1,0 +1,99 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "postits-ocr: separa y lee post-its (OpenCV + Bedrock) y deja texto.json en el bucket de capturas de integra-procesador. No modifica recursos del equipo.",
+  "Parameters": {
+    "NombreBucketCapturas": {"Type": "String", "AllowedPattern": "^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$"},
+    "TablaNinosNombre": {"Type": "String", "AllowedPattern": "^[A-Za-z0-9_.-]{3,255}$"},
+    "TablaEducadorasNombre": {"Type": "String", "AllowedPattern": "^[A-Za-z0-9_.-]{3,255}$"},
+    "ModeloId": {"Type": "String", "Default": "us.anthropic.claude-haiku-4-5-20251001-v1:0"},
+    "PerfilInferenciaArn": {"Type": "String", "AllowedPattern": "^arn:aws:bedrock:[a-z0-9-]+:[0-9]{12}:inference-profile/[A-Za-z0-9.:-]+$"},
+    "ModelosBaseArns": {"Type": "CommaDelimitedList"},
+    "CodigoBucket": {"Type": "String"},
+    "CodigoClave": {"Type": "String"},
+    "PlazoLecturaS": {"Type": "String", "Default": "30", "AllowedPattern": "^[1-9][0-9]?$"},
+    "HilosLectura": {"Type": "String", "Default": "8", "AllowedPattern": "^([1-9]|1[0-6])$"},
+    "NivelLog": {"Type": "String", "Default": "INFO", "AllowedValues": ["DEBUG", "INFO", "WARNING"]},
+    "KmsKeyArn": {"Type": "String", "Default": ""},
+    "Etiquetar": {"Type": "String", "Default": "si", "AllowedValues": ["si", "no"]}
+  },
+  "Conditions": {
+    "UsaKms": {"Fn::Not": [{"Fn::Equals": [{"Ref": "KmsKeyArn"}, ""]}]},
+    "ConEtiquetas": {"Fn::Equals": [{"Ref": "Etiquetar"}, "si"]}
+  },
+  "Resources": {
+    "GrupoLogs": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/postits-ocr",
+        "RetentionInDays": 7,
+        "Tags": {"Fn::If": ["ConEtiquetas", [{"Key": "proyecto", "Value": "postits-ocr"}], {"Ref": "AWS::NoValue"}]}
+      }
+    },
+    "Rol": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "Description": "Rol minimo de la Lambda postits-ocr",
+        "AssumeRolePolicyDocument": {"Version": "2012-10-17", "Statement": [
+          {"Effect": "Allow", "Principal": {"Service": "lambda.amazonaws.com"}, "Action": "sts:AssumeRole"}]},
+        "Policies": [{"PolicyName": "postits-ocr-minimo", "PolicyDocument": {"Version": "2012-10-17", "Statement": [
+          {"Sid": "LeerCapturas", "Effect": "Allow", "Action": "s3:GetObject",
+           "Resource": {"Fn::Sub": "arn:aws:s3:::${NombreBucketCapturas}/capturas/*"}},
+          {"Sid": "ListarCapturas", "Effect": "Allow", "Action": "s3:ListBucket",
+           "Resource": {"Fn::Sub": "arn:aws:s3:::${NombreBucketCapturas}"},
+           "Condition": {"StringLike": {"s3:prefix": ["capturas/CAP-*"]}}},
+          {"Sid": "EscribirOriginal", "Effect": "Allow", "Action": "s3:PutObject",
+           "Resource": {"Fn::Sub": "arn:aws:s3:::${NombreBucketCapturas}/capturas/CAP-*/original/*"}},
+          {"Sid": "EscribirJson", "Effect": "Allow", "Action": "s3:PutObject",
+           "Resource": [{"Fn::Sub": "arn:aws:s3:::${NombreBucketCapturas}/capturas/CAP-*/meta.json"},
+                        {"Fn::Sub": "arn:aws:s3:::${NombreBucketCapturas}/capturas/CAP-*/texto.json"}]},
+          {"Sid": "LeerEducadora", "Effect": "Allow", "Action": "dynamodb:GetItem",
+           "Resource": {"Fn::Sub": "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${TablaEducadorasNombre}"}},
+          {"Sid": "LeerNominaDeLaSala", "Effect": "Allow", "Action": "dynamodb:Query",
+           "Resource": {"Fn::Sub": "arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${TablaNinosNombre}"}},
+          {"Sid": "InvocarPerfil", "Effect": "Allow", "Action": "bedrock:InvokeModel",
+           "Resource": {"Ref": "PerfilInferenciaArn"}},
+          {"Sid": "InvocarModelosBase", "Effect": "Allow", "Action": "bedrock:InvokeModel",
+           "Resource": {"Ref": "ModelosBaseArns"}},
+          {"Sid": "LogsDeLaFuncion", "Effect": "Allow", "Action": ["logs:CreateLogStream", "logs:PutLogEvents"],
+           "Resource": {"Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/postits-ocr:*"}},
+          {"Fn::If": ["UsaKms",
+            {"Sid": "LlaveDelBucket", "Effect": "Allow", "Action": ["kms:Decrypt", "kms:GenerateDataKey"],
+             "Resource": {"Ref": "KmsKeyArn"}},
+            {"Ref": "AWS::NoValue"}]}
+        ]}}],
+        "Tags": {"Fn::If": ["ConEtiquetas", [{"Key": "proyecto", "Value": "postits-ocr"}], {"Ref": "AWS::NoValue"}]}
+      }
+    },
+    "Funcion": {
+      "Type": "AWS::Lambda::Function",
+      "DependsOn": "GrupoLogs",
+      "Properties": {
+        "FunctionName": "postits-ocr",
+        "Description": "Separa y lee post-its de una foto y deja texto.json para ProcesarNota",
+        "Runtime": "python3.12",
+        "Architectures": ["x86_64"],
+        "Handler": "ocr.handler",
+        "MemorySize": 2048,
+        "Timeout": 60,
+        "Role": {"Fn::GetAtt": ["Rol", "Arn"]},
+        "Code": {"S3Bucket": {"Ref": "CodigoBucket"}, "S3Key": {"Ref": "CodigoClave"}},
+        "Environment": {"Variables": {
+          "POSTITS_BUCKET": {"Ref": "NombreBucketCapturas"},
+          "BEDROCK_MODEL_ID": {"Ref": "ModeloId"},
+          "TABLA_NINOS": {"Ref": "TablaNinosNombre"},
+          "TABLA_EDUCADORAS": {"Ref": "TablaEducadorasNombre"},
+          "POSTITS_PLAZO_LECTURA_S": {"Ref": "PlazoLecturaS"},
+          "POSTITS_HILOS_LECTURA": {"Ref": "HilosLectura"},
+          "POSTITS_LOG": {"Ref": "NivelLog"}
+        }},
+        "Tags": {"Fn::If": ["ConEtiquetas", [{"Key": "proyecto", "Value": "postits-ocr"}], {"Ref": "AWS::NoValue"}]}
+      }
+    }
+  },
+  "Outputs": {
+    "NombreFuncion": {"Value": {"Ref": "Funcion"}},
+    "ArnFuncion": {"Value": {"Fn::GetAtt": ["Funcion", "Arn"]}},
+    "ArnRol": {"Value": {"Fn::GetAtt": ["Rol", "Arn"]}},
+    "GrupoLogs": {"Value": {"Ref": "GrupoLogs"}}
+  }
+}
