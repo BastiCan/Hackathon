@@ -4,8 +4,8 @@ type Variante = 'pri' | 'sec' | 'ok';
 
 const ESTILOS: Record<Variante, string> = {
   pri: 'bg-integra text-white',
-  sec: 'bg-papel border-[1.5px] border-linea',
-  // Verde del prototipo, un punto más oscuro para que el texto blanco cumpla AA.
+  sec: 'bg-papel border border-integra text-integra',
+  // Verde del logo de Integra, oscurecido para que el texto blanco cumpla AA.
   ok: 'bg-guardar text-white',
 };
 
@@ -27,7 +27,7 @@ export function Boton({
   return (
     <button
       type="button"
-      className={`inline-flex min-h-tactil items-center justify-center gap-[6px] rounded-[12px] py-[10px] font-bold disabled:opacity-50 ${
+      className={`inline-flex min-h-tactil items-center justify-center gap-[6px] rounded-tarjeta py-[10px] text-[15px] font-medium disabled:opacity-50 ${
         compacto ? 'px-2' : 'px-4'
       } ${ESTILOS[variante]} ${ancho ? 'w-full' : ''} ${className}`}
       {...resto}

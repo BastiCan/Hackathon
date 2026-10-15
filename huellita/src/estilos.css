@@ -13,25 +13,22 @@
     @apply bg-fondo font-texto text-base leading-[1.45] text-tinta;
   }
 
-  /*
-   * En escritorio la app se centra como una columna; alrededor queda el azul
-   * del prototipo para que no se vea un lienzo blanco infinito.
-   */
+  /* En escritorio la app se centra como una columna sobre un gris azulado. */
   @media (min-width: 560px) {
     body {
-      background: #d9e1ee;
+      background: #e3e9f2;
     }
   }
 
   h1 {
-    @apply font-display text-[26px] font-extrabold leading-[1.1] tracking-[-0.02em];
+    @apply text-[21px] font-bold leading-[1.2];
   }
 
   h2 {
-    @apply font-display text-[18px] font-semibold tracking-[-0.01em];
+    @apply text-[16px] font-bold;
   }
 
-  /* Las citas de la tía ya traen su propio formato; sin comillas automáticas. */
+  /* Las citas ya traen su propio formato; sin comillas automáticas. */
   q {
     quotes: none;
   }
@@ -39,55 +36,29 @@
   :focus-visible {
     outline: 3px solid #1f4e9a;
     outline-offset: 2px;
-    border-radius: 8px;
+    border-radius: 4px;
   }
 }
 
 @layer components {
-  /* Cuaderno cuadriculado de la pantalla Revisar (22 px). */
-  .cuaderno {
-    background-color: #ffffff;
-    background-image:
-      linear-gradient(#e2e8f4 1px, transparent 1px),
-      linear-gradient(90deg, #e2e8f4 1px, transparent 1px);
-    background-size: 22px 22px;
+  /* Rótulo de sección: mayúscula pequeña, como en los formularios del Estado. */
+  .rotulo {
+    @apply font-rotulo text-[12px] font-medium uppercase tracking-[0.06em] text-tinta-2;
   }
 
-  /* Post-it de la nota original: papel levantado y cinta adhesiva. */
-  .postit {
-    position: relative;
-    border-radius: 3px 3px 3px 16px;
-    box-shadow:
-      0 1px 0 rgba(30, 42, 85, 0.08),
-      0 12px 20px -14px rgba(30, 42, 85, 0.55);
+  /* Aviso con borde de color a la izquierda (sin esquinas en ese lado). */
+  .aviso {
+    @apply border-l-4 border-aviso-borde bg-aviso-fondo;
+    border-radius: 0 6px 6px 0;
   }
 
-  .postit::before {
-    content: '';
-    position: absolute;
-    top: -9px;
-    left: 50%;
-    width: 74px;
-    height: 20px;
-    transform: translateX(-50%) rotate(-3deg);
-    background: rgba(255, 255, 255, 0.55);
-    border: 1px solid rgba(30, 42, 85, 0.06);
-  }
-
-  /* Pila de pendientes: amarillo con rosa y lima asomando detrás. */
-  .pila {
-    border-radius: 4px 4px 4px 18px;
-    box-shadow:
-      5px 5px 0 #ffb8d2,
-      -4px 9px 0 #d6f27c,
-      0 16px 22px -14px rgba(30, 42, 85, 0.5);
-  }
-
-  /* Aro de frescura del avatar; el color viene de la variable --aro. */
-  .aro {
-    box-shadow:
-      0 0 0 3px #ffffff,
-      0 0 0 6px var(--aro, #2e9e5b);
+  /* Punto de frescura junto a la fecha del último registro. */
+  .punto {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--punto, #8a93a6);
   }
 
   /* Nota resuelta: se despide antes de salir de la lista (tarea 10). */
@@ -98,11 +69,12 @@
   @keyframes sale {
     to {
       opacity: 0;
-      transform: translateX(16px) scale(0.98);
+      transform: translateX(16px);
     }
   }
 
-  /* Línea de tiempo del historial. */  .linea-tiempo {
+  /* Línea de tiempo del historial. */
+  .linea-tiempo {
     position: relative;
     padding-left: 18px;
   }
@@ -129,7 +101,7 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: var(--punto, #8a93b2);
+    background: var(--punto, #8a93a6);
   }
 }
 
@@ -141,6 +113,10 @@
 
   .sin-barra::-webkit-scrollbar {
     display: none;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
   }
 }
 

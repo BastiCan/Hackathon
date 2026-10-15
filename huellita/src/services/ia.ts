@@ -38,6 +38,12 @@ export interface IAService {
     archivo: Blob | undefined,
     contexto: ContextoIA,
   ): Promise<Sugerencia[]>;
+  /**
+   * Lo que se leyó de una evidencia ya procesada (texto del post-it o
+   * transcripción del audio) y, en la demo, la foto de ejemplo que corresponde.
+   * Opcional: el backend real puede devolverlo dentro de la evidencia.
+   */
+  lecturaDe?(evidenciaId: string): { texto: string; foto?: string } | undefined;
 }
 
 const LATENCIA_POR_DEFECTO_MS = 1500;
@@ -178,6 +184,11 @@ export class IAServiceSimulado implements IAService {
   private readonly latenciaMs: number;
   private readonly umbral: number;
   private readonly guionesUsados = new Set<number>();
+  private readonly lecturas = new Map<string, { texto: string; foto?: string }>();
+
+  lecturaDe(evidenciaId: string): { texto: string; foto?: string } | undefined {
+    return this.lecturas.get(evidenciaId);
+  }
 
   constructor(opciones: OpcionesIASimulada = {}) {
     const semilla = semillaJson as unknown as Semilla;
@@ -201,6 +212,9 @@ export class IAServiceSimulado implements IAService {
         return [this.notaDeSala(evidencia, 'No pudimos leer esta nota.', 'baja')];
       }
       texto = guion.texto;
+      this.lecturas.set(evidencia.id, { texto, foto: guion.foto });
+    } else {
+      this.lecturas.set(evidencia.id, { texto });
     }
 
     // 2. Si el texto es un guion de la demo, se devuelven sus sugerencias.

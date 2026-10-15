@@ -3,12 +3,13 @@ import { ProveedorAviso } from './aviso';
 import { BarraInferior } from './BarraInferior';
 import { ProveedorCaptura } from './captura';
 import { Dock } from './Dock';
+import { Encabezado } from './Encabezado';
 import { useNombreNino, useSesion } from './hooks';
 
 /**
- * Marco de las pantallas: el mundo de la tía se centra a 480 px como máximo y
- * lleva dock de captura en Mi sala y en la ficha; la vista directora puede usar
- * hasta 1100 px (`.kiro/steering/diseno-visual.md`).
+ * Marco de las pantallas: encabezado institucional arriba, contenido centrado a
+ * 480 px (la vista directora usa hasta 1100 px), barra de captura en la agenda
+ * y en la ficha, y la barra inferior de navegación.
  */
 export function Layout() {
   const { pathname } = useLocation();
@@ -43,9 +44,14 @@ export function Layout() {
     <ProveedorAviso conDock={conDock}>
       <ProveedorCaptura nino={ninoId && nombreNino ? { id: ninoId, nombre: nombreNino } : null}>
         <div className={`mx-auto flex min-h-dvh w-full flex-col bg-fondo ${ancho}`}>
+          <Encabezado
+            usuaria={sesion.valor?.usuaria}
+            salas={sesion.valor?.salas}
+            salaActual={sesion.valor?.sala}
+          />
           <main
-            className={`flex-1 px-4 pt-[18px] ${pathname === '/revisar' ? 'cuaderno' : ''}`}
-            style={{ paddingBottom: conDock ? (nombreNino ? 212 : 190) : 96 }}
+            className="flex-1 px-4 pt-[14px]"
+            style={{ paddingBottom: conDock ? (nombreNino ? 156 : 132) : 84 }}
           >
             {sesion.error ? (
               <p className="rounded-tarjeta border border-linea bg-papel p-4 text-tinta-2">
@@ -67,7 +73,7 @@ function Cargando() {
   return (
     <div className="mx-auto flex min-h-dvh w-full max-w-tia items-center justify-center bg-fondo">
       <p role="status" className="text-tinta-2">
-        Cargando tu sala…
+        Cargando tu agenda…
       </p>
     </div>
   );

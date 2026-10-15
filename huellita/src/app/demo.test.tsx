@@ -40,7 +40,9 @@ function texto(): string {
 
 function botonPor(nombre: string): HTMLButtonElement {
   const botones = [...contenedor.querySelectorAll('button')];
-  const encontrado = botones.find((b) => (b.textContent ?? '').includes(nombre));
+  const encontrado =
+    botones.find((b) => (b.textContent ?? '').trim() === nombre) ??
+    botones.find((b) => (b.textContent ?? '').includes(nombre));
   if (!encontrado) throw new Error(`No hay botón con el texto "${nombre}"`);
   return encontrado as HTMLButtonElement;
 }
@@ -96,40 +98,43 @@ afterEach(() => {
 
 describe('guion de la demo', () => {
   it('se puede correr completo después de reiniciar', async () => {
-    // 1. Entrar como tía Ana y ver Mi sala.
+    // 1. Entrar como tía Ana: su agenda de hoy y la planilla de la sala.
     await montar('/entrada');
     expect(texto()).toContain('¿Quién entra hoy?');
     await tocar(botonPor('Tía Ana'));
-    expect(texto()).toContain('Medio Menor A');
-    expect(texto()).toContain('notas por revisar');
+    expect(texto()).toContain('Agenda · Medio Menor A');
+    expect(texto()).toContain('por revisar');
+    await tocar(destinoPor('Sala'));
     const josefa = contenedor.querySelector('[aria-label^="Josefa"]');
     expect(josefa?.getAttribute('aria-label')).toContain('revisar avance');
-    expect(contenedor.querySelectorAll('.grid-cols-3 > button')).toHaveLength(18);
+    expect(contenedor.querySelectorAll('tbody tr')).toHaveLength(18);
 
     // 2. Foto del post-it: llega a Revisar el guion de Josefa.
     await capturarArchivo('foto');
     await tocar(destinoPor('Revisar'));
-    expect(texto()).toContain('Confirma lo que Huellita leyó de tus notas.');
+    expect(texto()).toContain('¿Está bien lo que leyó Huellita?');
     expect(texto()).toContain('se agacha y recoge los individuales');
     expect(texto()).toContain('Josefa');
-    expect(texto()).toContain('Segura');
+    expect(texto()).toContain('Alta');
+    // La foto de ejemplo del post-it queda guardada y se muestra.
+    expect(contenedor.querySelector('img[alt="Foto del post-it"]')).not.toBeNull();
 
-    // 3. Aceptarla y verla en la ficha de Josefa.
-    await tocar(botonPor('Guardar'));
+    // 3. Confirmarla y verla en la ficha de Josefa.
+    await tocar(botonPor('Confirmar'));
     await esperarSalida();
     expect(texto()).toContain('Guardado en la ficha de Josefa');
-    await tocar(destinoPor('Mi sala'));
+    await tocar(destinoPor('Sala'));
     await tocar(contenedor.querySelector<HTMLButtonElement>('[aria-label^="Josefa"]')!);
     expect(texto()).toContain('Registrar para Josefa');
     expect(texto()).toContain('se agacha y recoge los individuales');
     expect(texto()).toContain('Convivencia y Ciudadanía');
 
-    // 4. Audio: guion de Emilio y corrección del nivel con "Cambiar".
-    await capturarArchivo('audio');
+    // 4. Otra foto: guion de Emilio y corrección del nivel con "Corregir".
+    await capturarArchivo('foto');
     await tocar(destinoPor('Revisar'));
     expect(texto()).toContain('clasificó las hojas del otoño');
     expect(texto()).toContain('Emilio');
-    await tocar(botonPor('Cambiar'));
+    await tocar(botonPor('Corregir'));
     expect(texto()).toContain('Cambiar evaluación');
     await tocar(botonPor('Integrando')); // nivel 5
     await tocar(botonPor('Guardar cambio'));
@@ -158,7 +163,7 @@ describe('guion de la demo', () => {
     expect(texto()).toContain('Nota guardada');
 
     // 6. Entrar como directora y ver el avance de las 3 salas.
-    await tocar(destinoPor('Mi sala'));
+    await tocar(destinoPor('Agenda'));
     await tocar(contenedor.querySelector<HTMLButtonElement>('[aria-label^="Menú de"]')!);
     await tocar(botonPor('Cambiar de usuaria'));
     expect(texto()).toContain('¿Quién entra hoy?');

@@ -2,12 +2,9 @@ import { Camera, Mic, Pencil } from 'lucide-react';
 import type { Formato } from '../lib/tipos';
 import { useCaptura } from './captura';
 
-const DEGRADADO = 'linear-gradient(to top, #F3F6FB 70%, rgba(243, 246, 251, 0))';
-const BORDE_SUAVE = 'linear-gradient(to top, #F3F6FB, rgba(243, 246, 251, 0))';
-
 /**
- * Dock de captura, siempre al alcance del pulgar sobre la barra inferior:
- * Foto y Texto a los lados y Audio al centro, destacado.
+ * Barra de captura, siempre al alcance del pulgar sobre la navegación: Foto,
+ * Grabar (al centro, en rojo como una grabadora) y Escribir.
  */
 export function Dock({ nombreNino }: { nombreNino?: string }) {
   const abrir = useCaptura();
@@ -15,27 +12,15 @@ export function Dock({ nombreNino }: { nombreNino?: string }) {
     <div
       role="group"
       aria-label={nombreNino ? `Registrar para ${nombreNino}` : 'Registrar'}
-      // En la ficha el dock lleva rótulo, así que el fondo va parejo para que
-      // el texto se lea sobre el contenido.
-      style={{ background: nombreNino ? '#F3F6FB' : DEGRADADO }}
-      className="fixed bottom-[72px] left-1/2 z-10 w-full max-w-tia -translate-x-1/2 px-6 pb-[14px] pt-3"
+      className="fixed bottom-[64px] left-1/2 z-10 w-full max-w-tia -translate-x-1/2 border-t border-linea bg-papel"
     >
       {nombreNino ? (
-        <>
-          <span
-            aria-hidden="true"
-            style={{ background: BORDE_SUAVE }}
-            className="pointer-events-none absolute -top-4 left-0 right-0 h-4"
-          />
-          <p className="mb-1 text-center text-[13px] font-bold text-tinta-2">
-            Registrar para {nombreNino}
-          </p>
-        </>
+        <p className="rotulo px-4 pt-[6px] text-center">Registrar para {nombreNino}</p>
       ) : null}
-      <div className="flex items-center justify-center gap-7">
+      <div className="grid grid-cols-[1fr_1.3fr_1fr] gap-2 px-3 py-2">
         <BotonCaptura formato="foto" etiqueta="Foto" onAbrir={abrir} />
-        <BotonCaptura formato="audio" etiqueta="Audio" onAbrir={abrir} principal />
-        <BotonCaptura formato="texto" etiqueta="Texto" onAbrir={abrir} />
+        <BotonCaptura formato="audio" etiqueta="Grabar" onAbrir={abrir} principal />
+        <BotonCaptura formato="texto" etiqueta="Escribir" onAbrir={abrir} />
       </div>
     </div>
   );
@@ -57,17 +42,13 @@ function BotonCaptura({
     <button
       type="button"
       onClick={() => onAbrir(formato)}
-      className="flex min-h-tactil flex-col items-center gap-1 text-[13px] font-bold text-tinta-2"
+      className={`flex min-h-[48px] items-center justify-center gap-2 rounded-tarjeta text-[15px] font-medium ${
+        principal
+          ? 'bg-grabar text-white'
+          : 'border border-[#C9D2DE] bg-papel text-integra'
+      }`}
     >
-      <span
-        className={
-          principal
-            ? 'grid h-[76px] w-[76px] place-items-center rounded-full bg-integra text-white shadow-[0_0_0_6px_#E7EEFA]'
-            : 'grid h-[54px] w-[54px] place-items-center rounded-full border-[1.5px] border-linea bg-papel text-tinta'
-        }
-      >
-        <Icono aria-hidden="true" className={principal ? 'h-[30px] w-[30px]' : 'h-[22px] w-[22px]'} />
-      </span>
+      <Icono aria-hidden="true" className="h-[20px] w-[20px]" />
       {etiqueta}
     </button>
   );

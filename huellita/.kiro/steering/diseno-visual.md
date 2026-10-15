@@ -2,48 +2,50 @@
 inclusion: always
 ---
 
-# Diseño visual (UX/UI): fuente de verdad
+# Diseño visual (UX/UI) · versión 2: agenda institucional
 
-**La referencia visual obligatoria es `.kiro/diseno/prototipo.html`.** Ábrelo y léelo completo antes de construir cualquier pantalla. La app en React debe verse y comportarse igual: mismos colores, tipografías, tamaños, espaciados, textos, íconos y orden de los elementos. Si este archivo y `interfaz.md` difieren en algo visual, **gana el prototipo**.
+La versión 2 reemplaza al diseño anterior de post-its sobre cuaderno (`.kiro/diseno/prototipo.html` queda solo como referencia histórica: **no seguirlo**). La referencia actual es la app misma y la maqueta `maqueta-postits-reales.html` del equipo.
 
-## Idea del diseño
-El mundo de la tía: **post-its pegados en un cuaderno cuadriculado**. La evidencia original se muestra como el post-it que la tía escribió (con letra manuscrita), y lo que Huellita entendió aparece como una etiqueta limpia pegada debajo. Así la tía reconoce su propia nota y ve qué hizo la app con ella. Todo lo demás es sobrio, claro y tranquilo.
+## Idea
+Huellita se ve como **un sistema del Estado hecho para la agenda de la tía**: sobrio, claro y con el sello de Integra, sin adornos de "app genérica". Se parece a lo que la tía ya usa: una **agenda del día**, una **planilla de la sala** (como el libro de registro) y una **bandeja de registros numerados**.
 
-## Tokens (copiar tal cual como variables CSS o en `tailwind.config.js`)
+## Lo que NO se hace
+- Nada de letra manuscrita imitada, notas giradas, cinta adhesiva ni fondo de cuaderno.
+- Nada de esquinas muy redondeadas, sombras grandes, degradados ni emojis.
+- Nada de frases "simpáticas" ("¡Todo al día!", "Huellita ya las ordenó"): tono institucional y cálido.
+- Nunca inventar la imagen de un post-it: si hay foto, se muestra **la foto real**, derecha; si no, la nota se muestra como texto.
+
+## Tokens (`tailwind.config.js`)
 | Token | Valor | Uso |
 |---|---|---|
-| tinta | `#1E2A55` | Texto principal (azul tinta de lápiz pasta) |
-| tinta-2 | `#56618A` | Texto secundario |
-| tinta-3 | `#8A93B2` | Etiquetas y navegación inactiva |
-| fondo | `#F3F6FB` | Fondo de la app |
-| papel | `#FFFFFF` | Tarjetas |
-| cuadricula | `#E2E8F4` | Cuadrícula del cuaderno y escalones vacíos |
-| linea | `#DCE3EF` | Bordes |
-| integra | `#1F4E9A` / claro `#E7EEFA` / oscuro `#163A75` | Acción principal, avatares |
-| post-it | amarillo `#FFE873`, rosa `#FFB8D2`, lima `#D6F27C` | Solo para notas originales, la pila de pendientes y "Para observar" |
-| frescura | verde `#2E9E5B`, amarillo `#E0A800`, rojo `#D64545` | **Solo** en el aro del avatar y la leyenda |
-| ámbar | `#B86E00` | **Solo** en la bandera de "revisar avance" |
-| niveles 1–8 | `#E8664F #F08A3E #F2C14E #9BC53D #5A9E3A #3A9E9A #3D7DD8 #1F3B6B` | **Solo** en chips, números y escaleras de nivel |
+| tinta | `#1B2A44` / 2 `#4E5B70` / 3 `#8A93A6` | Texto |
+| fondo | `#F4F7FC` | Fondo de la app |
+| linea | `#DCE3EF` | Bordes y separadores |
+| integra | `#1F4E9A` | Institución, navegación, acciones principales |
+| logo | rojo `#E5432F`, amarillo `#F5B800`, azul `#1F4E9A`, verde `#4C9A2A` | Franja superior y ámbitos |
+| ámbitos | DPS rojo · Comunicación amarillo · Entorno verde (fondo suave + texto oscuro) | Etiquetas de núcleo, números de nivel, puntos de la semana |
+| aviso | fondo `#FFF8DC`, borde `#F5B800` | Avisos con borde izquierdo |
+| guardar | `#2F7A1E` | Botón Confirmar |
+| grabar | `#C8341F` | Botón Grabar |
+| frescura | verde, amarillo, rojo | **Solo** el punto junto a la fecha del último registro |
+| ámbar | `#B86E00` | **Solo** la bandera y el nivel en "revisar avance" |
 
-Radio de las tarjetas: 14 px. Bordes de 1 px `linea`. Sin sombras, salvo en los post-its (efecto de papel levantado).
+Radio de tarjetas: 6 px; hojas inferiores: 14 px. Bordes de 1 px.
 
-## Tipografías (autoalojadas con `@fontsource` para que funcionen sin conexión)
-- **Bricolage Grotesque** (600 y 800): títulos, iniciales de los avatares y números de nivel. Con moderación.
-- **Atkinson Hyperlegible** (400 y 700): todo el texto de la interfaz. Está diseñada para máxima legibilidad. Base de 16 px; nunca menos de 12 px.
-- **Kalam** (400): **solo** para texto escrito por la tía (citas de post-its, historial y la lista "Para observar"). Nunca en botones ni etiquetas.
+## Tipografía
+**Una sola familia: Roboto** (400, 500 y 700), autoalojada con `@fontsource/roboto`. Rótulos de sección en **Roboto Condensed** 500, mayúscula pequeña (`.rotulo`). Si el equipo consigue la tipografía oficial **gobCL** (kitdigital.gob.cl), se cambia solo en `tailwind.config.js` y `main.tsx`.
 
-## Piezas clave (ver el prototipo)
-- **Pila de pendientes**: post-it amarillo con dos post-its (rosa y lima) asomando detrás, número grande en Kalam y "notas por revisar". Lleva a Revisar.
-- **Tarjeta de niño/a**: avatar de 54 px con iniciales y **aro de color de frescura**, nombre, chip de nivel general "N3" y bandera ámbar arriba a la derecha si corresponde.
-- **Dock de captura**: Foto y Texto como círculos de 54 px a los lados, y **Audio al centro como botón de 76 px** azul Integra con halo. Siempre al alcance del pulgar, sobre la barra inferior.
-- **Revisar**: fondo de cuaderno cuadriculado (22 px). Cada nota = post-it rotado levemente (entre −1,2° y +1,1°, alternando) con una "cinta adhesiva" y la cita en Kalam, más la tarjeta "lectura" pegada debajo: niño/a, certeza (Segura / Revisar / Poco segura), número de nivel en cuadrado de color, nombre del nivel, núcleo, conducta, y los botones **Guardar** (verde), **Cambiar** y **X**.
-- **Ficha**: tarjeta lima "Para observar esta semana"; sección "Cómo va" con cada núcleo como una **escalera de 8 escalones** (como la lámina de la rúbrica de Integra) pintada hasta el nivel actual con su color; historial como línea de tiempo con puntos del color del nivel.
-- **Hojas inferiores** (captura, cambiar, leyenda y detalle de núcleo): suben desde abajo con esquinas de 24 px y un asa.
-- **Aviso (toast)** oscuro sobre el dock, con "Deshacer" cuando aplica.
+## Estructura
+- **Encabezado institucional** en todas las pantallas: franja azul con el sello "Gobierno de Chile · INTEGRA" y la usuaria con su cargo (abre el menú), más la franja de 4 colores del logo. En producción, el sello se reemplaza por los logos oficiales.
+- **Navegación inferior**: Agenda · Sala · Revisar (+ Directora para la directora).
+- **Barra de captura** (Agenda y ficha): Foto · **Grabar** (rojo, al centro) · Escribir.
 
-## Textos de la interfaz
-Usar exactamente los del prototipo. Por ejemplo: "notas por revisar", "Huellita ya las ordenó", "Confirma lo que Huellita leyó de tus notas.", "Aceptar las seguras", "Guardar", "Cambiar", "Guardar en la sala", "Para observar esta semana", "Cómo va", "Registros", "Listo, lo verás en Revisar" y "¡Todo al día!". Tuteo cercano, sin jerga técnica y sin la palabra "IA".
+## Pantallas
+1. **Agenda** (`/`): rótulo "Agenda · sala", fecha larga y "Hoy"; semana de lunes a viernes con puntos de colores por ámbito; aviso "N por revisar"; próximo registro IEA y observados en 30 días; el día por **períodos de la jornada** (`lib/agenda.ts`), cada registro con miniatura (foto real o tipo de nota), nombre, hora, autora, texto (2 líneas), etiqueta del núcleo, nivel y "Por revisar".
+2. **Sala** (`/sala`): planilla con una fila por niño/a ("Josefa P."), una columna por núcleo (IA, CC, CM, LV, LA, EN, ES, PM) con el número de nivel en el color de su ámbito (ámbar si está en revisar avance), y la columna "Último" con punto de frescura. Filtros, leyenda de ámbitos y resumen.
+3. **Revisar** (`/revisar`): cada registro es una tarjeta con N.º de registro, origen, **la foto del post-it** (se amplía al tocarla), "Huellita leyó" y una ficha (Niño/a, Núcleo, Nivel, Conducta, Confianza: Alta/Media/Baja con explicación). Botones **Confirmar** (verde), **Corregir** y **Descartar**.
+4. **Ficha** (`/nino/:id`): aviso con el resumen y "Para observar esta semana"; "Cómo va · por ámbito" con los 8 núcleos agrupados y su nivel; "Su agenda": tira con las fotos de sus registros; historial.
+5. **Directora** (`/directora`): tarjetas por sala; la sala se abre como planilla en modo lectura.
 
 ## Calidad
-- Diseñar a 375–390 px. En escritorio, centrar con un máximo de 480 px para las pantallas de la tía; la vista Directora puede usar hasta 1100 px.
-- Respetar `prefers-reduced-motion`. Foco visible de 3 px azul Integra. Áreas táctiles de al menos 44 px.
+Diseñar a 375–390 px; en escritorio, columna de 480 px (directora hasta 1100 px). Áreas táctiles de 44 px o más, foco visible de 3 px azul y `prefers-reduced-motion`.

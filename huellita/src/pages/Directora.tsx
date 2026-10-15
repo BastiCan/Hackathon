@@ -34,8 +34,8 @@ export function Directora() {
 
   return (
     <>
-      <p className="text-[14px] text-tinta-2">{jardin.nombre}</p>
-      <h1 className="mb-[14px]">Salas</h1>
+      <p className="rotulo">{jardin.nombre}</p>
+      <h1 className="mb-3">Salas del jardín</h1>
 
       <section aria-label="Salas del jardín" className="grid gap-3 md:grid-cols-2">
         {salas.map((s) => (
@@ -70,7 +70,7 @@ function TarjetaSala({ sala, onAbrir }: { sala: TarjetaSalaVista; onAbrir: () =>
         <h2>{sala.nombre}</h2>
         <ChevronRight aria-hidden="true" className="h-[22px] w-[22px] flex-none text-tinta-3" />
       </div>
-      <div aria-hidden="true" className="my-2 h-2 overflow-hidden rounded-full bg-cuadricula">
+      <div aria-hidden="true" className="my-2 h-2 overflow-hidden rounded-[2px] bg-cuadricula">
         <span className="block h-full bg-integra" style={{ width: `${sala.porcentaje}%` }} />
       </div>
       <p className="text-[14px] text-tinta-2">

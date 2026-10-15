@@ -100,7 +100,7 @@ export function HojaGestionNino({
             <select
               value={destino}
               onChange={(e) => setDestino(e.target.value)}
-              className="mt-1 min-h-tactil w-full rounded-[12px] border-[1.5px] border-linea bg-papel px-[10px] py-2 text-base text-tinta"
+              className="mt-1 min-h-tactil w-full rounded-tarjeta border border-linea bg-papel px-[10px] py-2 text-base text-tinta"
             >
               {otras.map((s) => (
                 <option key={s.id} value={s.id}>
@@ -156,7 +156,7 @@ function Opcion({
     <button
       type="button"
       onClick={onClick}
-      className="flex min-h-tactil items-center gap-3 rounded-[12px] border-[1.5px] border-linea px-3 py-2 text-left font-bold"
+      className="flex min-h-tactil items-center gap-3 rounded-tarjeta border border-linea px-3 py-2 text-left font-bold"
     >
       {icono}
       {texto}

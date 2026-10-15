@@ -32,7 +32,7 @@ export function HojaCambiar({
         <select
           value={ninoId}
           onChange={(e) => setNinoId(e.target.value)}
-          className="mt-1 min-h-tactil w-full rounded-[12px] border-[1.5px] border-linea bg-papel px-[10px] py-2 text-base text-tinta"
+          className="mt-1 min-h-tactil w-full rounded-tarjeta border border-linea bg-papel px-[10px] py-2 text-base text-tinta"
         >
           {ninos.map((n) => (
             <option key={n.id} value={n.id}>
@@ -47,7 +47,7 @@ export function HojaCambiar({
         <select
           value={nucleo}
           onChange={(e) => setNucleo(e.target.value as NucleoId)}
-          className="mt-1 min-h-tactil w-full rounded-[12px] border-[1.5px] border-linea bg-papel px-[10px] py-2 text-base text-tinta"
+          className="mt-1 min-h-tactil w-full rounded-tarjeta border border-linea bg-papel px-[10px] py-2 text-base text-tinta"
         >
           {codigosNucleos().map((c) => (
             <option key={c} value={c}>
@@ -65,7 +65,7 @@ export function HojaCambiar({
             role="radio"
             aria-checked={info.nivel === nivel}
             onClick={() => setNivel(info.nivel)}
-            className={`flex min-h-tactil items-center gap-3 rounded-[12px] border-[1.5px] p-[10px] text-left ${
+            className={`flex min-h-tactil items-center gap-3 rounded-tarjeta border p-[10px] text-left ${
               info.nivel === nivel ? 'border-integra bg-integra-claro' : 'border-linea'
             }`}
           >

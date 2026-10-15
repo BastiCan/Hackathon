@@ -1,6 +1,7 @@
 import { ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useConsulta } from '../app/hooks';
+import { FranjaLogo, SelloInstitucional } from '../app/Encabezado';
 import { useServicios } from '../app/servicios';
 import { inicialesUsuaria } from '../lib/vistas';
 
@@ -43,10 +44,16 @@ export function Entrada() {
   };
 
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-tia flex-col bg-fondo px-4 pb-10 pt-12">
-      <h1>Huellita</h1>
+    <div className="mx-auto flex min-h-dvh w-full max-w-tia flex-col bg-fondo">
+      <div className="flex min-h-[44px] items-center bg-integra px-4 py-[6px] text-white">
+        <SelloInstitucional />
+      </div>
+      <FranjaLogo />
+      <div className="px-4 pb-10 pt-8">
+      <p className="rotulo">{consulta.valor?.jardin.nombre ?? 'Jardín de la demo'}</p>
+      <h1 className="text-[26px]">Huellita</h1>
       <p className="mt-1 text-[15px] text-tinta-2">
-        {consulta.valor?.jardin.nombre ?? 'Jardín de la demo'}
+        Registro de observaciones de la sala para educadoras y técnicas de párvulos.
       </p>
       <h2 className="mb-2 mt-7">¿Quién entra hoy?</h2>
 
@@ -63,7 +70,7 @@ export function Entrada() {
             >
               <span
                 aria-hidden="true"
-                className="grid h-11 w-11 flex-none place-items-center rounded-full bg-integra font-display font-semibold text-white"
+                className="grid h-11 w-11 flex-none place-items-center rounded-full bg-integra font-bold text-white"
               >
                 {o.iniciales}
               </span>
@@ -80,6 +87,7 @@ export function Entrada() {
       <p className="mt-6 text-[14px] text-tinta-2">
         Datos de demostración: los nombres de niños y niñas son ficticios.
       </p>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,6 @@
-# DEMO.md · Huellita en 3 minutos
+# DEMO.md · Huellita v2 en 3 minutos
 
-Recorrido para mostrar la Fase 1 (datos de prueba, Huellita simulada, sin AWS).
+Recorrido de la versión 2 (agenda institucional). Datos de prueba, Huellita simulada, sin backend.
 
 ## Antes de empezar
 
@@ -9,115 +9,51 @@ npm install        # solo la primera vez
 npm run dev        # http://localhost:5173
 ```
 
-Para la presentación conviene `npm run build` + `npm run preview`: es la misma app
-pero con el service worker activo, así se puede mostrar que funciona sin red.
+O abrir `huellita-demo.html` con doble clic (no necesita instalar nada).
 
-- Celular o ventana angosta (**390 px**). En el inspector de Chrome: iPhone 14.
-- Si quedó algo de un ensayo anterior: menú de la tía (círculo "TA" arriba a la
-  derecha) → **Reiniciar demo**. Vuelve la semilla tal cual y aparece la pantalla
-  de entrada.
-- La fecha de la demo es fija (**jueves 15 de octubre de 2026**), así los
-  semáforos y los días siempre salen igual.
+- Celular o ventana angosta (**390 px**). En Chrome: `F12` → ícono de celular.
+- Si quedó algo de un ensayo anterior: toca tu nombre arriba a la derecha → **Reiniciar demo**.
+- La fecha de la demo es fija (**jueves 15 de octubre de 2026**), así todo sale igual.
 
 ## Guion (6 pasos, ~3 minutos)
 
-### 1. Entrar como tía Ana · Mi sala (25 s)
+### 1. Entrar como tía Ana · su agenda (30 s)
+Elegir **"Tía Ana · Medio Menor A"**. Qué mostrar:
+- el **sello institucional** (Gobierno de Chile · Integra) y la franja con los colores del logo;
+- la **semana** de lunes a viernes, con puntos de colores por ámbito;
+- el aviso **"3 por revisar"** y el **próximo registro IEA (noviembre)**;
+- el día ordenado por **períodos de la jornada**: en "Experiencia de aprendizaje" está la **foto real del post-it** de Maximiliano (las tortugas).
 
-Elegir **"Tía Ana · Medio Menor A"**.
+Frase: *la app se parece a la agenda que la tía ya lleva; solo que se llena sola.*
 
-Qué mostrar:
-- la **pila de post-its**: "3 notas por revisar · Huellita ya las ordenó";
-- la grilla de 18 niños/as con **iniciales, nunca fotos**;
-- el **aro de frescura**: verde, amarillo y rojo. Toca el **"?"**: el aro dice
-  hace cuánto no se registra algo, **no** cómo le va al niño o niña;
-- **Josefa**, con la **bandera ámbar** de "revisar avance" (2 registros seguidos
-  bajo lo esperado para su edad, en Lenguaje Verbal);
-- abajo: "Observados en 30 días: **16 de 18** · Menos registrado: …" (el mismo número que ve la directora).
+### 2. La planilla de la sala (25 s)
+Toca **Sala**: una fila por niño/a y una columna por núcleo, como el libro de registro.
+- Los números van en el color de su **ámbito** (rojo, amarillo y verde del logo de Integra).
+- **Josefa** tiene la bandera y su **2** en Lenguaje Verbal en ámbar: revisar avance.
+- La columna "Último" dice hace cuánto no se registra a cada uno (punto de color). **No mide cómo le va.**
 
-Frase: *la tía abre la app y en 2 segundos sabe a quién le falta observar.*
+### 3. Foto del post-it (30 s)
+Vuelve a **Agenda** y toca **Foto**; saca una foto a cualquier post-it.
+- Aviso **"Listo, lo verás en Revisar"**: la tía sigue en la sala.
+- En **Revisar**, el primer registro muestra **la foto real del post-it** (los individuales), lo que **Huellita leyó** y la ficha: Josefa · Convivencia y Ciudadanía · Nivel 4 Afianzando · Confianza Alta.
 
-### 2. Foto del post-it (30 s)
+### 4. Confirmar y ver la ficha (25 s)
+Toca **Confirmar** → aviso con **Deshacer**. Entra a la ficha de **Josefa** (Sala → Josefa):
+- arriba: **"Conviene acompañar de cerca Lenguaje Verbal"** y qué observar esta semana;
+- "Cómo va · por ámbito", con sus 8 núcleos;
+- "Su agenda": la tira con la foto del post-it que acabas de confirmar.
 
-Toca **Foto** (círculo izquierdo del dock) y saca una foto a cualquier cosa, o
-usa la foto de `data/demo/postits_presentacion.png`.
+### 5. Corregir y una nota de sala (40 s)
+Saca otra **Foto**: llega el post-it de **Emilio** (hojas del otoño). Toca **Corregir**, elige **5 Integrando** y guarda: queda registrado que la tía cambió la sugerencia.
+Luego **Escribir**: "Hoy bajó la asistencia, los niños comenzaron a resfriarse". Huellita la reconoce como **nota de la sala**, no como evaluación.
 
-- Aparece el aviso **"Listo, lo verás en Revisar"** y la pantalla **no se
-  bloquea**: Huellita lee mientras la tía sigue en la sala.
-- El globo rojo de **Revisar** pasa de 3 a 4.
-
-Toca **Revisar**: la primera nota es el post-it de **Josefa**
-("…se agacha y recoge los individuales, los ordena y se los pasa a la tía"),
-con la cita en letra manuscrita y, pegada debajo, lo que Huellita leyó:
-Josefa · **Segura** · nivel **4 Afianzando** · Convivencia y Ciudadanía · la
-conducta observable de la rúbrica.
-
-### 3. Aceptar y ver la ficha (25 s)
-
-Toca **Guardar** (verde) → aviso con **Deshacer** por 5 segundos.
-
-Vuelve a **Mi sala** y entra a **Josefa**:
-- el resumen en 2 líneas;
-- la tarjeta lima **"Para observar esta semana"**;
-- **"Cómo va"**: cada núcleo como una escalera de 8 escalones pintada hasta su
-  nivel; Lenguaje Verbal con su bandera;
-- en **Registros**, arriba, el registro que acabamos de aceptar.
-
-Frase: *la IA sugiere, la tía decide, y la ficha se ordena sola.*
-
-### 4. Audio y "Cambiar" (40 s)
-
-Toca **Audio** (botón grande azul del centro), di cualquier cosa 2 o 3 segundos
-y toca **"Listo, enviar"** (se corta solo a los 60 s).
-
-En **Revisar** aparece el guion de **Emilio**
-("clasificó las hojas del otoño por tres colores…"), Pensamiento Matemático,
-nivel 4, certeza **Revisar**.
-
-Toca **Cambiar**: se abre la hoja con niño/a, núcleo y los **8 niveles con su
-descriptor**. Elige **5 Integrando** y **Guardar cambio**.
-
-Frase: *nunca se guarda una evaluación sin que la tía la confirme, y queda
-registrado que ella la cambió.*
-
-### 5. Una nota que no evalúa a nadie (20 s)
-
-Toca **Texto** y escribe:
-
-> Hoy bajó la asistencia, los niños comenzaron a resfriarse y han estado con mucha tos.
-
-En **Revisar** esa nota llega como **"Nota de la sala"**, sin niño ni nivel, con
-los botones **"Guardar en la sala"** o descartar. Guárdala.
-
-Si quedan notas, toca **"Aceptar las seguras (N)"** para mostrar el atajo, y
-luego **Deshacer**. Cuando no queda nada: **"¡Todo al día!"**.
-
-### 6. Entrar como directora (20 s)
-
-Menú de la tía → **Cambiar de usuaria** → **"Directora Carmen"**. Entra directo
-al resumen de todas las salas (destino **Directora** en la barra inferior).
-
-- Una tarjeta por sala: **observados en los últimos 30 días**, cuántos están por
-  **revisar avance** y el **núcleo menos registrado**.
-- Toca **Medio Menor A**: se abre su Mi sala en **modo lectura**, y al tocar un
-  niño/a se puede **Ver su ficha**, **Mover de sala** o **Dar de baja** (las dos
-  últimas piden confirmación y solo cambian los datos de la demo).
+### 6. La directora (20 s)
+Toca tu nombre → **Cambiar de usuaria** → **Directora Carmen**: entra directo al resumen de las 3 salas (observados en 30 días, revisar avance, núcleo menos registrado). Abre **Medio Menor A**: la misma planilla, en solo lectura.
 
 ## Cierre (15 s)
-
-- Hoy: **4 horas a la semana** pasando notas en limpio.
-- Con Huellita: 3 toques por evidencia y la tía solo confirma.
-- Privacidad: **sin reconocimiento facial**, avatares con iniciales, las fotos y
-  audios **no salen del teléfono** en esta fase y en las URLs solo viajan IDs.
+*De 4 horas a menos de 15 minutos a la semana: la tía saca una foto, confirma con un toque y el registro del IEA se va armando solo. La IA sugiere; la educadora decide.*
 
 ## Si algo se cae en vivo
-
-| Problema | Qué hacer |
-|---|---|
-| No hay permiso de micrófono | La app ofrece **"Escribir la nota"**: sigue con el paso 5. |
-| La cámara no abre (escritorio) | El botón **Foto** abre el selector de archivos; usa `data/demo/postits_presentacion.png`. |
-| Se desordenó la demo | Menú de la tía → **Reiniciar demo**. |
-| Se acabaron los guiones de foto y audio | Vuelven a empezar solos; también sirve escribir una nota con un nombre de la sala ("Martina armó una torre de 6 bloques y contó hasta 5"). |
-
-El recorrido completo está cubierto por una prueba automática
-(`src/app/demo.test.tsx`): corre los 6 pasos después de "Reiniciar demo", así que
-si algún cambio lo rompe, `npm test` avisa.
+- Sin cámara o micrófono: usa **Escribir** con el texto del guion.
+- Si la app se ve rara: **Reiniciar demo** desde el menú de la tía.
+- Plan B: abrir `huellita-demo.html` en otro computador.

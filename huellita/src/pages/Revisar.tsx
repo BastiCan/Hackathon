@@ -111,16 +111,21 @@ export function Revisar() {
 
   return (
     <>
-      <h1>Revisar</h1>
-      <p className="text-[14px] text-tinta-2">Confirma lo que Huellita leyó de tus notas.</p>
+      <p className="rotulo">Revisar</p>
+      <h1>¿Está bien lo que leyó Huellita?</h1>
+      <p className="text-[14px] text-tinta-2">
+        Confirma cada registro. Ninguna evaluación se guarda sin tu revisión.
+      </p>
 
       {total > 0 ? (
-        <div className="mt-[6px] mb-[18px] flex items-center justify-between gap-[10px]">
-          <span className="text-[14px] text-tinta-2">{total} pendientes</span>
+        <div className="mb-3 mt-2 flex flex-col gap-2">
+          <span className="text-[14px] text-tinta-2">
+            {total} {total === 1 ? 'registro pendiente' : 'registros pendientes'}
+          </span>
           {seguras > 0 ? (
-            <Boton variante="sec" onClick={aceptarSeguras}>
+            <Boton variante="sec" ancho onClick={aceptarSeguras}>
               <Check aria-hidden="true" className="h-[18px] w-[18px]" />
-              Aceptar las seguras ({seguras})
+              Confirmar los de confianza alta ({seguras})
             </Boton>
           ) : null}
         </div>
@@ -128,7 +133,7 @@ export function Revisar() {
 
       {total === 0 ? (
         <div className="px-5 py-14 text-center text-tinta-2">
-          <span className="mb-[6px] block font-mano text-[28px] text-tinta">¡Todo al día!</span>
+          <span className="mb-[6px] block text-[18px] font-bold text-tinta">Todo revisado</span>
           Cuando registres algo nuevo, aparecerá aquí.
         </div>
       ) : null}

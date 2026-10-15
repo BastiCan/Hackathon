@@ -2,25 +2,36 @@ import { ChevronLeft, Eye, Flag } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFicha } from '../app/hooks';
+import { ambitoDe, COLOR_AMBITO, NOMBRE_AMBITO, type AmbitoId } from '../components/ambitos';
 import { Avatar } from '../components/Avatar';
-import { Escalera } from '../components/Escalera';
+import { NumeroNivel } from '../components/ChipNivel';
 import { HojaNucleo } from '../components/HojaNucleo';
+import { Miniatura } from '../components/Miniatura';
 import type { NucleoId } from '../lib/tipos';
 import type { NucleoVista } from '../lib/vistas';
 
+const AMBITOS: AmbitoId[] = ['dps', 'com', 'ent'];
+
+/** Texto oscuro de cada ámbito, para títulos legibles (contraste AA). */
+const TEXTO_AMBITO: Record<AmbitoId, string> = {
+  dps: '#9A2414',
+  com: '#6B4A00',
+  ent: '#2E5A12',
+};
+
 /**
- * Pantalla 3: ficha del niño/a. Resumen, qué observar esta semana, cómo va por
- * núcleo (escalera de 8 escalones) y los registros validados.
+ * Ficha del niño/a, como una página de su agenda: qué acompañar esta semana,
+ * cómo va por ámbito (con los colores del logo de Integra) y sus registros con
+ * la foto de cada post-it.
  */
 export function FichaNino() {
   const { id } = useParams();
   const navegar = useNavigate();
   const vista = useFicha(id);
-  const [verTodos, setVerTodos] = useState(false);
   const [detalle, setDetalle] = useState<NucleoVista | null>(null);
   const [filtro, setFiltro] = useState<NucleoId | 'todos'>('todos');
 
-  if (vista.cargando) {
+  if (vista.cargando && !vista.valor) {
     return (
       <p role="status" className="py-10 text-center text-tinta-2">
         Cargando la ficha…
@@ -30,7 +41,7 @@ export function FichaNino() {
   if (!vista.valor) {
     return (
       <>
-        <Volver onClick={() => navegar('/')} />
+        <Volver onClick={() => navegar('/sala')} />
         <p className="rounded-tarjeta border border-linea bg-papel p-4 text-tinta-2">
           {vista.error ?? 'No encontramos a ese niño o niña.'}
         </p>
@@ -39,92 +50,123 @@ export function FichaNino() {
   }
 
   const f = vista.valor;
-  const nucleosVisibles = verTodos ? f.nucleos : f.nucleos.slice(0, 4);
   const historial =
     filtro === 'todos' ? f.historial : f.historial.filter((r) => r.nucleo === filtro);
+  const conFoto = f.historial.filter((r) => r.foto).slice(0, 6);
+  const tira = conFoto.length > 0 ? conFoto : f.historial.slice(0, 3);
 
   return (
     <>
-      <Volver onClick={() => navegar('/')} />
+      <Volver onClick={() => navegar('/sala')} />
 
-      <header className="mb-[14px] flex items-center gap-[14px]">
-        <Avatar iniciales={f.iniciales} frescura={f.frescura} tamano={64} />
-        <div>
-          <h1>{f.nino.nombre}</h1>
-          <p className="text-[14px] text-tinta-2">
+      <header className="mb-3 flex items-center gap-3">
+        <Avatar iniciales={f.iniciales} frescura={f.frescura} tamano={48} />
+        <div className="min-w-0">
+          <h1>
+            {f.nino.nombre} {f.nino.apellidoInicial}
+          </h1>
+          <p className="text-[13px] text-tinta-2">
             {f.edad.anios} años {f.edad.meses} meses · {f.sala.nombre}
+            {f.historial[0] ? ` · último registro ${f.historial[0].fechaCorta}` : ''}
           </p>
         </div>
       </header>
 
-      <section className="mb-3 rounded-tarjeta border border-linea bg-papel p-[14px]">
-        <p className="text-[15px] text-tinta-2">{f.resumen}</p>
+      <section className="aviso mb-3 px-3 py-[10px]">
+        <p className="text-[14px]">{f.resumen}</p>
+        {f.conductasObservar.length > 0 ? (
+          <>
+            <h2 className="mt-2 flex items-center gap-[6px] text-[14px]">
+              <Eye aria-hidden="true" className="h-[18px] w-[18px]" />
+              Para observar esta semana
+            </h2>
+            <ul className="mt-1 list-disc pl-5 text-[14px] text-[#33415C]">
+              {f.conductasObservar.map((conducta) => (
+                <li key={conducta}>{conducta}</li>
+              ))}
+            </ul>
+          </>
+        ) : null}
       </section>
 
-      {f.conductasObservar.length > 0 ? (
-        <section
-          className="mb-3 rounded-tarjeta bg-postit-lima p-[14px]"
-          style={{ transform: 'rotate(0.4deg)' }}
-        >
-          <h2 className="mb-[6px] flex items-center gap-[6px] text-[16px]">
-            <Eye aria-hidden="true" className="h-[22px] w-[22px]" />
-            Para observar esta semana
-          </h2>
-          <ul className="list-disc pl-5">
-            {f.conductasObservar.map((conducta) => (
-              <li key={conducta} className="font-mano text-[19px] leading-[1.3]">
-                {conducta}
+      <section
+        aria-label="Nivel por núcleo"
+        className="mb-3 rounded-tarjeta border border-linea bg-papel px-3 py-[10px]"
+      >
+        <p className="rotulo mb-1">Cómo va · por ámbito</p>
+        {AMBITOS.map((a) => {
+          const nucleos = f.nucleos.filter((n) => ambitoDe(n.nucleo) === a);
+          if (nucleos.length === 0) return null;
+          return (
+            <div key={a} className="mt-2">
+              <h2
+                className="mb-1 flex items-center gap-2 text-[12px] font-medium"
+                style={{ color: TEXTO_AMBITO[a] }}
+              >
+                <i className="block h-[9px] w-[9px] rounded-[2px]" style={{ background: COLOR_AMBITO[a] }} />
+                {NOMBRE_AMBITO[a]}
+              </h2>
+              {nucleos.map((n) => (
+                <button
+                  key={n.nucleo}
+                  type="button"
+                  onClick={() => setDetalle(n)}
+                  className="flex min-h-tactil w-full items-center justify-between gap-2 border-b border-[#EEF1F5] py-1 text-left last:border-b-0"
+                >
+                  <span className="min-w-0">
+                    <span className="flex items-center gap-[6px] text-[14px]">
+                      {n.nombre}
+                      {n.revisarAvance ? (
+                        <Flag aria-hidden="true" className="h-[15px] w-[15px] flex-none text-ambar" />
+                      ) : null}
+                    </span>
+                    <span className="block text-[12px] text-tinta-2">
+                      {n.nivel ? n.nombreNivel : 'Sin registros aún'}
+                      {n.revisarAvance ? ` · revisar avance (esperado ${f.nivelEsperadoEdad})` : ''}
+                    </span>
+                  </span>
+                  {n.nivel ? (
+                    <NumeroNivel
+                      nivel={n.nivel}
+                      nucleo={n.nucleo}
+                      revisar={n.revisarAvance}
+                      tamano={26}
+                    />
+                  ) : (
+                    <span className="text-tinta-3">–</span>
+                  )}
+                </button>
+              ))}
+            </div>
+          );
+        })}
+      </section>
+
+      {tira.length > 0 ? (
+        <section className="mb-3 rounded-tarjeta border border-linea bg-papel px-3 py-[10px]">
+          <p className="rotulo mb-2">Su agenda · últimos registros</p>
+          <ul className="sin-barra -mx-3 flex gap-3 overflow-x-auto px-3">
+            {tira.map((r) => (
+              <li key={r.id} className="w-[84px] flex-none">
+                <Miniatura formato={r.formato ?? 'texto'} foto={r.foto} tamano={84} />
+                <p className="mt-1 text-[11px] text-tinta-2">
+                  {r.fechaCorta} · {r.nucleo} {r.nivel}
+                </p>
               </li>
             ))}
           </ul>
         </section>
       ) : null}
 
-      <section
-        aria-label="Nivel por núcleo"
-        className="mb-3 rounded-tarjeta border border-linea bg-papel p-[14px]"
-      >
-        <h2 className="mb-1">Cómo va</h2>
-        {nucleosVisibles.map((n) => (
-          <button
-            key={n.nucleo}
-            type="button"
-            onClick={() => setDetalle(n)}
-            className="grid w-full min-h-tactil grid-cols-[1fr_auto] items-end gap-x-[10px] gap-y-1 border-b border-linea py-[10px] text-left last:border-b-0"
-          >
-            <span className="flex items-center gap-[6px] text-[15px] font-bold">
-              {n.nombre}
-              {n.revisarAvance ? (
-                <Flag aria-hidden="true" className="h-[18px] w-[18px] flex-none text-ambar" />
-              ) : null}
-            </span>
-            <Escalera nivel={n.nivel} />
-            <span className="col-start-1 text-[13px] text-tinta-2">
-              {n.nivel ? `Nivel ${n.nivel} · ${n.nombreNivel}` : 'Sin registros aún'}
-              {n.revisarAvance ? ' · revisar avance' : ''}
-            </span>
-          </button>
-        ))}
-        {!verTodos && f.nucleos.length > 4 ? (
-          <button
-            type="button"
-            onClick={() => setVerTodos(true)}
-            className="mt-2 min-h-tactil font-bold text-integra"
-          >
-            Ver los {f.nucleos.length}
-          </button>
-        ) : null}
-      </section>
-
-      <section className="mb-3 rounded-tarjeta border border-linea bg-papel p-[14px]">
-        <div className="mb-[10px] flex items-center justify-between gap-2">
+      <section className="mb-3 rounded-tarjeta border border-linea bg-papel px-3 py-[10px]">
+        <div className="mb-2 flex items-center justify-between gap-2">
           <h2>Registros</h2>
           <label className="min-w-0 flex-none text-[13px] text-tinta-2">
             <span className="sr-only">Filtrar por núcleo</span>
             <select
               value={filtro}
               onChange={(e) => setFiltro(e.target.value as NucleoId | 'todos')}
-              className="min-h-tactil max-w-[180px] truncate rounded-[12px] border-[1.5px] border-linea bg-papel px-2 text-[14px] text-tinta"
+              className="min-h-tactil max-w-[180px] truncate rounded-tarjeta border border-linea bg-papel px-2 text-[14px] text-tinta"
             >
               <option value="todos">Todos los núcleos</option>
               {f.nucleos.map((n) => (
@@ -137,17 +179,19 @@ export function FichaNino() {
         </div>
 
         {historial.length === 0 ? (
-          <p className="text-[15px] text-tinta-2">
-            Todavía no hay registros guardados con este filtro.
-          </p>
+          <p className="text-[14px] text-tinta-2">Todavía no hay registros guardados con este filtro.</p>
         ) : (
           <ol className="linea-tiempo">
             {historial.map((r) => (
-              <li key={r.id} className="pb-[14px]" style={{ ['--punto' as string]: r.color }}>
-                <p className="text-[13px] text-tinta-2">
+              <li
+                key={r.id}
+                className="pb-3"
+                style={{ ['--punto' as string]: COLOR_AMBITO[ambitoDe(r.nucleo)] }}
+              >
+                <p className="text-[12px] text-tinta-2">
                   {r.fechaCorta} · {r.nombreNucleo} · Nivel {r.nivel} · {r.autora}
                 </p>
-                <q className="font-mano text-[17px]">{r.cita}</q>
+                <q className="text-[14px] text-[#33415C]">“{r.cita}”</q>
               </li>
             ))}
           </ol>
@@ -171,10 +215,10 @@ function Volver({ onClick }: { onClick: () => void }) {
     <button
       type="button"
       onClick={onClick}
-      className="-ml-[6px] mb-1 inline-flex min-h-tactil items-center gap-1 px-[6px] font-bold text-tinta-2"
+      className="-ml-[6px] mb-1 inline-flex min-h-tactil items-center gap-1 px-[6px] font-medium text-integra"
     >
       <ChevronLeft aria-hidden="true" className="h-[22px] w-[22px]" />
-      Mi sala
+      Sala
     </button>
   );
 }

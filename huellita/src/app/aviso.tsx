@@ -47,17 +47,17 @@ export function ProveedorAviso({
       {aviso ? (
         <div
           className="pointer-events-none fixed left-1/2 z-30 w-full max-w-tia -translate-x-1/2 px-4"
-          style={{ bottom: conDock ? 170 : 88 }}
+          style={{ bottom: conDock ? 136 : 76 }}
         >
           <div
             role="status"
-            className="pointer-events-auto flex animate-sube items-center justify-between gap-[10px] rounded-[12px] bg-tinta px-4 py-[14px] text-white"
+            className="pointer-events-auto flex animate-sube items-center justify-between gap-[10px] rounded-tarjeta bg-tinta px-4 py-3 text-white"
           >
             <span>{aviso.texto}</span>
             {aviso.deshacer ? (
               <button
                 type="button"
-                className="min-h-tactil font-bold text-postit-amarillo"
+                className="min-h-tactil font-bold text-logo-amarillo"
                 onClick={() => {
                   const accion = aviso.deshacer;
                   limpiar();

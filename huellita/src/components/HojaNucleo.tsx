@@ -40,7 +40,7 @@ export function HojaNucleo({
             className="mb-3 rounded-tarjeta border border-linea bg-papel p-[14px]"
           >
             <div className="flex items-center gap-[10px]">
-              <NumeroNivel nivel={paso.nivel} />
+              <NumeroNivel nivel={paso.nivel} nucleo={nucleo} tamano={26} />
               <strong>
                 {paso.rotulo}: {c.nombreNivel}
               </strong>

@@ -1,45 +1,46 @@
-import { colorNivel } from '../lib/rubrica';
-import type { Nivel } from '../lib/tipos';
-import { colorChipNivel, colorTextoNivel } from './colores';
+import type { Nivel, NucleoId } from '../lib/tipos';
+import { ambitoDe, CLASE_ETIQUETA } from './ambitos';
 
 /**
- * Etiqueta "N4" con el color del nivel. Va en pastel del mismo color con el
- * número en tinta: el relleno fuerte del prototipo con texto blanco de 12 px no
- * alcanza el contraste AA en los niveles claros (tarea 10).
+ * Número de nivel en un cuadrado pequeño. Con núcleo, toma el color suave de su
+ * ámbito; sin núcleo (nivel general), va en azul Integra. Si el núcleo está en
+ * "revisar avance", va en ámbar.
  */
-export function ChipNivel({ nivel }: { nivel: Nivel | null }) {
-  if (nivel === null) {
-    return (
-      <span className="rounded-full bg-cuadricula px-2 py-[2px] text-[12px] font-bold text-tinta-2">
-        Sin nivel
-      </span>
-    );
-  }
-  const { fondo, borde } = colorChipNivel(nivel);
+export function NumeroNivel({
+  nivel,
+  nucleo,
+  revisar = false,
+  tamano = 24,
+}: {
+  nivel: Nivel;
+  nucleo?: NucleoId;
+  revisar?: boolean;
+  tamano?: number;
+}) {
+  const clase = revisar
+    ? 'bg-[#FFE7B8] text-[#7A4A00] ring-1 ring-ambar'
+    : nucleo
+      ? CLASE_ETIQUETA[ambitoDe(nucleo)]
+      : 'bg-integra text-white';
   return (
     <span
-      className="rounded-full border px-2 py-[2px] text-[12px] font-bold tracking-[0.02em] text-tinta"
-      style={{ background: fondo, borderColor: borde }}
+      aria-hidden="true"
+      className={`tabular inline-grid flex-none place-items-center rounded-[4px] font-bold ${clase}`}
+      style={{ width: tamano, height: tamano, fontSize: Math.round(tamano * 0.55) }}
     >
-      N{nivel}
+      {nivel}
     </span>
   );
 }
 
-/** Número de nivel en cuadrado de color (tarjeta de lectura y hojas). */
-export function NumeroNivel({ nivel, tamano = 38 }: { nivel: Nivel; tamano?: number }) {
+/** Nivel general del niño/a como texto corto ("Nivel 4"), o "Sin nivel". */
+export function ChipNivel({ nivel }: { nivel: Nivel | null }) {
+  if (nivel === null) {
+    return <span className="text-[12px] text-tinta-3">Sin nivel</span>;
+  }
   return (
-    <span
-      aria-hidden="true"
-      className="grid flex-none place-items-center rounded-[10px] font-display text-[20px] font-extrabold"
-      style={{
-        background: colorNivel(nivel),
-        color: colorTextoNivel(nivel),
-        width: tamano,
-        height: tamano,
-      }}
-    >
-      {nivel}
+    <span className="inline-flex items-center gap-1 text-[12px] text-tinta-2">
+      <NumeroNivel nivel={nivel} tamano={18} />
     </span>
   );
 }

@@ -1,4 +1,4 @@
-# Huellita
+# Huellita · versión 2
 
 App para que las tías de Fundación Integra registren evidencias del desarrollo de los niños y niñas en 2 toques. La IA las ordena por niño/a, núcleo y nivel (1–8), y la tía solo confirma.
 
@@ -21,3 +21,9 @@ Hackathon AWS Breaking Barriers Chile 2026 · Desafío 1 de Fundación Integra.
 2. Login y datos en AWS Amplify (Cognito, DynamoDB y S3).
 3. IA real: Bedrock (Claude visión y clasificación) y Transcribe.
 4. Vista directora y privacidad avanzada (Rekognition para difuminar caras, Guardrails).
+
+## Versión 2 (diseño agenda institucional)
+- Agenda del día por períodos de la jornada, planilla de la sala por núcleo, Revisar con la foto real del post-it y ficha por ámbito.
+- Una sola tipografía (Roboto) y la paleta del logo de Integra; encabezado institucional.
+- **Para el backend:** cada evidencia puede traer `foto` (imagen del post-it) y `textoExtraido`; ver `PROGRESO.md` → "Versión 2".
+- La versión 1 queda en la etiqueta `v1` del repositorio y en `versiones/huellita-demo-v1.html`.
