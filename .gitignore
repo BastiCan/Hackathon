@@ -38,3 +38,8 @@ npm-install.log
 
 # ---- Artefactos de build de TypeScript ----
 *.tsbuildinfo
+
+# ---- Kiro ----
+# Config local de MCP (puede contener claves). Las specs y steering SI se comparten.
+.kiro/settings/mcp.json
+.worktrees/
