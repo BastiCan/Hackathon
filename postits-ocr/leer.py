@@ -10,8 +10,10 @@ niños y clasificar lo hace ProcesarNota.
     postits = leer_foto(foto_jpeg, ninos, lector, plazo_s=30)              # Plan B: foto completa
         -> [{"texto", "legibilidad", "color", "caja": [x0, y0, x1, y1] (0-1000) | None}, ...]
 
-- ninos: lista de {"nombre", "apellido", "apodos"} de la sala; solo ayuda a leer la letra. El
-  modelo copia los nombres tal como están escritos.
+- ninos: lista de {"nombre", "apellido", "apodos"} de la sala. Por defecto NO va en el prompt: con la
+  lista, el modelo cambiaba nombres reales por otros parecidos de la sala ("Juanita" -> "Josefita").
+  POSTITS_NOMBRES_EN_PROMPT=1 la vuelve a poner como ayuda de lectura. El backend reconoce variantes y
+  apodos al identificar. El modelo copia los nombres tal como están escritos.
 - El texto es literal: conserva los saltos de línea (\\n) y pone [ilegible] donde no se lee.
 - Temperatura 0; si el modelo la rechaza (ValidationException que menciona "temperature"), se
   reintenta sin ella y las llamadas siguientes del contenedor ya no la envían (`sin_temperatura`).
@@ -83,17 +85,32 @@ def _hilos_de_entorno() -> int:
     return HILOS_POR_DEFECTO
 
 
+def _nombres_en_prompt_de_entorno() -> bool:
+    """POSTITS_NOMBRES_EN_PROMPT: "1" pone la lista de niños de la sala en el prompt de lectura; "0" o vacío
+    (por defecto) no la pone."""
+    crudo = os.environ.get("POSTITS_NOMBRES_EN_PROMPT", "").strip()
+    if crudo not in ("", "0", "1"):
+        log.warning("POSTITS_NOMBRES_EN_PROMPT invalido: la lista no va en el prompt")
+    return crudo == "1"
+
+
 PLAZO_LECTURA_S = _plazo_de_entorno()
 HILOS = _hilos_de_entorno()
+NOMBRES_EN_PROMPT = _nombres_en_prompt_de_entorno()
 
 _BLOQUE_NINOS = """Niños de la sala (nombre y apodos), solo para ayudarte a leer la letra:
 {ninos}
 """
 
-_REGLAS = """- Transcribe literal: no resumas, no corrijas ortografía, no completes ni agregues palabras.
-- Copia cada nombre tal como está escrito, aunque se parezca a uno de la lista o esté mal escrito.
+_REGLAS_NOMBRE_CON_LISTA = """- Copia cada nombre tal como está escrito, aunque se parezca a uno de la lista o esté mal escrito.
 - Si no puedes leer el nombre con seguridad, escribe [ilegible]. Nunca elijas un nombre de la lista solo porque se parece.
-- Mantén los saltos de línea {de} (en el JSON van como \\n).
+"""
+_REGLAS_NOMBRE_SIN_LISTA = """- Copia cada nombre tal como está escrito, aunque esté mal escrito.
+- Si no puedes leer el nombre con seguridad, escribe [ilegible].
+"""
+
+_REGLAS = """- Transcribe literal: no resumas, no corrijas ortografía, no completes ni agregues palabras.
+{reglas_nombre}- Mantén los saltos de línea {de} (en el JSON van como \\n).
 - Si una palabra o un trozo no se puede leer, escribe [ilegible] en su lugar. Si no se puede leer nada, el texto es [ilegible].
 - No adivines ni inventes: si no estás seguro de una palabra, escribe [ilegible].
 """
@@ -137,17 +154,20 @@ def lista_ninos(roster) -> str:
     return ", ".join(p for p in partes if p)
 
 
-def _bloque_ninos(roster) -> str:
-    ninos = lista_ninos(roster)
-    return _BLOQUE_NINOS.format(ninos=ninos) if ninos else ""
+def _partes_prompt(roster) -> dict:
+    """Bloque con la lista de niños y reglas de nombres: con lista solo si POSTITS_NOMBRES_EN_PROMPT=1."""
+    ninos = lista_ninos(roster) if NOMBRES_EN_PROMPT else ""
+    if not ninos:
+        return {"bloque_ninos": "", "reglas_nombre": _REGLAS_NOMBRE_SIN_LISTA}
+    return {"bloque_ninos": _BLOQUE_NINOS.format(ninos=ninos), "reglas_nombre": _REGLAS_NOMBRE_CON_LISTA}
 
 
 def prompt_recorte(roster) -> str:
-    return PROMPT_RECORTE.format(bloque_ninos=_bloque_ninos(roster))
+    return PROMPT_RECORTE.format(**_partes_prompt(roster))
 
 
 def prompt_foto(roster) -> str:
-    return PROMPT_FOTO.format(bloque_ninos=_bloque_ninos(roster))
+    return PROMPT_FOTO.format(**_partes_prompt(roster))
 
 
 def _sin_tildes(texto: str) -> str:

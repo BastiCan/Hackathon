@@ -13,6 +13,7 @@
     "PlazoLecturaS": {"Type": "String", "Default": "30", "AllowedPattern": "^[1-9][0-9]?$"},
     "HilosLectura": {"Type": "String", "Default": "8", "AllowedPattern": "^([1-9]|1[0-6])$"},
     "NivelLog": {"Type": "String", "Default": "INFO", "AllowedValues": ["DEBUG", "INFO", "WARNING"]},
+    "NombresEnPrompt": {"Type": "String", "Default": "0", "AllowedValues": ["0", "1"]},
     "KmsKeyArn": {"Type": "String", "Default": ""},
     "Etiquetar": {"Type": "String", "Default": "si", "AllowedValues": ["si", "no"]}
   },
@@ -84,7 +85,8 @@
           "TABLA_EDUCADORAS": {"Ref": "TablaEducadorasNombre"},
           "POSTITS_PLAZO_LECTURA_S": {"Ref": "PlazoLecturaS"},
           "POSTITS_HILOS_LECTURA": {"Ref": "HilosLectura"},
-          "POSTITS_LOG": {"Ref": "NivelLog"}
+          "POSTITS_LOG": {"Ref": "NivelLog"},
+          "POSTITS_NOMBRES_EN_PROMPT": {"Ref": "NombresEnPrompt"}
         }},
         "Tags": {"Fn::If": ["ConEtiquetas", [{"Key": "proyecto", "Value": "postits-ocr"}], {"Ref": "AWS::NoValue"}]}
       }
