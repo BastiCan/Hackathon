@@ -3,11 +3,19 @@
  * Los nombres de dominio van en español: niño, sala, núcleo, evidencia.
  */
 
-/** Códigos de los 8 núcleos de las BCEP 2018. La lista viva se carga de la rúbrica. */
-export type NucleoId = 'IA' | 'CC' | 'CM' | 'LV' | 'LA' | 'EN' | 'ES' | 'PM';
+/**
+ * Los 5 dominios del dataset E-1, que en la interfaz se llaman núcleos (D3 del
+ * diseño: núcleo = dominio). La lista viva se carga de la rúbrica.
+ */
+export type NucleoId =
+  | 'motor_grueso'
+  | 'motor_fino'
+  | 'lenguaje_comunicacion'
+  | 'socioemocional'
+  | 'cognitivo';
 
-/** Niveles de la rúbrica de Integra (1 Comenzando … 8 Profundizando). */
-export type Nivel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+/** Los 9 niveles orientativos de la ruta del dataset E-1 (1 a 9). */
+export type Nivel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
 export type Rol = 'tia' | 'directora';
 export type Formato = 'foto' | 'audio' | 'texto';

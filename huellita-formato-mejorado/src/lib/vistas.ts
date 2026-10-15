@@ -260,7 +260,7 @@ export interface NucleoVista {
   revisarAvance: boolean;
 }
 
-/** Los 8 núcleos con su nivel actual, en el orden de la rúbrica. */
+/** Los núcleos con su nivel actual, en el orden de la rúbrica. */
 export function nucleosDeFicha(
   evaluaciones: EvaluacionValidada[],
   fechaNacimiento: string,

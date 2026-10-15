@@ -20,8 +20,8 @@ import { ProveedorServicios } from './servicios';
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
 
-const RUTAS_TIA = ['/', '/sala', '/revisar', '/nino/NINO-00001', '/entrada'];
-const RUTAS_DIRECTORA = ['/directora', '/directora/sala/SALA-MMA'];
+const RUTAS_TIA = ['/', '/sala', '/revisar', '/nino/NINO-00008', '/entrada'];
+const RUTAS_DIRECTORA = ['/directora', '/directora/sala/SG-A'];
 
 /** Clases con las que un control declara al menos 44 px de alto. */
 const ALTO_SUFICIENTE = [
@@ -82,7 +82,7 @@ function declaraAreaTactil(el: HTMLElement): boolean {
 
 beforeEach(async () => {
   datos = new DataServiceLocal({ almacen: almacenMemoria() });
-  await datos.cambiarUsuaria('USR-ANA');
+  await datos.cambiarUsuaria('EDU-0001');
   contenedor = document.createElement('div');
   document.body.appendChild(contenedor);
   raiz = createRoot(contenedor);

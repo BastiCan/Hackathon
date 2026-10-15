@@ -17,26 +17,39 @@ function servicios() {
 describe('DataServiceLocal', () => {
   it('parte de la semilla con la primera tía y su sala', async () => {
     const { datos } = servicios();
-    expect((await datos.sesion()).id).toBe('USR-ANA');
-    expect((await datos.salaActual()).id).toBe('SALA-MMA');
+    expect((await datos.sesion()).id).toBe('EDU-0001');
+    expect((await datos.salaActual()).id).toBe('SG-A');
     expect(datos.hoy()).toBe(semilla.fechaDemo);
-    expect(await datos.ninos('SALA-MMA')).toHaveLength(18);
+    expect(await datos.ninos('SG-A')).toHaveLength(13);
   });
 
   it('una tía ve solo sus salas y la directora, todo el jardín', async () => {
     const { datos } = servicios();
-    expect((await datos.salas()).map((s) => s.id)).toEqual(['SALA-MMA']);
+    expect((await datos.salas()).map((s) => s.id)).toEqual(['SG-A']);
     await datos.cambiarUsuaria('USR-CARMEN');
-    expect((await datos.salas())).toHaveLength(3);
+    expect(await datos.salas()).toHaveLength(2);
   });
 
   it('guarda en localStorage con la clave huellita:v1 y recupera el estado', async () => {
     const { almacen, datos } = servicios();
-    await datos.cambiarUsuaria('USR-ROSA');
+    await datos.cambiarUsuaria('EDU-0002');
     expect(almacen.leer(CLAVE_ALMACEN)).not.toBeNull();
 
     const otro = new DataServiceLocal({ semilla, almacen });
-    expect((await otro.sesion()).id).toBe('USR-ROSA');
+    expect((await otro.sesion()).id).toBe('EDU-0002');
+    expect((await otro.salaActual()).id).toBe('SG-B');
+  });
+
+  it('descarta lo guardado con una semilla anterior (la de 8 núcleos)', async () => {
+    const almacen = almacenMemoria();
+    almacen.escribir(
+      CLAVE_ALMACEN,
+      JSON.stringify({ version: 1, usuariaId: 'USR-ROSA', usuariaElegida: true, salaId: 'SALA-MMA', sugerencias: [] }),
+    );
+    const datos = new DataServiceLocal({ semilla, almacen });
+    expect((await datos.sesion()).id).toBe('EDU-0001');
+    expect(await datos.usuariaElegida()).toBe(false);
+    expect(await datos.sugerencias({})).toHaveLength(semilla.sugerencias.length);
   });
 
   it('validar deja la evaluación con autor y fecha; cambiar guarda el original', async () => {
@@ -47,7 +60,7 @@ describe('DataServiceLocal', () => {
     const aceptada = (await datos.sugerencias({ estado: ['aceptada'] })).find(
       (s) => s.id === pendiente.id,
     );
-    expect(aceptada?.validadaPor).toBe('USR-ANA');
+    expect(aceptada?.validadaPor).toBe('EDU-0001');
     expect(aceptada?.validadaEn).toContain(semilla.fechaDemo);
 
     const [otra] = await datos.sugerencias({ estado: ['pendiente'] });
@@ -88,38 +101,34 @@ describe('DataServiceLocal', () => {
 
   it('dar de baja saca al niño/a de la sala sin borrar su historial', async () => {
     const { datos } = servicios();
-    await datos.darDeBaja('NINO-00001');
-    const ninos = await datos.ninos('SALA-MMA');
-    expect(ninos.map((n) => n.id)).not.toContain('NINO-00001');
-    expect((await datos.sugerencias({ ninoId: 'NINO-00001' })).length).toBeGreaterThan(0);
+    await datos.darDeBaja('NINO-00008');
+    const ninos = await datos.ninos('SG-A');
+    expect(ninos.map((n) => n.id)).not.toContain('NINO-00008');
+    expect((await datos.sugerencias({ ninoId: 'NINO-00008' })).length).toBeGreaterThan(0);
   });
 
   it('recuerda la usuaria elegida y la olvida al reiniciar la demo', async () => {
     const { datos } = servicios();
     expect(await datos.usuariaElegida()).toBe(false);
-    await datos.cambiarUsuaria('USR-ROSA');
+    await datos.cambiarUsuaria('EDU-0002');
     expect(await datos.usuariaElegida()).toBe(true);
     await datos.reiniciarDemo();
     expect(await datos.usuariaElegida()).toBe(false);
   });
 
-  it('el catálogo de salas del jardín trae las 3 salas, sin datos de niños', async () => {
+  it('el catálogo de salas del jardín trae las 2 salas, sin datos de niños', async () => {
     const { datos } = servicios();
     const salas = await datos.salasDelJardin();
-    expect(salas.map((s) => s.nombre)).toEqual([
-      'Medio Menor A',
-      'Medio Menor B',
-      'Sala Cuna Mayor',
-    ]);
+    expect(salas.map((s) => s.nombre)).toEqual(['Sala A', 'Sala B']);
   });
 });
 
 describe('evidencias nuevas', () => {
   it('se guardan con el día de la demo y la hora real, y quedan al final (orden de llegada)', async () => {
     const { datos } = servicios();
-    const nueva = await datos.guardarEvidencia({ salaId: 'SALA-MMA', autorId: 'USR-ANA', formato: 'texto' });
+    const nueva = await datos.guardarEvidencia({ salaId: 'SG-A', autorId: 'EDU-0001', formato: 'texto' });
     expect(nueva.creadaEn.slice(0, 10)).toBe(semilla.fechaDemo);
-    const todas = await datos.evidencias({ salaId: 'SALA-MMA' });
+    const todas = await datos.evidencias({ salaId: 'SG-A' });
     expect(todas[todas.length - 1].id).toBe(nueva.id);
   });
 });
@@ -129,10 +138,10 @@ describe('capturar', () => {
     const { datos, ia } = servicios();
     const antes = (await datos.sugerencias({ estado: ['pendiente'] })).length;
 
-    const { evidencia, procesada } = await capturar('texto', undefined, 'Martina cuenta objetos hasta 10.', undefined, { datos, ia });
+    const { evidencia, procesada } = await capturar('texto', undefined, 'Pascal cuenta objetos hasta 10.', undefined, { datos, ia });
     expect(evidencia.estado).toBe('procesando');
-    expect(evidencia.autorId).toBe('USR-ANA');
-    expect(evidencia.salaId).toBe('SALA-MMA');
+    expect(evidencia.autorId).toBe('EDU-0001');
+    expect(evidencia.salaId).toBe('SG-A');
 
     const sugerencias = await procesada;
     expect(sugerencias).toHaveLength(1);
@@ -150,11 +159,11 @@ describe('capturar', () => {
       'texto',
       undefined,
       'Fernanda cuenta objetos hasta 10.',
-      'NINO-00003',
+      'NINO-00051',
       { datos, ia },
     );
     const sugerencias = await procesada;
-    expect(sugerencias[0].ninoId).toBe('NINO-00003');
+    expect(sugerencias[0].ninoId).toBe('NINO-00051');
   });
 
   it('el nivel propuesto usa el nivel actual del núcleo del niño/a', async () => {
@@ -162,13 +171,13 @@ describe('capturar', () => {
     const { procesada } = await capturar(
       'texto',
       undefined,
-      'Josefa usa palabras nuevas para contar temas de su interés.',
+      'Josefa combina dos palabras para pedir agua.',
       undefined,
       { datos, ia },
     );
     const [sug] = await procesada;
-    expect(sug.ninoId).toBe('NINO-00001');
-    expect(sug.nucleo).toBe('LV');
-    expect(sug.nivel).toBe(2); // nivel actual de Josefa en Lenguaje Verbal
+    expect(sug.ninoId).toBe('NINO-00008');
+    expect(sug.nucleo).toBe('lenguaje_comunicacion');
+    expect(sug.nivel).toBe(4); // nivel actual de Josefa en Lenguaje y comunicación
   });
 });

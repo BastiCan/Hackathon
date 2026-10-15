@@ -5,8 +5,8 @@ import type { Evidencia, Formato, Semilla } from '../lib/tipos';
 
 const semilla = semillaJson as unknown as Semilla;
 
-/** Sala Medio Menor A, la de la demo. */
-const ninosSala = semilla.ninos.filter((n) => n.salaId === 'SALA-MMA' && n.activo);
+/** Sala A, la de la demo. */
+const ninosSala = semilla.ninos.filter((n) => n.salaId === 'SG-A' && n.activo);
 
 const contexto: ContextoIA = {
   ninos: ninosSala.map((n) => ({ id: n.id, nombre: n.nombre, nivelEsperado: 4 })),
@@ -15,8 +15,8 @@ const contexto: ContextoIA = {
 function evidencia(formato: Formato, textoExtraido?: string): Evidencia {
   return {
     id: 'EVI-TEST',
-    salaId: 'SALA-MMA',
-    autorId: 'USR-ANA',
+    salaId: 'SG-A',
+    autorId: 'EDU-0001',
     creadaEn: '2026-10-15T10:00:00',
     formato,
     textoExtraido,
@@ -30,17 +30,17 @@ function ia() {
 
 describe('IAServiceSimulado', () => {
   it('con un nombre exacto de la sala y una conducta reconocible, la certeza es alta', async () => {
-    const texto = 'Martina clasifica los bloques por color y forma, y los ordena por tamaño.';
+    const texto = 'Emilio clasifica los bloques por color y forma después de la consigna.';
     const [sug, ...resto] = await ia().procesar(evidencia('texto', texto), undefined, contexto);
 
     expect(resto).toHaveLength(0);
     expect(sug.tipo).toBe('evaluacion');
-    expect(sug.ninoId).toBe('NINO-00004');
-    expect(sug.nombreDetectado).toBe('Martina');
-    expect(sug.nucleo).toBe('PM');
+    expect(sug.ninoId).toBe('NINO-00453');
+    expect(sug.nombreDetectado).toBe('Emilio');
+    expect(sug.nucleo).toBe('cognitivo');
     expect(sug.certeza).toBe('alta');
     expect(sug.estado).toBe('pendiente');
-    expect(sug.cita).toContain('Martina');
+    expect(sug.cita).toContain('Emilio');
   });
 
   it('usa solo conductas y niveles que existen en la rúbrica', async () => {
@@ -48,7 +48,7 @@ describe('IAServiceSimulado', () => {
     const [sug] = await ia().procesar(evidencia('texto', texto), undefined, contexto);
 
     expect(sug.nivel).toBeGreaterThanOrEqual(1);
-    expect(sug.nivel).toBeLessThanOrEqual(8);
+    expect(sug.nivel).toBeLessThanOrEqual(9);
     const { conductas } = await import('../lib/rubrica');
     expect(conductas(sug.nucleo!, sug.nivel!)).toContain(sug.conducta);
   });
@@ -56,26 +56,32 @@ describe('IAServiceSimulado', () => {
   it('reconoce nombres con tilde', async () => {
     const texto = 'Tomás describe la posición de los objetos: cerca, lejos, encima y debajo.';
     const [sug] = await ia().procesar(evidencia('texto', texto), undefined, contexto);
-    expect(sug.ninoId).toBe('NINO-00005');
+    expect(sug.ninoId).toBe('NINO-00356');
   });
 
   it('si la nota menciona a 2 niños, genera 2 sugerencias', async () => {
     const texto =
-      'Emilio reproduce patrones simples de dos elementos. Isidora usa mucho y poco al comparar.';
+      'Emilio reproduce patrones simples de dos elementos. Esperanza usa mucho y poco al comparar.';
     const sugerencias = await ia().procesar(evidencia('texto', texto), undefined, contexto);
 
     expect(sugerencias).toHaveLength(2);
-    expect(sugerencias.map((s) => s.ninoId).sort()).toEqual(['NINO-00002', 'NINO-00009']);
+    expect(sugerencias.map((s) => s.ninoId).sort()).toEqual(['NINO-00300', 'NINO-00453']);
     expect(new Set(sugerencias.map((s) => s.id)).size).toBe(2);
     // Cada tarjeta cita la parte que le corresponde.
-    expect(sugerencias.find((s) => s.ninoId === 'NINO-00009')?.cita).toContain('Isidora');
+    expect(sugerencias.find((s) => s.ninoId === 'NINO-00300')?.cita).toContain('Esperanza');
+  });
+
+  it('con homónimos en la sala, propone a los dos y la tía elige', async () => {
+    const texto = 'Martina apiló cuatro bloques sin que se cayeran.';
+    const sugerencias = await ia().procesar(evidencia('texto', texto), undefined, contexto);
+    expect(sugerencias.map((s) => s.ninoId).sort()).toEqual(['NINO-00237', 'NINO-00263']);
   });
 
   it('ordena las sugerencias según quién aparece primero en la nota', async () => {
-    const texto = 'Tomás armó un puzzle de 6 piezas y le explicó a Gaspar cómo hacerlo.';
+    const texto = 'Tomás armó un puzzle de 6 piezas y le explicó a Pedro cómo hacerlo.';
     const sugerencias = await ia().procesar(evidencia('texto', texto), undefined, contexto);
     const nombres = sugerencias.map((s) => s.nombreDetectado);
-    expect(nombres).toEqual(['Tomás', 'Gaspar']);
+    expect(nombres).toEqual(['Tomás', 'Pedro']);
   });
 
   it('un texto grupal o no evaluativo queda como nota de sala', async () => {
@@ -99,7 +105,7 @@ describe('IAServiceSimulado', () => {
   });
 
   it('si el texto calza con un guion de la demo, devuelve sus sugerencias predefinidas', async () => {
-    const guion = semilla.demoCapturas[3]; // Sofía y Martina
+    const guion = semilla.demoCapturas[3]; // Sofía y Pedro
     const sugerencias = await ia().procesar(
       evidencia('texto', guion.texto),
       undefined,
@@ -115,14 +121,14 @@ describe('IAServiceSimulado', () => {
   it('una foto sin texto toma el siguiente guion de foto de la demo', async () => {
     const servicio = ia();
     const primera = await servicio.procesar(evidencia('foto'), undefined, contexto);
-    expect(primera[0].ninoId).toBe('NINO-00001'); // Josefa, post-it de los individuales
-    expect(primera[0].nucleo).toBe('CC');
+    expect(primera[0].ninoId).toBe('NINO-00008'); // Josefa, post-it de los individuales
+    expect(primera[0].nucleo).toBe('socioemocional');
 
     // El guion no se repite: la siguiente foto toma el siguiente guion de foto
     // (Emilio y las hojas de otoño), con su foto de ejemplo.
     const segunda = await servicio.procesar(evidencia('foto'), undefined, contexto);
-    expect(segunda[0].ninoId).toBe('NINO-00002');
-    expect(segunda[0].nucleo).toBe('PM');
+    expect(segunda[0].ninoId).toBe('NINO-00453');
+    expect(segunda[0].nucleo).toBe('cognitivo');
   });
 
   it('recuerda lo leído y la foto de ejemplo del guion', async () => {
@@ -142,7 +148,7 @@ describe('IAServiceSimulado', () => {
   it('simula latencia antes de responder', async () => {
     const lenta = new IAServiceSimulado({ guiones: semilla.demoCapturas, latenciaMs: 30 });
     const inicio = Date.now();
-    await lenta.procesar(evidencia('texto', 'Martina cuenta objetos hasta 10.'), undefined, contexto);
+    await lenta.procesar(evidencia('texto', 'Pascal cuenta objetos hasta 10.'), undefined, contexto);
     expect(Date.now() - inicio).toBeGreaterThanOrEqual(25);
   });
 });

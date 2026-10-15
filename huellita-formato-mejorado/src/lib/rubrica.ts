@@ -1,9 +1,11 @@
 /**
- * Carga y consulta de `data/rubrica_8_niveles.json`.
+ * Carga y consulta de `data/rubrica_e1.json`: la ruta de 9 niveles y 5 dominios
+ * del dataset E-1, la misma que usa la IA del backend (integra-procesador). Se
+ * genera con `scripts/generar_datos_e1.py`.
  * La rúbrica es la única fuente de verdad: aquí no se escriben a mano niveles,
  * descriptores ni conductas observables (ver `.kiro/steering/rubrica.md`).
  */
-import rubricaJson from '@data/rubrica_8_niveles.json';
+import rubricaJson from '@data/rubrica_e1.json';
 import type { CeldaRubrica, Nivel, NivelInfo, NucleoId, NucleoInfo } from './tipos';
 
 interface NivelJson {
@@ -35,7 +37,10 @@ interface RubricaJson {
 
 const datos = rubricaJson as unknown as RubricaJson;
 
-/** Colores de nivel definidos en `.kiro/steering/interfaz.md`. */
+/**
+ * Colores de nivel definidos en `.kiro/steering/interfaz.md`, más un morado
+ * oscuro para el nivel 9 (lleva texto blanco, contraste AA).
+ */
 const COLORES_NIVEL: Record<Nivel, string> = {
   1: '#E8664F',
   2: '#F08A3E',
@@ -45,6 +50,7 @@ const COLORES_NIVEL: Record<Nivel, string> = {
   6: '#3A9E9A',
   7: '#3D7DD8',
   8: '#1F3B6B',
+  9: '#5B3A8E',
 };
 
 /** "32–40 meses" → { desde: 32, hasta: 40 }. Acepta guion normal o medio. */
@@ -89,7 +95,7 @@ for (const nucleo of datos.rubrica) {
   }
 }
 
-/** Los 8 niveles con su nombre y rango de edad orientativa. */
+/** Los niveles con su nombre y rango de edad orientativa. */
 export function niveles(): NivelInfo[] {
   return NIVELES;
 }
@@ -111,12 +117,12 @@ export function nivelInfo(nivel: Nivel): NivelInfo {
   return info;
 }
 
-/** Nombre del nivel, por ejemplo 4 → "Afianzando". */
+/** Nombre del nivel, por ejemplo 9 → "Secuencias y autonomía creciente". */
 export function nombreNivel(nivel: Nivel): string {
   return nivelInfo(nivel).nombre;
 }
 
-/** Nombre del núcleo, por ejemplo "LV" → "Lenguaje Verbal". */
+/** Nombre del núcleo, por ejemplo "lenguaje_comunicacion" → "Lenguaje y comunicación". */
 export function nombreNucleo(nucleo: NucleoId): string {
   return NUCLEOS.find((n) => n.codigo === nucleo)?.nombre ?? nucleo;
 }
@@ -148,7 +154,10 @@ export function todasLasCeldas(): CeldaRubrica[] {
   return [...CELDAS.values()];
 }
 
-/** Nivel siguiente, o el mismo si ya está en 8. */
+/** Nivel más alto de la rúbrica. */
+const NIVEL_MAXIMO = NIVELES[NIVELES.length - 1].nivel;
+
+/** Nivel siguiente, o el mismo si ya está en el más alto. */
 export function nivelSiguiente(nivel: Nivel): Nivel {
-  return (nivel < 8 ? nivel + 1 : 8) as Nivel;
+  return (nivel < NIVEL_MAXIMO ? nivel + 1 : NIVEL_MAXIMO) as Nivel;
 }

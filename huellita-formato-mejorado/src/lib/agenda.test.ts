@@ -5,7 +5,7 @@ import type { Semilla } from './tipos';
 
 const semilla = semillaJson as unknown as Semilla;
 const HOY = semilla.fechaDemo; // jueves 2026-10-15
-const salaA = (x: { salaId: string }) => x.salaId === 'SALA-MMA';
+const salaA = (x: { salaId: string }) => x.salaId === 'SG-A';
 
 describe('agenda', () => {
   it('asigna cada hora a su período de la jornada', () => {
@@ -37,10 +37,10 @@ describe('agenda', () => {
     );
     const registros = periodos.flatMap((p) => p.registros);
     expect(registros.length).toBeGreaterThan(0);
-    // La nota de "Agus" de hoy está pendiente y nombra a Agustina.
-    const agus = registros.find((r) => r.texto.includes('Agus'));
-    expect(agus?.entradas[0].nombre).toBe('Agustina');
-    expect(agus?.entradas[0].pendiente).toBe(true);
+    // La nota de "Naya" de hoy está pendiente y nombra a Nayara.
+    const naya = registros.find((r) => r.texto.includes('Naya'));
+    expect(naya?.entradas[0].nombre).toBe('Nayara');
+    expect(naya?.entradas[0].pendiente).toBe(true);
     // Cada registro cae en el período de su hora.
     for (const p of periodos) {
       for (const r of p.registros) expect(periodoDe(r.hora).inicio).toBe(p.inicio);

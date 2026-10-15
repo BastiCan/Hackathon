@@ -52,14 +52,11 @@ export interface DiaSemana {
 }
 
 const AMBITO: Record<NucleoId, 'dps' | 'com' | 'ent'> = {
-  IA: 'dps',
-  CC: 'dps',
-  CM: 'dps',
-  LV: 'com',
-  LA: 'com',
-  EN: 'ent',
-  ES: 'ent',
-  PM: 'ent',
+  motor_grueso: 'dps',
+  motor_fino: 'dps',
+  lenguaje_comunicacion: 'com',
+  socioemocional: 'dps',
+  cognitivo: 'ent',
 };
 
 /** Lunes a viernes de la semana de `hoy` (si `hoy` es fin de semana, la que termina). */

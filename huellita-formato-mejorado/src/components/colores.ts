@@ -60,7 +60,7 @@ export function mezclarConBlanco(hex: string, proporcion: number): string {
 
 /**
  * Color de texto legible sobre el color de un nivel. Los niveles 1 a 6 son
- * claros o medios y piden tinta; el 7 y el 8 son oscuros y piden blanco. Así el
+ * claros o medios y piden tinta; del 7 al 9 son oscuros y piden blanco. Así el
  * número grande de nivel cumple contraste AA sin cambiar la paleta (tarea 10).
  */
 export function colorTextoNivel(nivel: Nivel): string {

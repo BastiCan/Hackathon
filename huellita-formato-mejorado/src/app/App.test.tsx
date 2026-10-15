@@ -9,10 +9,13 @@ import { act } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { MemoryRouter } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import semillaJson from '@data/semilla.json';
+import type { Semilla } from '../lib/tipos';
 import { almacenMemoria, DataServiceLocal } from '../services/datos';
 import { IAServiceSimulado } from '../services/ia';
 import { Rutas } from './App';
 import { ALT_LOGO } from './Encabezado';
+import { ProveedorOpciones } from './opciones';
 import { ProveedorServicios } from './servicios';
 
 // React 18 pide esta marca para que `act` no avise en cada render.
@@ -22,13 +25,20 @@ let contenedor: HTMLDivElement;
 let raiz: Root;
 let datos: DataServiceLocal;
 
+/**
+ * Monta la versión con agenda. Se declara con `ProveedorOpciones` en vez de confiar en
+ * `CONFIG`: así estas pruebas dan igual aunque el entorno traiga `VITE_AGENDA=false`
+ * (la versión AWS tiene las suyas en `version-aws.test.tsx`).
+ */
 async function montar(ruta: string) {
   await act(async () => {
     raiz.render(
       <ProveedorServicios datos={datos} ia={new IAServiceSimulado({ latenciaMs: 0 })}>
-        <MemoryRouter initialEntries={[ruta]}>
-          <Rutas />
-        </MemoryRouter>
+        <ProveedorOpciones agenda>
+          <MemoryRouter initialEntries={[ruta]}>
+            <Rutas />
+          </MemoryRouter>
+        </ProveedorOpciones>
       </ProveedorServicios>,
     );
   });
@@ -70,9 +80,48 @@ async function esperarSalida() {
   });
 }
 
+/**
+ * La semilla con dos registros bajos seguidos de Pedro en Lenguaje y
+ * comunicación (nivel 7 con 30 y 31 meses, cuando lo esperado es 9): así se
+ * puede probar la bandera "revisar avance", que el historial del dataset no trae.
+ */
+function semillaConRevisarAvance(): Semilla {
+  const base = JSON.parse(JSON.stringify(semillaJson)) as Semilla;
+  const registros = [
+    { id: 'EVI-T0001', fecha: '2026-09-28T10:00:00-03:00' },
+    { id: 'EVI-T0002', fecha: '2026-10-08T10:00:00-03:00' },
+  ];
+  for (const r of registros) {
+    base.evidencias.push({
+      id: r.id,
+      salaId: 'SG-A',
+      autorId: 'EDU-0001',
+      creadaEn: r.fecha,
+      formato: 'texto',
+      textoExtraido: 'Pedro pidió agua con una sola palabra.',
+      estado: 'lista',
+    });
+    base.sugerencias.push({
+      id: `SUG-${r.id}`,
+      evidenciaId: r.id,
+      salaId: 'SG-A',
+      tipo: 'evaluacion',
+      ninoId: 'NINO-00253',
+      nucleo: 'lenguaje_comunicacion',
+      nivel: 7,
+      cita: 'Pedro pidió agua con una sola palabra.',
+      certeza: 'alta',
+      estado: 'aceptada',
+      validadaPor: 'EDU-0001',
+      validadaEn: r.fecha,
+    });
+  }
+  return base;
+}
+
 beforeEach(async () => {
   datos = new DataServiceLocal({ almacen: almacenMemoria() });
-  await datos.cambiarUsuaria('USR-ANA');
+  await datos.cambiarUsuaria('EDU-0001');
   contenedor = document.createElement('div');
   document.body.appendChild(contenedor);
   raiz = createRoot(contenedor);
@@ -90,7 +139,7 @@ describe('Agenda', () => {
     const logo = contenedor.querySelector(`header img[alt="${ALT_LOGO}"]`);
     expect(logo).not.toBeNull();
     expect(logo!.getAttribute('src')).toBeTruthy();
-    expect(texto()).toContain('Agenda · Medio Menor A');
+    expect(texto()).toContain('Agenda · Sala A');
     expect(texto()).toContain('Jueves 15 de octubre');
     expect(texto()).toContain('por revisar');
     expect(texto()).toContain('registro IEA (noviembre)');
@@ -120,21 +169,32 @@ describe('Sala', () => {
   it('muestra la planilla con una fila por niño/a y su nivel por núcleo', async () => {
     await montar('/sala');
     expect(texto()).toContain('Planilla de la sala');
-    expect(texto()).toContain('Medio Menor A');
+    expect(texto()).toContain('Sala A');
     expect(texto()).toContain('Josefa');
+    expect(texto()).toContain('Martina M.');
     expect(texto()).toContain('Observados en 30 días');
-    expect(contenedor.querySelectorAll('tbody tr')).toHaveLength(18);
-    // Una columna por núcleo.
-    expect(contenedor.querySelectorAll('thead th')).toHaveLength(10);
+    expect(contenedor.querySelectorAll('tbody tr')).toHaveLength(13);
+    // Una columna por núcleo (los 5 dominios), más el nombre y el último registro.
+    const encabezados = [...contenedor.querySelectorAll('thead th')].map((th) => th.textContent);
+    expect(encabezados).toEqual(['Niño/a', 'MG', 'MF', 'LC', 'SE', 'CO', 'Último']);
     // Nunca fotos de niños ni niñas (solo el logo del encabezado).
     expect(imagenesSinLogo()).toHaveLength(0);
   });
 
+  it('el filtro revisar avance queda vacío con el historial del dataset', async () => {
+    await montar('/sala');
+    await tocar(botonPor('Revisar avance'));
+    expect(contenedor.querySelectorAll('tbody tr')).toHaveLength(0);
+    expect(texto()).toContain('Ninguno en este filtro.');
+  });
+
   it('filtra por revisar avance', async () => {
+    datos = new DataServiceLocal({ semilla: semillaConRevisarAvance(), almacen: almacenMemoria() });
+    await datos.cambiarUsuaria('EDU-0001');
     await montar('/sala');
     await tocar(botonPor('Revisar avance'));
     expect(contenedor.querySelectorAll('tbody tr')).toHaveLength(1);
-    expect(texto()).toContain('Josefa');
+    expect(texto()).toContain('Pedro');
   });
 
   it('abre la leyenda de los colores', async () => {
@@ -159,7 +219,7 @@ describe('Revisar', () => {
     expect(texto()).toContain('Corregir');
     expect(texto()).toContain('Descartar');
     // Nombre que no calzó exacto: queda lo que estaba escrito en la nota.
-    expect(texto()).toContain('escrito “Agus”');
+    expect(texto()).toContain('escrito “Naya”');
     expect(texto()).toContain('Baja');
     expect(texto()).toMatch(/N\.º \d{4}/);
   });
@@ -187,22 +247,30 @@ describe('Revisar', () => {
 
 describe('Ficha', () => {
   it('muestra el resumen, los núcleos, qué observar y los registros', async () => {
-    await montar('/nino/NINO-00001');
+    await montar('/nino/NINO-00008');
     expect(texto()).toContain('Josefa');
     expect(texto()).toContain('Para observar esta semana');
-    expect(texto()).toContain('Conviene acompañar de cerca Lenguaje Verbal');
+    // Lenguaje y comunicación es su núcleo con el registro más antiguo.
+    expect(texto()).toContain('Conviene observar más Lenguaje y comunicación');
     expect(texto()).toContain('Cómo va · por ámbito');
     expect(texto()).toContain('Desarrollo personal y social');
     expect(texto()).toContain('Comunicación integral');
-    expect(texto()).toContain('Pensamiento Matemático');
-    expect(texto()).toContain('revisar avance (esperado 4)');
+    expect(texto()).toContain('Cognitivo');
     expect(texto()).toContain('Registros');
     expect(texto()).toContain('Registrar para Josefa');
   });
 
+  it('marca revisar avance con el nivel esperado para su edad', async () => {
+    datos = new DataServiceLocal({ semilla: semillaConRevisarAvance(), almacen: almacenMemoria() });
+    await datos.cambiarUsuaria('EDU-0001');
+    await montar('/nino/NINO-00253');
+    expect(texto()).toContain('Conviene acompañar de cerca Lenguaje y comunicación');
+    expect(texto()).toContain('revisar avance (esperado 9)');
+  });
+
   it('abre el detalle de un núcleo con el nivel actual y el siguiente', async () => {
-    await montar('/nino/NINO-00001');
-    await tocar(botonPor('Lenguaje Verbal'));
+    await montar('/nino/NINO-00008');
+    await tocar(botonPor('Lenguaje y comunicación'));
     expect(texto()).toContain('Ahora:');
     expect(texto()).toContain('Siguiente:');
   });
@@ -216,44 +284,43 @@ describe('Directora', () => {
   it('muestra una tarjeta por sala con los observados de 30 días', async () => {
     await montar('/directora');
     expect(texto()).toContain('Salas del jardín');
-    expect(texto()).toContain('Medio Menor A');
-    expect(texto()).toContain('Medio Menor B');
-    expect(texto()).toContain('Sala Cuna Mayor');
-    expect(texto()).toContain('16 de 18 observados en 30 días');
-    expect(texto()).toContain('1 por revisar avance');
+    expect(texto()).toContain('Sala A');
+    expect(texto()).toContain('Sala B');
+    expect(texto()).toContain('2 de 13 observados en 30 días');
+    expect(texto()).toContain('Ninguno por revisar');
     expect(texto()).toContain('Menos registrado:');
     // Nunca fotos de niños ni niñas (solo el logo del encabezado).
     expect(imagenesSinLogo()).toHaveLength(0);
   });
 
   it('abre una sala en modo lectura, sin captura ni pila de pendientes', async () => {
-    await montar('/directora/sala/SALA-MMA');
+    await montar('/directora/sala/SG-A');
     expect(texto()).toContain('Vista de la directora · solo lectura');
-    expect(texto()).toContain('Medio Menor A');
+    expect(texto()).toContain('Sala A');
     expect(contenedor.querySelector('[aria-label="Registrar"]')).toBeNull();
-    expect(contenedor.querySelectorAll('tbody tr')).toHaveLength(18);
+    expect(contenedor.querySelectorAll('tbody tr')).toHaveLength(13);
   });
 
   it('mueve de sala a un niño/a con confirmación', async () => {
-    await montar('/directora/sala/SALA-MMA');
+    await montar('/directora/sala/SG-A');
     await tocar(botonPor('Josefa'));
     expect(texto()).toContain('Ver su ficha');
     await tocar(botonPor('Mover de sala'));
     expect(texto()).toContain('Nueva sala');
     await tocar(botonPor('Mover'));
-    expect((await datos.nino('NINO-00001')).salaId).toBe('SALA-MMB');
-    expect(texto()).toContain('ahora está en Medio Menor B');
+    expect((await datos.nino('NINO-00008')).salaId).toBe('SG-B');
+    expect(texto()).toContain('ahora está en Sala B');
   });
 
   it('da de baja a un niño/a solo después de confirmar', async () => {
-    await montar('/directora/sala/SALA-MMA');
+    await montar('/directora/sala/SG-A');
     await tocar(botonPor('Josefa'));
     await tocar(botonPor('Dar de baja'));
     expect(texto()).toContain('¿Dar de baja a Josefa?');
     // Mientras no confirme, nada cambia.
-    expect((await datos.nino('NINO-00001')).activo).toBe(true);
+    expect((await datos.nino('NINO-00008')).activo).toBe(true);
     await tocar(botonPor('Sí, dar de baja'));
-    expect((await datos.nino('NINO-00001')).activo).toBe(false);
+    expect((await datos.nino('NINO-00008')).activo).toBe(false);
   });
 });
 
@@ -261,7 +328,7 @@ describe('Acceso por rol', () => {
   it('una tía no entra a la vista directora', async () => {
     await montar('/directora');
     // Redirige a su agenda.
-    expect(texto()).toContain('Agenda · Medio Menor A');
+    expect(texto()).toContain('Agenda · Sala A');
     expect(texto()).not.toContain('Salas del jardín');
   });
 
