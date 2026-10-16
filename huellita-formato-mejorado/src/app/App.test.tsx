@@ -108,7 +108,7 @@ afterEach(() => {
 });
 
 describe('Inicio', () => {
-  it('muestra el encabezado oficial, la semana, el aviso y los botones para registrar', async () => {
+  it('muestra el encabezado oficial, el aviso y los botones para registrar', async () => {
     await montar('/');
     // El encabezado lleva el logo oficial Mineduc + Integra, no un sello dibujado.
     const logo = contenedor.querySelector(`header img[alt="${ALT_LOGO}"]`);
@@ -118,7 +118,8 @@ describe('Inicio', () => {
     expect(texto()).toContain('Jueves 15 de octubre');
     expect(texto()).toContain('3 por revisar');
     expect(texto()).toContain('registro IEA (noviembre)');
-    expect(contenedor.querySelectorAll('[aria-label="Días de la semana"] li')).toHaveLength(5);
+    // El calendario de la semana ya no está en el inicio.
+    expect(contenedor.querySelector('[aria-label="Días de la semana"]')).toBeNull();
     // La jornada de la agenda ya no está: en su lugar van los botones.
     expect(texto()).not.toContain('Experiencia de aprendizaje');
     const botones = [
@@ -128,15 +129,6 @@ describe('Inicio', () => {
     ['Subir foto', 'Grabar audio', 'Escribir', 'Subir audio'].forEach((etiqueta, i) =>
       expect(botones[i]).toContain(etiqueta),
     );
-  });
-
-  it('la semana dice cuántos registros hay cada día y cuántos faltan por revisar', async () => {
-    await montar('/');
-    const dias = [...contenedor.querySelectorAll('[aria-label="Días de la semana"] li')].map(
-      (li) => li.querySelector('.sr-only')?.textContent ?? '',
-    );
-    expect(dias[3]).toMatch(/^jueves 15, hoy: \d+ registros, 3 por revisar$/);
-    expect(dias[4]).toBe('viernes 16: todavía no llega');
   });
 
   it('el aviso de pendientes lleva a Revisar', async () => {
@@ -315,12 +307,13 @@ describe('Revisar', () => {
 });
 
 describe('Ficha', () => {
-  it('muestra el resumen, los 5 núcleos, qué observar y los registros', async () => {
+  it('muestra cómo va, el promedio, los 5 núcleos y los registros', async () => {
     await montar('/nino/NINO-00001');
     expect(texto()).toContain('Josefa');
-    expect(texto()).toContain('Para observar esta semana');
-    expect(texto()).toContain('Conviene acompañar de cerca Lenguaje y comunicación');
+    // El cuadro naranjo con indicaciones ya no se muestra en la ficha.
+    expect(texto()).not.toContain('Para observar esta semana');
     expect(texto()).toContain('Cómo va · por núcleo');
+    expect(texto()).toContain('Promedio');
     expect(texto()).toContain('Motor grueso');
     expect(texto()).toContain('Sin registros aún');
     expect(texto()).toContain('Cognitivo');

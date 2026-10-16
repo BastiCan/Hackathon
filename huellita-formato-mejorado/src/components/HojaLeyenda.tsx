@@ -1,5 +1,5 @@
-import { Flag } from 'lucide-react';
-import { niveles } from '../lib/rubrica';
+﻿import { Flag } from 'lucide-react';
+import { niveles, nucleos } from '../lib/rubrica';
 import type { ColorFrescura } from '../lib/tipos';
 import { NumeroNivel } from './ChipNivel';
 import { COLOR_FRESCURA, TEXTO_FRESCURA } from './colores';
@@ -8,13 +8,26 @@ import { HojaInferior } from './HojaInferior';
 const ORDEN: ColorFrescura[] = ['verde', 'amarillo', 'rojo'];
 
 /**
- * Leyenda de la planilla (requisito 4.6): el color de cada nivel, el punto de
- * frescura y la bandera de "revisar avance".
+ * Leyenda de la planilla (requisito 4.6): qué significa cada sigla de núcleo
+ * (MG, MF, LC, SE, CO), el color de cada nivel, el punto de frescura y la
+ * bandera de "revisar avance".
  */
 export function HojaLeyenda({ onCerrar }: { onCerrar: () => void }) {
   return (
     <HojaInferior titulo="Qué significan los colores" onCerrar={onCerrar}>
-      <h3 className="rotulo mt-3">Nivel alcanzado en cada núcleo</h3>
+      <h3 className="rotulo mt-3">Siglas de los núcleos</h3>
+      <ul className="mt-1">
+        {nucleos().map((n) => (
+          <li key={n.codigo} className="flex items-center gap-3 py-[5px]">
+            <span className="grid h-7 w-9 flex-none place-items-center rounded-chip border border-linea bg-papel text-[13px] font-bold text-tinta">
+              {n.sigla}
+            </span>
+            <span className="text-[15px]">{n.nombre}</span>
+          </li>
+        ))}
+      </ul>
+
+      <h3 className="rotulo mt-4">Nivel alcanzado en cada núcleo</h3>
       <ul className="mt-1">
         {niveles().map((n) => (
           <li key={n.nivel} className="flex items-center gap-3 py-[5px]">

@@ -1,27 +1,33 @@
-import { ChevronLeft, Eye, Flag } from 'lucide-react';
+import { ChevronLeft, Flag, PencilLine } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useAviso } from '../app/aviso';
 import { useFicha } from '../app/hooks';
+import { useServicios } from '../app/servicios';
 import { Avatar } from '../components/Avatar';
 import { NumeroNivel } from '../components/ChipNivel';
 import { PALETA } from '../components/colores';
+import { HojaCambiar } from '../components/HojaCambiar';
 import { HojaNucleo } from '../components/HojaNucleo';
 import { Mancha } from '../components/Mancha';
 import { Miniatura } from '../components/Miniatura';
-import type { NucleoId } from '../lib/tipos';
-import type { NucleoVista } from '../lib/vistas';
+import type { NucleoId, Sugerencia } from '../lib/tipos';
+import type { NucleoVista, RegistroVista } from '../lib/vistas';
 
 /**
- * Ficha del niño/a: qué acompañar esta semana, cómo va en cada núcleo (el
- * número en el color de su nivel, igual que en la planilla) y sus registros
- * con la foto de cada post-it.
+ * Ficha del niño/a: cómo va en cada núcleo (el número en el color de su nivel,
+ * igual que en la planilla), su promedio de notas válidas comparado con la
+ * sala y sus registros con la foto de cada post-it.
  */
 export function FichaNino() {
   const { id } = useParams();
   const navegar = useNavigate();
+  const { datos } = useServicios();
+  const aviso = useAviso();
   const vista = useFicha(id);
   const [detalle, setDetalle] = useState<NucleoVista | null>(null);
   const [filtro, setFiltro] = useState<NucleoId | 'todos'>('todos');
+  const [corrigiendo, setCorrigiendo] = useState<Sugerencia | null>(null);
 
   if (vista.cargando && !vista.valor) {
     return (
@@ -42,10 +48,42 @@ export function FichaNino() {
   }
 
   const f = vista.valor;
+
+  // Un registro de la ficha abre la misma hoja Corregir de Revisar, armada con
+  // sus datos actuales. Al guardar se vuelve a validar la sugerencia, que deja
+  // registro del cambio (campo original) y recalcula niveles y promedio.
+  const abrirCorreccion = (r: RegistroVista) => {
+    setCorrigiendo({
+      id: r.id,
+      evidenciaId: '',
+      salaId: f.sala.id,
+      tipo: 'evaluacion',
+      ninoId: f.nino.id,
+      nucleo: r.nucleo,
+      nivel: r.nivel,
+      cita: r.cita,
+      certeza: 'alta',
+      estado: 'aceptada',
+    });
+  };
+  const guardarCorreccion = (cambios: { ninoId?: string; nucleo?: NucleoId; nivel?: number }) => {
+    if (!corrigiendo) return;
+    const id = corrigiendo.id;
+    setCorrigiendo(null);
+    void datos
+      .validar(id, cambios as Parameters<typeof datos.validar>[1])
+      .then(
+        () => aviso('Registro actualizado'),
+        () => aviso('No pudimos guardar el cambio. Intentalo de nuevo.'),
+      );
+  };
   const historial =
     filtro === 'todos' ? f.historial : f.historial.filter((r) => r.nucleo === filtro);
   const conFoto = f.historial.filter((r) => r.foto).slice(0, 6);
   const tira = conFoto.length > 0 ? conFoto : f.historial.slice(0, 3);
+  const promedioTexto = f.promedio !== null ? f.promedio.toFixed(1) : null;
+  const promedioSalaTexto =
+    f.rezago.promedioSala !== null ? f.rezago.promedioSala.toFixed(1) : null;
 
   return (
     <>
@@ -64,27 +102,10 @@ export function FichaNino() {
         </div>
       </header>
 
-      {/* Escritorio: a la izquierda el resumen y cómo va; a la derecha sus
-          fotos y los registros. En celular es la misma fila de siempre. */}
+      {/* Escritorio: a la izquierda cómo va; a la derecha sus fotos y los
+          registros. En celular es la misma fila de siempre. */}
       <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-6">
         <div className="min-w-0">
-          <section className="aviso mb-3 px-3 py-[10px]">
-            <p className="text-[15px]">{f.resumen}</p>
-            {f.conductasObservar.length > 0 ? (
-              <>
-                <h2 className="mt-2 flex items-center gap-[6px] text-[15px]">
-                  <Eye aria-hidden="true" className="h-[18px] w-[18px]" />
-                  Para observar esta semana
-                </h2>
-                <ul className="mt-1 list-disc pl-5 text-[15px] text-tinta">
-                  {f.conductasObservar.map((conducta) => (
-                    <li key={conducta}>{conducta}</li>
-                  ))}
-                </ul>
-              </>
-            ) : null}
-          </section>
-
           <section
             aria-label="Nivel por núcleo"
             className="relative mb-3 overflow-hidden rounded-tarjeta border border-linea bg-papel px-3 py-[10px] shadow-tarjeta"
@@ -95,7 +116,32 @@ export function FichaNino() {
               opacidad={0.08}
               className="-right-6 -top-7 h-24 w-24"
             />
-            <p className="rotulo relative mb-1">Cómo va · por núcleo</p>
+            <div className="relative mb-2 flex items-end justify-between gap-2">
+              <p className="rotulo mb-0">Cómo va · por núcleo</p>
+              {promedioTexto ? (
+                <p className="text-[13px] text-tinta-2">
+                  Promedio{' '}
+                  <strong className="text-[15px] text-tinta">{promedioTexto}</strong>
+                  {promedioSalaTexto ? (
+                    <span> · sala {promedioSalaTexto}</span>
+                  ) : null}
+                </p>
+              ) : null}
+            </div>
+
+            {f.rezago.enRezago ? (
+              <p
+                role="status"
+                className="relative mb-2 flex items-start gap-2 rounded-campo border border-naranjo-texto/40 bg-naranjo-suave px-3 py-2 text-[14px] text-naranjo-texto"
+              >
+                <Flag aria-hidden="true" className="mt-[2px] h-[16px] w-[16px] flex-none" />
+                <span>
+                  <b>Posible rezago.</b> Su promedio está una desviación estándar o más por
+                  debajo del resto de la sala. Conviene acompañar de cerca y registrar seguido.
+                </span>
+              </p>
+            ) : null}
+
             <ul className="relative">
               {f.nucleos.map((n) => (
                 <li key={n.nucleo} className="border-b border-cuadricula last:border-b-0">
@@ -180,10 +226,22 @@ export function FichaNino() {
                     className="pb-3"
                     style={{ ['--punto' as string]: r.color }}
                   >
-                    <p className="text-[13px] text-tinta-2">
-                      {r.fechaCorta} · {r.nombreNucleo} · Nivel {r.nivel} · {r.autora}
-                    </p>
-                    <q className="text-[15px] text-tinta">“{r.cita}”</q>
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <p className="text-[13px] text-tinta-2">
+                          {r.fechaCorta} · {r.nombreNucleo} · Nivel {r.nivel} · {r.autora}
+                        </p>
+                        <q className="text-[15px] text-tinta">“{r.cita}”</q>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => abrirCorreccion(r)}
+                        aria-label={`Corregir el registro de ${r.nombreNucleo} del ${r.fechaCorta}`}
+                        className="grid min-h-tactil min-w-tactil flex-none place-items-center rounded-chip border border-linea bg-papel text-tinta-2"
+                      >
+                        <PencilLine aria-hidden="true" className="h-[18px] w-[18px]" />
+                      </button>
+                    </div>
                   </li>
                 ))}
               </ol>
@@ -198,6 +256,15 @@ export function FichaNino() {
           nivel={detalle.nivel ?? f.nivelEsperadoEdad}
           conEvidencia={detalle.nivel !== null}
           onCerrar={() => setDetalle(null)}
+        />
+      ) : null}
+
+      {corrigiendo ? (
+        <HojaCambiar
+          sugerencia={corrigiendo}
+          ninos={f.ninosSala}
+          onGuardar={guardarCorreccion}
+          onCerrar={() => setCorrigiendo(null)}
         />
       ) : null}
     </>
