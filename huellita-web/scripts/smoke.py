@@ -7,6 +7,7 @@ una de sus sugerencias, comprobar que quedo aceptada y devolverla a pendiente.
 Uso en PowerShell, desde huellita-web:
   .\.venv\Scripts\python.exe scripts\smoke.py https://d111111abcdef8.cloudfront.net
   .\.venv\Scripts\python.exe scripts\smoke.py https://d111111abcdef8.cloudfront.net --audio "C:\ruta\nota.m4a"
+  .\.venv\Scripts\python.exe scripts\smoke.py https://d111111abcdef8.cloudfront.net --foto "C:\ruta\postit.jpeg"
 
 No necesita credenciales de AWS: habla con el BFF por HTTPS con la cabecera X-Usuaria-Id.
 Sale con 0 si todo paso y con 1 describiendo el primer paso que fallo.
@@ -29,6 +30,7 @@ SALA = "SG-A"
 INTERVALO = 5
 ESPERA_MAX = 300
 MAX_BYTES_AUDIO = 4194304
+MAX_BYTES_FOTO = 5767168
 TIEMPO_LECTURA = 30
 TIEMPO_ENVIO = 90
 TIPOS_AUDIO = {
@@ -38,6 +40,11 @@ TIPOS_AUDIO = {
     ".ogg": "audio/ogg",
     ".mp3": "audio/mpeg",
     ".wav": "audio/wav",
+}
+TIPOS_FOTO = {
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".png": "image/png",
 }
 
 
@@ -175,6 +182,40 @@ def crear_nota_audio(base: str, ruta: str) -> str:
     return evidencia["id"]
 
 
+def crear_nota_foto(base: str, ruta: str) -> str:
+    comprobar(os.path.isfile(ruta), f"no encuentro el archivo de foto {ruta}")
+    with open(ruta, "rb") as archivo:
+        crudo = archivo.read()
+    comprobar(crudo, f"el archivo {ruta} esta vacio")
+    comprobar(
+        len(crudo) <= MAX_BYTES_FOTO,
+        f"la foto pesa {len(crudo)} bytes y el tope es {MAX_BYTES_FOTO} (reducela antes de enviarla)",
+    )
+    extension = os.path.splitext(ruta)[1].lower()
+    tipo = TIPOS_FOTO.get(extension) or mimetypes.guess_type(ruta)[0] or "image/jpeg"
+    comprobar(
+        tipo in ("image/jpeg", "image/png"),
+        f"la foto {ruta} es {tipo} y el BFF solo acepta JPEG o PNG (el celular manda HEIC; conviertela)",
+    )
+    cuerpo_envio = {
+        "salaId": SALA,
+        "autorId": USUARIA,
+        "formato": "foto",
+        "fotoBase64": base64.b64encode(crudo).decode("ascii"),
+        "mimeType": tipo,
+    }
+    estado, cuerpo = pedir(base, "POST", "/api/capturas", cuerpo_envio, TIEMPO_ENVIO)
+    comprobar(estado == 201, f"POST /api/capturas con foto respondio {estado} {resumen(cuerpo)} (se esperaba 201)")
+    evidencia = cuerpo.get("evidencia") if isinstance(cuerpo, dict) else None
+    comprobar(isinstance(evidencia, dict) and evidencia.get("id"), f"la respuesta no trae la evidencia: {resumen(cuerpo)}")
+    comprobar(
+        evidencia.get("estado") == "procesando",
+        f"la foto {evidencia.get('id')} nacio en {evidencia.get('estado')} y se esperaba procesando",
+    )
+    print(f"   foto creada: {evidencia['id']} ({len(crudo) // 1024} KB, {tipo})")
+    return evidencia["id"]
+
+
 def leer_registros(base: str) -> dict:
     estado, cuerpo = pedir(base, "GET", f"/api/salas/{SALA}/registros")
     comprobar(
@@ -295,6 +336,15 @@ def flujo_audio(base: str, ruta: str) -> None:
     )
 
 
+def flujo_foto(base: str, ruta: str) -> None:
+    print("9. flujo de foto (post-it)")
+    comienzo = time.monotonic()
+    id_captura = crear_nota_foto(base, ruta)
+    evidencia, sugerencias = esperar_lista(base, id_captura, "  ")
+    transcurrido = int(time.monotonic() - comienzo)
+    print(f"   foto->sugerencias en {transcurrido} s ({len(sugerencias)} sugerencia(s))")
+
+
 def analizar(argumentos: list[str] | None = None) -> argparse.Namespace:
     analizador = argparse.ArgumentParser(
         prog="smoke.py",
@@ -306,6 +356,11 @@ def analizar(argumentos: list[str] | None = None) -> argparse.Namespace:
         "--audio",
         metavar="archivo.m4a",
         help="prueba tambien el flujo de voz con este archivo (hasta 4 MiB)",
+    )
+    analizador.add_argument(
+        "--foto",
+        metavar="postit.jpeg",
+        help="prueba tambien el flujo de foto de post-it con este archivo JPEG/PNG (hasta 5.5 MiB)",
     )
     return analizador.parse_args(argumentos)
 
@@ -328,6 +383,8 @@ def main(argumentos: list[str] | None = None) -> int:
         devolver_a_pendiente(base, id_sugerencia)
         if opciones.audio:
             flujo_audio(base, opciones.audio)
+        if opciones.foto:
+            flujo_foto(base, opciones.foto)
     except Falla as falla:
         print(f"FALLA: {falla}")
         return 1
