@@ -46,9 +46,10 @@ def reservar_cupo_del_dia(cfg: Config, sala_id: str, dia: str) -> int:
     item = dynamo.actualizar(
         cfg.tabla_capturas,
         _clave(id_contador(dia)),
-        "ADD total :uno",
+        "ADD #total :uno",
         {":uno": {"N": "1"}, ":max": {"N": str(cfg.max_capturas_dia)}},
-        condicion="attribute_not_exists(total) OR total < :max",
+        condicion="attribute_not_exists(#total) OR #total < :max",
+        nombres={"#total": "total"},
     )
     if item is None:
         raise errores.error("tope_diario")

@@ -50,7 +50,7 @@ CODIGOS_HTTP = {
 
 # Las dos únicas condiciones que escribe datos/capturas.py.
 CONDICIONES = {
-    "attribute_not_exists(total) OR total < :max": lambda item, valores: (
+    "attribute_not_exists(#total) OR #total < :max": lambda item, valores: (
         "total" not in item or int(item["total"]["N"]) < int(valores[":max"]["N"])
     ),
     "attribute_exists(id_captura) AND sala_key = :sk": lambda item, valores: (
@@ -236,7 +236,8 @@ def _aplicar(expresion: str, item: dict, valores: dict, nombres: dict) -> None:
     """Aplica las expresiones `ADD` y `SET` que escribe datos/capturas.py."""
     verbo, _, cuerpo = expresion.partition(" ")
     if verbo == "ADD":
-        atributo, token = cuerpo.split()
+        alias, token = cuerpo.split()
+        atributo = nombres.get(alias, alias)
         actual = int(item.get(atributo, {"N": "0"})["N"])
         item[atributo] = {"N": str(actual + int(valores[token]["N"]))}
         return
