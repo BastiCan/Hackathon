@@ -54,7 +54,8 @@ if (-not (Test-Path $Npm)) {
     throw "No encuentro npm ($Npm). Pasalo con -Npm o agrega c:\dev\hackaton\.worktrees\.herramientas\bin al PATH."
 }
 
-# 2. Build del frontend apuntando al BFF (/api, mismo dominio) y sin agenda.
+# 2. Build del frontend apuntando al BFF (/api, mismo dominio). La navegacion arranca en
+#    Inicio: la Agenda ya no existe (el flag VITE_AGENDA quedo obsoleto tras el merge con main).
 $raiz = Split-Path -Parent $PSScriptRoot                               # huellita-web
 $front = Join-Path (Split-Path -Parent $raiz) "huellita-formato-mejorado"
 if (-not (Test-Path (Join-Path $front "package.json"))) { throw "No encuentro el frontend en $front." }
@@ -62,13 +63,12 @@ if (-not (Test-Path (Join-Path $front "package.json"))) { throw "No encuentro el
 Push-Location $front
 try {
     $env:VITE_DATOS = "http"
-    $env:VITE_AGENDA = "false"
 
     Write-Host "2/4 npm ci en $front ..."
     & $Npm ci
     Confirmar "npm ci fallo."
 
-    Write-Host "    npm run build con VITE_DATOS=http y VITE_AGENDA=false ..."
+    Write-Host "    npm run build con VITE_DATOS=http ..."
     & $Npm run build
     Confirmar "npm run build fallo."
     if (-not (Test-Path "dist\index.html")) { throw "El build no dejo dist\index.html." }

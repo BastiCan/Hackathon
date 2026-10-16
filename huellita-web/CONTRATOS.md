@@ -920,7 +920,7 @@ PowerShell, sin parámetros obligatorios. Pasos, en este orden:
    `aws cloudformation describe-stacks --profile hackaton --region us-east-1`:
    `UrlApp`, `BucketWeb`, `IdDistribucion`.
 2. En `huellita-formato-mejorado/`: `npm ci`, luego `npm run build` con
-   `$env:VITE_DATOS="http"` y `$env:VITE_AGENDA="false"`.
+   `$env:VITE_DATOS="http"`.
 3. Sube en **dos pasadas** con `aws s3 sync dist s3://<BucketWeb> --delete`:
    - primera: solo `assets/*`, con `--cache-control "public,max-age=31536000,immutable"`;
    - segunda: todo lo demás (incluidos `index.html`, `sw.js`, `registerSW.js` y

@@ -60,8 +60,8 @@ cd c:\dev\hackaton\.worktrees\huellita-aws\huellita-web
 ```
 
 Hace, en este orden: lee `UrlApp`, `BucketWeb` e `IdDistribucion` del stack; en
-`huellita-formato-mejorado/` corre `npm ci` y `npm run build` con `VITE_DATOS=http` y
-`VITE_AGENDA=false`; sube `dist` con `aws s3 sync --delete` en **dos pasadas** (primero
+`huellita-formato-mejorado/` corre `npm ci` y `npm run build` con `VITE_DATOS=http`;
+sube `dist` con `aws s3 sync --delete` en **dos pasadas** (primero
 `assets/*` con `public,max-age=31536000,immutable`, después todo lo demás —incluidos
 `index.html`, `sw.js`, `registerSW.js` y `manifest.webmanifest`— con `no-cache`, para que la
 PWA se actualice); invalida `"/*"` en CloudFront e imprime la `UrlApp`.
@@ -198,7 +198,7 @@ final de `template.yaml`):
    `app.py` monta esos archivos en `/` (`StaticFiles` con `html=True`) y deja `/api/*` igual.
    En este plan **no se usa `publicar_front.ps1`** (no hay bucket ni distribución que
    invalidar): el build viaja dentro del paquete de la función, así que publicar es
-   `npm run build` con `VITE_DATOS=http` y `VITE_AGENDA=false`, copiar `dist` y volver a
+   `npm run build` con `VITE_DATOS=http`, copiar `dist` y volver a
    `sam deploy`. El script, si el stack no trae `BucketWeb` e `IdDistribucion`, corta con un
    mensaje que apunta a esta sección.
 4. Consecuencias: el frontend sigue en el mismo origen que `/api` (no hay CORS nuevo), pero se
