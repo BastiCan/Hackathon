@@ -11,9 +11,12 @@ puedas continuar sin contexto previo. Lee la sección "Lo primero que debes hace
 ## 1. Resumen en una línea
 
 El front Huellita (`huellita-formato-mejorado`) quedó conectado al backend real en AWS
-(BFF `huellita-web`). **Texto y audio funcionan end-to-end y están verificados en vivo.**
-La captura de **foto de post-it** está implementada y commiteada, pero **todavía NO
-desplegada ni verificada contra AWS** (es el único paso que falta: FEAT-003).
+(BFF `huellita-web`). **Texto, audio Y FOTO de post-it funcionan end-to-end y están
+verificados en vivo contra AWS.** Todo está desplegado y pusheado a `origin/feature/huellita-aws`.
+
+> ACTUALIZACIÓN (cierre del turno): la foto de post-it YA quedó desplegada y verificada
+> (ver §5-bis). El stack `huellita-web` está en UPDATE_COMPLETE con los permisos IAM del OCR.
+> Todo pusheado hasta el commit `123f411`.
 
 **URL de la demo:** https://d3hs1azrtjzcei.cloudfront.net
 
@@ -33,10 +36,9 @@ desplegada ni verificada contra AWS** (es el único paso que falta: FEAT-003).
 - **Revisar y confirmar/corregir** una sugerencia (aceptar o devolver a pendiente). Verificado.
 - **Archivar** una captura.
 
-### ⚠️ Implementado pero NO desplegado todavía (pendiente FEAT-003)
-- **Foto de post-it**: el código del BFF y del front ya está (commits `9d5e76f` y `3b26bac`),
-  pero **no se ha hecho `sam deploy` ni se ha republicado el front**, así que en la URL
-  todavía NO funciona. No la muestres hasta que FEAT-003 termine y se verifique (ver §5).
+- **Crear una nota de FOTO de post-it** → se sube la imagen, el OCR lee los post-its y la IA
+  sugiere núcleo + nivel en **~24-27 s**. Verificado end-to-end con las dos fotos de WhatsApp:
+  Foto A (~160 KB) dio 11 sugerencias en 9 recortes; Foto B dio 12 en 9 recortes.
 
 ### ❌ No funciona / no mostrar
 - **Editar una nota de sala**: el BFF no tiene ese endpoint; responde "no disponible".
@@ -73,12 +75,14 @@ desplegada ni verificada contra AWS** (es el único paso que falta: FEAT-003).
 
 - Rama de trabajo: **`feature/huellita-aws`**, dentro del worktree
   `c:\dev\hackaton\.worktrees\huellita-aws`.
-- `origin/feature/huellita-aws` está en **`e658b0f`** (el fix de DynamoDB, ya pusheado).
-- **Local está 2 commits adelante de origin, SIN pushear todavía:**
-  - `9d5e76f` feat: BFF acepta formato foto (FEAT-001)
-  - `3b26bac` feat: enviar foto de post-it al BFF real (FEAT-002)
-- Hay un workflow en curso que añadirá un 3º commit (FEAT-003: deploy + verificación) y el commit
-  de cierre. **No se ha pusheado la foto porque todavía no está verificada contra AWS.**
+- `origin/feature/huellita-aws` está en **`123f411`** (todo pusheado, incluida la foto).
+- Commits de la foto, ya en origin:
+  - `9d5e76f` BFF acepta formato foto (FEAT-001)
+  - `3b26bac` front envía foto al BFF (FEAT-002)
+  - `4490d0a` ESTADO-DEMO.md (este doc)
+  - `912812a` deploy BFF + verificación e2e foto (FEAT-003)
+  - `123f411` artefactos de review (APPROVED)
+- `feature/huellita-aws` está sincronizada con origin (0/0). **Nada pendiente de pushear.**
 - Ramas de respaldo (no borrar): `respaldo/huellita-aws-pre-merge`, `respaldo/huellita-aws-pre-merge2`.
 - `main` NO se ha tocado. La integración a `main` va por PR (ya hay uno abierto para lo anterior).
 - Pendiente de versionar a propósito: `huellita-web/.agents/` y los `.agents/tasks/task-foto-postit/`
@@ -86,25 +90,26 @@ desplegada ni verificada contra AWS** (es el único paso que falta: FEAT-003).
 
 ---
 
-## 5. Lo ÚNICO que falta: desplegar y verificar la foto (FEAT-003)
+## 5. Foto de post-it: COMPLETADA (ya no queda pendiente)
 
-Hay un workflow corriendo que debería hacer esto automáticamente. Si lo terminó, verifica que:
-1. Se hizo `sam deploy` del BFF (añade 2 permisos IAM nuevos: `lambda:InvokeFunction` sobre
-   `postits-ocr` y `s3:PutObject` sobre `original/*`). **Riesgo**: si la cuenta del hackathon no
-   permite esos permisos IAM, el deploy falla y hay que escalarlo. Es el único bloqueo serio posible.
-2. Se republicó el front (`scripts\publicar_front.ps1` desde `huellita-web`, o las dos pasadas de
-   `aws s3 sync` + invalidación de CloudFront como en `DESPLIEGUE.md`).
-3. Se verificó la foto end-to-end con las imágenes de prueba que dejó Lucas:
-   - `C:\dev\hackaton\WhatsApp Image 2026-10-16 at 00.19.49.jpeg`
-   - `C:\dev\hackaton\WhatsApp Image 2026-10-16 at 00.19.50.jpeg`
+El workflow terminó bien y el revisor aprobó (APPROVED). Resumen de lo hecho:
+- `sam deploy` del BFF → stack `huellita-web` **UPDATE_COMPLETE** (no hizo falta el Plan B de
+  CloudFront). La Lambda del BFF tiene `FUNCION_OCR=postits-ocr` y el rol trae los 2 permisos
+  nuevos efectivos: `lambda:InvokeFunction` sobre `postits-ocr` y `s3:PutObject` sobre
+  `capturas/*/original/*`. **No hubo bloqueo de IAM.**
+- Front republicado contra el BFF.
+- Verificación end-to-end con las dos fotos de WhatsApp de Lucas: ambas llegaron a sugerencias
+  (Foto A 27 s / 11 sugerencias; Foto B 24 s / 12 sugerencias). Sin regresión en texto ni audio.
+- Pruebas: pytest BFF 398, vitest front 208, build OK.
+- **Ya pusheado** hasta `123f411` en `origin/feature/huellita-aws`.
 
-Si el workflow NO terminó o falló, el estado y los hallazgos quedan en:
-`.agents/tasks/task-foto-postit/` y el reporte `foto-postit-conexion-ejecucion.md`.
-
-**Después de verificar la foto, hay que pushear la rama:**
-```powershell
-git -C c:\dev\hackaton\.worktrees\huellita-aws push -u origin feature/huellita-aws
-```
+### Salvedades de la foto para la demo (no bloqueantes)
+1. **Una foto genera N recortes de post-it → N sugerencias** (id `{CAP}-p{recorte}-{indice}`). La
+   pantalla Revisar las lista planas por evidencia, **no las agrupa visualmente por recorte**
+   todavía (fix opcional post-demo). Para la demo: usa un post-it claro con **pocos recortes**.
+2. **El OCR de manuscrito es ruidoso**: puede equivocar palabras y dejar niño/núcleo/nivel vacíos
+   con certeza baja. Es esperado (la tía confirma a mano), pero para la demo **elige post-its
+   legibles y con letra clara**.
 
 ---
 
@@ -174,10 +179,21 @@ una acción evaluable.**
 
 ## 8. Lo primero que debes hacer al tomar el turno
 
-1. **Comprueba si la foto quedó desplegada.** Corre el smoke de texto y audio para confirmar que
-   la demo sigue sana (deben dar "Todo paso."). Si el workflow de foto terminó, verifica la foto
-   con las dos imágenes de WhatsApp (§5).
-2. **Si la foto está verificada → pushea la rama** (§5) para no perder el trabajo.
-3. **Si el deploy de la foto falló por IAM**, ese es el bloqueo a resolver con quien administre la
-   cuenta del hackathon. La demo de texto+audio sigue en pie mientras tanto.
-4. **Ensaya el guion** (§6) con un niño real de SG-A antes de la demo en vivo.
+Buenas noticias: **texto, audio y foto están los tres desplegados, verificados y pusheados.**
+No queda trabajo bloqueante. Lo que conviene hacer:
+
+1. **Sanidad rápida**: `git pull` en el worktree, y corre el smoke para confirmar que la demo
+   sigue sana (texto, audio y foto):
+   ```powershell
+   cd c:\dev\hackaton\.worktrees\huellita-aws\huellita-web
+   aws configure export-credentials --profile hackaton --format powershell | Out-String | Invoke-Expression
+   .\.venv\Scripts\python.exe scripts\smoke.py https://d3hs1azrtjzcei.cloudfront.net
+   .\.venv\Scripts\python.exe scripts\smoke.py https://d3hs1azrtjzcei.cloudfront.net --audio "C:\dev\hackaton\TEST TRANSCRIPTOR.m4a"
+   .\.venv\Scripts\python.exe scripts\smoke.py https://d3hs1azrtjzcei.cloudfront.net --foto "C:\dev\hackaton\WhatsApp Image 2026-10-16 at 00.19.49.jpeg"
+   ```
+2. **Ensaya el guion** (§6) con un niño real de SG-A. Para foto, usa un post-it legible con pocos
+   recortes (§5, salvedades).
+3. **Opcional**: abrir un PR de `feature/huellita-aws` hacia `main` cuando el equipo decida integrar
+   (hoy la rama está pusheada pero la integración a `main` va por PR revisado).
+4. **Pendiente opcional post-demo** (no bloqueante): que la pantalla Revisar agrupe las sugerencias
+   de una foto por recorte de post-it; hoy llegan planas por evidencia.
