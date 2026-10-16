@@ -10,6 +10,12 @@ import type { Evidencia, Nino, Sugerencia, Usuaria } from '../lib/tipos';
 import { almacenMemoria } from './datos';
 import { ErrorParaTia } from './errores';
 import { aBase64, BLOQUE_BASE64, DataServiceHttp, INTERVALO_SONDEO_MS } from './http';
+import { reducirFoto } from '../lib/fotos';
+
+// En jsdom no hay `createImageBitmap`, así que `reducirFoto` se dobla para
+// controlar qué data URL (o `undefined`) devuelve en cada caso de foto.
+vi.mock('../lib/fotos', () => ({ reducirFoto: vi.fn() }));
+const reducirFotoMock = vi.mocked(reducirFoto);
 
 const USUARIAS: Usuaria[] = [
   { id: 'EDU-0001', nombre: 'Tía Ana', rol: 'tia', jardinId: 'JAR-0001', salaIds: ['SG-A'] },
@@ -153,6 +159,7 @@ function soloRuta(metodo: string, ruta: string): Llamada[] {
 
 beforeEach(() => {
   servidor = montarServidor();
+  reducirFotoMock.mockReset();
 });
 
 afterEach(() => {
@@ -271,6 +278,49 @@ describe('POST /api/capturas', () => {
       estado: 502,
       message: 'No pudimos guardar esto. Intenta de nuevo.',
     });
+  });
+
+  it('reduce la foto a JPEG y manda solo fotoBase64, nunca el blob crudo', async () => {
+    const datos = await servicio(false);
+    const base64 = aBase64(new Uint8Array([255, 216, 255, 1, 2, 3]));
+    reducirFotoMock.mockResolvedValue(`data:image/jpeg;base64,${base64}`);
+    servidor.estado.evidenciaCreada = { ...unaEvidencia('CAP-FOTO', 'procesando'), formato: 'foto' };
+    // El original llega como HEIC pesado: nunca debe salir del dispositivo tal cual.
+    const original = new Blob([new Uint8Array([0, 0, 0, 24, 102, 116, 121, 112, 104, 101, 105, 99])], {
+      type: 'image/heic',
+    });
+
+    const evidencia = await datos.guardarEvidencia(
+      { salaId: 'SG-A', autorId: 'EDU-0001', formato: 'foto' },
+      original,
+    );
+
+    expect(reducirFotoMock).toHaveBeenCalledWith(original);
+    const [llamada] = soloRuta('POST', '/api/capturas');
+    expect(llamada.cuerpo).toEqual({
+      salaId: 'SG-A',
+      autorId: 'EDU-0001',
+      formato: 'foto',
+      fotoBase64: base64,
+      mimeType: 'image/jpeg',
+    });
+    // Nada de prefijo `data:` ni del contenido crudo del original.
+    expect(String(llamada.cuerpo?.fotoBase64)).not.toContain('data:');
+    expect(evidencia.estado).toBe('procesando');
+  });
+
+  it('si no se puede preparar la foto, avisa a la tía y no hace POST', async () => {
+    const datos = await servicio(false);
+    reducirFotoMock.mockResolvedValue(undefined);
+    const original = new Blob([new Uint8Array([1, 2, 3])], { type: 'image/heic' });
+
+    await expect(
+      datos.guardarEvidencia({ salaId: 'SG-A', autorId: 'EDU-0001', formato: 'foto' }, original),
+    ).rejects.toMatchObject({ codigo: 'foto_invalida' });
+    await expect(
+      datos.guardarEvidencia({ salaId: 'SG-A', autorId: 'EDU-0001', formato: 'foto' }),
+    ).rejects.toBeInstanceOf(ErrorParaTia);
+    expect(soloRuta('POST', '/api/capturas')).toHaveLength(0);
   });
 });
 
@@ -477,13 +527,10 @@ describe('seguimiento de las notas en proceso', () => {
 });
 
 describe('sesión y catálogos', () => {
-  it('el servidor procesa las notas y todavía no recibe fotos', async () => {
+  it('el servidor procesa las notas y ya recibe fotos', async () => {
     const datos = await servicio(false);
     expect(datos.procesaEnServidor).toBe(true);
-    expect(datos.admiteFoto).toBe(false);
-    await expect(
-      datos.guardarEvidencia({ salaId: 'SG-A', autorId: 'EDU-0001', formato: 'foto' }),
-    ).rejects.toMatchObject({ codigo: 'formato_no_soportado' });
+    expect(datos.admiteFoto).toBe(true);
   });
 
   it('la usuaria elegida queda en el dispositivo y la sala se consulta una vez', async () => {

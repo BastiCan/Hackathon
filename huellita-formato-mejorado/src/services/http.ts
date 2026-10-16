@@ -14,6 +14,7 @@
  * Contratos: `huellita-web/SPEC-OFICIAL.md` §1 (manda) y `CONTRATOS.md` §9.
  */
 import { CONFIG, MAX_BYTES_AUDIO } from '../app/config';
+import { reducirFoto } from '../lib/fotos';
 import type {
   DemoCaptura,
   Evidencia,
@@ -47,6 +48,12 @@ export const CLAVE_SESION = 'huellita:aws:v1';
 export const BLOQUE_BASE64 = 0x8000;
 /** Tope de caracteres de una nota escrita (lo mismo valida el BFF). */
 export const MAX_CARACTERES_TEXTO = 5000;
+/**
+ * Tope del base64 de la foto ya reducida. El BFF rechaza más de ~5.5 MiB de
+ * imagen decodificada; con el margen del base64 (4/3) este tope deja la foto
+ * holgadamente bajo ese límite y evita gastar el viaje con una imagen enorme.
+ */
+export const MAX_BASE64_FOTO = Math.floor(5.5 * 1024 * 1024);
 
 /** Zona horaria de la demo, la misma que usa el BFF. */
 const ZONA_HORARIA = 'America/Santiago';
@@ -227,8 +234,8 @@ export interface OpcionesDataServiceHttp {
 export class DataServiceHttp implements DataService {
   /** El BFF procesa la nota: la captura no llama a la IA del dispositivo. */
   readonly procesaEnServidor = true;
-  /** El BFF todavía no recibe fotos; la captura solo ofrece grabar o escribir. */
-  readonly admiteFoto = false;
+  /** La versión AWS ya recibe fotos de post-it: el BFF las lee con el OCR. */
+  readonly admiteFoto = true;
 
   private readonly almacen: Almacen;
   private readonly base: string;
@@ -521,13 +528,6 @@ export class DataServiceHttp implements DataService {
     e: Omit<Evidencia, 'id' | 'creadaEn' | 'estado'>,
     archivo?: Blob,
   ): Promise<Evidencia> {
-    if (e.formato === 'foto') {
-      throw new ErrorParaTia(
-        'Por ahora no podemos leer fotos. Graba la nota o escríbela.',
-        'formato_no_soportado',
-      );
-    }
-
     const entrada: Record<string, unknown> = {
       salaId: e.salaId,
       autorId: e.autorId,
@@ -535,7 +535,26 @@ export class DataServiceHttp implements DataService {
     };
     if (e.ninoIdSugerido) entrada.ninoIdSugerido = e.ninoIdSugerido;
 
-    if (e.formato === 'audio') {
+    if (e.formato === 'foto') {
+      if (!archivo) throw new ErrorParaTia('No llegó la foto. Inténtalo de nuevo.');
+      // Siempre se reduce a JPEG antes de salir del dispositivo: nunca viaja el
+      // original crudo (puede ser HEIC o pesar demasiado para el BFF).
+      const dataUrl = await reducirFoto(archivo);
+      if (!dataUrl) {
+        throw new ErrorParaTia('No pudimos preparar la foto. Intenta con otra.', 'foto_invalida');
+      }
+      // `reducirFoto` entrega `data:image/jpeg;base64,...`; el BFF solo quiere
+      // la parte base64, sin el prefijo.
+      const base64 = dataUrl.slice(dataUrl.indexOf(',') + 1);
+      if (base64.length > MAX_BASE64_FOTO) {
+        throw new ErrorParaTia(
+          'La foto es muy pesada para enviarla. Prueba con otra.',
+          'foto_demasiado_grande',
+        );
+      }
+      entrada.fotoBase64 = base64;
+      entrada.mimeType = 'image/jpeg';
+    } else if (e.formato === 'audio') {
       if (!archivo) throw new ErrorParaTia('No llegó la grabación. Inténtalo de nuevo.');
       // Se revisa acá para no gastar el viaje: el BFF responde 413.
       if (archivo.size > MAX_BYTES_AUDIO) {
