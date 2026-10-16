@@ -4,7 +4,6 @@
 /** Opciones de compilación de Huellita (ver `src/app/config.ts`). */
 interface ImportMetaEnv {
   readonly VITE_DATOS?: 'local' | 'http';
-  readonly VITE_AGENDA?: string;
   readonly VITE_AUDIO_MAX_SEGUNDOS?: string;
   readonly VITE_FECHA_HOY?: string;
 }

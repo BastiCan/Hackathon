@@ -1,9 +1,8 @@
 // @vitest-environment jsdom
 /**
- * Ajustes de la versión AWS (tarea 3 del plan de integración): agenda oculta,
- * foto desactivable y audio de hasta 5 minutos a 48 kbps. Las pantallas se
- * montan con `ProveedorOpciones`, como si la app se hubiera compilado con
- * `VITE_AGENDA=false`.
+ * Ajustes de la versión AWS (tarea 3 del plan de integración): foto
+ * desactivable y audio de hasta 5 minutos a 48 kbps. Las pantallas se montan
+ * con los servicios reales de la demo.
  */
 import { act } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
@@ -14,8 +13,6 @@ import { almacenMemoria, DataServiceLocal } from '../services/datos';
 import { IAServiceSimulado } from '../services/ia';
 import { Rutas } from './App';
 import { AUDIO_MAX_MINIMO, leerConfig, MAX_BYTES_AUDIO } from './config';
-import { destinos } from './destinos';
-import { ProveedorOpciones } from './opciones';
 import { ProveedorServicios } from './servicios';
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
@@ -29,16 +26,14 @@ class DatosSinFoto extends DataServiceLocal {
   readonly admiteFoto = false;
 }
 
-async function montar(ruta: string, agenda = false) {
+async function montar(ruta: string) {
   await act(async () => {
     raiz.render(
-      <ProveedorOpciones agenda={agenda}>
-        <ProveedorServicios datos={datos} ia={new IAServiceSimulado({ latenciaMs: 0 })}>
-          <MemoryRouter initialEntries={[ruta]}>
-            <Rutas />
-          </MemoryRouter>
-        </ProveedorServicios>
-      </ProveedorOpciones>,
+      <ProveedorServicios datos={datos} ia={new IAServiceSimulado({ latenciaMs: 0 })}>
+        <MemoryRouter initialEntries={[ruta]}>
+          <Rutas />
+        </MemoryRouter>
+      </ProveedorServicios>,
     );
   });
 }
@@ -79,62 +74,21 @@ afterEach(() => {
 
 describe('opciones de compilación', () => {
   it('sin variables queda como la Fase 1', () => {
-    expect(leerConfig({})).toEqual({ datos: 'local', agenda: true, audioMaxSegundos: 300 });
+    expect(leerConfig({})).toEqual({ datos: 'local', audioMaxSegundos: 300 });
   });
 
   it('lee la versión AWS', () => {
     const config = leerConfig({
       VITE_DATOS: 'http',
-      VITE_AGENDA: 'false',
       VITE_AUDIO_MAX_SEGUNDOS: '420',
       VITE_FECHA_HOY: '2026-10-15',
     });
-    expect(config).toEqual({ datos: 'http', agenda: false, audioMaxSegundos: 420, fechaHoy: '2026-10-15' });
+    expect(config).toEqual({ datos: 'http', audioMaxSegundos: 420, fechaHoy: '2026-10-15' });
   });
 
   it('nunca deja el tope de audio bajo 4 minutos', () => {
     expect(leerConfig({ VITE_AUDIO_MAX_SEGUNDOS: '60' }).audioMaxSegundos).toBe(AUDIO_MAX_MINIMO);
     expect(leerConfig({ VITE_AUDIO_MAX_SEGUNDOS: 'mucho' }).audioMaxSegundos).toBe(300);
-  });
-});
-
-describe('sin agenda', () => {
-  it('el inicio es Mi sala y el menú no muestra la agenda', async () => {
-    await montar('/');
-    expect(texto()).toContain('Planilla de la sala');
-    expect(contenedor.querySelector('a[href="/"]')).toBeNull();
-    expect(destinos(false, false).map((d) => d.a)).toEqual(['/sala', '/revisar']);
-    const enBarra = [...contenedor.querySelectorAll('nav[aria-label="Principal"] a')].map((a) =>
-      a.getAttribute('href'),
-    );
-    expect(enBarra).toEqual(['/sala', '/revisar']);
-  });
-
-  it('la captura acompaña a Mi sala', async () => {
-    await montar('/sala');
-    const docks = contenedor.querySelectorAll('[aria-label="Registrar"]');
-    // Uno en la barra lateral (escritorio) y otro fijo abajo (celular).
-    expect(docks).toHaveLength(2);
-    expect(contenedor.querySelector('main')?.className).toContain('hueco-dock');
-  });
-
-  it('al entrar, la tía llega a Mi sala', async () => {
-    await datos.reiniciarDemo();
-    await montar('/entrada');
-    await tocar(botonPor('Tía Ana'));
-    expect(texto()).toContain('Planilla de la sala');
-    expect(texto()).toContain('Sala A');
-  });
-
-  it('una tía que abre la vista directora vuelve a Mi sala', async () => {
-    await montar('/directora');
-    expect(texto()).toContain('Planilla de la sala');
-    expect(texto()).not.toContain('Salas del jardín');
-  });
-
-  it('con la agenda visible, el inicio sigue siendo la agenda', async () => {
-    await montar('/', true);
-    expect(texto()).toContain('Agenda · Sala A');
   });
 });
 
@@ -145,7 +99,7 @@ describe('sin foto', () => {
     await montar('/sala');
     for (const dock of contenedor.querySelectorAll('[aria-label="Registrar"]')) {
       const botones = [...dock.querySelectorAll('button')].map((b) => b.textContent?.trim());
-      expect(botones).toEqual(['Grabar', 'Escribir']);
+      expect(botones).toEqual(['Grabar audio', 'Escribir', 'Subir audio']);
     }
   });
 });

@@ -1,0 +1,18 @@
+{
+  "id_captura": "CAP-000012",
+  "origen": "audio",
+  "estado": "fallido",
+  "texto_completo": "",
+  "palabras": [],
+  "confianza_agregada": null,
+  "idioma": "es-US",
+  "proveedor": "amazon_transcribe",
+  "modelo": "batch-standard",
+  "id_trabajo": "tr-CAP-000012",
+  "iniciado_en": "2026-10-15T14:02:11Z",
+  "terminado_en": "2026-10-15T14:02:38Z",
+  "error": {
+    "codigo": "transcripcion_fallida",
+    "mensaje": "Ejemplo: aquí va el motivo que informa Amazon Transcribe (FailureReason)"
+  }
+}

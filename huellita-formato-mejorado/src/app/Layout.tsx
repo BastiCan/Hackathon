@@ -8,7 +8,7 @@ import { Dock } from './Dock';
 import { Encabezado } from './Encabezado';
 import { useNombreNino, useSesion } from './hooks';
 import { NavegacionLateral } from './NavegacionLateral';
-import { rutaInicio, useOpciones } from './opciones';
+import { rutaInicio } from './opciones';
 
 /**
  * Marco de las pantallas, adaptable (`.kiro/steering/diseno-visual.md`):
@@ -24,18 +24,19 @@ import { rutaInicio, useOpciones } from './opciones';
 export function Layout() {
   const { pathname } = useLocation();
   const sesion = useSesion();
-  const opciones = useOpciones();
-  // La captura acompaña al inicio (la agenda o, sin agenda, Mi sala) y a la ficha.
-  const inicio = rutaInicio(opciones);
+  // Redirecciones por rol vuelven al inicio (Inicio).
+  const inicio = rutaInicio();
 
   const enFicha = pathname.startsWith('/nino/');
   const enDirectora = pathname.startsWith('/directora');
-  const conDock = pathname === inicio || enFicha;
+  // Inicio lleva los botones de captura en la pantalla misma; la ficha, en el
+  // dock (celular) o en la barra lateral (computador).
+  const conDock = enFicha;
   const ninoId = enFicha ? pathname.split('/')[2] : undefined;
   const nombreNino = useNombreNino(ninoId);
 
   if (sesion.cargando) {
-    return <Cargando texto={opciones.agenda ? 'Cargando tu agenda…' : 'Cargando tu sala…'} />;
+    return <Cargando texto="Cargando Huellita…" />;
   }
 
   // Demo sin usuaria elegida: primero la pantalla de entrada (tarea 5).
@@ -84,9 +85,12 @@ export function Layout() {
               )}
             </main>
           </div>
+          {/* Las barras fijas van dentro de la columna (`isolate`), igual que las
+              hojas que abren las pantallas: así una hoja (z-20) siempre queda
+              sobre la barra (z-10) y su último botón nunca se esconde detrás. */}
+          {conDock ? <Dock nombreNino={nombreNino ?? undefined} /> : null}
+          <BarraInferior pendientes={pendientes} esDirectora={esDirectora} ancho={ancho} />
         </div>
-        {conDock ? <Dock nombreNino={nombreNino ?? undefined} /> : null}
-        <BarraInferior pendientes={pendientes} esDirectora={esDirectora} ancho={ancho} />
       </ProveedorCaptura>
     </ProveedorAviso>
   );

@@ -1,8 +1,7 @@
 import { Mic, Pencil } from 'lucide-react';
 import { urlFoto } from '../lib/fotos';
 import type { Formato, NucleoId } from '../lib/tipos';
-import { nombreNucleo } from '../lib/rubrica';
-import { abreviatura, ambitoDe, CLASE_ETIQUETA } from './ambitos';
+import { nombreNucleo, siglaNucleo } from '../lib/rubrica';
 import { PALETA } from './colores';
 import { Mancha } from './Mancha';
 
@@ -67,15 +66,14 @@ function Icono({ formato }: { formato: Formato }) {
   return <Componente className="h-[18px] w-[18px]" />;
 }
 
-/** Etiqueta del núcleo con el color suave de su ámbito. */
+/**
+ * Etiqueta del núcleo, en azul claro institucional para todos: el color queda
+ * reservado para el nivel, así no se confunden.
+ */
 export function EtiquetaNucleo({ nucleo, corta = false }: { nucleo: NucleoId; corta?: boolean }) {
   return (
-    <span
-      className={`inline-block rounded-chip px-[7px] py-[1px] text-[13px] font-bold ${
-        CLASE_ETIQUETA[ambitoDe(nucleo)]
-      }`}
-    >
-      {corta ? abreviatura(nucleo) : nombreNucleo(nucleo)}
+    <span className="inline-block rounded-chip bg-integra-claro px-[7px] py-[1px] text-[13px] font-bold text-integra-oscuro">
+      {corta ? siglaNucleo(nucleo) : nombreNucleo(nucleo)}
     </span>
   );
 }

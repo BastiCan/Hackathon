@@ -1,5 +1,7 @@
 # Requisitos: Huellita (app para tías de Integra)
 
+> **Actualización (15-10-2026):** la app pasó a la rúbrica E-1 del backend (5 núcleos × 9 niveles, `data/rubrica_e1.json`) y la Agenda se reemplazó por Inicio. Donde este documento diga 8 núcleos, nivel 1–8 o `rubrica_8_niveles.json`, mandan `.kiro/steering/rubrica.md` e `interfaz.md`. Detalle en `PROGRESO.md`.
+
 ## Introducción
 Huellita convierte la evidencia que las tías ya generan en la sala (post-its, audios y notas breves) en evaluaciones ordenadas por niño/a, núcleo y nivel (1–8), con validación de la tía en un toque. El objetivo es reducir la documentación de 4 h a menos de 15 min por semana, cuidando la privacidad de los niños y niñas. Ver el steering en `.kiro/steering/` (producto, privacidad, interfaz, rúbrica y tecnología).
 

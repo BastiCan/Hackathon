@@ -5,10 +5,10 @@
  * jsdom no aplica media queries ni calcula layout, así que aquí se comprueba
  * lo que sí se puede verificar en el código:
  *
- * 1. en celular siguen existiendo la barra inferior fija y la barra de captura,
- *    y las dos se esconden desde 1024 px (`lg:hidden`);
- * 2. en escritorio aparece la barra lateral con los mismos destinos y los
- *    mismos 3 botones de captura, sin duplicar la lista de destinos;
+ * 1. en celular siguen existiendo la barra inferior fija y, en la ficha, la
+ *    barra de captura, y las dos se esconden desde 1024 px (`lg:hidden`);
+ * 2. en escritorio aparece la barra lateral con los mismos destinos y, en la
+ *    ficha, los mismos 4 botones de captura, sin duplicar la lista de destinos;
  * 3. las pantallas declaran su grilla de escritorio con clases `lg:`;
  * 4. las hojas inferiores se vuelven diálogo centrado y el aviso se va a la
  *    esquina en `lg:`;
@@ -23,7 +23,6 @@ import { almacenMemoria, DataServiceLocal } from '../services/datos';
 import { IAServiceSimulado } from '../services/ia';
 import { Rutas } from './App';
 import { destinos } from './destinos';
-import { ProveedorOpciones } from './opciones';
 import { ProveedorServicios } from './servicios';
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
@@ -32,20 +31,13 @@ let contenedor: HTMLDivElement;
 let raiz: Root;
 let datos: DataServiceLocal;
 
-/**
- * Monta la versión con agenda. Se declara con `ProveedorOpciones` en vez de confiar en
- * `CONFIG`: así estas pruebas dan igual aunque el entorno traiga `VITE_AGENDA=false`
- * (la versión AWS tiene las suyas en `version-aws.test.tsx`).
- */
 async function montar(ruta: string) {
   await act(async () => {
     raiz.render(
       <ProveedorServicios datos={datos} ia={new IAServiceSimulado({ latenciaMs: 0 })}>
-        <ProveedorOpciones agenda>
-          <MemoryRouter initialEntries={[ruta]}>
-            <Rutas />
-          </MemoryRouter>
-        </ProveedorOpciones>
+        <MemoryRouter initialEntries={[ruta]}>
+          <Rutas />
+        </MemoryRouter>
       </ProveedorServicios>,
     );
   });
@@ -94,22 +86,41 @@ describe('celular (menos de 1024 px)', () => {
     expect(barra.className).toContain('bottom-0');
     // Zona segura del iPhone.
     expect(barra.className).toContain('barra-segura');
-    // El contenido deja el hueco de la barra más el dock.
-    expect(uno('main').className).toContain('hueco-dock');
+    // En Inicio los botones van en la pantalla: el hueco es solo el de la barra.
+    expect(uno('main').className).toContain('hueco-barra');
   });
 
-  it('mantiene la barra de captura con sus 3 botones sobre la barra inferior', async () => {
+  it('en la ficha el contenido deja el hueco de la barra más el dock', async () => {
+    await montar('/nino/NINO-00008');
+    // `hueco-dock-nino` cuando ya cargó el nombre del niño/a.
+    expect(uno('main').className).toMatch(/hueco-dock(-nino)?\b/);
+  });
+
+  it('en Inicio los botones de registrar no se duplican', async () => {
     await montar('/');
-    const docks = [...contenedor.querySelectorAll<HTMLElement>('[aria-label="Registrar"]')];
+    expect(contenedor.querySelector('[aria-label^="Registrar"]')).toBeNull();
+    const enPantalla = uno('section[aria-labelledby="titulo-registrar"]');
+    expect(enPantalla.querySelectorAll('button')).toHaveLength(4);
+  });
+
+  it('en la ficha mantiene la barra de captura con sus 4 botones sobre la barra inferior', async () => {
+    await montar('/nino/NINO-00008');
+    const docks = [
+      ...contenedor.querySelectorAll<HTMLElement>('[aria-label="Registrar para Josefa"]'),
+    ];
     // Uno en la barra lateral (escritorio) y otro fijo abajo (celular).
     expect(docks).toHaveLength(2);
     const fijo = docks.find((d) => d.className.includes('fixed'));
     expect(fijo).toBeDefined();
     expect(fijo!.className).toContain('sobre-barra');
-    expect(fijo!.querySelectorAll('button')).toHaveLength(3);
     for (const dock of docks) {
       expect(dock.querySelectorAll('.bg-grabar')).toHaveLength(1);
-      expect(dock.querySelectorAll('button')).toHaveLength(3);
+      expect([...dock.querySelectorAll('button')].map((b) => (b.textContent ?? '').trim())).toEqual([
+        'Subir foto',
+        'Grabar audio',
+        'Escribir',
+        'Subir audio',
+      ]);
     }
   });
 
@@ -122,11 +133,11 @@ describe('celular (menos de 1024 px)', () => {
 
 describe('escritorio (desde 1024 px)', () => {
   it('la barra inferior y la barra de captura se esconden en lg', async () => {
-    await montar('/');
+    await montar('/nino/NINO-00008');
     expect(barraInferior().className).toContain('lg:hidden');
-    const fijo = [...contenedor.querySelectorAll<HTMLElement>('[aria-label="Registrar"]')].find(
-      (d) => d.className.includes('fixed'),
-    );
+    const fijo = [
+      ...contenedor.querySelectorAll<HTMLElement>('[aria-label="Registrar para Josefa"]'),
+    ].find((d) => d.className.includes('fixed'));
     expect(fijo!.className).toContain('lg:hidden');
   });
 
@@ -192,15 +203,19 @@ describe('escritorio (desde 1024 px)', () => {
 });
 
 describe('pantallas en escritorio', () => {
-  it('la agenda se abre en dos columnas', async () => {
+  it('el inicio se abre en dos columnas', async () => {
     await montar('/');
-    const grilla = uno('[aria-label="Días de la semana"]').parentElement as HTMLElement;
+    const semana = uno('[aria-label="Días de la semana"]').parentElement as HTMLElement;
+    const grilla = semana.parentElement as HTMLElement;
     expect(grilla.className).toContain('lg:grid');
     expect(grilla.className).toContain('lg:grid-cols-[minmax(0,1fr)_300px]');
-    // La semana a la izquierda y el aviso de pendientes a la derecha.
-    expect(uno('[aria-label="Días de la semana"]').className).toContain('lg:col-start-1');
-    expect(uno('[aria-label="Jornada"]').className).toContain('lg:col-start-1');
+    // La semana y los botones a la izquierda; el aviso de pendientes a la derecha.
+    expect(semana.className).toContain('lg:col-start-1');
+    expect(uno('section[aria-labelledby="titulo-registrar"]').className).toContain('lg:col-start-1');
     expect(uno('.aviso').parentElement!.className).toContain('lg:col-start-2');
+    // En escritorio los 4 botones van en una fila.
+    const botones = uno('section[aria-labelledby="titulo-registrar"] button').parentElement!;
+    expect(botones.className).toContain('lg:grid-cols-4');
   });
 
   it('la planilla de la sala ocupa el ancho sin truncar los nombres', async () => {

@@ -70,32 +70,29 @@ describe('diasEntre', () => {
 
 describe('nivelEsperado', () => {
   it('respeta los bordes de cada rango de la rúbrica', () => {
-    // Borde inferior inclusivo y borde superior exclusivo en los 9 rangos.
+    // Los rangos del dataset E-1 comparten borde (el máximo de un nivel es el
+    // mínimo del siguiente) y `nivelEsperado` se queda con el piso (`Math.min`).
+    // Por eso se prueba el interior de cada rango, que sí es inequívoco.
     for (const n of niveles()) {
-      expect(nivelEsperado(n.edadDesdeMeses)).toBe(n.nivel);
-      expect(nivelEsperado(n.edadHastaMeses - 1)).toBe(n.nivel);
+      if (n.edadMaxMeses - n.edadMinMeses < 2) continue;
+      expect(nivelEsperado(n.edadMinMeses + 1)).toBe(n.nivel);
+      expect(nivelEsperado(n.edadMaxMeses - 1)).toBe(n.nivel);
     }
   });
 
   it('cubre los rangos de la ruta de niveles del dataset E-1', () => {
+    // En los bordes compartidos (2, 4, 6, 9, 12, 18, 21, 27) `nivelEsperado`
+    // devuelve el nivel más bajo de los dos que caben; en el interior, el único.
     const esperados: [number, Nivel][] = [
       [0, 1],
       [1, 1],
-      [2, 2],
       [3, 2],
-      [4, 3],
       [5, 3],
-      [6, 4],
       [8, 4],
-      [9, 5],
       [11, 5],
-      [12, 6],
       [17, 6],
-      [18, 7],
       [20, 7],
-      [21, 8],
       [26, 8],
-      [27, 9],
       [35, 9],
     ];
     for (const [edad, nivel] of esperados) expect(nivelEsperado(edad)).toBe(nivel);

@@ -4,12 +4,13 @@ import {
   codigosNucleos,
   colorNivel,
   conductas,
-  descriptor,
   niveles,
+  nivelMaximo,
   nivelSiguiente,
   nombreNivel,
   nombreNucleo,
   nucleos,
+  siglaNucleo,
 } from './rubrica';
 
 describe('rubrica', () => {
@@ -17,8 +18,13 @@ describe('rubrica', () => {
     expect(niveles()).toHaveLength(9);
     expect(nombreNivel(1)).toBe('Atención y regulación inicial');
     expect(nombreNivel(9)).toBe('Secuencias y autonomía creciente');
-    expect(niveles()[0]).toMatchObject({ edadDesdeMeses: 0, edadHastaMeses: 2 });
-    expect(niveles()[8]).toMatchObject({ edadDesdeMeses: 27, edadHastaMeses: 36 });
+    expect(niveles()[0]).toMatchObject({ edadMinMeses: 0, edadMaxMeses: 2 });
+    expect(niveles()[8]).toMatchObject({
+      edadMinMeses: 27,
+      edadMaxMeses: 36,
+      edadOrientativa: '27–36 meses',
+    });
+    expect(nivelMaximo()).toBe(9);
   });
 
   it('carga los 5 dominios como núcleos, en el orden de los datos', () => {
@@ -31,17 +37,18 @@ describe('rubrica', () => {
     ]);
     expect(nucleos()).toHaveLength(5);
     expect(nombreNucleo('lenguaje_comunicacion')).toBe('Lenguaje y comunicación');
-    expect(nucleos().find((n) => n.codigo === 'cognitivo')?.ambito).toBe(
-      'Interacción y comprensión del entorno',
-    );
+    // La sigla sale del código del núcleo (MG, MF, LC, SE, CO).
+    expect(nucleos().map((n) => n.sigla)).toEqual(['MG', 'MF', 'LC', 'SE', 'CO']);
+    expect(siglaNucleo('cognitivo')).toBe('CO');
   });
 
-  it('entrega descriptor y 2 conductas observables por celda', () => {
+  it('entrega descripción y 2 conductas observables por celda', () => {
     for (const nucleo of codigosNucleos()) {
       for (const { nivel } of niveles()) {
-        expect(descriptor(nucleo, nivel).length).toBeGreaterThan(0);
+        const c = celda(nucleo, nivel);
+        expect(c.descripcionNivel.length).toBeGreaterThan(0);
         expect(conductas(nucleo, nivel)).toHaveLength(2);
-        expect(celda(nucleo, nivel).nivel).toBe(nivel);
+        expect(c.nivel).toBe(nivel);
       }
     }
   });
@@ -57,11 +64,11 @@ describe('rubrica', () => {
     expect(nivelSiguiente(9)).toBe(9);
   });
 
-  it('usa los colores de nivel de la interfaz y uno oscuro para el 9', () => {
-    expect(colorNivel(1)).toBe('#E8664F');
-    expect(colorNivel(4)).toBe('#9BC53D');
-    expect(colorNivel(8)).toBe('#1F3B6B');
-    expect(colorNivel(9)).toBe('#5B3A8E');
+  it('usa un color distinto por nivel, del cálido al azul oscuro', () => {
+    expect(colorNivel(1)).toBe('#EF7A6A');
+    expect(colorNivel(4)).toBe('#B7D351');
+    expect(colorNivel(8)).toBe('#2F6BC4');
+    expect(colorNivel(9)).toBe('#233F86');
     expect(new Set(niveles().map((n) => colorNivel(n.nivel))).size).toBe(9);
   });
 });

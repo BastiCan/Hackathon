@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:integra-hackaton:contrato:resultado-transcripcion:v1",
+  "title": "ResultadoTranscripcion v1",
+  "description": "JSON que entrega el transcriptor de audio en POST /api/transcripciones/audio y GET /api/transcripciones/{id_trabajo}. Sigue TextoTranscrito de design.md y agrega id_captura, origen, estado y error.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id_captura", "origen", "estado", "texto_completo", "palabras", "confianza_agregada", "idioma", "proveedor", "modelo", "id_trabajo", "iniciado_en", "terminado_en", "error"],
+  "properties": {
+    "id_captura": {"type": "string", "pattern": "^[A-Za-z0-9._-]{1,128}$", "description": "ID que envió el otro backend en el POST. Vuelve tal cual."},
+    "origen": {"enum": ["audio", "postit"], "description": "Este servicio siempre entrega audio. postit queda para el lector de post-its."},
+    "estado": {"enum": ["transcribiendo", "completado", "fallido"]},
+    "texto_completo": {"type": "string", "description": "Transcripción completa con puntuación. No tiene el límite de 280 caracteres."},
+    "palabras": {"type": "array", "items": {"$ref": "#/$defs/palabra"}, "description": "Una entrada por palabra, sin la puntuación."},
+    "confianza_agregada": {"type": ["number", "null"], "minimum": 0, "maximum": 1, "description": "Promedio de la confianza de las palabras. null si no hay palabras."},
+    "idioma": {"enum": ["es-US", "es-MX", "es-ES"], "description": "Idioma usado en Transcribe. No existe es-CL."},
+    "proveedor": {"type": "string", "description": "amazon_transcribe, o mock en modo simulado."},
+    "modelo": {"type": "string", "description": "Etiqueta fija batch-standard (mock en modo simulado)."},
+    "id_trabajo": {"type": "string", "pattern": "^[A-Za-z0-9._-]{1,200}$", "description": "Nombre del trabajo en Transcribe: prefijo (tr- por defecto) + id_captura. Se usa en el GET."},
+    "iniciado_en": {"$ref": "#/$defs/instante"},
+    "terminado_en": {"oneOf": [{"$ref": "#/$defs/instante"}, {"type": "null"}]},
+    "error": {"oneOf": [{"$ref": "#/$defs/error"}, {"type": "null"}]}
+  },
+  "allOf": [
+    {
+      "if": {"required": ["estado"], "properties": {"estado": {"const": "transcribiendo"}}},
+      "then": {"properties": {"texto_completo": {"const": ""}, "palabras": {"maxItems": 0}, "confianza_agregada": {"type": "null"}, "terminado_en": {"type": "null"}, "error": {"type": "null"}}}
+    },
+    {
+      "if": {"required": ["estado"], "properties": {"estado": {"const": "completado"}}},
+      "then": {"properties": {"terminado_en": {"type": "string"}, "error": {"type": "null"}}}
+    },
+    {
+      "if": {"required": ["estado"], "properties": {"estado": {"const": "fallido"}}},
+      "then": {"properties": {"texto_completo": {"const": ""}, "palabras": {"maxItems": 0}, "terminado_en": {"type": "string"}, "error": {"type": "object"}}}
+    }
+  ],
+  "$defs": {
+    "instante": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$", "description": "Fecha y hora UTC en ISO 8601."},
+    "palabra": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["texto", "inicio_segundos", "fin_segundos", "confianza", "dudosa"],
+      "properties": {
+        "texto": {"type": "string"},
+        "inicio_segundos": {"type": ["number", "null"], "minimum": 0},
+        "fin_segundos": {"type": ["number", "null"], "minimum": 0},
+        "confianza": {"type": "number", "minimum": 0, "maximum": 1},
+        "dudosa": {"type": "boolean", "description": "true si la confianza es menor que UMBRAL_PALABRA_DUDOSA (0,60 por defecto)."}
+      }
+    },
+    "error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["codigo", "mensaje"],
+      "properties": {
+        "codigo": {"type": "string", "description": "transcripcion_fallida, resultado_no_disponible o resultado_invalido."},
+        "mensaje": {"type": "string"}
+      }
+    }
+  }
+}

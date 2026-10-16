@@ -166,7 +166,7 @@ describe('capturar', () => {
     expect(sugerencias[0].ninoId).toBe('NINO-00051');
   });
 
-  it('el nivel propuesto usa el nivel actual del núcleo del niño/a', async () => {
+  it('con una conducta reconocible, propone el nivel de esa conducta (como el backend)', async () => {
     const { datos, ia } = servicios();
     const { procesada } = await capturar(
       'texto',
@@ -178,6 +178,7 @@ describe('capturar', () => {
     const [sug] = await procesada;
     expect(sug.ninoId).toBe('NINO-00008');
     expect(sug.nucleo).toBe('lenguaje_comunicacion');
-    expect(sug.nivel).toBe(4); // nivel actual de Josefa en Lenguaje y comunicación
+    // "combina dos palabras" calza con la conducta de Lenguaje y comunicación nivel 8.
+    expect(sug.nivel).toBe(8);
   });
 });

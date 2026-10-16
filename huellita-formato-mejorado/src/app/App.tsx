@@ -1,26 +1,25 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { Agenda } from '../pages/Agenda';
 import { Directora } from '../pages/Directora';
 import { Entrada } from '../pages/Entrada';
 import { FichaNino } from '../pages/FichaNino';
+import { Inicio } from '../pages/Inicio';
 import { MiSala } from '../pages/MiSala';
 import { Revisar } from '../pages/Revisar';
 import { Layout } from './Layout';
-import { rutaInicio, useOpciones } from './opciones';
+import { rutaInicio } from './opciones';
 import { ProveedorServicios } from './servicios';
 
 /**
  * Rutas de Huellita. Nada de datos de niños/as en las URLs: solo IDs
- * (privacidad.md 8). Sin agenda (versión AWS), "/" lleva a Mi sala.
+ * (privacidad.md 8). "/" es Inicio, que reemplazó a la antigua agenda.
  */
 export function Rutas() {
-  const opciones = useOpciones();
-  const inicio = rutaInicio(opciones);
+  const inicio = rutaInicio();
   return (
     <Routes>
       <Route path="/entrada" element={<Entrada />} />
       <Route element={<Layout />}>
-        <Route path="/" element={opciones.agenda ? <Agenda /> : <Navigate to="/sala" replace />} />
+        <Route path="/" element={<Inicio />} />
         <Route path="/sala" element={<MiSala />} />
         <Route path="/revisar" element={<Revisar />} />
         <Route path="/nino/:id" element={<FichaNino />} />

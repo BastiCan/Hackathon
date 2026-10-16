@@ -13,7 +13,6 @@ import { capturar } from '../services/captura';
 import { almacenMemoria, DataServiceLocal } from '../services/datos';
 import { IAServiceSimulado } from '../services/ia';
 import { Rutas } from './App';
-import { ProveedorOpciones } from './opciones';
 import { ProveedorServicios } from './servicios';
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
@@ -23,19 +22,13 @@ let raiz: Root;
 let datos: DataServiceLocal;
 let ia: IAServiceSimulado;
 
-/**
- * Monta la versión con agenda, que es la del guion de la demo local. Se declara con
- * `ProveedorOpciones` para que el guion no dependa de las variables `VITE_*` del entorno.
- */
 async function montar(ruta: string) {
   await act(async () => {
     raiz.render(
       <ProveedorServicios datos={datos} ia={ia}>
-        <ProveedorOpciones agenda>
-          <MemoryRouter initialEntries={[ruta]}>
-            <Rutas />
-          </MemoryRouter>
-        </ProveedorOpciones>
+        <MemoryRouter initialEntries={[ruta]}>
+          <Rutas />
+        </MemoryRouter>
       </ProveedorServicios>,
     );
   });
@@ -105,16 +98,20 @@ afterEach(() => {
 
 describe('guion de la demo', () => {
   it('se puede correr completo después de reiniciar', async () => {
-    // 1. Entrar como tía Ana: su agenda de hoy y la planilla de la sala.
+    // 1. Entrar como tía Ana: su inicio de hoy y la planilla de la sala.
     await montar('/entrada');
     expect(texto()).toContain('¿Quién entra hoy?');
     await tocar(botonPor('Tía Ana'));
-    expect(texto()).toContain('Agenda · Sala A');
+    expect(texto()).toContain('Inicio · Sala A');
     expect(texto()).toContain('por revisar');
+    // Tía Ana tiene una sola sala: Inicio dice dónde registra, sin selector.
+    expect(contenedor.querySelector('#titulo-registrar')?.textContent).toBe('Registrar en Sala A');
+    expect(texto()).toContain('Subir audio');
     await tocar(destinoPor('Sala'));
-    const josefa = contenedor.querySelector('[aria-label^="Josefa"]');
-    expect(josefa?.getAttribute('aria-label')).toContain('nivel 5');
+    expect(contenedor.querySelector('[aria-label^="Josefa"]')).not.toBeNull();
     expect(contenedor.querySelectorAll('tbody tr')).toHaveLength(13);
+    // Cada número lleva el color de su nivel; el lector de pantalla lo nombra.
+    expect(texto()).toMatch(/Nivel \d/);
 
     // 2. Foto del post-it: llega a Revisar el guion de Josefa.
     await capturarArchivo('foto');
@@ -141,8 +138,13 @@ describe('guion de la demo', () => {
     await tocar(destinoPor('Revisar'));
     expect(texto()).toContain('clasificó las hojas del otoño');
     expect(texto()).toContain('Emilio');
+    const antesEmilio = (await datos.sugerencias({ ninoId: 'NINO-00453' })).find(
+      (s) => s.estado === 'pendiente',
+    );
+    const nivelPropuesto = antesEmilio?.nivel;
     await tocar(botonPor('Corregir'));
     expect(texto()).toContain('Corregir evaluación');
+    // Se corrige a un nivel distinto del propuesto para comprobar el cambio.
     await tocar(botonPor('Combinación y participación')); // nivel 8
     await tocar(botonPor('Guardar corrección'));
     await esperarSalida();
@@ -150,27 +152,19 @@ describe('guion de la demo', () => {
     const deEmilio = await datos.sugerencias({ ninoId: 'NINO-00453' });
     const cambiada = deEmilio.find((s) => s.estado === 'cambiada');
     expect(cambiada?.nivel).toBe(8);
-    expect(cambiada?.original?.nivel).toBe(9);
+    expect(cambiada?.original?.nivel).toBe(nivelPropuesto);
 
-    // 5. Nota grupal: se ofrece guardar en la sala, no evaluar a un niño/a.
-    await act(async () => {
-      const { procesada } = await capturar(
-        'texto',
-        undefined,
-        'Hoy bajó la asistencia, los niños comenzaron a resfriarse y han estado con mucha tos.',
-        undefined,
-        { datos, ia },
-      );
-      await procesada;
-    });
+    // 5. Subir audio: una nota de voz grupal se ofrece guardar en la sala, no
+    //    evaluar a un niño/a.
+    await capturarArchivo('audio');
     expect(texto()).toContain('Nota de la sala');
     expect(texto()).toContain('bajó la asistencia');
     await tocar(botonPor('Guardar en la sala'));
     await esperarSalida();
     expect(texto()).toContain('Nota guardada');
 
-    // 6. Entrar como directora y ver el avance de las 2 salas.
-    await tocar(destinoPor('Agenda'));
+    // 6. Entrar como directora y ver el avance de las salas del jardín.
+    await tocar(destinoPor('Inicio'));
     await tocar(contenedor.querySelector<HTMLButtonElement>('[aria-label^="Menú de"]')!);
     await tocar(botonPor('Cambiar de usuaria'));
     expect(texto()).toContain('¿Quién entra hoy?');

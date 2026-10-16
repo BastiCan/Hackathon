@@ -166,7 +166,7 @@ export function Revisar() {
             key={nota.evidencia.id}
             nota={nota}
             indice={notas.length + i}
-            onEscribir={() => abrirCaptura('texto')}
+            onEscribir={() => abrirCaptura('escribir')}
             onDescartar={() => {
               // La evidencia queda resuelta y sale de Revisar; su archivo ya se
               // borró de la memoria al marcarla.

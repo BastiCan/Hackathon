@@ -1,0 +1,12 @@
+# Dependencias de la Lambda postits-ocr (python3.12, x86_64), para el zip (empaquetar_zip.ps1).
+# Versiones exactas con wheels cp312 manylinux x86_64.
+# - opencv-python-headless: sin GUI, la variante que corre en Lambda (en el venv local va opencv-python).
+# - boto3/botocore no van: los trae el runtime python3.12.
+# - tzdata: zoneinfo("America/Santiago") para la fecha por defecto.
+# - python-ulid: id_captura = f"CAP-{ULID()}", como el equipo. Su *.dist-info tiene que ir en el zip
+#   (llama a importlib.metadata.version("python-ulid") al importarse).
+numpy==2.4.6
+opencv-python-headless==4.14.0.94
+pillow==12.3.0
+tzdata==2026.5
+python-ulid==4.0.1

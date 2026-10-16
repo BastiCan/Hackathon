@@ -4,8 +4,8 @@
  */
 
 /**
- * Los 5 dominios del dataset E-1, que en la interfaz se llaman núcleos (D3 del
- * diseño: núcleo = dominio). La lista viva se carga de la rúbrica.
+ * Los 5 núcleos de la rúbrica E-1 del backend, con el mismo código que usa el
+ * backend (`dominio`). La lista viva y su orden se cargan de la rúbrica.
  */
 export type NucleoId =
   | 'motor_grueso'
@@ -14,7 +14,7 @@ export type NucleoId =
   | 'socioemocional'
   | 'cognitivo';
 
-/** Los 9 niveles orientativos de la ruta del dataset E-1 (1 a 9). */
+/** Los 9 niveles de la rúbrica E-1 (0 a 36 meses). */
 export type Nivel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
 export type Rol = 'tia' | 'directora';
@@ -129,20 +129,29 @@ export interface EvaluacionValidada {
 export interface NivelInfo {
   nivel: Nivel;
   nombre: string;
-  tramo: string;
-  grupoOrientativo: string;
+  /** Descripción integradora del nivel (la misma para los 5 núcleos). */
+  descripcion: string;
   /** Inclusivo. */
-  edadDesdeMeses: number;
-  /** Exclusivo (el último nivel no tiene techo efectivo). */
-  edadHastaMeses: number;
+  edadMinMeses: number;
+  /** Inclusivo, como en el backend: en un borde caben dos niveles. */
+  edadMaxMeses: number;
+  /** "27–36 meses". */
   edadOrientativa: string;
 }
 
 /** Un núcleo de la rúbrica (configuración cargada desde datos). */
 export interface NucleoInfo {
   codigo: NucleoId;
+  /** Sigla de 2 letras para la planilla ("MG"). */
+  sigla: string;
   nombre: string;
-  ambito: string;
+}
+
+/** Una conducta observable de la rúbrica, con su código del backend. */
+export interface Manifestacion {
+  /** "MAN-L09-MG-01". */
+  id: string;
+  texto: string;
 }
 
 /** Contenido de un núcleo en un nivel. */
@@ -150,9 +159,10 @@ export interface CeldaRubrica {
   nucleo: NucleoId;
   nivel: Nivel;
   nombreNivel: string;
-  descriptor: string;
+  descripcionNivel: string;
+  /** Las conductas observables de la celda (texto de cada manifestación). */
   conductas: string[];
-  oaReferencia: string[];
+  manifestaciones: Manifestacion[];
 }
 
 export type ColorFrescura = 'verde' | 'amarillo' | 'rojo';

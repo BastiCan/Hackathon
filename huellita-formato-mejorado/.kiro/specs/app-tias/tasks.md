@@ -2,6 +2,8 @@
 
 Ejecutar en orden. Al terminar cada tarea: `npm run build` sin errores, `npm test` en verde, y marcar `[x]`.
 
+> **Actualización (15-10-2026):** la app pasó a la rúbrica E-1 del backend (5 núcleos × 9 niveles, `data/rubrica_e1.json`) y la Agenda se reemplazó por Inicio. Donde este plan diga 8 núcleos, nivel 1–8 o `rubrica_8_niveles.json`, mandan `.kiro/steering/rubrica.md` e `interfaz.md`. Detalle en `PROGRESO.md`.
+
 ## Fase 1: Interfaz completa con datos de prueba (sin AWS)
 
 - [x] 1. Crear el proyecto base

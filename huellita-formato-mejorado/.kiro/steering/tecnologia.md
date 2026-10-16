@@ -15,12 +15,14 @@ inclusion: always
 ## Arquitectura del frontend
 ```
 src/
-  app/            rutas y layout (barra inferior, barra de captura)
-  pages/          MiSala, Revisar, FichaNino, Directora
-  components/     TarjetaNino, BarraNucleo, TarjetaSugerencia, Captura*, Semaforo, ChipNivel...
+  app/            rutas y layout (barra inferior, barra de captura, captura)
+  pages/          Inicio, MiSala, Revisar, FichaNino, Directora, Entrada
+  components/     TarjetaSugerencia, Captura (hojas de foto, audio, texto y subir audio), ChipNivel...
   lib/
     evaluacion.ts reglas de cálculo (puras, con pruebas)
-    rubrica.ts    carga y consulta de data/rubrica_8_niveles.json
+    rubrica.ts    carga y consulta de data/rubrica_e1.json (la rúbrica del backend)
+    inicio.ts     semana y próximo IEA de la pantalla de inicio
+    audio.ts      revisión de audios subidos (mismas reglas del transcriptor)
     tipos.ts      tipos de dominio
   services/
     datos.ts      interfaz DataService + implementación local (Fase 1) y Amplify (Fase 2)

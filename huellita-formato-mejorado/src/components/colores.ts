@@ -5,7 +5,8 @@
  * valores (ver `tailwind.config.js`).
  *
  * El aro del avatar mide hace cuánto no hay registro, nunca el desempeño del
- * niño/a (ver `.kiro/steering/producto.md`).
+ * niño/a (ver `.kiro/steering/producto.md`). Los números de nivel van en el
+ * color de su nivel (`colorNivel` de `lib/rubrica.ts`).
  */
 import { colorNivel } from '../lib/rubrica';
 import type { ColorFrescura, Nivel } from '../lib/tipos';
@@ -59,12 +60,12 @@ export function mezclarConBlanco(hex: string, proporcion: number): string {
 }
 
 /**
- * Color de texto legible sobre el color de un nivel. Los niveles 1 a 6 son
- * claros o medios y piden tinta; del 7 al 9 son oscuros y piden blanco. Así el
- * número grande de nivel cumple contraste AA sin cambiar la paleta (tarea 10).
+ * Color de texto legible sobre el color de un nivel. Los niveles 1 a 7 son
+ * claros o medios y piden tinta; el 8 y el 9 son oscuros y piden blanco. Todos
+ * los pares cumplen contraste AA (≥ 4,5:1; lo comprueba `rubrica.test.ts`).
  */
 export function colorTextoNivel(nivel: Nivel): string {
-  return nivel >= 7 ? '#FFFFFF' : TINTA;
+  return nivel >= 8 ? '#FFFFFF' : TINTA;
 }
 
 /** Fondo pastel del chip "N4": el color del nivel aclarado para llevar texto. */

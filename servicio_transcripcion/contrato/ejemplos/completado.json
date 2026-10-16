@@ -1,0 +1,93 @@
+{
+  "id_captura": "CAP-000012",
+  "origen": "audio",
+  "estado": "completado",
+  "texto_completo": "Armó una torre de seis bloques y después ayudó a ordenar.",
+  "palabras": [
+    {
+      "texto": "Armó",
+      "inicio_segundos": 0.42,
+      "fin_segundos": 0.81,
+      "confianza": 0.9312,
+      "dudosa": false
+    },
+    {
+      "texto": "una",
+      "inicio_segundos": 0.81,
+      "fin_segundos": 0.95,
+      "confianza": 0.9987,
+      "dudosa": false
+    },
+    {
+      "texto": "torre",
+      "inicio_segundos": 0.95,
+      "fin_segundos": 1.4,
+      "confianza": 0.5703,
+      "dudosa": true
+    },
+    {
+      "texto": "de",
+      "inicio_segundos": 1.4,
+      "fin_segundos": 1.52,
+      "confianza": 0.9921,
+      "dudosa": false
+    },
+    {
+      "texto": "seis",
+      "inicio_segundos": 1.52,
+      "fin_segundos": 1.9,
+      "confianza": 0.9655,
+      "dudosa": false
+    },
+    {
+      "texto": "bloques",
+      "inicio_segundos": 1.9,
+      "fin_segundos": 2.48,
+      "confianza": 0.9104,
+      "dudosa": false
+    },
+    {
+      "texto": "y",
+      "inicio_segundos": 2.48,
+      "fin_segundos": 2.6,
+      "confianza": 0.9978,
+      "dudosa": false
+    },
+    {
+      "texto": "después",
+      "inicio_segundos": 2.6,
+      "fin_segundos": 3.1,
+      "confianza": 0.8826,
+      "dudosa": false
+    },
+    {
+      "texto": "ayudó",
+      "inicio_segundos": 3.1,
+      "fin_segundos": 3.55,
+      "confianza": 0.8611,
+      "dudosa": false
+    },
+    {
+      "texto": "a",
+      "inicio_segundos": 3.55,
+      "fin_segundos": 3.62,
+      "confianza": 0.9733,
+      "dudosa": false
+    },
+    {
+      "texto": "ordenar",
+      "inicio_segundos": 3.62,
+      "fin_segundos": 4.21,
+      "confianza": 0.9402,
+      "dudosa": false
+    }
+  ],
+  "confianza_agregada": 0.9112,
+  "idioma": "es-US",
+  "proveedor": "amazon_transcribe",
+  "modelo": "batch-standard",
+  "id_trabajo": "tr-CAP-000012",
+  "iniciado_en": "2026-10-15T14:02:11Z",
+  "terminado_en": "2026-10-15T14:02:38Z",
+  "error": null
+}

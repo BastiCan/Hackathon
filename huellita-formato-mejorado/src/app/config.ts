@@ -1,17 +1,15 @@
 /**
  * Opciones de compilación de Huellita, leídas de las variables `VITE_*` de Vite
  * (ver `src/vite-env.d.ts`). Sin variables, la app queda como en la Fase 1:
- * datos locales, agenda visible y audio de hasta 5 minutos.
+ * datos locales y audio de hasta 5 minutos.
  *
  * - `VITE_DATOS`: `local` (semilla y `localStorage`) o `http` (BFF en AWS, `/api`).
- * - `VITE_AGENDA`: `false` oculta la agenda; las tías entran directo a Mi sala.
  * - `VITE_AUDIO_MAX_SEGUNDOS`: tope de grabación; nunca menos de 240 s.
  * - `VITE_FECHA_HOY`: fecha "hoy" fija (`YYYY-MM-DD`) para una demo reproducible.
  */
 
 export interface ConfigApp {
   datos: 'local' | 'http';
-  agenda: boolean;
   audioMaxSegundos: number;
   fechaHoy?: string;
 }
@@ -36,7 +34,6 @@ export function leerConfig(entorno: Entorno): ConfigApp {
   const fechaHoy = texto(entorno, 'VITE_FECHA_HOY');
   return {
     datos: texto(entorno, 'VITE_DATOS')?.toLowerCase() === 'http' ? 'http' : 'local',
-    agenda: texto(entorno, 'VITE_AGENDA')?.toLowerCase() !== 'false',
     audioMaxSegundos: Number.isFinite(segundos)
       ? Math.max(AUDIO_MAX_MINIMO, Math.round(segundos))
       : AUDIO_MAX_POR_DEFECTO,
