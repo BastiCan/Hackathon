@@ -39,6 +39,13 @@ export interface CambiosValidacion {
 }
 
 export interface DataService {
+  /**
+   * `true` si el servidor procesa las notas (versión AWS): la captura guarda la
+   * evidencia y no llama a la IA del dispositivo. Por omisión, `false`.
+   */
+  readonly procesaEnServidor?: boolean;
+  /** `false` si este servicio todavía no recibe fotos (la versión AWS). */
+  readonly admiteFoto?: boolean;
   /** Fecha "hoy" de la demo, inyectable para que todo sea reproducible. */
   hoy(): string;
   sesion(): Promise<Usuaria>;

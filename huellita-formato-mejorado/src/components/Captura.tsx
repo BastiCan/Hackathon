@@ -1,5 +1,6 @@
 import { FileAudio, Mic } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { AUDIO_MAX_POR_DEFECTO, MAX_BYTES_AUDIO } from '../app/config';
 import {
   ACEPTA_AUDIO,
   FORMATOS_AUDIO_TEXTO,
@@ -10,7 +11,35 @@ import {
 import { Boton } from './Boton';
 import { HojaInferior } from './HojaInferior';
 
-const MAXIMO_SEGUNDOS = 60;
+/** 48 kbps: 5 minutos de voz caben en unos 1,8 MB, bajo el tope del transcriptor. */
+const BITS_POR_SEGUNDO = 48_000;
+/** MediaRecorder entrega un trozo por segundo, así lo grabado no depende de un solo evento. */
+const TROZO_MS = 1000;
+
+/** Segundos como reloj: 75 → "1:15". */
+export function formatoReloj(segundos: number): string {
+  const s = Math.max(0, Math.floor(segundos));
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+}
+
+/** 300 → "Máximo 5 minutos"; 270 → "Máximo 4 minutos y 30 segundos". */
+export function textoMaximo(segundos: number): string {
+  const minutos = Math.floor(segundos / 60);
+  const resto = segundos % 60;
+  const partes: string[] = [];
+  if (minutos > 0) partes.push(`${minutos} ${minutos === 1 ? 'minuto' : 'minutos'}`);
+  if (resto > 0) partes.push(`${resto} segundos`);
+  return `Máximo ${partes.join(' y ')}`;
+}
+
+/** Grabadora a 48 kbps; si el navegador no acepta la opción, con la calidad que traiga. */
+function crearGrabadora(flujo: MediaStream): MediaRecorder {
+  try {
+    return new MediaRecorder(flujo, { audioBitsPerSecond: BITS_POR_SEGUNDO });
+  } catch {
+    return new MediaRecorder(flujo);
+  }
+}
 
 /** `URL.createObjectURL` no existe en todos los entornos (por ejemplo, jsdom). */
 function urlLocal(archivo: Blob): string | null {
@@ -123,20 +152,28 @@ export function HojaFoto({
 }
 
 /**
- * Audio: graba de inmediato, cuenta los segundos y se detiene con un toque o a
- * los 60 s. Si no hay micrófono, ofrece escribir la nota.
+ * Audio: graba de inmediato, cuenta los segundos desde que el micrófono
+ * empieza a grabar y se detiene con un toque o al llegar al tope (5 minutos por
+ * omisión). Si no hay micrófono, ofrece escribir la nota. Si la grabación quedó
+ * más pesada de lo que acepta el transcriptor, no la envía y lo dice.
  */
 export function HojaAudio({
   onEnviar,
   onCerrar,
   onEscribir,
+  maximoSegundos = AUDIO_MAX_POR_DEFECTO,
+  maximoBytes = MAX_BYTES_AUDIO,
 }: {
   onEnviar: (archivo: Blob) => void;
   onCerrar: () => void;
   onEscribir: () => void;
+  maximoSegundos?: number;
+  maximoBytes?: number;
 }) {
   const [segundos, setSegundos] = useState(0);
+  const [grabando, setGrabando] = useState(false);
   const [sinMicrofono, setSinMicrofono] = useState(false);
+  const [muyLarga, setMuyLarga] = useState(false);
   const grabadora = useRef<MediaRecorder | null>(null);
   const pistas = useRef<MediaStream | null>(null);
   const trozos = useRef<Blob[]>([]);
@@ -156,18 +193,29 @@ export function HojaAudio({
           return;
         }
         pistas.current = flujo;
-        const rec = new MediaRecorder(flujo);
+        const rec = crearGrabadora(flujo);
         grabadora.current = rec;
         rec.ondataavailable = (e) => {
           if (e.data.size > 0) trozos.current.push(e.data);
+        };
+        // El reloj parte cuando el micrófono de verdad empieza a grabar, no
+        // mientras el navegador pide el permiso.
+        rec.onstart = () => {
+          if (!cancelado) setGrabando(true);
         };
         rec.onstop = () => {
           flujo.getTracks().forEach((p) => p.stop());
           if (enviado.current) return;
           enviado.current = true;
-          onEnviar(new Blob(trozos.current, { type: rec.mimeType || 'audio/webm' }));
+          const audio = new Blob(trozos.current, { type: rec.mimeType || 'audio/webm' });
+          trozos.current = [];
+          if (audio.size > maximoBytes) {
+            setMuyLarga(true);
+            return;
+          }
+          onEnviar(audio);
         };
-        rec.start();
+        rec.start(TROZO_MS);
       } catch {
         // Sin permiso o sin micrófono: mensaje claro, nunca trazas técnicas.
         if (!cancelado) setSinMicrofono(true);
@@ -181,22 +229,26 @@ export function HojaAudio({
       if (grabadora.current?.state === 'recording') grabadora.current.stop();
       pistas.current?.getTracks().forEach((p) => p.stop());
     };
-  }, [onEnviar]);
+  }, [onEnviar, maximoBytes]);
 
   useEffect(() => {
-    if (sinMicrofono) return;
+    if (!grabando) return;
     const reloj = window.setInterval(() => setSegundos((s) => s + 1), 1000);
     return () => window.clearInterval(reloj);
-  }, [sinMicrofono]);
+  }, [grabando]);
 
   const detener = () => {
-    if (grabadora.current?.state === 'recording') grabadora.current.stop();
-    else onCerrar();
+    if (grabadora.current?.state === 'recording') {
+      setGrabando(false);
+      grabadora.current.stop();
+    } else {
+      onCerrar();
+    }
   };
 
-  // Tope de 60 segundos: se envía solo.
+  // Al llegar al tope se envía solo.
   useEffect(() => {
-    if (segundos >= MAXIMO_SEGUNDOS) detener();
+    if (grabando && segundos >= maximoSegundos) detener();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [segundos]);
 
@@ -213,20 +265,34 @@ export function HojaAudio({
     );
   }
 
-  const reloj = `0:${String(Math.min(segundos, MAXIMO_SEGUNDOS)).padStart(2, '0')}`;
+  if (muyLarga) {
+    return (
+      <HojaInferior titulo="No pudimos enviar el audio" onCerrar={onCerrar}>
+        <p className="mb-[14px] mt-1 text-[15px] text-tinta-2">
+          La grabación es muy larga para enviarla. Graba una más corta.
+        </p>
+        <Boton ancho variante="pri" onClick={onEscribir}>
+          Escribir la nota
+        </Boton>
+      </HojaInferior>
+    );
+  }
+
+  const transcurrido = Math.min(segundos, maximoSegundos);
 
   return (
     <HojaInferior etiqueta="Grabando audio" onCerrar={detener}>
       <div className="flex flex-col items-center gap-[14px] py-4">
-        <h2>Grabando…</h2>
+        <h2>{grabando || segundos > 0 ? 'Grabando…' : 'Preparando el micrófono…'}</h2>
         <div className="grid h-24 w-24 animate-late place-items-center rounded-full bg-grabar text-white">
           <Mic aria-hidden="true" className="h-8 w-8" />
         </div>
         <span className="text-[34px] font-bold tabular-nums" role="timer">
-          {reloj}
+          {formatoReloj(transcurrido)}
         </span>
         <p className="text-center text-[15px] text-tinta-2">
-          Cuenta qué hizo y quién. Máximo 60 segundos.
+          Cuenta qué hizo y quién. {textoMaximo(maximoSegundos)} · quedan{' '}
+          {formatoReloj(maximoSegundos - transcurrido)}.
         </p>
         <Boton ancho variante="pri" onClick={detener}>
           Listo, enviar

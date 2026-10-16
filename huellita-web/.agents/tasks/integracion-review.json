@@ -1,0 +1,62 @@
+{
+  "verdict": "APPROVED",
+  "findings": [
+    {
+      "severity": "MENOR",
+      "label": "Andamiaje de dobles por find_spec",
+      "location": "tests/conftest.py:115-118, tests/test_capturas.py:80,221-230",
+      "issue": "Instala reemplazos de errores, tiempo, dynamo, auth, datos.audio y datos.decisiones si el modulo real falta. Hoy no se instala ninguno, pero es el mismo gatillo que ya dejo la suite verde sin datos/audio.py.",
+      "fix": "Borrar el andamiaje para que un import ausente falle fuerte."
+    },
+    {
+      "severity": "MENOR",
+      "label": "El tope diario se anuncia como de esta sala",
+      "location": "src/huellita_api/errores.py:51, template.yaml:68",
+      "issue": "El contador es CONTADOR#AAAA-MM-DD global del dia, pero el mensaje a la tia y la descripcion de MaxCapturasDia dicen 'en esta sala' / 'por sala'.",
+      "fix": "Cambiar ambos textos a 'de hoy'."
+    },
+    {
+      "severity": "MENOR",
+      "label": "Entrada en frio a /nino/{id} sin cabecera",
+      "location": "huellita-formato-mejorado/src/app/hooks.ts:317, huellita-formato-mejorado/src/services/http.ts:303",
+      "issue": "useFicha llama datos.nino(id) antes de resolver contexto(), y pedir omite X-Usuaria-Id mientras la sesion este vacia; el BFF responde 403 'Esta sala no es tuya'.",
+      "fix": "Resolver contexto() antes de la primera llamada con cabecera, o redirigir a la entrada cuando no hay sesion."
+    },
+    {
+      "severity": "MENOR",
+      "label": "La confirmacion masiva se pisa en el cache",
+      "location": "huellita-formato-mejorado/src/pages/Revisar.tsx:107",
+      "issue": "Un PUT por nota con Promise.all, y cada respuesta reemplaza el arreglo completo de sugerencias; una respuesta rezagada puede devolver a pendiente lo ya confirmado hasta el proximo sondeo.",
+      "fix": "Mandar un solo PUT con los N items, o fusionar la respuesta en vez de reemplazarla."
+    },
+    {
+      "severity": "MENOR",
+      "label": "Plomeria entre carriles sin retirar",
+      "location": "src/huellita_api/rutas/lectura.py:101, src/huellita_api/datos/lectura.py:45, src/huellita_api/datos/audio.py:78",
+      "issue": "_buscar_nino busca leer_nino con getattr y la trata como opcional, pero leer_nino esta anotada -> Nino y lanza no_encontrado, asi que la rama de respaldo no se alcanza en produccion; sincronizar recibe un reloj que descarta con del.",
+      "fix": "Alinear firmas e importar la funcion directo."
+    },
+    {
+      "severity": "MENOR",
+      "label": "Nada fija el 'intenta de nuevo' del 503",
+      "location": "src/huellita_api/errores.py:52",
+      "issue": "El spec pide ese texto para 429 y 503 del transcriptor; esta en el mensaje pero ninguna prueba lo afirma.",
+      "fix": "Agregar la asercion del mensaje junto a la del codigo."
+    },
+    {
+      "severity": "MENOR",
+      "label": "El cupo del dia se gasta antes de escribir en S3",
+      "location": "src/huellita_api/rutas/capturas.py:100",
+      "issue": "reservar_cupo_del_dia corre antes de _entregar, asi que una captura que termina en 502 con error_envio igual consumio un cupo.",
+      "fix": "Reservar despues de la entrega, o devolver el cupo en el camino de falla."
+    },
+    {
+      "severity": "MENOR",
+      "label": "publicar_front.ps1 deja variables en la sesion",
+      "location": "scripts/publicar_front.ps1:64",
+      "issue": "Fija $env:VITE_DATOS y $env:VITE_AGENDA y no las restaura en el finally; un build posterior en la misma consola hereda el modo http.",
+      "fix": "Guardar y restaurar los valores previos."
+    }
+  ],
+  "reviewDoc": "c:\\dev\\hackaton\\.worktrees\\huellita-aws\\huellita-web\\.agents\\tasks\\integracion-review.md"
+}

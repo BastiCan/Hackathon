@@ -1,0 +1,17 @@
+{
+  "verdict": "APPROVED",
+  "findings": [
+    {
+      "severity": "minor",
+      "file": "huellita-formato-mejorado/src/pages/Revisar.tsx",
+      "detail": "Una sola foto genera N recortes de post-it -> N sugerencias (foto A: 11 en 9 recortes; foto B: 12 en 9 recortes) con ids {CAP-id}-p{recorte}-{indice}, pero la pantalla Revisar las lista planas por evidencia y no agrupa visualmente por archivo_s3/recorte. Ya documentado como salvedad NO bloqueante en FEAT-003; no afecta el pipeline foto->OCR->texto->sugerencias.",
+      "fix": "Opcional post-demo: agrupar sugerencias por el prefijo de recorte (p0..pN) o por archivo_s3 en Revisar.tsx. Para la demo, usar un post-it claro con pocos recortes."
+    },
+    {
+      "severity": "minor",
+      "file": "huellita-web/.agents/tasks/task-foto-postit/features/FEAT-003.json",
+      "detail": "El OCR manuscrito en vivo puede equivocar palabras (foto B transcribio 'No puese cher que todos hoya sob muy amigables'), y varios recortes quedan con nino/nucleo/nivel vacios y certeza baja. Es esperado por el contrato (la tia confirma a mano) y no es un defecto del cambio.",
+      "fix": "Para la demo en vivo, elegir imagenes de post-it legibles; latencias medidas foto->sugerencias 24-27 s (texto ~13 s, audio ~20 s)."
+    }
+  ]
+}

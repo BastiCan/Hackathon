@@ -57,8 +57,13 @@ describe('datos de prueba', () => {
   it('no traen RUT ni apellidos completos', () => {
     const crudo = JSON.stringify(semilla);
     expect(/\brut\b/i.test(crudo)).toBe(false);
-    // De cada niño/a solo se guarda la inicial del apellido ("M.").
-    expect(semilla.ninos.every((n) => /^[A-ZÁÉÍÓÚÑ]\.$/.test(n.apellidoInicial))).toBe(true);
+    // De cada niño/a se guarda a lo más la inicial del apellido ("M."), y solo
+    // cuando hace falta para distinguir homónimos de la sala.
+    expect(semilla.ninos.every((n) => /^([A-ZÁÉÍÓÚÑ]\.)?$/.test(n.apellidoInicial))).toBe(true);
+    expect(semilla.ninos.filter((n) => n.apellidoInicial !== '').map((n) => n.nombre)).toEqual([
+      'Martina',
+      'Martina',
+    ]);
   });
 
   it('identifican a cada niño/a con un ID seudónimo', () => {
@@ -81,7 +86,7 @@ class IAEspia implements IAService {
 async function servicios(): Promise<{ datos: DataServiceLocal; ia: IAEspia; almacen: Almacen }> {
   const almacen = almacenMemoria();
   const datos = new DataServiceLocal({ almacen });
-  await datos.cambiarUsuaria('USR-ANA');
+  await datos.cambiarUsuaria('EDU-0001');
   return { datos, ia: new IAEspia(), almacen };
 }
 

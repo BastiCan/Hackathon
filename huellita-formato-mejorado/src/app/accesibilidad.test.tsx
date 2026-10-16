@@ -20,8 +20,8 @@ import { ProveedorServicios } from './servicios';
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
 
-const RUTAS_TIA = ['/', '/sala', '/revisar', '/nino/NINO-00001', '/entrada'];
-const RUTAS_DIRECTORA = ['/directora', '/directora/sala/SALA-MMA'];
+const RUTAS_TIA = ['/', '/sala', '/revisar', '/nino/NINO-00008', '/entrada'];
+const RUTAS_DIRECTORA = ['/directora', '/directora/sala/SG-A'];
 
 /** Clases con las que un control declara al menos 44 px de alto. */
 const ALTO_SUFICIENTE = [
@@ -82,7 +82,7 @@ function declaraAreaTactil(el: HTMLElement): boolean {
 
 beforeEach(async () => {
   datos = new DataServiceLocal({ almacen: almacenMemoria() });
-  await datos.cambiarUsuaria('USR-ANA');
+  await datos.cambiarUsuaria('EDU-0001');
   contenedor = document.createElement('div');
   document.body.appendChild(contenedor);
   raiz = createRoot(contenedor);
@@ -140,13 +140,12 @@ describe('áreas táctiles', () => {
     expect(botones).toHaveLength(4);
     botones.forEach((b) => expect(b.className).toContain('min-h-[96px]'));
     expect(registrar!.querySelectorAll('.bg-grabar')).toHaveLength(1);
-    // El selector de sala tiene su etiqueta visible: el título del bloque.
-    const selector = registrar!.querySelector('select');
-    expect(selector?.labels?.[0]?.textContent).toBe('Registrar en');
+    // Una tía con una sola sala no ve selector: el bloque dice dónde registra.
+    expect(contenedor.querySelector('#titulo-registrar')?.textContent).toBe('Registrar en Sala A');
   });
 
   it('la barra de captura de la ficha tiene 4 botones grandes y Grabar destacado', async () => {
-    await montar('/nino/NINO-00001');
+    await montar('/nino/NINO-00008');
     const dock = [
       ...contenedor.querySelectorAll<HTMLElement>('[aria-label="Registrar para Josefa"]'),
     ].find((d) => d.className.includes('fixed'));

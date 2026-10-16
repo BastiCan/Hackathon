@@ -8,6 +8,7 @@ import { Dock } from './Dock';
 import { Encabezado } from './Encabezado';
 import { useNombreNino, useSesion } from './hooks';
 import { NavegacionLateral } from './NavegacionLateral';
+import { rutaInicio } from './opciones';
 
 /**
  * Marco de las pantallas, adaptable (`.kiro/steering/diseno-visual.md`):
@@ -23,6 +24,8 @@ import { NavegacionLateral } from './NavegacionLateral';
 export function Layout() {
   const { pathname } = useLocation();
   const sesion = useSesion();
+  // Redirecciones por rol vuelven al inicio (Inicio).
+  const inicio = rutaInicio();
 
   const enFicha = pathname.startsWith('/nino/');
   const enDirectora = pathname.startsWith('/directora');
@@ -33,7 +36,7 @@ export function Layout() {
   const nombreNino = useNombreNino(ninoId);
 
   if (sesion.cargando) {
-    return <Cargando />;
+    return <Cargando texto="Cargando Huellita…" />;
   }
 
   // Demo sin usuaria elegida: primero la pantalla de entrada (tarea 5).
@@ -46,7 +49,7 @@ export function Layout() {
 
   // Acceso por rol: la vista directora no es para las tías (privacidad.md 6).
   if (enDirectora && sesion.valor && !esDirectora) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={inicio} replace />;
   }
 
   // Ancho de la columna del celular; en escritorio manda la grilla de abajo.
@@ -118,11 +121,11 @@ export function FondoManchas() {
   );
 }
 
-function Cargando() {
+function Cargando({ texto }: { texto: string }) {
   return (
     <div className="alto-pantalla mx-auto flex w-full max-w-tia items-center justify-center bg-fondo md:max-w-[640px] lg:max-w-none">
       <p role="status" className="text-tinta-2">
-        Cargando Huellita…
+        {texto}
       </p>
     </div>
   );

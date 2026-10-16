@@ -1,0 +1,30 @@
+{
+ "numero_educadoras": {
+  "N": "2"
+ },
+ "numero_salas": {
+  "N": "2"
+ },
+ "salas": {
+  "L": [
+   {
+    "S": "SG-A"
+   },
+   {
+    "S": "SG-B"
+   }
+  ]
+ },
+ "region": {
+  "S": "Arica y Parinacota"
+ },
+ "comuna": {
+  "S": "Arica"
+ },
+ "id_jardin": {
+  "S": "JAR-0001"
+ },
+ "nombre_fantasia": {
+  "S": "Jardín Sintético Sendero Azul"
+ }
+}

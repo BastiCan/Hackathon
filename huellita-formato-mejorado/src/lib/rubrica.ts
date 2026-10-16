@@ -1,51 +1,54 @@
 /**
- * Carga y consulta de la rúbrica E-1, la misma que usa el backend:
- * `data/rubrica_e1.json` es copia exacta de
- * `integra-backend/data/processed/rubrica.json` (5 núcleos × 9 niveles,
- * 90 conductas observables). `data/nucleos_e1.json` agrega solo lo que el
- * backend no trae: el nombre visible y la sigla de cada núcleo.
+ * Carga y consulta de `data/rubrica_e1.json`: la ruta de 9 niveles y 5 dominios
+ * del dataset E-1, la misma que usa el BFF local (`huellita-web`). Se genera con
+ * `scripts/generar_datos_e1.py` desde el dataset sintético E-1, así el modo
+ * local y el modo AWS muestran los mismos núcleos, niveles y conductas.
  *
  * La rúbrica es la única fuente de verdad: aquí no se escriben a mano niveles,
  * descripciones ni conductas observables (ver `.kiro/steering/rubrica.md`).
  */
 import rubricaJson from '@data/rubrica_e1.json';
-import nucleosJson from '@data/nucleos_e1.json';
-import type {
-  CeldaRubrica,
-  Manifestacion,
-  Nivel,
-  NivelInfo,
-  NucleoId,
-  NucleoInfo,
-} from './tipos';
+import type { CeldaRubrica, Manifestacion, Nivel, NivelInfo, NucleoId, NucleoInfo } from './tipos';
 
 interface NivelJson {
   nivel: number;
-  nombre_nivel: string;
-  edad_min_meses: number;
-  edad_max_meses: number;
-  descripcion: string;
+  nombre: string;
+  tramo_bcep: string;
+  grupo_orientativo: string;
+  edad_orientativa: string;
 }
 
-interface ManifestacionJson {
+interface CeldaJson {
   nivel: number;
-  dominio: string;
-  texto_observable: string;
+  nombre: string;
+  descriptor: string;
+  conductas_observables: string[];
+  oa_referencia?: string[];
+}
+
+interface NucleoJson {
+  codigo: string;
+  nucleo: string;
+  ambito: string;
+  niveles: CeldaJson[];
 }
 
 interface RubricaJson {
-  version: string;
-  dominios: string[];
+  nota?: string;
   niveles: NivelJson[];
-  manifestaciones: Record<string, ManifestacionJson>;
-}
-
-interface NucleosJson {
-  nucleos: { dominio: string; sigla: string; nombre: string }[];
+  rubrica: NucleoJson[];
 }
 
 const datos = rubricaJson as unknown as RubricaJson;
-const presentacion = nucleosJson as unknown as NucleosJson;
+
+/** Sigla de 2 letras de la planilla, derivada del código del núcleo. */
+const SIGLAS: Record<NucleoId, string> = {
+  motor_grueso: 'MG',
+  motor_fino: 'MF',
+  lenguaje_comunicacion: 'LC',
+  socioemocional: 'SE',
+  cognitivo: 'CO',
+};
 
 /**
  * Un color por nivel, del cálido (1) al azul oscuro (9), en la familia de los
@@ -65,44 +68,61 @@ const COLORES_NIVEL: Record<Nivel, string> = {
   9: '#233F86',
 };
 
+/** "0–2 meses" → { desde: 0, hasta: 2 }. Acepta guion normal o medio. */
+function rangoEdad(texto: string): { desde: number; hasta: number } {
+  const m = /(\d+)\s*[–—-]\s*(\d+)/.exec(texto);
+  if (!m) throw new Error(`Rango de edad no reconocido en la rúbrica: "${texto}"`);
+  return { desde: Number(m[1]), hasta: Number(m[2]) };
+}
+
+/**
+ * Descripción integradora por nivel: el descriptor del primer núcleo
+ * (motor grueso) en ese nivel, que en el dataset E-1 resume la ruta del tramo.
+ */
+const DESCRIPCION_POR_NIVEL = new Map<number, string>();
+for (const celdaNivel of datos.rubrica[0]?.niveles ?? []) {
+  DESCRIPCION_POR_NIVEL.set(celdaNivel.nivel, celdaNivel.descriptor);
+}
+
 const NIVELES: NivelInfo[] = datos.niveles
-  .map((n) => ({
-    nivel: n.nivel as Nivel,
-    nombre: n.nombre_nivel,
-    descripcion: n.descripcion,
-    edadMinMeses: n.edad_min_meses,
-    edadMaxMeses: n.edad_max_meses,
-    edadOrientativa: `${n.edad_min_meses}–${n.edad_max_meses} meses`,
-  }))
+  .map((n) => {
+    const { desde, hasta } = rangoEdad(n.edad_orientativa);
+    return {
+      nivel: n.nivel as Nivel,
+      nombre: n.nombre,
+      descripcion: DESCRIPCION_POR_NIVEL.get(n.nivel) ?? n.nombre,
+      edadMinMeses: desde,
+      edadMaxMeses: hasta,
+      edadOrientativa: n.edad_orientativa,
+    };
+  })
   .sort((a, b) => a.nivel - b.nivel);
 
-const NUCLEOS: NucleoInfo[] = datos.dominios.map((dominio) => {
-  const visible = presentacion.nucleos.find((n) => n.dominio === dominio);
-  if (!visible) throw new Error(`Falta el nombre visible del núcleo "${dominio}" en nucleos_e1.json`);
-  return { codigo: dominio as NucleoId, sigla: visible.sigla, nombre: visible.nombre };
-});
+const NUCLEOS: NucleoInfo[] = datos.rubrica.map((n) => ({
+  codigo: n.codigo as NucleoId,
+  sigla: SIGLAS[n.codigo as NucleoId] ?? n.codigo,
+  nombre: n.nucleo,
+}));
 
 const CELDAS = new Map<string, CeldaRubrica>();
-for (const nucleo of NUCLEOS) {
-  for (const info of NIVELES) {
-    CELDAS.set(`${nucleo.codigo}:${info.nivel}`, {
-      nucleo: nucleo.codigo,
-      nivel: info.nivel,
-      nombreNivel: info.nombre,
-      descripcionNivel: info.descripcion,
-      conductas: [],
-      manifestaciones: [],
+for (const nucleo of datos.rubrica) {
+  const sigla = SIGLAS[nucleo.codigo as NucleoId] ?? nucleo.codigo;
+  for (const celdaNivel of nucleo.niveles) {
+    // El dataset local no trae códigos de manifestación; se derivan como en el
+    // backend (MAN-L09-MG-01) para conservar el mismo formato en la interfaz.
+    const manifestaciones: Manifestacion[] = celdaNivel.conductas_observables.map((texto, i) => ({
+      id: `MAN-L0${celdaNivel.nivel}-${sigla}-0${i + 1}`,
+      texto,
+    }));
+    CELDAS.set(`${nucleo.codigo}:${celdaNivel.nivel}`, {
+      nucleo: nucleo.codigo as NucleoId,
+      nivel: celdaNivel.nivel as Nivel,
+      nombreNivel: celdaNivel.nombre,
+      descripcionNivel: celdaNivel.descriptor,
+      conductas: celdaNivel.conductas_observables,
+      manifestaciones,
     });
   }
-}
-// Las conductas en el orden de su código (…-01 antes que …-02).
-for (const id of Object.keys(datos.manifestaciones).sort()) {
-  const m = datos.manifestaciones[id];
-  const c = CELDAS.get(`${m.dominio}:${m.nivel}`);
-  if (!c) throw new Error(`La manifestación ${id} apunta a un núcleo o nivel que no existe`);
-  const manifestacion: Manifestacion = { id, texto: m.texto_observable };
-  c.manifestaciones.push(manifestacion);
-  c.conductas.push(manifestacion.texto);
 }
 for (const c of CELDAS.values()) {
   if (c.conductas.length === 0) {
@@ -110,9 +130,9 @@ for (const c of CELDAS.values()) {
   }
 }
 
-/** Versión de la rúbrica del backend ("E1-2026-10-13"). */
+/** Nota del dataset local (apoyo pedagógico, no instrumento clínico). */
 export function versionRubrica(): string {
-  return datos.version;
+  return datos.nota ?? 'E1-local';
 }
 
 /** Los 9 niveles con su nombre, descripción y rango de edad orientativa. */

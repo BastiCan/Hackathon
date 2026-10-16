@@ -5,13 +5,13 @@ import type { Evidencia, Semilla, Sugerencia } from './tipos';
 
 const semilla = semillaJson as unknown as Semilla;
 const HOY = semilla.fechaDemo; // jueves 2026-10-15
-const salaA = (x: { salaId: string }) => x.salaId === 'SALA-MMA';
+const salaA = (x: { salaId: string }) => x.salaId === 'SG-A';
 
 function evidencia(parcial: Partial<Evidencia> = {}): Evidencia {
   return {
     id: 'EVI-X',
-    salaId: 'SALA-MMA',
-    autorId: 'USR-ANA',
+    salaId: 'SG-A',
+    autorId: 'EDU-0001',
     creadaEn: '2026-10-14T10:00:00',
     formato: 'texto',
     estado: 'lista',
@@ -23,7 +23,7 @@ function sugerencia(parcial: Partial<Sugerencia> = {}): Sugerencia {
   return {
     id: 'SUG-X',
     evidenciaId: 'EVI-X',
-    salaId: 'SALA-MMA',
+    salaId: 'SG-A',
     tipo: 'evaluacion',
     cita: 'cita',
     certeza: 'alta',
@@ -89,7 +89,7 @@ describe('textos de la semana', () => {
       semilla.evidencias.filter(salaA),
       semilla.sugerencias,
     );
-    expect(etiquetaDia(lunes)).toMatch(/^lunes 12: \d+ registros?$/);
+    expect(etiquetaDia(lunes)).toMatch(/^lunes 12: (\d+ registros?|sin registros)$/);
     expect(etiquetaDia(jueves)).toMatch(/^jueves 15, hoy: \d+ registros, 3 por revisar$/);
     expect(etiquetaDia(viernes)).toBe('viernes 16: todavía no llega');
   });

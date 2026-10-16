@@ -6,13 +6,15 @@ import { Inicio } from '../pages/Inicio';
 import { MiSala } from '../pages/MiSala';
 import { Revisar } from '../pages/Revisar';
 import { Layout } from './Layout';
+import { rutaInicio } from './opciones';
 import { ProveedorServicios } from './servicios';
 
 /**
  * Rutas de Huellita. Nada de datos de niños/as en las URLs: solo IDs
- * (privacidad.md 8).
+ * (privacidad.md 8). "/" es Inicio, que reemplazó a la antigua agenda.
  */
 export function Rutas() {
+  const inicio = rutaInicio();
   return (
     <Routes>
       <Route path="/entrada" element={<Entrada />} />
@@ -24,7 +26,7 @@ export function Rutas() {
         <Route path="/directora" element={<Directora />} />
         <Route path="/directora/sala/:salaId" element={<MiSala soloLectura />} />
       </Route>
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<Navigate to={inicio} replace />} />
     </Routes>
   );
 }

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useConsulta } from '../app/hooks';
 import { FranjaLogo, LogoOficial } from '../app/Encabezado';
 import { FondoManchas } from '../app/Layout';
+import { rutaInicio } from '../app/opciones';
 import { useServicios } from '../app/servicios';
 import { inicialesUsuaria } from '../lib/vistas';
 
@@ -13,6 +14,7 @@ import { inicialesUsuaria } from '../lib/vistas';
 export function Entrada() {
   const { datos } = useServicios();
   const navegar = useNavigate();
+  const inicio = rutaInicio();
 
   const consulta = useConsulta(async (d) => {
     const [usuarias, salas, jardin] = await Promise.all([
@@ -39,9 +41,9 @@ export function Entrada() {
 
   const entrar = async (id: string) => {
     await datos.cambiarUsuaria(id);
-    // La directora parte en el resumen de todas las salas; la tía, en su sala.
+    // La directora parte en el resumen de todas las salas; la tía, en Inicio.
     const rol = consulta.valor?.opciones.find((u) => u.id === id)?.rol;
-    navegar(rol === 'directora' ? '/directora' : '/', { replace: true });
+    navegar(rol === 'directora' ? '/directora' : inicio, { replace: true });
   };
 
   return (

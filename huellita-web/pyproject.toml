@@ -1,0 +1,4 @@
+# Solo configuración de pytest: el paquete no se instala, se importa desde src/.
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

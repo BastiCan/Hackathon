@@ -67,7 +67,7 @@ function barraLateral(): HTMLElement {
 
 beforeEach(async () => {
   datos = new DataServiceLocal({ almacen: almacenMemoria() });
-  await datos.cambiarUsuaria('USR-ANA');
+  await datos.cambiarUsuaria('EDU-0001');
   contenedor = document.createElement('div');
   document.body.appendChild(contenedor);
   raiz = createRoot(contenedor);
@@ -91,7 +91,7 @@ describe('celular (menos de 1024 px)', () => {
   });
 
   it('en la ficha el contenido deja el hueco de la barra más el dock', async () => {
-    await montar('/nino/NINO-00001');
+    await montar('/nino/NINO-00008');
     // `hueco-dock-nino` cuando ya cargó el nombre del niño/a.
     expect(uno('main').className).toMatch(/hueco-dock(-nino)?\b/);
   });
@@ -104,7 +104,7 @@ describe('celular (menos de 1024 px)', () => {
   });
 
   it('en la ficha mantiene la barra de captura con sus 4 botones sobre la barra inferior', async () => {
-    await montar('/nino/NINO-00001');
+    await montar('/nino/NINO-00008');
     const docks = [
       ...contenedor.querySelectorAll<HTMLElement>('[aria-label="Registrar para Josefa"]'),
     ];
@@ -133,7 +133,7 @@ describe('celular (menos de 1024 px)', () => {
 
 describe('escritorio (desde 1024 px)', () => {
   it('la barra inferior y la barra de captura se esconden en lg', async () => {
-    await montar('/nino/NINO-00001');
+    await montar('/nino/NINO-00008');
     expect(barraInferior().className).toContain('lg:hidden');
     const fijo = [
       ...contenedor.querySelectorAll<HTMLElement>('[aria-label="Registrar para Josefa"]'),
@@ -243,7 +243,7 @@ describe('pantallas en escritorio', () => {
   });
 
   it('la ficha del niño o niña se abre en dos columnas', async () => {
-    await montar('/nino/NINO-00001');
+    await montar('/nino/NINO-00008');
     const grilla = uno('[aria-label="Nivel por núcleo"]').parentElement!.parentElement as HTMLElement;
     expect(grilla.className).toContain('lg:grid');
     expect(grilla.className).toContain('lg:grid-cols-2');
@@ -295,7 +295,7 @@ describe('hojas y avisos', () => {
 });
 
 describe('sin scroll horizontal', () => {
-  const RUTAS = ['/', '/sala', '/revisar', '/nino/NINO-00001'];
+  const RUTAS = ['/', '/sala', '/revisar', '/nino/NINO-00008'];
 
   for (const ruta of RUTAS) {
     it(`${ruta} no deja anchos fijos ni fotos sin tope`, async () => {

@@ -1,0 +1,7 @@
+{
+  "task_id": "task-foto-postit",
+  "task_description": "Conectar la captura de FOTO de post-it al flujo de Huellita (Opcion A del informe): el BFF acepta formato foto, sube la imagen a capturas/{id}/original/foto.jpg e invoca la Lambda postits-ocr sincronamente; el front habilita el envio de foto reducida a JPEG; se agregan 2 permisos IAM (lambda:InvokeFunction y s3:PutObject sobre original/*) y la variable FUNCION_OCR; se despliega a AWS y se verifica end-to-end foto->OCR->texto->sugerencias sin romper texto ni audio.",
+  "status": "completed",
+  "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003"],
+  "blocked_reason": null
+}

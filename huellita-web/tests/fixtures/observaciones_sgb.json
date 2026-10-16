@@ -1,0 +1,7026 @@
+[
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Sube uno o más peldaños con apoyo de mano, baranda o gateando."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-SE-01"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Imita una tarea cotidiana de otra persona durante el juego."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-SE-02"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Permanece cerca de otro niño o niña realizando una actividad similar por un periodo breve."
+      }
+     }
+    }
+   ]
+  },
+  "fecha": {
+   "S": "2025-01-03"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "nivel": {
+   "N": "7"
+  },
+  "texto_literal": {
+   "S": "Sube uno o más peldaños con apoyo de mano, baranda o gateando. Imita una tarea cotidiana de otra persona durante el juego. Permanece cerca de otro niño o niña realizando una actividad similar por un periodo breve. Se observó la conducta en una interacción breve y espontánea."
+  },
+  "id_obs": {
+   "S": "OBS-0001171"
+  },
+  "id_nino": {
+   "S": "NINO-00209"
+  },
+  "orden": {
+   "S": "2025-01-03#2025-01-03T00:00:00-03:00#OBS-0001171"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_nino": {
+   "S": "NINO-00216"
+  },
+  "orden": {
+   "S": "2025-01-03#2025-01-03T00:00:00-03:00#OBS-0001208"
+  },
+  "fecha": {
+   "S": "2025-01-03"
+  },
+  "nivel": {
+   "N": "5"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_obs": {
+   "S": "OBS-0001208"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "texto_literal": {
+   "S": "Se pone de pie con apoyo y se mantiene mientras sostiene una superficie estable. Comparte atención alternando la mirada entre una persona y un objeto de interés. Busca proximidad o apoyo de una persona familiar ante una situación nueva. Se observó la conducta en una interacción breve y espontánea."
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Se pone de pie con apoyo y se mantiene mientras sostiene una superficie estable."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-SE-01"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Comparte atención alternando la mirada entre una persona y un objeto de interés."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-SE-02"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Busca proximidad o apoyo de una persona familiar ante una situación nueva."
+      }
+     }
+    }
+   ]
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_nino": {
+   "S": "NINO-00037"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "1"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L01-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Mueve brazos y piernas espontáneamente durante un periodo de alerta."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "1"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L01-SE-01"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Mantiene por unos segundos la mirada hacia el rostro de la persona que lo sostiene o acompaña."
+      }
+     }
+    }
+   ]
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_obs": {
+   "S": "OBS-0000210"
+  },
+  "nivel": {
+   "N": "1"
+  },
+  "orden": {
+   "S": "2025-02-03#2025-02-03T00:00:00-03:00#OBS-0000210"
+  },
+  "texto_literal": {
+   "S": "Mueve brazos y piernas espontáneamente durante un periodo de alerta. Mantiene por unos segundos la mirada hacia el rostro de la persona que lo sostiene o acompaña. Registro obtenido con materiales seguros disponibles en la sala."
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "fecha": {
+   "S": "2025-02-03"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Explora un objeto mirándolo, llevándolo a la boca o moviéndolo de más de una manera."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-SE-01"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Ríe o vocaliza para prolongar un juego social repetido."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-SE-02"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Expresa agrado o desagrado de manera diferenciada ante actividades distintas."
+      }
+     }
+    }
+   ]
+  },
+  "orden": {
+   "S": "2025-02-03#2025-02-03T00:00:00-03:00#OBS-0002104"
+  },
+  "nivel": {
+   "N": "3"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_obs": {
+   "S": "OBS-0002104"
+  },
+  "texto_literal": {
+   "S": "Explora un objeto mirándolo, llevándolo a la boca o moviéndolo de más de una manera. Ríe o vocaliza para prolongar un juego social repetido. Expresa agrado o desagrado de manera diferenciada ante actividades distintas. La evidencia apareció durante una rutina cotidiana del grupo."
+  },
+  "id_nino": {
+   "S": "NINO-00357"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "fecha": {
+   "S": "2025-02-03"
+  }
+ },
+ {
+  "texto_literal": {
+   "S": "Prueba más de una acción para alcanzar un objeto cercano fuera de alcance directo. Usa un gesto convencional, como señalar, mostrar o despedirse, para comunicar una intención. Responde con acción o mirada a una palabra frecuente dentro de una rutina. Toma un objeto pequeño seguro entre pulgar y otro dedo."
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Prueba más de una acción para alcanzar un objeto cercano fuera de alcance directo."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Usa un gesto convencional, como señalar, mostrar o despedirse, para comunicar una intención."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-LC-02"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Responde con acción o mirada a una palabra frecuente dentro de una rutina."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-MF-01"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Toma un objeto pequeño seguro entre pulgar y otro dedo."
+      }
+     }
+    }
+   ]
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_educadora": {
+   "S": "EDU-0002"
+  },
+  "fecha": {
+   "S": "2025-03-03"
+  },
+  "id_obs": {
+   "S": "OBS-0000128"
+  },
+  "id_nino": {
+   "S": "NINO-00023"
+  },
+  "nivel": {
+   "N": "5"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "orden": {
+   "S": "2025-03-03#2025-03-03T00:00:00-03:00#OBS-0000128"
+  }
+ },
+ {
+  "orden": {
+   "S": "2025-03-03#2025-03-03T00:00:00-03:00#OBS-0001534"
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "2"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_obs": {
+   "S": "OBS-0001534"
+  },
+  "fecha": {
+   "S": "2025-03-03"
+  },
+  "texto_literal": {
+   "S": "Sigue visualmente un objeto lento de un lado al otro cruzando la línea media. Observa sus manos o repite un movimiento que produjo un resultado visible cercano. Responde a la voz con arrullos, vocalizaciones o cambios de expresión. Se documentó evidencia positiva en un momento de exploración."
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "2"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L02-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Sigue visualmente un objeto lento de un lado al otro cruzando la línea media."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "2"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L02-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Observa sus manos o repite un movimiento que produjo un resultado visible cercano."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "2"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L02-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Responde a la voz con arrullos, vocalizaciones o cambios de expresión."
+      }
+     }
+    }
+   ]
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_nino": {
+   "S": "NINO-00265"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_nino": {
+   "S": "NINO-00322"
+  },
+  "fecha": {
+   "S": "2025-03-03"
+  },
+  "texto_literal": {
+   "S": "Señala al menos una parte del cuerpo u objeto conocido cuando se le pregunta. Hace trazos visibles con crayón grueso después de recibir papel y material seguro. Se documentó evidencia positiva en un momento de exploración."
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-LC-02"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Señala al menos una parte del cuerpo u objeto conocido cuando se le pregunta."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-MF-01"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Hace trazos visibles con crayón grueso después de recibir papel y material seguro."
+      }
+     }
+    }
+   ]
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "nivel": {
+   "N": "7"
+  },
+  "id_obs": {
+   "S": "OBS-0001878"
+  },
+  "orden": {
+   "S": "2025-03-03#2025-03-03T00:00:00-03:00#OBS-0001878"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Explora un objeto mirándolo, llevándolo a la boca o moviéndolo de más de una manera."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-SE-01"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Ríe o vocaliza para prolongar un juego social repetido."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-SE-02"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Expresa agrado o desagrado de manera diferenciada ante actividades distintas."
+      }
+     }
+    }
+   ]
+  },
+  "id_educadora": {
+   "S": "EDU-0002"
+  },
+  "fecha": {
+   "S": "2025-03-03"
+  },
+  "id_nino": {
+   "S": "NINO-00366"
+  },
+  "nivel": {
+   "N": "3"
+  },
+  "texto_literal": {
+   "S": "Explora un objeto mirándolo, llevándolo a la boca o moviéndolo de más de una manera. Ríe o vocaliza para prolongar un juego social repetido. Expresa agrado o desagrado de manera diferenciada ante actividades distintas. La evidencia apareció durante una rutina cotidiana del grupo."
+  },
+  "id_obs": {
+   "S": "OBS-0002152"
+  },
+  "orden": {
+   "S": "2025-03-03#2025-03-03T00:00:00-03:00#OBS-0002152"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-MF-02"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Pasa varias páginas de cartón o manipula tapas grandes con intención."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-MG-01"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Camina con estabilidad mientras transporta un objeto liviano."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Sube uno o más peldaños con apoyo de mano, baranda o gateando."
+      }
+     }
+    }
+   ]
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "fecha": {
+   "S": "2025-03-08"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "orden": {
+   "S": "2025-03-08#2025-03-08T00:00:00-03:00#OBS-0001879"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_nino": {
+   "S": "NINO-00322"
+  },
+  "id_educadora": {
+   "S": "EDU-0002"
+  },
+  "id_obs": {
+   "S": "OBS-0001879"
+  },
+  "nivel": {
+   "N": "7"
+  },
+  "texto_literal": {
+   "S": "Pasa varias páginas de cartón o manipula tapas grandes con intención. Camina con estabilidad mientras transporta un objeto liviano. Sube uno o más peldaños con apoyo de mano, baranda o gateando."
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "fecha": {
+   "S": "2025-03-08"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_educadora": {
+   "S": "EDU-0002"
+  },
+  "id_obs": {
+   "S": "OBS-0002153"
+  },
+  "id_nino": {
+   "S": "NINO-00366"
+  },
+  "nivel": {
+   "N": "3"
+  },
+  "orden": {
+   "S": "2025-03-08#2025-03-08T00:00:00-03:00#OBS-0002153"
+  },
+  "texto_literal": {
+   "S": "Repite una acción sencilla que vuelve a producir un sonido o movimiento. Produce series de vocales, chillidos suaves o sonidos guturales durante el juego. Gira hacia la voz de una persona conocida cuando esta habla desde un costado. Se documentó evidencia positiva en un momento de exploración."
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Repite una acción sencilla que vuelve a producir un sonido o movimiento."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Produce series de vocales, chillidos suaves o sonidos guturales durante el juego."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-LC-02"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Gira hacia la voz de una persona conocida cuando esta habla desde un costado."
+      }
+     }
+    }
+   ]
+  }
+ },
+ {
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-MF-01"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Alcanza intencionalmente un objeto visible y lo toma con una o ambas manos."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-MF-02"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Pasa un objeto de una mano a la otra o lo lleva a la boca para explorarlo."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-MG-01"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Rueda de costado o cambia de boca arriba a boca abajo, o a la inversa, durante el juego."
+      }
+     }
+    }
+   ]
+  },
+  "fecha": {
+   "S": "2025-03-13"
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "orden": {
+   "S": "2025-03-13#2025-03-13T00:00:00-03:00#OBS-0002154"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_educadora": {
+   "S": "EDU-0002"
+  },
+  "id_nino": {
+   "S": "NINO-00366"
+  },
+  "nivel": {
+   "N": "3"
+  },
+  "texto_literal": {
+   "S": "Alcanza intencionalmente un objeto visible y lo toma con una o ambas manos. Pasa un objeto de una mano a la otra o lo lleva a la boca para explorarlo. Rueda de costado o cambia de boca arriba a boca abajo, o a la inversa, durante el juego."
+  },
+  "id_obs": {
+   "S": "OBS-0002154"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "2"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L02-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Observa sus manos o repite un movimiento que produjo un resultado visible cercano."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "2"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L02-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Responde a la voz con arrullos, vocalizaciones o cambios de expresión."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "2"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L02-LC-02"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Alterna al menos una emisión sonora con la persona adulta durante un intercambio."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "2"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L02-MF-01"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Junta las manos en la línea media mientras está despierto."
+      }
+     }
+    }
+   ]
+  },
+  "fecha": {
+   "S": "2025-04-03"
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "2"
+  },
+  "texto_literal": {
+   "S": "Observa sus manos o repite un movimiento que produjo un resultado visible cercano. Responde a la voz con arrullos, vocalizaciones o cambios de expresión. Alterna al menos una emisión sonora con la persona adulta durante un intercambio. Junta las manos en la línea media mientras está despierto. Se observó la conducta en una interacción breve y espontánea."
+  },
+  "id_obs": {
+   "S": "OBS-0000211"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_educadora": {
+   "S": "EDU-0002"
+  },
+  "orden": {
+   "S": "2025-04-03#2025-04-03T00:00:00-03:00#OBS-0000211"
+  },
+  "id_nino": {
+   "S": "NINO-00037"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "nivel": {
+   "N": "4"
+  },
+  "fecha": {
+   "S": "2025-04-03"
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_obs": {
+   "S": "OBS-0002105"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "orden": {
+   "S": "2025-04-03#2025-04-03T00:00:00-03:00#OBS-0002105"
+  },
+  "id_nino": {
+   "S": "NINO-00357"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "texto_literal": {
+   "S": "Busca con la mirada o la mano un objeto que quedó parcialmente oculto. Anticipa una acción de una rutina conocida mediante movimiento, mirada o vocalización. Balbucea secuencias repetidas de consonante y vocal durante la interacción. Reacciona de manera distinta ante una persona habitual y una menos familiar. Se observó la conducta en una interacción breve y espontánea."
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "4"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L04-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Busca con la mirada o la mano un objeto que quedó parcialmente oculto."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "4"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L04-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Anticipa una acción de una rutina conocida mediante movimiento, mirada o vocalización."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "4"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L04-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Balbucea secuencias repetidas de consonante y vocal durante la interacción."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "4"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L04-SE-02"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Reacciona de manera distinta ante una persona habitual y una menos familiar."
+      }
+     }
+    }
+   ]
+  }
+ },
+ {
+  "nivel": {
+   "N": "4"
+  },
+  "fecha": {
+   "S": "2025-04-03"
+  },
+  "orden": {
+   "S": "2025-04-03#2025-04-03T00:00:00-03:00#OBS-0002583"
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "texto_literal": {
+   "S": "Cambia entre sentado y otra postura con apoyo de manos o del mobiliario bajo. Inicia un intercambio mediante mirada, sonido, sonrisa o extensión de brazos. Reacciona de manera distinta ante una persona habitual y una menos familiar. Registro obtenido con materiales seguros disponibles en la sala."
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "4"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L04-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Cambia entre sentado y otra postura con apoyo de manos o del mobiliario bajo."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "4"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L04-SE-01"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Inicia un intercambio mediante mirada, sonido, sonrisa o extensión de brazos."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "4"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L04-SE-02"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Reacciona de manera distinta ante una persona habitual y una menos familiar."
+      }
+     }
+    }
+   ]
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_obs": {
+   "S": "OBS-0002583"
+  },
+  "id_nino": {
+   "S": "NINO-00442"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "orden": {
+   "S": "2025-04-08#2025-04-08T00:00:00-03:00#OBS-0000212"
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_obs": {
+   "S": "OBS-0000212"
+  },
+  "id_nino": {
+   "S": "NINO-00037"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "1"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L01-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Sigue brevemente con la mirada un rostro u objeto de alto contraste que se desplaza lentamente."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "1"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L01-SE-02"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Disminuye el llanto o la agitación ante voz suave, contacto o contención."
+      }
+     }
+    }
+   ]
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "texto_literal": {
+   "S": "Sigue brevemente con la mirada un rostro u objeto de alto contraste que se desplaza lentamente. Disminuye el llanto o la agitación ante voz suave, contacto o contención. Se documentó evidencia positiva en un momento de exploración."
+  },
+  "nivel": {
+   "N": "1"
+  },
+  "fecha": {
+   "S": "2025-04-08"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "id_obs": {
+   "S": "OBS-0000213"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "texto_literal": {
+   "S": "Golpea o roza de forma repetida un objeto colocado a su alcance. Sostiene la cabeza alineada durante varios segundos cuando se le carga con apoyo de tronco. Apoya antebrazos y eleva cabeza y parte superior del pecho estando boca abajo. La evidencia apareció durante una rutina cotidiana del grupo."
+  },
+  "fecha": {
+   "S": "2025-04-13"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "2"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "2"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L02-MF-02"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Golpea o roza de forma repetida un objeto colocado a su alcance."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "2"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L02-MG-01"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Sostiene la cabeza alineada durante varios segundos cuando se le carga con apoyo de tronco."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "2"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L02-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Apoya antebrazos y eleva cabeza y parte superior del pecho estando boca abajo."
+      }
+     }
+    }
+   ]
+  },
+  "id_nino": {
+   "S": "NINO-00037"
+  },
+  "orden": {
+   "S": "2025-04-13#2025-04-13T00:00:00-03:00#OBS-0000213"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "nivel": {
+   "N": "8"
+  },
+  "id_obs": {
+   "S": "OBS-0001172"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Empareja dos o más objetos o imágenes iguales entre varias opciones."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-SE-02"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Comunica una necesidad de ayuda, pausa o consuelo mediante palabra, seña o gesto claro."
+      }
+     }
+    }
+   ]
+  },
+  "orden": {
+   "S": "2025-05-03#2025-05-03T00:00:00-03:00#OBS-0001172"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_nino": {
+   "S": "NINO-00209"
+  },
+  "fecha": {
+   "S": "2025-05-03"
+  },
+  "texto_literal": {
+   "S": "Empareja dos o más objetos o imágenes iguales entre varias opciones. Comunica una necesidad de ayuda, pausa o consuelo mediante palabra, seña o gesto claro. Se documentó evidencia positiva en un momento de exploración."
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "orden": {
+   "S": "2025-05-03#2025-05-03T00:00:00-03:00#OBS-0001209"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MF-02"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Intenta usar cuchara, vaso u otro objeto cotidiano según su función."
+      }
+     }
+    }
+   ]
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_nino": {
+   "S": "NINO-00216"
+  },
+  "id_obs": {
+   "S": "OBS-0001209"
+  },
+  "texto_literal": {
+   "S": "Intenta usar cuchara, vaso u otro objeto cotidiano según su función."
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "fecha": {
+   "S": "2025-05-03"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "nivel": {
+   "N": "3"
+  },
+  "orden": {
+   "S": "2025-05-03#2025-05-03T00:00:00-03:00#OBS-0001535"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "fecha": {
+   "S": "2025-05-03"
+  },
+  "id_obs": {
+   "S": "OBS-0001535"
+  },
+  "id_nino": {
+   "S": "NINO-00265"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "texto_literal": {
+   "S": "Repite una acción sencilla que vuelve a producir un sonido o movimiento. Produce series de vocales, chillidos suaves o sonidos guturales durante el juego. Gira hacia la voz de una persona conocida cuando esta habla desde un costado."
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Repite una acción sencilla que vuelve a producir un sonido o movimiento."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Produce series de vocales, chillidos suaves o sonidos guturales durante el juego."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-LC-02"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Gira hacia la voz de una persona conocida cuando esta habla desde un costado."
+      }
+     }
+    }
+   ]
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "id_nino": {
+   "S": "NINO-00493"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_educadora": {
+   "S": "EDU-0002"
+  },
+  "orden": {
+   "S": "2025-05-03#2025-05-03T00:00:00-03:00#OBS-0002910"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Usa un objeto cotidiano de manera funcional en una actividad breve."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Identifica un objeto conocido al elegirlo entre dos cuando se le solicita."
+      }
+     }
+    }
+   ]
+  },
+  "fecha": {
+   "S": "2025-05-03"
+  },
+  "texto_literal": {
+   "S": "Usa un objeto cotidiano de manera funcional en una actividad breve. Identifica un objeto conocido al elegirlo entre dos cuando se le solicita. Registro realizado durante una actividad de juego libre."
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "id_obs": {
+   "S": "OBS-0002910"
+  }
+ },
+ {
+  "texto_literal": {
+   "S": "Completa una secuencia cotidiana de dos pasos después de una indicación inicial. Combina dos palabras, aproximaciones o señas para expresar una relación o intención. Sigue una instrucción de dos acciones relacionadas dentro de una rutina conocida. La evidencia apareció durante una rutina cotidiana del grupo."
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "nivel": {
+   "N": "8"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "orden": {
+   "S": "2025-05-08#2025-05-08T00:00:00-03:00#OBS-0001173"
+  },
+  "fecha": {
+   "S": "2025-05-08"
+  },
+  "id_obs": {
+   "S": "OBS-0001173"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Completa una secuencia cotidiana de dos pasos después de una indicación inicial."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Combina dos palabras, aproximaciones o señas para expresar una relación o intención."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-LC-02"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Sigue una instrucción de dos acciones relacionadas dentro de una rutina conocida."
+      }
+     }
+    }
+   ]
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_nino": {
+   "S": "NINO-00209"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "id_obs": {
+   "S": "OBS-0001210"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MG-01"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Da varios pasos sin apoyo o recorre una distancia breve de forma independiente."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Se agacha para recoger un objeto y vuelve a incorporarse con o sin apoyo cercano."
+      }
+     }
+    }
+   ]
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "texto_literal": {
+   "S": "Da varios pasos sin apoyo o recorre una distancia breve de forma independiente. Se agacha para recoger un objeto y vuelve a incorporarse con o sin apoyo cercano. Registro realizado durante una actividad de juego libre."
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_nino": {
+   "S": "NINO-00216"
+  },
+  "fecha": {
+   "S": "2025-05-08"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "orden": {
+   "S": "2025-05-08#2025-05-08T00:00:00-03:00#OBS-0001210"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-MF-01"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Alcanza intencionalmente un objeto visible y lo toma con una o ambas manos."
+      }
+     }
+    }
+   ]
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_obs": {
+   "S": "OBS-0001536"
+  },
+  "nivel": {
+   "N": "3"
+  },
+  "fecha": {
+   "S": "2025-05-08"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "texto_literal": {
+   "S": "Alcanza intencionalmente un objeto visible y lo toma con una o ambas manos. La manifestación se observó más de una vez durante la actividad."
+  },
+  "orden": {
+   "S": "2025-05-08#2025-05-08T00:00:00-03:00#OBS-0001536"
+  },
+  "id_nino": {
+   "S": "NINO-00265"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "id_nino": {
+   "S": "NINO-00493"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_obs": {
+   "S": "OBS-0002911"
+  },
+  "orden": {
+   "S": "2025-05-08#2025-05-08T00:00:00-03:00#OBS-0002911"
+  },
+  "texto_literal": {
+   "S": "Usa de manera consistente al menos tres palabras, aproximaciones o señas con significado. Sigue una instrucción cotidiana de un paso acompañada, si hace falta, por gesto. Se documentó evidencia positiva en un momento de exploración."
+  },
+  "fecha": {
+   "S": "2025-05-08"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Usa de manera consistente al menos tres palabras, aproximaciones o señas con significado."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-LC-02"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Sigue una instrucción cotidiana de un paso acompañada, si hace falta, por gesto."
+      }
+     }
+    }
+   ]
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "nivel": {
+   "N": "8"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_obs": {
+   "S": "OBS-0001174"
+  },
+  "fecha": {
+   "S": "2025-05-13"
+  },
+  "texto_literal": {
+   "S": "Construye una torre de cuatro o más bloques estables. Gira una tapa grande, perilla o pieza rotatoria para lograr un resultado. Corre una distancia breve, aunque todavía ajuste velocidad o equilibrio. Patea una pelota detenida hacia adelante sin necesitar sostén. Registro realizado durante una actividad de juego libre."
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "orden": {
+   "S": "2025-05-13#2025-05-13T00:00:00-03:00#OBS-0001174"
+  },
+  "id_nino": {
+   "S": "NINO-00209"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-MF-01"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Construye una torre de cuatro o más bloques estables."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-MF-02"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Gira una tapa grande, perilla o pieza rotatoria para lograr un resultado."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-MG-01"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Corre una distancia breve, aunque todavía ajuste velocidad o equilibrio."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Patea una pelota detenida hacia adelante sin necesitar sostén."
+      }
+     }
+    }
+   ]
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Usa un objeto cotidiano de manera funcional en una actividad breve."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Identifica un objeto conocido al elegirlo entre dos cuando se le solicita."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-SE-01"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Se aleja para explorar y vuelve o mira a la persona adulta como referencia."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-SE-02"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Imita una acción social sencilla, como saludar, aplaudir o ayudar a guardar."
+      }
+     }
+    }
+   ]
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_nino": {
+   "S": "NINO-00216"
+  },
+  "texto_literal": {
+   "S": "Usa un objeto cotidiano de manera funcional en una actividad breve. Identifica un objeto conocido al elegirlo entre dos cuando se le solicita. Se aleja para explorar y vuelve o mira a la persona adulta como referencia. Imita una acción social sencilla, como saludar, aplaudir o ayudar a guardar. La manifestación se observó más de una vez durante la actividad."
+  },
+  "orden": {
+   "S": "2025-05-13#2025-05-13T00:00:00-03:00#OBS-0001211"
+  },
+  "id_obs": {
+   "S": "OBS-0001211"
+  },
+  "fecha": {
+   "S": "2025-05-13"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_educadora": {
+   "S": "EDU-0002"
+  },
+  "nivel": {
+   "N": "3"
+  },
+  "fecha": {
+   "S": "2025-05-13"
+  },
+  "texto_literal": {
+   "S": "Pasa un objeto de una mano a la otra o lo lleva a la boca para explorarlo. Rueda de costado o cambia de boca arriba a boca abajo, o a la inversa, durante el juego. Mantiene la cabeza estable al sentarse con apoyo de tronco. Se observó la conducta en una interacción breve y espontánea."
+  },
+  "id_obs": {
+   "S": "OBS-0001537"
+  },
+  "id_nino": {
+   "S": "NINO-00265"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "orden": {
+   "S": "2025-05-13#2025-05-13T00:00:00-03:00#OBS-0001537"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-MF-02"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Pasa un objeto de una mano a la otra o lo lleva a la boca para explorarlo."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-MG-01"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Rueda de costado o cambia de boca arriba a boca abajo, o a la inversa, durante el juego."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Mantiene la cabeza estable al sentarse con apoyo de tronco."
+      }
+     }
+    }
+   ]
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "id_nino": {
+   "S": "NINO-00493"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_educadora": {
+   "S": "EDU-0002"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MF-01"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Apila dos bloques u objetos estables después de explorar o ver el ejemplo."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MF-02"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Intenta usar cuchara, vaso u otro objeto cotidiano según su función."
+      }
+     }
+    }
+   ]
+  },
+  "fecha": {
+   "S": "2025-05-13"
+  },
+  "orden": {
+   "S": "2025-05-13#2025-05-13T00:00:00-03:00#OBS-0002912"
+  },
+  "id_obs": {
+   "S": "OBS-0002912"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "texto_literal": {
+   "S": "Apila dos bloques u objetos estables después de explorar o ver el ejemplo. Intenta usar cuchara, vaso u otro objeto cotidiano según su función."
+  }
+ },
+ {
+  "texto_literal": {
+   "S": "Participa en una actividad junto a pares y tolera compartir espacio o materiales con apoyo adulto. Comunica una necesidad de ayuda, pausa o consuelo mediante palabra, seña o gesto claro. Se observó la conducta en una interacción breve y espontánea."
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-SE-01"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Participa en una actividad junto a pares y tolera compartir espacio o materiales con apoyo adulto."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-SE-02"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Comunica una necesidad de ayuda, pausa o consuelo mediante palabra, seña o gesto claro."
+      }
+     }
+    }
+   ]
+  },
+  "orden": {
+   "S": "2025-05-18#2025-05-18T00:00:00-03:00#OBS-0001175"
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "nivel": {
+   "N": "8"
+  },
+  "id_obs": {
+   "S": "OBS-0001175"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_educadora": {
+   "S": "EDU-0002"
+  },
+  "fecha": {
+   "S": "2025-05-18"
+  },
+  "id_nino": {
+   "S": "NINO-00209"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Usa de manera consistente al menos tres palabras, aproximaciones o señas con significado."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-LC-02"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Sigue una instrucción cotidiana de un paso acompañada, si hace falta, por gesto."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MF-01"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Apila dos bloques u objetos estables después de explorar o ver el ejemplo."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MF-02"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Intenta usar cuchara, vaso u otro objeto cotidiano según su función."
+      }
+     }
+    }
+   ]
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "texto_literal": {
+   "S": "Usa de manera consistente al menos tres palabras, aproximaciones o señas con significado. Sigue una instrucción cotidiana de un paso acompañada, si hace falta, por gesto. Apila dos bloques u objetos estables después de explorar o ver el ejemplo. Intenta usar cuchara, vaso u otro objeto cotidiano según su función. Se documentó evidencia positiva en un momento de exploración."
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_nino": {
+   "S": "NINO-00216"
+  },
+  "id_educadora": {
+   "S": "EDU-0002"
+  },
+  "fecha": {
+   "S": "2025-05-18"
+  },
+  "orden": {
+   "S": "2025-05-18#2025-05-18T00:00:00-03:00#OBS-0001212"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "id_obs": {
+   "S": "OBS-0001212"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Explora un objeto mirándolo, llevándolo a la boca o moviéndolo de más de una manera."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-SE-01"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Ríe o vocaliza para prolongar un juego social repetido."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-SE-02"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Expresa agrado o desagrado de manera diferenciada ante actividades distintas."
+      }
+     }
+    }
+   ]
+  },
+  "fecha": {
+   "S": "2025-05-18"
+  },
+  "id_obs": {
+   "S": "OBS-0001538"
+  },
+  "nivel": {
+   "N": "3"
+  },
+  "orden": {
+   "S": "2025-05-18#2025-05-18T00:00:00-03:00#OBS-0001538"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_nino": {
+   "S": "NINO-00265"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "texto_literal": {
+   "S": "Explora un objeto mirándolo, llevándolo a la boca o moviéndolo de más de una manera. Ríe o vocaliza para prolongar un juego social repetido. Expresa agrado o desagrado de manera diferenciada ante actividades distintas. Registro obtenido con materiales seguros disponibles en la sala."
+  }
+ },
+ {
+  "orden": {
+   "S": "2025-05-18#2025-05-18T00:00:00-03:00#OBS-0002913"
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "texto_literal": {
+   "S": "Da varios pasos sin apoyo o recorre una distancia breve de forma independiente. Se agacha para recoger un objeto y vuelve a incorporarse con o sin apoyo cercano. Se aleja para explorar y vuelve o mira a la persona adulta como referencia."
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "id_nino": {
+   "S": "NINO-00493"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_obs": {
+   "S": "OBS-0002913"
+  },
+  "fecha": {
+   "S": "2025-05-18"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MG-01"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Da varios pasos sin apoyo o recorre una distancia breve de forma independiente."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Se agacha para recoger un objeto y vuelve a incorporarse con o sin apoyo cercano."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-SE-01"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Se aleja para explorar y vuelve o mira a la persona adulta como referencia."
+      }
+     }
+    }
+   ]
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "nivel": {
+   "N": "8"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "texto_literal": {
+   "S": "Empareja dos o más objetos o imágenes iguales entre varias opciones. Completa una secuencia cotidiana de dos pasos después de una indicación inicial. Combina dos palabras, aproximaciones o señas para expresar una relación o intención."
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_obs": {
+   "S": "OBS-0001176"
+  },
+  "id_nino": {
+   "S": "NINO-00209"
+  },
+  "fecha": {
+   "S": "2025-05-23"
+  },
+  "orden": {
+   "S": "2025-05-23#2025-05-23T00:00:00-03:00#OBS-0001176"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Empareja dos o más objetos o imágenes iguales entre varias opciones."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Completa una secuencia cotidiana de dos pasos después de una indicación inicial."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Combina dos palabras, aproximaciones o señas para expresar una relación o intención."
+      }
+     }
+    }
+   ]
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "texto_literal": {
+   "S": "Da varios pasos sin apoyo o recorre una distancia breve de forma independiente. Se agacha para recoger un objeto y vuelve a incorporarse con o sin apoyo cercano. Se aleja para explorar y vuelve o mira a la persona adulta como referencia."
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_nino": {
+   "S": "NINO-00216"
+  },
+  "id_obs": {
+   "S": "OBS-0001213"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MG-01"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Da varios pasos sin apoyo o recorre una distancia breve de forma independiente."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Se agacha para recoger un objeto y vuelve a incorporarse con o sin apoyo cercano."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-SE-01"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Se aleja para explorar y vuelve o mira a la persona adulta como referencia."
+      }
+     }
+    }
+   ]
+  },
+  "orden": {
+   "S": "2025-05-23#2025-05-23T00:00:00-03:00#OBS-0001213"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "fecha": {
+   "S": "2025-05-23"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "texto_literal": {
+   "S": "Repite una acción sencilla que vuelve a producir un sonido o movimiento. Produce series de vocales, chillidos suaves o sonidos guturales durante el juego. La manifestación se observó más de una vez durante la actividad."
+  },
+  "orden": {
+   "S": "2025-05-23#2025-05-23T00:00:00-03:00#OBS-0001539"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "nivel": {
+   "N": "3"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "fecha": {
+   "S": "2025-05-23"
+  },
+  "id_nino": {
+   "S": "NINO-00265"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Repite una acción sencilla que vuelve a producir un sonido o movimiento."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Produce series de vocales, chillidos suaves o sonidos guturales durante el juego."
+      }
+     }
+    }
+   ]
+  },
+  "id_obs": {
+   "S": "OBS-0001539"
+  }
+ },
+ {
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Usa un objeto cotidiano de manera funcional en una actividad breve."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Identifica un objeto conocido al elegirlo entre dos cuando se le solicita."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-SE-02"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Imita una acción social sencilla, como saludar, aplaudir o ayudar a guardar."
+      }
+     }
+    }
+   ]
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "texto_literal": {
+   "S": "Usa un objeto cotidiano de manera funcional en una actividad breve. Identifica un objeto conocido al elegirlo entre dos cuando se le solicita. Imita una acción social sencilla, como saludar, aplaudir o ayudar a guardar."
+  },
+  "fecha": {
+   "S": "2025-05-28"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "orden": {
+   "S": "2025-05-28#2025-05-28T00:00:00-03:00#OBS-0001214"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_nino": {
+   "S": "NINO-00216"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_obs": {
+   "S": "OBS-0001214"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "texto_literal": {
+   "S": "Gira hacia la voz de una persona conocida cuando esta habla desde un costado. Alcanza intencionalmente un objeto visible y lo toma con una o ambas manos. Pasa un objeto de una mano a la otra o lo lleva a la boca para explorarlo. Registro realizado durante una actividad de juego libre."
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-LC-02"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Gira hacia la voz de una persona conocida cuando esta habla desde un costado."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-MF-01"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Alcanza intencionalmente un objeto visible y lo toma con una o ambas manos."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-MF-02"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Pasa un objeto de una mano a la otra o lo lleva a la boca para explorarlo."
+      }
+     }
+    }
+   ]
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "fecha": {
+   "S": "2025-05-28"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_educadora": {
+   "S": "EDU-0002"
+  },
+  "id_obs": {
+   "S": "OBS-0001540"
+  },
+  "nivel": {
+   "N": "3"
+  },
+  "orden": {
+   "S": "2025-05-28#2025-05-28T00:00:00-03:00#OBS-0001540"
+  },
+  "id_nino": {
+   "S": "NINO-00265"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Usa de manera consistente al menos tres palabras, aproximaciones o señas con significado."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-LC-02"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Sigue una instrucción cotidiana de un paso acompañada, si hace falta, por gesto."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MF-01"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Apila dos bloques u objetos estables después de explorar o ver el ejemplo."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MF-02"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Intenta usar cuchara, vaso u otro objeto cotidiano según su función."
+      }
+     }
+    }
+   ]
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_nino": {
+   "S": "NINO-00216"
+  },
+  "orden": {
+   "S": "2025-06-02#2025-06-02T00:00:00-03:00#OBS-0001215"
+  },
+  "id_obs": {
+   "S": "OBS-0001215"
+  },
+  "texto_literal": {
+   "S": "Usa de manera consistente al menos tres palabras, aproximaciones o señas con significado. Sigue una instrucción cotidiana de un paso acompañada, si hace falta, por gesto. Apila dos bloques u objetos estables después de explorar o ver el ejemplo. Intenta usar cuchara, vaso u otro objeto cotidiano según su función. Registro obtenido con materiales seguros disponibles en la sala."
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "fecha": {
+   "S": "2025-06-02"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "id_nino": {
+   "S": "NINO-00088"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "texto_literal": {
+   "S": "Se agacha para recoger un objeto y vuelve a incorporarse con o sin apoyo cercano. Se aleja para explorar y vuelve o mira a la persona adulta como referencia. Imita una acción social sencilla, como saludar, aplaudir o ayudar a guardar. Registro obtenido con materiales seguros disponibles en la sala."
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Se agacha para recoger un objeto y vuelve a incorporarse con o sin apoyo cercano."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-SE-01"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Se aleja para explorar y vuelve o mira a la persona adulta como referencia."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-SE-02"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Imita una acción social sencilla, como saludar, aplaudir o ayudar a guardar."
+      }
+     }
+    }
+   ]
+  },
+  "id_obs": {
+   "S": "OBS-0000491"
+  },
+  "fecha": {
+   "S": "2025-06-03"
+  },
+  "orden": {
+   "S": "2025-06-03#2025-06-03T00:00:00-03:00#OBS-0000491"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "id_obs": {
+   "S": "OBS-0002155"
+  },
+  "nivel": {
+   "N": "4"
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "texto_literal": {
+   "S": "Busca con la mirada o la mano un objeto que quedó parcialmente oculto. Anticipa una acción de una rutina conocida mediante movimiento, mirada o vocalización. La evidencia apareció durante una rutina cotidiana del grupo."
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_nino": {
+   "S": "NINO-00366"
+  },
+  "fecha": {
+   "S": "2025-06-03"
+  },
+  "orden": {
+   "S": "2025-06-03#2025-06-03T00:00:00-03:00#OBS-0002155"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "4"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L04-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Busca con la mirada o la mano un objeto que quedó parcialmente oculto."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "4"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L04-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Anticipa una acción de una rutina conocida mediante movimiento, mirada o vocalización."
+      }
+     }
+    }
+   ]
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MG-01"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Da varios pasos sin apoyo o recorre una distancia breve de forma independiente."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Se agacha para recoger un objeto y vuelve a incorporarse con o sin apoyo cercano."
+      }
+     }
+    }
+   ]
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_nino": {
+   "S": "NINO-00216"
+  },
+  "id_educadora": {
+   "S": "EDU-0002"
+  },
+  "orden": {
+   "S": "2025-06-07#2025-06-07T00:00:00-03:00#OBS-0001216"
+  },
+  "fecha": {
+   "S": "2025-06-07"
+  },
+  "texto_literal": {
+   "S": "Da varios pasos sin apoyo o recorre una distancia breve de forma independiente. Se agacha para recoger un objeto y vuelve a incorporarse con o sin apoyo cercano. Registro obtenido con materiales seguros disponibles en la sala."
+  },
+  "id_obs": {
+   "S": "OBS-0001216"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "id_nino": {
+   "S": "NINO-00088"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "texto_literal": {
+   "S": "Usa un objeto cotidiano de manera funcional en una actividad breve. Identifica un objeto conocido al elegirlo entre dos cuando se le solicita."
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "orden": {
+   "S": "2025-06-08#2025-06-08T00:00:00-03:00#OBS-0000492"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Usa un objeto cotidiano de manera funcional en una actividad breve."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Identifica un objeto conocido al elegirlo entre dos cuando se le solicita."
+      }
+     }
+    }
+   ]
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "fecha": {
+   "S": "2025-06-08"
+  },
+  "id_obs": {
+   "S": "OBS-0000492"
+  }
+ },
+ {
+  "nivel": {
+   "N": "4"
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "orden": {
+   "S": "2025-06-08#2025-06-08T00:00:00-03:00#OBS-0002156"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_nino": {
+   "S": "NINO-00366"
+  },
+  "id_obs": {
+   "S": "OBS-0002156"
+  },
+  "texto_literal": {
+   "S": "Balbucea secuencias repetidas de consonante y vocal durante la interacción. Responde de forma consistente a su identificador ficticio o a una llamada habitual del grupo. Golpea dos objetos entre sí después de recibirlos o ver una demostración. Registro obtenido con materiales seguros disponibles en la sala."
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "4"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L04-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Balbucea secuencias repetidas de consonante y vocal durante la interacción."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "4"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L04-LC-02"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Responde de forma consistente a su identificador ficticio o a una llamada habitual del grupo."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "4"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L04-MF-01"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Golpea dos objetos entre sí después de recibirlos o ver una demostración."
+      }
+     }
+    }
+   ]
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "fecha": {
+   "S": "2025-06-08"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "id_nino": {
+   "S": "NINO-00088"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Usa de manera consistente al menos tres palabras, aproximaciones o señas con significado."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-LC-02"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Sigue una instrucción cotidiana de un paso acompañada, si hace falta, por gesto."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MF-01"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Apila dos bloques u objetos estables después de explorar o ver el ejemplo."
+      }
+     }
+    }
+   ]
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_educadora": {
+   "S": "EDU-0002"
+  },
+  "fecha": {
+   "S": "2025-06-13"
+  },
+  "id_obs": {
+   "S": "OBS-0000493"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "texto_literal": {
+   "S": "Usa de manera consistente al menos tres palabras, aproximaciones o señas con significado. Sigue una instrucción cotidiana de un paso acompañada, si hace falta, por gesto. Apila dos bloques u objetos estables después de explorar o ver el ejemplo. Se documentó evidencia positiva en un momento de exploración."
+  },
+  "orden": {
+   "S": "2025-06-13#2025-06-13T00:00:00-03:00#OBS-0000493"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "id_nino": {
+   "S": "NINO-00088"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "texto_literal": {
+   "S": "Intenta usar cuchara, vaso u otro objeto cotidiano según su función. Da varios pasos sin apoyo o recorre una distancia breve de forma independiente. Se agacha para recoger un objeto y vuelve a incorporarse con o sin apoyo cercano. Se observó la conducta en una interacción breve y espontánea."
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MF-02"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Intenta usar cuchara, vaso u otro objeto cotidiano según su función."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MG-01"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Da varios pasos sin apoyo o recorre una distancia breve de forma independiente."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Se agacha para recoger un objeto y vuelve a incorporarse con o sin apoyo cercano."
+      }
+     }
+    }
+   ]
+  },
+  "orden": {
+   "S": "2025-06-18#2025-06-18T00:00:00-03:00#OBS-0000494"
+  },
+  "id_obs": {
+   "S": "OBS-0000494"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "fecha": {
+   "S": "2025-06-18"
+  }
+ },
+ {
+  "fecha": {
+   "S": "2025-06-23"
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "id_obs": {
+   "S": "OBS-0000495"
+  },
+  "id_nino": {
+   "S": "NINO-00088"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Usa un objeto cotidiano de manera funcional en una actividad breve."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-SE-01"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Se aleja para explorar y vuelve o mira a la persona adulta como referencia."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-SE-02"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Imita una acción social sencilla, como saludar, aplaudir o ayudar a guardar."
+      }
+     }
+    }
+   ]
+  },
+  "orden": {
+   "S": "2025-06-23#2025-06-23T00:00:00-03:00#OBS-0000495"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "texto_literal": {
+   "S": "Usa un objeto cotidiano de manera funcional en una actividad breve. Se aleja para explorar y vuelve o mira a la persona adulta como referencia. Imita una acción social sencilla, como saludar, aplaudir o ayudar a guardar. Registro obtenido con materiales seguros disponibles en la sala."
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "orden": {
+   "S": "2025-07-03#2025-07-03T00:00:00-03:00#OBS-0000129"
+  },
+  "id_nino": {
+   "S": "NINO-00023"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "texto_literal": {
+   "S": "Sigue una instrucción cotidiana de un paso acompañada, si hace falta, por gesto. Apila dos bloques u objetos estables después de explorar o ver el ejemplo. Intenta usar cuchara, vaso u otro objeto cotidiano según su función. Se observó la conducta en una interacción breve y espontánea."
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-LC-02"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Sigue una instrucción cotidiana de un paso acompañada, si hace falta, por gesto."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MF-01"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Apila dos bloques u objetos estables después de explorar o ver el ejemplo."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MF-02"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Intenta usar cuchara, vaso u otro objeto cotidiano según su función."
+      }
+     }
+    }
+   ]
+  },
+  "id_obs": {
+   "S": "OBS-0000129"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "fecha": {
+   "S": "2025-07-03"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "nivel": {
+   "N": "8"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-MG-01"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Corre una distancia breve, aunque todavía ajuste velocidad o equilibrio."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Patea una pelota detenida hacia adelante sin necesitar sostén."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-SE-01"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Participa en una actividad junto a pares y tolera compartir espacio o materiales con apoyo adulto."
+      }
+     }
+    }
+   ]
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_nino": {
+   "S": "NINO-00322"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_obs": {
+   "S": "OBS-0001880"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "orden": {
+   "S": "2025-07-03#2025-07-03T00:00:00-03:00#OBS-0001880"
+  },
+  "texto_literal": {
+   "S": "Corre una distancia breve, aunque todavía ajuste velocidad o equilibrio. Patea una pelota detenida hacia adelante sin necesitar sostén. Participa en una actividad junto a pares y tolera compartir espacio o materiales con apoyo adulto. Se documentó evidencia positiva en un momento de exploración."
+  },
+  "fecha": {
+   "S": "2025-07-03"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "texto_literal": {
+   "S": "Introduce un objeto en un recipiente de boca amplia y trata de recuperarlo. Se desplaza para alcanzar un objeto mediante gateo, arrastre u otra estrategia coordinada. Se pone de pie con apoyo y se mantiene mientras sostiene una superficie estable. Comparte atención alternando la mirada entre una persona y un objeto de interés."
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-MF-02"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Introduce un objeto en un recipiente de boca amplia y trata de recuperarlo."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-MG-01"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Se desplaza para alcanzar un objeto mediante gateo, arrastre u otra estrategia coordinada."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Se pone de pie con apoyo y se mantiene mientras sostiene una superficie estable."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-SE-01"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Comparte atención alternando la mirada entre una persona y un objeto de interés."
+      }
+     }
+    }
+   ]
+  },
+  "id_obs": {
+   "S": "OBS-0002106"
+  },
+  "nivel": {
+   "N": "5"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_nino": {
+   "S": "NINO-00357"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "orden": {
+   "S": "2025-07-03#2025-07-03T00:00:00-03:00#OBS-0002106"
+  },
+  "fecha": {
+   "S": "2025-07-03"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-MF-02"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Introduce un objeto en un recipiente de boca amplia y trata de recuperarlo."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-MG-01"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Se desplaza para alcanzar un objeto mediante gateo, arrastre u otra estrategia coordinada."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Se pone de pie con apoyo y se mantiene mientras sostiene una superficie estable."
+      }
+     }
+    }
+   ]
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "orden": {
+   "S": "2025-07-03#2025-07-03T00:00:00-03:00#OBS-0002584"
+  },
+  "texto_literal": {
+   "S": "Introduce un objeto en un recipiente de boca amplia y trata de recuperarlo. Se desplaza para alcanzar un objeto mediante gateo, arrastre u otra estrategia coordinada. Se pone de pie con apoyo y se mantiene mientras sostiene una superficie estable."
+  },
+  "nivel": {
+   "N": "5"
+  },
+  "id_nino": {
+   "S": "NINO-00442"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "id_obs": {
+   "S": "OBS-0002584"
+  },
+  "fecha": {
+   "S": "2025-07-03"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "texto_literal": {
+   "S": "Da varios pasos sin apoyo o recorre una distancia breve de forma independiente. Se agacha para recoger un objeto y vuelve a incorporarse con o sin apoyo cercano. Se aleja para explorar y vuelve o mira a la persona adulta como referencia. Se observó la conducta en una interacción breve y espontánea."
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_obs": {
+   "S": "OBS-0000130"
+  },
+  "fecha": {
+   "S": "2025-07-08"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MG-01"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Da varios pasos sin apoyo o recorre una distancia breve de forma independiente."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Se agacha para recoger un objeto y vuelve a incorporarse con o sin apoyo cercano."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-SE-01"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Se aleja para explorar y vuelve o mira a la persona adulta como referencia."
+      }
+     }
+    }
+   ]
+  },
+  "id_nino": {
+   "S": "NINO-00023"
+  },
+  "orden": {
+   "S": "2025-07-08#2025-07-08T00:00:00-03:00#OBS-0000130"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "texto_literal": {
+   "S": "Empareja dos o más objetos o imágenes iguales entre varias opciones. Completa una secuencia cotidiana de dos pasos después de una indicación inicial. Combina dos palabras, aproximaciones o señas para expresar una relación o intención. Comunica una necesidad de ayuda, pausa o consuelo mediante palabra, seña o gesto claro. Se observó la conducta en una interacción breve y espontánea."
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "nivel": {
+   "N": "8"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_nino": {
+   "S": "NINO-00322"
+  },
+  "id_obs": {
+   "S": "OBS-0001881"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Empareja dos o más objetos o imágenes iguales entre varias opciones."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Completa una secuencia cotidiana de dos pasos después de una indicación inicial."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Combina dos palabras, aproximaciones o señas para expresar una relación o intención."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-SE-02"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Comunica una necesidad de ayuda, pausa o consuelo mediante palabra, seña o gesto claro."
+      }
+     }
+    }
+   ]
+  },
+  "fecha": {
+   "S": "2025-07-08"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "orden": {
+   "S": "2025-07-08#2025-07-08T00:00:00-03:00#OBS-0001881"
+  }
+ },
+ {
+  "id_obs": {
+   "S": "OBS-0002107"
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Busca un objeto que vio ocultarse completamente bajo una tela o recipiente."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Prueba más de una acción para alcanzar un objeto cercano fuera de alcance directo."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-SE-02"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Busca proximidad o apoyo de una persona familiar ante una situación nueva."
+      }
+     }
+    }
+   ]
+  },
+  "fecha": {
+   "S": "2025-07-08"
+  },
+  "nivel": {
+   "N": "5"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "texto_literal": {
+   "S": "Busca un objeto que vio ocultarse completamente bajo una tela o recipiente. Prueba más de una acción para alcanzar un objeto cercano fuera de alcance directo. Busca proximidad o apoyo de una persona familiar ante una situación nueva. La manifestación se observó más de una vez durante la actividad."
+  },
+  "orden": {
+   "S": "2025-07-08#2025-07-08T00:00:00-03:00#OBS-0002107"
+  },
+  "id_nino": {
+   "S": "NINO-00357"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "id_obs": {
+   "S": "OBS-0002157"
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Busca un objeto que vio ocultarse completamente bajo una tela o recipiente."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Prueba más de una acción para alcanzar un objeto cercano fuera de alcance directo."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Usa un gesto convencional, como señalar, mostrar o despedirse, para comunicar una intención."
+      }
+     }
+    }
+   ]
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_educadora": {
+   "S": "EDU-0002"
+  },
+  "id_nino": {
+   "S": "NINO-00366"
+  },
+  "texto_literal": {
+   "S": "Busca un objeto que vio ocultarse completamente bajo una tela o recipiente. Prueba más de una acción para alcanzar un objeto cercano fuera de alcance directo. Usa un gesto convencional, como señalar, mostrar o despedirse, para comunicar una intención. Se observó la conducta en una interacción breve y espontánea."
+  },
+  "fecha": {
+   "S": "2025-10-03"
+  },
+  "orden": {
+   "S": "2025-10-03#2025-10-03T00:00:00-03:00#OBS-0002157"
+  },
+  "nivel": {
+   "N": "5"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-MG-01"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Camina con estabilidad mientras transporta un objeto liviano."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Sube uno o más peldaños con apoyo de mano, baranda o gateando."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-SE-01"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Imita una tarea cotidiana de otra persona durante el juego."
+      }
+     }
+    }
+   ]
+  },
+  "id_nino": {
+   "S": "NINO-00493"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "orden": {
+   "S": "2025-10-03#2025-10-03T00:00:00-03:00#OBS-0002914"
+  },
+  "id_educadora": {
+   "S": "EDU-0002"
+  },
+  "fecha": {
+   "S": "2025-10-03"
+  },
+  "nivel": {
+   "N": "7"
+  },
+  "texto_literal": {
+   "S": "Camina con estabilidad mientras transporta un objeto liviano. Sube uno o más peldaños con apoyo de mano, baranda o gateando. Imita una tarea cotidiana de otra persona durante el juego. Se observó la conducta en una interacción breve y espontánea."
+  },
+  "id_obs": {
+   "S": "OBS-0002914"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-LC-02"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Responde con acción o mirada a una palabra frecuente dentro de una rutina."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-MF-01"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Toma un objeto pequeño seguro entre pulgar y otro dedo."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-MF-02"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Introduce un objeto en un recipiente de boca amplia y trata de recuperarlo."
+      }
+     }
+    }
+   ]
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_educadora": {
+   "S": "EDU-0002"
+  },
+  "id_nino": {
+   "S": "NINO-00366"
+  },
+  "id_obs": {
+   "S": "OBS-0002158"
+  },
+  "nivel": {
+   "N": "5"
+  },
+  "fecha": {
+   "S": "2025-10-08"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "orden": {
+   "S": "2025-10-08#2025-10-08T00:00:00-03:00#OBS-0002158"
+  },
+  "texto_literal": {
+   "S": "Responde con acción o mirada a una palabra frecuente dentro de una rutina. Toma un objeto pequeño seguro entre pulgar y otro dedo. Introduce un objeto en un recipiente de boca amplia y trata de recuperarlo. Se observó la conducta en una interacción breve y espontánea."
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "orden": {
+   "S": "2025-11-03#2025-11-03T00:00:00-03:00#OBS-0002108"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Usa un objeto cotidiano de manera funcional en una actividad breve."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Identifica un objeto conocido al elegirlo entre dos cuando se le solicita."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Usa de manera consistente al menos tres palabras, aproximaciones o señas con significado."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-LC-02"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Sigue una instrucción cotidiana de un paso acompañada, si hace falta, por gesto."
+      }
+     }
+    }
+   ]
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_educadora": {
+   "S": "EDU-0002"
+  },
+  "texto_literal": {
+   "S": "Usa un objeto cotidiano de manera funcional en una actividad breve. Identifica un objeto conocido al elegirlo entre dos cuando se le solicita. Usa de manera consistente al menos tres palabras, aproximaciones o señas con significado. Sigue una instrucción cotidiana de un paso acompañada, si hace falta, por gesto. La evidencia apareció durante una rutina cotidiana del grupo."
+  },
+  "id_obs": {
+   "S": "OBS-0002108"
+  },
+  "fecha": {
+   "S": "2025-11-03"
+  },
+  "id_nino": {
+   "S": "NINO-00357"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "texto_literal": {
+   "S": "Usa un objeto cotidiano de manera funcional en una actividad breve. Imita una acción social sencilla, como saludar, aplaudir o ayudar a guardar."
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "orden": {
+   "S": "2025-11-03#2025-11-03T00:00:00-03:00#OBS-0002585"
+  },
+  "id_obs": {
+   "S": "OBS-0002585"
+  },
+  "id_nino": {
+   "S": "NINO-00442"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "fecha": {
+   "S": "2025-11-03"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Usa un objeto cotidiano de manera funcional en una actividad breve."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-SE-02"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Imita una acción social sencilla, como saludar, aplaudir o ayudar a guardar."
+      }
+     }
+    }
+   ]
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "fecha": {
+   "S": "2025-11-08"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "texto_literal": {
+   "S": "Apila dos bloques u objetos estables después de explorar o ver el ejemplo. Intenta usar cuchara, vaso u otro objeto cotidiano según su función. Da varios pasos sin apoyo o recorre una distancia breve de forma independiente. Registro realizado durante una actividad de juego libre."
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "id_obs": {
+   "S": "OBS-0002109"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "orden": {
+   "S": "2025-11-08#2025-11-08T00:00:00-03:00#OBS-0002109"
+  },
+  "id_nino": {
+   "S": "NINO-00357"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MF-01"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Apila dos bloques u objetos estables después de explorar o ver el ejemplo."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MF-02"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Intenta usar cuchara, vaso u otro objeto cotidiano según su función."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MG-01"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Da varios pasos sin apoyo o recorre una distancia breve de forma independiente."
+      }
+     }
+    }
+   ]
+  }
+ },
+ {
+  "id_obs": {
+   "S": "OBS-0002586"
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "fecha": {
+   "S": "2025-11-08"
+  },
+  "orden": {
+   "S": "2025-11-08#2025-11-08T00:00:00-03:00#OBS-0002586"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Identifica un objeto conocido al elegirlo entre dos cuando se le solicita."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Usa de manera consistente al menos tres palabras, aproximaciones o señas con significado."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-LC-02"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Sigue una instrucción cotidiana de un paso acompañada, si hace falta, por gesto."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MF-01"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Apila dos bloques u objetos estables después de explorar o ver el ejemplo."
+      }
+     }
+    }
+   ]
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_nino": {
+   "S": "NINO-00442"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "texto_literal": {
+   "S": "Identifica un objeto conocido al elegirlo entre dos cuando se le solicita. Usa de manera consistente al menos tres palabras, aproximaciones o señas con significado. Sigue una instrucción cotidiana de un paso acompañada, si hace falta, por gesto. Apila dos bloques u objetos estables después de explorar o ver el ejemplo."
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "texto_literal": {
+   "S": "Intenta usar cuchara, vaso u otro objeto cotidiano según su función. Da varios pasos sin apoyo o recorre una distancia breve de forma independiente. Se agacha para recoger un objeto y vuelve a incorporarse con o sin apoyo cercano. Se aleja para explorar y vuelve o mira a la persona adulta como referencia. Se observó la conducta en una interacción breve y espontánea."
+  },
+  "fecha": {
+   "S": "2025-11-13"
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MF-02"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Intenta usar cuchara, vaso u otro objeto cotidiano según su función."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MG-01"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Da varios pasos sin apoyo o recorre una distancia breve de forma independiente."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Se agacha para recoger un objeto y vuelve a incorporarse con o sin apoyo cercano."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-SE-01"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Se aleja para explorar y vuelve o mira a la persona adulta como referencia."
+      }
+     }
+    }
+   ]
+  },
+  "orden": {
+   "S": "2025-11-13#2025-11-13T00:00:00-03:00#OBS-0002587"
+  },
+  "id_obs": {
+   "S": "OBS-0002587"
+  },
+  "id_nino": {
+   "S": "NINO-00442"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "id_obs": {
+   "S": "OBS-0002588"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Usa un objeto cotidiano de manera funcional en una actividad breve."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Identifica un objeto conocido al elegirlo entre dos cuando se le solicita."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "6"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L06-SE-02"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Imita una acción social sencilla, como saludar, aplaudir o ayudar a guardar."
+      }
+     }
+    }
+   ]
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "texto_literal": {
+   "S": "Usa un objeto cotidiano de manera funcional en una actividad breve. Identifica un objeto conocido al elegirlo entre dos cuando se le solicita. Imita una acción social sencilla, como saludar, aplaudir o ayudar a guardar. La manifestación se observó más de una vez durante la actividad."
+  },
+  "nivel": {
+   "N": "6"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "fecha": {
+   "S": "2025-11-18"
+  },
+  "orden": {
+   "S": "2025-11-18#2025-11-18T00:00:00-03:00#OBS-0002588"
+  },
+  "id_nino": {
+   "S": "NINO-00442"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "fecha": {
+   "S": "2025-12-03"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "texto_literal": {
+   "S": "Hace trazos visibles con crayón grueso después de recibir papel y material seguro. Pasa varias páginas de cartón o manipula tapas grandes con intención. Camina con estabilidad mientras transporta un objeto liviano."
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "orden": {
+   "S": "2025-12-03#2025-12-03T00:00:00-03:00#OBS-0000131"
+  },
+  "id_nino": {
+   "S": "NINO-00023"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "nivel": {
+   "N": "7"
+  },
+  "id_obs": {
+   "S": "OBS-0000131"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-MF-01"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Hace trazos visibles con crayón grueso después de recibir papel y material seguro."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-MF-02"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Pasa varias páginas de cartón o manipula tapas grandes con intención."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-MG-01"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Camina con estabilidad mientras transporta un objeto liviano."
+      }
+     }
+    }
+   ]
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Realiza una acción de juego representacional, como dar de comer a un muñeco o simular hablar."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Sube uno o más peldaños con apoyo de mano, baranda o gateando."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-SE-01"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Imita una tarea cotidiana de otra persona durante el juego."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-SE-02"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Permanece cerca de otro niño o niña realizando una actividad similar por un periodo breve."
+      }
+     }
+    }
+   ]
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "texto_literal": {
+   "S": "Realiza una acción de juego representacional, como dar de comer a un muñeco o simular hablar. Sube uno o más peldaños con apoyo de mano, baranda o gateando. Imita una tarea cotidiana de otra persona durante el juego. Permanece cerca de otro niño o niña realizando una actividad similar por un periodo breve."
+  },
+  "id_obs": {
+   "S": "OBS-0000132"
+  },
+  "orden": {
+   "S": "2025-12-08#2025-12-08T00:00:00-03:00#OBS-0000132"
+  },
+  "id_nino": {
+   "S": "NINO-00023"
+  },
+  "fecha": {
+   "S": "2025-12-08"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "nivel": {
+   "N": "7"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_educadora": {
+   "S": "EDU-0002"
+  },
+  "texto_literal": {
+   "S": "Prueba una alternativa cuando la primera estrategia para abrir, encajar o alcanzar no funciona. Usa palabras, aproximaciones o señas diferentes para pedir, nombrar o rechazar en varias ocasiones. Señala al menos una parte del cuerpo u objeto conocido cuando se le pregunta. Hace trazos visibles con crayón grueso después de recibir papel y material seguro. Pasa varias páginas de cartón o manipula tapas grandes con intención."
+  },
+  "id_nino": {
+   "S": "NINO-00023"
+  },
+  "orden": {
+   "S": "2025-12-13#2025-12-13T00:00:00-03:00#OBS-0000133"
+  },
+  "fecha": {
+   "S": "2025-12-13"
+  },
+  "nivel": {
+   "N": "7"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Prueba una alternativa cuando la primera estrategia para abrir, encajar o alcanzar no funciona."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Usa palabras, aproximaciones o señas diferentes para pedir, nombrar o rechazar en varias ocasiones."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-LC-02"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Señala al menos una parte del cuerpo u objeto conocido cuando se le pregunta."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-MF-01"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Hace trazos visibles con crayón grueso después de recibir papel y material seguro."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "7"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L07-MF-02"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Pasa varias páginas de cartón o manipula tapas grandes con intención."
+      }
+     }
+    }
+   ]
+  },
+  "id_obs": {
+   "S": "OBS-0000133"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "nivel": {
+   "N": "8"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "id_obs": {
+   "S": "OBS-0002915"
+  },
+  "id_nino": {
+   "S": "NINO-00493"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "orden": {
+   "S": "2026-02-03#2026-02-03T00:00:00-03:00#OBS-0002915"
+  },
+  "fecha": {
+   "S": "2026-02-03"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Combina dos palabras, aproximaciones o señas para expresar una relación o intención."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-LC-02"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Sigue una instrucción de dos acciones relacionadas dentro de una rutina conocida."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-MF-01"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Construye una torre de cuatro o más bloques estables."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-MF-02"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Gira una tapa grande, perilla o pieza rotatoria para lograr un resultado."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-MG-01"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Corre una distancia breve, aunque todavía ajuste velocidad o equilibrio."
+      }
+     }
+    }
+   ]
+  },
+  "texto_literal": {
+   "S": "Combina dos palabras, aproximaciones o señas para expresar una relación o intención. Sigue una instrucción de dos acciones relacionadas dentro de una rutina conocida. Construye una torre de cuatro o más bloques estables. Gira una tapa grande, perilla o pieza rotatoria para lograr un resultado. Corre una distancia breve, aunque todavía ajuste velocidad o equilibrio. Se observó la conducta en una interacción breve y espontánea."
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "orden": {
+   "S": "2026-02-08#2026-02-08T00:00:00-03:00#OBS-0002916"
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "nivel": {
+   "N": "8"
+  },
+  "texto_literal": {
+   "S": "Patea una pelota detenida hacia adelante sin necesitar sostén. Participa en una actividad junto a pares y tolera compartir espacio o materiales con apoyo adulto. Comunica una necesidad de ayuda, pausa o consuelo mediante palabra, seña o gesto claro. La manifestación se observó más de una vez durante la actividad."
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "id_nino": {
+   "S": "NINO-00493"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_obs": {
+   "S": "OBS-0002916"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Patea una pelota detenida hacia adelante sin necesitar sostén."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-SE-01"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Participa en una actividad junto a pares y tolera compartir espacio o materiales con apoyo adulto."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-SE-02"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Comunica una necesidad de ayuda, pausa o consuelo mediante palabra, seña o gesto claro."
+      }
+     }
+    }
+   ]
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "fecha": {
+   "S": "2026-02-08"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "fecha": {
+   "S": "2026-04-03"
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "id_nino": {
+   "S": "NINO-00088"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "nivel": {
+   "N": "8"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_obs": {
+   "S": "OBS-0000496"
+  },
+  "texto_literal": {
+   "S": "Empareja dos o más objetos o imágenes iguales entre varias opciones. Completa una secuencia cotidiana de dos pasos después de una indicación inicial. Patea una pelota detenida hacia adelante sin necesitar sostén. Participa en una actividad junto a pares y tolera compartir espacio o materiales con apoyo adulto. Comunica una necesidad de ayuda, pausa o consuelo mediante palabra, seña o gesto claro. Registro obtenido con materiales seguros disponibles en la sala."
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Empareja dos o más objetos o imágenes iguales entre varias opciones."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Completa una secuencia cotidiana de dos pasos después de una indicación inicial."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Patea una pelota detenida hacia adelante sin necesitar sostén."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-SE-01"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Participa en una actividad junto a pares y tolera compartir espacio o materiales con apoyo adulto."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-SE-02"
+      },
+      "dominio": {
+       "S": "socioemocional"
+      },
+      "texto_observable": {
+       "S": "Comunica una necesidad de ayuda, pausa o consuelo mediante palabra, seña o gesto claro."
+      }
+     }
+    }
+   ]
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "orden": {
+   "S": "2026-04-03#2026-04-03T00:00:00-03:00#OBS-0000496"
+  }
+ },
+ {
+  "id_obs": {
+   "S": "OBS-0000497"
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "id_nino": {
+   "S": "NINO-00088"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "nivel": {
+   "N": "8"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "texto_literal": {
+   "S": "Combina dos palabras, aproximaciones o señas para expresar una relación o intención. Sigue una instrucción de dos acciones relacionadas dentro de una rutina conocida. Construye una torre de cuatro o más bloques estables. Se observó la conducta en una interacción breve y espontánea."
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "fecha": {
+   "S": "2026-04-08"
+  },
+  "orden": {
+   "S": "2026-04-08#2026-04-08T00:00:00-03:00#OBS-0000497"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Combina dos palabras, aproximaciones o señas para expresar una relación o intención."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-LC-02"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Sigue una instrucción de dos acciones relacionadas dentro de una rutina conocida."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "8"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L08-MF-01"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Construye una torre de cuatro o más bloques estables."
+      }
+     }
+    }
+   ]
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "id_obs": {
+   "S": "OBS-0002917"
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "id_nino": {
+   "S": "NINO-00493"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "id_educadora": {
+   "S": "EDU-0002"
+  },
+  "fecha": {
+   "S": "2026-08-03"
+  },
+  "orden": {
+   "S": "2026-08-03#2026-08-03T00:00:00-03:00#OBS-0002917"
+  },
+  "texto_literal": {
+   "S": "Representa una secuencia de dos o más acciones relacionadas en el juego simbólico. Clasifica objetos por una característica visible, como forma, color o tamaño, después de una consigna simple. Se observó la conducta en una interacción breve y espontánea."
+  },
+  "nivel": {
+   "N": "9"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "9"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L09-CO-01"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Representa una secuencia de dos o más acciones relacionadas en el juego simbólico."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "9"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L09-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Clasifica objetos por una característica visible, como forma, color o tamaño, después de una consigna simple."
+      }
+     }
+    }
+   ]
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Prueba más de una acción para alcanzar un objeto cercano fuera de alcance directo."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Usa un gesto convencional, como señalar, mostrar o despedirse, para comunicar una intención."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-LC-02"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Responde con acción o mirada a una palabra frecuente dentro de una rutina."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-MF-01"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Toma un objeto pequeño seguro entre pulgar y otro dedo."
+      }
+     }
+    }
+   ]
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "texto_literal": {
+   "S": "Prueba más de una acción para alcanzar un objeto cercano fuera de alcance directo. Usa un gesto convencional, como señalar, mostrar o despedirse, para comunicar una intención. Responde con acción o mirada a una palabra frecuente dentro de una rutina. Toma un objeto pequeño seguro entre pulgar y otro dedo. Registro realizado durante una actividad de juego libre."
+  },
+  "id_nino": {
+   "S": "NINO-00362"
+  },
+  "id_obs": {
+   "S": "OBS-0002137"
+  },
+  "fecha": {
+   "S": "2026-09-03"
+  },
+  "nivel": {
+   "N": "5"
+  },
+  "orden": {
+   "S": "2026-09-03#2026-09-03T00:00:00-03:00#OBS-0002137"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ },
+ {
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "id_obs": {
+   "S": "OBS-0002569"
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "nivel": {
+   "N": "3"
+  },
+  "fecha": {
+   "S": "2026-09-03"
+  },
+  "texto_literal": {
+   "S": "Repite una acción sencilla que vuelve a producir un sonido o movimiento. Produce series de vocales, chillidos suaves o sonidos guturales durante el juego. Gira hacia la voz de una persona conocida cuando esta habla desde un costado. La evidencia apareció durante una rutina cotidiana del grupo."
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_nino": {
+   "S": "NINO-00439"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-CO-02"
+      },
+      "dominio": {
+       "S": "cognitivo"
+      },
+      "texto_observable": {
+       "S": "Repite una acción sencilla que vuelve a producir un sonido o movimiento."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-LC-01"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Produce series de vocales, chillidos suaves o sonidos guturales durante el juego."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "3"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L03-LC-02"
+      },
+      "dominio": {
+       "S": "lenguaje_comunicacion"
+      },
+      "texto_observable": {
+       "S": "Gira hacia la voz de una persona conocida cuando esta habla desde un costado."
+      }
+     }
+    }
+   ]
+  },
+  "orden": {
+   "S": "2026-09-03#2026-09-03T00:00:00-03:00#OBS-0002569"
+  }
+ },
+ {
+  "id_obs": {
+   "S": "OBS-0002138"
+  },
+  "estado": {
+   "S": "SUGERIDO"
+  },
+  "manifestaciones": {
+   "L": [
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-MF-02"
+      },
+      "dominio": {
+       "S": "motor_fino"
+      },
+      "texto_observable": {
+       "S": "Introduce un objeto en un recipiente de boca amplia y trata de recuperarlo."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-MG-01"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Se desplaza para alcanzar un objeto mediante gateo, arrastre u otra estrategia coordinada."
+      }
+     }
+    },
+    {
+     "M": {
+      "nivel": {
+       "N": "5"
+      },
+      "id_manifestacion": {
+       "S": "MAN-L05-MG-02"
+      },
+      "dominio": {
+       "S": "motor_grueso"
+      },
+      "texto_observable": {
+       "S": "Se pone de pie con apoyo y se mantiene mientras sostiene una superficie estable."
+      }
+     }
+    }
+   ]
+  },
+  "tipo": {
+   "S": "PARTICULAR"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "sala_key": {
+   "S": "JAR-0001#SG-B"
+  },
+  "texto_literal": {
+   "S": "Introduce un objeto en un recipiente de boca amplia y trata de recuperarlo. Se desplaza para alcanzar un objeto mediante gateo, arrastre u otra estrategia coordinada. Se pone de pie con apoyo y se mantiene mientras sostiene una superficie estable. Registro realizado durante una actividad de juego libre."
+  },
+  "orden": {
+   "S": "2026-09-08#2026-09-08T00:00:00-03:00#OBS-0002138"
+  },
+  "origen": {
+   "S": "dataset"
+  },
+  "fecha": {
+   "S": "2026-09-08"
+  },
+  "id_nino": {
+   "S": "NINO-00362"
+  },
+  "nivel": {
+   "N": "5"
+  },
+  "id_educadora": {
+   "S": "EDU-0001"
+  },
+  "id_captura": {
+   "S": "DATASET"
+  }
+ }
+]

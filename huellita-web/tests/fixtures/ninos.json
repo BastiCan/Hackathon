@@ -1,0 +1,928 @@
+[
+ {
+  "nombre": {
+   "S": "Josefa"
+  },
+  "fecha_nacimiento": {
+   "S": "2024-06-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2025-08-03"
+  },
+  "ultima_obs_fecha": {
+   "S": "2025-08-03"
+  },
+  "apodos": {
+   "L": [
+    {
+     "S": "Jose"
+    },
+    {
+     "S": "la Jose"
+    }
+   ]
+  },
+  "ultimo_nivel": {
+   "N": "6"
+  },
+  "sala_grupo": {
+   "S": "SG-A"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2024-12-05"
+  },
+  "id_nino": {
+   "S": "NINO-00008"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Lucas"
+  },
+  "fecha_nacimiento": {
+   "S": "2024-05-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2025-12-13"
+  },
+  "ultima_obs_fecha": {
+   "S": "2025-12-13"
+  },
+  "apodos": {
+   "L": []
+  },
+  "ultimo_nivel": {
+   "N": "7"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2025-02-17"
+  },
+  "id_nino": {
+   "S": "NINO-00023"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Gabriel"
+  },
+  "fecha_nacimiento": {
+   "S": "2025-01-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2025-04-13"
+  },
+  "ultima_obs_fecha": {
+   "S": "2025-04-13"
+  },
+  "apodos": {
+   "L": [
+    {
+     "S": "Gabo"
+    }
+   ]
+  },
+  "ultimo_nivel": {
+   "N": "2"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2025-01-01"
+  },
+  "id_nino": {
+   "S": "NINO-00037"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Pascal"
+  },
+  "fecha_nacimiento": {
+   "S": "2024-10-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2025-03-13"
+  },
+  "ultima_obs_fecha": {
+   "S": "2025-03-13"
+  },
+  "apodos": {
+   "L": []
+  },
+  "ultimo_nivel": {
+   "N": "3"
+  },
+  "sala_grupo": {
+   "S": "SG-A"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2024-12-07"
+  },
+  "id_nino": {
+   "S": "NINO-00051"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Vicente"
+  },
+  "fecha_nacimiento": {
+   "S": "2026-05-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2026-08-08"
+  },
+  "ultima_obs_fecha": {
+   "S": "2026-08-08"
+  },
+  "apodos": {
+   "L": [
+    {
+     "S": "Vicho"
+    }
+   ]
+  },
+  "ultimo_nivel": {
+   "N": "2"
+  },
+  "sala_grupo": {
+   "S": "SG-A"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2026-07-29"
+  },
+  "id_nino": {
+   "S": "NINO-00080"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Alex"
+  },
+  "fecha_nacimiento": {
+   "S": "2024-04-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2026-04-08"
+  },
+  "ultima_obs_fecha": {
+   "S": "2026-04-08"
+  },
+  "apodos": {
+   "L": []
+  },
+  "ultimo_nivel": {
+   "N": "8"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2025-04-25"
+  },
+  "id_nino": {
+   "S": "NINO-00088"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Antonia"
+  },
+  "fecha_nacimiento": {
+   "S": "2023-06-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2025-05-23"
+  },
+  "ultima_obs_fecha": {
+   "S": "2025-05-23"
+  },
+  "apodos": {
+   "L": [
+    {
+     "S": "Anto"
+    }
+   ]
+  },
+  "ultimo_nivel": {
+   "N": "8"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2024-12-20"
+  },
+  "id_nino": {
+   "S": "NINO-00209"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Joaquín"
+  },
+  "fecha_nacimiento": {
+   "S": "2024-03-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2025-06-07"
+  },
+  "ultima_obs_fecha": {
+   "S": "2025-06-07"
+  },
+  "apodos": {
+   "L": [
+    {
+     "S": "Joaco"
+    }
+   ]
+  },
+  "ultimo_nivel": {
+   "N": "6"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2024-11-03"
+  },
+  "id_nino": {
+   "S": "NINO-00216"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Martina M."
+  },
+  "fecha_nacimiento": {
+   "S": "2024-10-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2025-12-03"
+  },
+  "ultima_obs_fecha": {
+   "S": "2025-12-03"
+  },
+  "apodos": {
+   "L": [
+    {
+     "S": "Martina"
+    },
+    {
+     "S": "Marti"
+    }
+   ]
+  },
+  "ultimo_nivel": {
+   "N": "6"
+  },
+  "sala_grupo": {
+   "S": "SG-A"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2025-03-01"
+  },
+  "id_nino": {
+   "S": "NINO-00237"
+  }
+ },
+ {
+  "apodos": {
+   "L": [
+    {
+     "S": "Pedrito"
+    }
+   ]
+  },
+  "fecha_ingreso": {
+   "S": "2025-03-28"
+  },
+  "fecha_nacimiento": {
+   "S": "2024-03-01"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "nombre": {
+   "S": "Pedro"
+  },
+  "sala_grupo": {
+   "S": "SG-A"
+  },
+  "ultima_obs_fecha": {
+   "S": "2026-10-15"
+  },
+  "ultimo_nivel": {
+   "N": "8"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2026-10-15"
+  },
+  "id_nino": {
+   "S": "NINO-00253"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Martina R."
+  },
+  "fecha_nacimiento": {
+   "S": "2024-10-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2025-05-03"
+  },
+  "ultima_obs_fecha": {
+   "S": "2025-05-03"
+  },
+  "apodos": {
+   "L": [
+    {
+     "S": "Martina"
+    },
+    {
+     "S": "Tina"
+    }
+   ]
+  },
+  "ultimo_nivel": {
+   "N": "4"
+  },
+  "sala_grupo": {
+   "S": "SG-A"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2024-12-06"
+  },
+  "id_nino": {
+   "S": "NINO-00263"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Emilia"
+  },
+  "fecha_nacimiento": {
+   "S": "2024-12-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2025-05-28"
+  },
+  "ultima_obs_fecha": {
+   "S": "2025-05-28"
+  },
+  "apodos": {
+   "L": []
+  },
+  "ultimo_nivel": {
+   "N": "3"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2025-01-17"
+  },
+  "id_nino": {
+   "S": "NINO-00265"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Esperanza"
+  },
+  "fecha_nacimiento": {
+   "S": "2024-11-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2026-10-13"
+  },
+  "ultima_obs_fecha": {
+   "S": "2026-10-13"
+  },
+  "apodos": {
+   "L": [
+    {
+     "S": "Espe"
+    }
+   ]
+  },
+  "ultimo_nivel": {
+   "N": "8"
+  },
+  "sala_grupo": {
+   "S": "SG-A"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2025-03-08"
+  },
+  "id_nino": {
+   "S": "NINO-00300"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Matías"
+  },
+  "fecha_nacimiento": {
+   "S": "2023-08-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2025-07-08"
+  },
+  "ultima_obs_fecha": {
+   "S": "2025-07-08"
+  },
+  "apodos": {
+   "L": [
+    {
+     "S": "Mati"
+    }
+   ]
+  },
+  "ultimo_nivel": {
+   "N": "8"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2025-01-14"
+  },
+  "id_nino": {
+   "S": "NINO-00322"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Rusi"
+  },
+  "fecha_nacimiento": {
+   "S": "2023-09-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2026-02-23"
+  },
+  "ultima_obs_fecha": {
+   "S": "2026-02-23"
+  },
+  "apodos": {
+   "L": [
+    {
+     "S": "Rusito"
+    }
+   ]
+  },
+  "ultimo_nivel": {
+   "N": "9"
+  },
+  "sala_grupo": {
+   "S": "SG-A"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2025-03-22"
+  },
+  "id_nino": {
+   "S": "NINO-00346"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Tomás"
+  },
+  "fecha_nacimiento": {
+   "S": "2024-11-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2025-04-13"
+  },
+  "ultima_obs_fecha": {
+   "S": "2025-04-13"
+  },
+  "apodos": {
+   "L": [
+    {
+     "S": "Tomi"
+    }
+   ]
+  },
+  "ultimo_nivel": {
+   "N": "3"
+  },
+  "sala_grupo": {
+   "S": "SG-A"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2025-01-20"
+  },
+  "id_nino": {
+   "S": "NINO-00356"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Gaspar"
+  },
+  "fecha_nacimiento": {
+   "S": "2024-09-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2025-11-08"
+  },
+  "ultima_obs_fecha": {
+   "S": "2025-11-08"
+  },
+  "apodos": {
+   "L": []
+  },
+  "ultimo_nivel": {
+   "N": "6"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2024-11-26"
+  },
+  "id_nino": {
+   "S": "NINO-00357"
+  }
+ },
+ {
+  "nombre": {
+   "S": "León"
+  },
+  "fecha_nacimiento": {
+   "S": "2025-11-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2026-09-08"
+  },
+  "ultima_obs_fecha": {
+   "S": "2026-09-08"
+  },
+  "apodos": {
+   "L": []
+  },
+  "ultimo_nivel": {
+   "N": "5"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2026-08-29"
+  },
+  "id_nino": {
+   "S": "NINO-00362"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Felipe"
+  },
+  "fecha_nacimiento": {
+   "S": "2024-10-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2025-10-08"
+  },
+  "ultima_obs_fecha": {
+   "S": "2025-10-08"
+  },
+  "apodos": {
+   "L": [
+    {
+     "S": "Pipe"
+    }
+   ]
+  },
+  "ultimo_nivel": {
+   "N": "5"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2024-12-21"
+  },
+  "id_nino": {
+   "S": "NINO-00366"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Sofía"
+  },
+  "fecha_nacimiento": {
+   "S": "2023-09-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2026-02-23"
+  },
+  "ultima_obs_fecha": {
+   "S": "2026-02-23"
+  },
+  "apodos": {
+   "L": [
+    {
+     "S": "Sofi"
+    },
+    {
+     "S": "la Sofi"
+    }
+   ]
+  },
+  "ultimo_nivel": {
+   "N": "9"
+  },
+  "sala_grupo": {
+   "S": "SG-A"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2025-04-02"
+  },
+  "id_nino": {
+   "S": "NINO-00372"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Benjamín"
+  },
+  "fecha_nacimiento": {
+   "S": "2025-02-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2026-09-03"
+  },
+  "ultima_obs_fecha": {
+   "S": "2026-09-03"
+  },
+  "apodos": {
+   "L": [
+    {
+     "S": "Benja"
+    },
+    {
+     "S": "el Benja"
+    }
+   ]
+  },
+  "ultimo_nivel": {
+   "N": "7"
+  },
+  "sala_grupo": {
+   "S": "SG-A"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2026-08-17"
+  },
+  "id_nino": {
+   "S": "NINO-00394"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Amanda"
+  },
+  "fecha_nacimiento": {
+   "S": "2026-04-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2026-09-03"
+  },
+  "ultima_obs_fecha": {
+   "S": "2026-09-03"
+  },
+  "apodos": {
+   "L": []
+  },
+  "ultimo_nivel": {
+   "N": "3"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2026-08-19"
+  },
+  "id_nino": {
+   "S": "NINO-00439"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Maximiliano"
+  },
+  "fecha_nacimiento": {
+   "S": "2024-09-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2025-11-18"
+  },
+  "ultima_obs_fecha": {
+   "S": "2025-11-18"
+  },
+  "apodos": {
+   "L": [
+    {
+     "S": "Maxi"
+    }
+   ]
+  },
+  "ultimo_nivel": {
+   "N": "6"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2025-03-12"
+  },
+  "id_nino": {
+   "S": "NINO-00442"
+  }
+ },
+ {
+  "apodos": {
+   "L": [
+    {
+     "S": "Emi"
+    }
+   ]
+  },
+  "fecha_ingreso": {
+   "S": "2025-04-27"
+  },
+  "fecha_nacimiento": {
+   "S": "2024-10-01"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "nombre": {
+   "S": "Emilio"
+  },
+  "sala_grupo": {
+   "S": "SG-A"
+  },
+  "ultima_obs_fecha": {
+   "S": "2026-10-15"
+  },
+  "ultimo_nivel": {
+   "N": "9"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2026-10-15"
+  },
+  "id_nino": {
+   "S": "NINO-00453"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Nayara"
+  },
+  "fecha_nacimiento": {
+   "S": "2023-06-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2025-11-13"
+  },
+  "ultima_obs_fecha": {
+   "S": "2025-11-13"
+  },
+  "apodos": {
+   "L": [
+    {
+     "S": "Naiara"
+    },
+    {
+     "S": "Naya"
+    }
+   ]
+  },
+  "ultimo_nivel": {
+   "N": "9"
+  },
+  "sala_grupo": {
+   "S": "SG-A"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2024-11-24"
+  },
+  "id_nino": {
+   "S": "NINO-00487"
+  }
+ },
+ {
+  "nombre": {
+   "S": "Isidora"
+  },
+  "fecha_nacimiento": {
+   "S": "2024-03-01"
+  },
+  "ultimo_nivel_fecha": {
+   "S": "2026-08-03"
+  },
+  "ultima_obs_fecha": {
+   "S": "2026-08-03"
+  },
+  "apodos": {
+   "L": [
+    {
+     "S": "Isi"
+    }
+   ]
+  },
+  "ultimo_nivel": {
+   "N": "9"
+  },
+  "sala_grupo": {
+   "S": "SG-B"
+  },
+  "id_jardin": {
+   "S": "JAR-0001"
+  },
+  "fecha_ingreso": {
+   "S": "2025-02-25"
+  },
+  "id_nino": {
+   "S": "NINO-00493"
+  }
+ }
+]

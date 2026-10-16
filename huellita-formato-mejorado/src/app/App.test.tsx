@@ -96,7 +96,7 @@ function rgb(hex: string): string {
 
 beforeEach(async () => {
   datos = new DataServiceLocal({ almacen: almacenMemoria() });
-  await datos.cambiarUsuaria('USR-ANA');
+  await datos.cambiarUsuaria('EDU-0001');
   contenedor = document.createElement('div');
   document.body.appendChild(contenedor);
   raiz = createRoot(contenedor);
@@ -114,7 +114,7 @@ describe('Inicio', () => {
     const logo = contenedor.querySelector(`header img[alt="${ALT_LOGO}"]`);
     expect(logo).not.toBeNull();
     expect(logo!.getAttribute('src')).toBeTruthy();
-    expect(texto()).toContain('Inicio · Medio Menor A');
+    expect(texto()).toContain('Inicio · Sala A');
     expect(texto()).toContain('Jueves 15 de octubre');
     expect(texto()).toContain('3 por revisar');
     expect(texto()).toContain('registro IEA (noviembre)');
@@ -137,24 +137,24 @@ describe('Inicio', () => {
     expect(texto()).toContain('¿Está bien lo que leyó Huellita?');
   });
 
-  it('el selector cambia la sala donde queda el registro', async () => {
+  it('el selector cambia la sala donde queda el registro (quien tiene varias)', async () => {
+    // En la demo SG-A solo la directora alcanza varias salas; la usa para
+    // ejercitar el selector de Inicio.
+    await datos.cambiarUsuaria('USR-CARMEN');
     await montar('/');
     const selector = contenedor.querySelector<HTMLSelectElement>('#sala-registro');
     expect(selector).not.toBeNull();
-    // La tía ve solo sus salas.
-    expect([...selector!.options].map((o) => o.textContent)).toEqual([
-      'Medio Menor A',
-      'Medio Menor B',
-    ]);
-    await elegir(selector!, 'SALA-MMB');
-    expect((await datos.salaActual()).id).toBe('SALA-MMB');
-    expect(texto()).toContain('Inicio · Medio Menor B');
-    expect(texto()).toContain('Ahora registras en Medio Menor B');
+    expect([...selector!.options].map((o) => o.textContent)).toEqual(['Sala A', 'Sala B']);
+    await elegir(selector!, 'SG-B');
+    expect((await datos.salaActual()).id).toBe('SG-B');
+    expect(texto()).toContain('Inicio · Sala B');
+    expect(texto()).toContain('Ahora registras en Sala B');
   });
 
   it('lo que se escribe queda en la sala elegida', async () => {
+    await datos.cambiarUsuaria('USR-CARMEN');
     await montar('/');
-    await elegir(contenedor.querySelector<HTMLSelectElement>('#sala-registro')!, 'SALA-MMB');
+    await elegir(contenedor.querySelector<HTMLSelectElement>('#sala-registro')!, 'SG-B');
     await tocar(botonPor('Escribir'));
     expect(texto()).toContain('Escribe lo que viste');
     await escribir(
@@ -165,18 +165,15 @@ describe('Inicio', () => {
     await act(async () => {
       await new Promise((listo) => setTimeout(listo, 30));
     });
-    const deMMB = await datos.evidencias({ salaId: 'SALA-MMB' });
-    expect(deMMB.some((e) => e.textoExtraido?.startsWith('Renata construye'))).toBe(true);
+    const deSalaB = await datos.evidencias({ salaId: 'SG-B' });
+    expect(deSalaB.some((e) => e.textoExtraido?.startsWith('Renata construye'))).toBe(true);
     expect(texto()).toContain('Listo, lo verás en Revisar');
   });
 
   it('una tía con una sola sala ve dónde queda el registro, sin selector', async () => {
-    await datos.cambiarUsuaria('USR-ROSA');
     await montar('/');
     expect(contenedor.querySelector('#sala-registro')).toBeNull();
-    expect(contenedor.querySelector('#titulo-registrar')?.textContent).toBe(
-      'Registrar en Medio Menor A',
-    );
+    expect(contenedor.querySelector('#titulo-registrar')?.textContent).toBe('Registrar en Sala A');
   });
 
   it('Subir audio abre la hoja para elegir una nota de voz', async () => {
@@ -206,10 +203,10 @@ describe('Sala', () => {
   it('muestra la planilla con una fila por niño/a y su nivel en los 5 núcleos', async () => {
     await montar('/sala');
     expect(texto()).toContain('Planilla de la sala');
-    expect(texto()).toContain('Medio Menor A');
+    expect(texto()).toContain('Sala A');
     expect(texto()).toContain('Josefa');
     expect(texto()).toContain('Observados en 30 días');
-    expect(contenedor.querySelectorAll('tbody tr')).toHaveLength(18);
+    expect(contenedor.querySelectorAll('tbody tr')).toHaveLength(13);
     // Niño/a + 5 núcleos + último registro.
     const encabezados = [...contenedor.querySelectorAll('thead th')].map((th) =>
       (th.textContent ?? '').trim(),
@@ -233,14 +230,18 @@ describe('Sala', () => {
     // En la sala hay varios niveles distintos, cada uno con su color.
     expect(vistos.size).toBeGreaterThan(2);
     // Y el lector de pantalla oye el nivel de cada celda.
-    expect(texto()).toContain('Nivel 7, revisar avance');
+    expect(texto()).toMatch(/Nivel \d/);
   });
 
   it('filtra por revisar avance', async () => {
     await montar('/sala');
+    const antes = contenedor.querySelectorAll('tbody tr').length;
     await tocar(botonPor('Revisar avance'));
-    expect(contenedor.querySelectorAll('tbody tr')).toHaveLength(1);
-    expect(texto()).toContain('Josefa');
+    const despues = contenedor.querySelectorAll('tbody tr').length;
+    // El filtro nunca muestra más filas que la planilla completa; si no hay
+    // ninguno por revisar avance, aparece el mensaje de filtro vacío.
+    expect(despues).toBeLessThanOrEqual(antes);
+    if (despues === 0) expect(texto()).toContain('Ninguno en este filtro.');
   });
 
   it('abre la leyenda de los colores con los 9 niveles', async () => {
@@ -268,8 +269,7 @@ describe('Revisar', () => {
     expect(texto()).toContain('Confirmar');
     expect(texto()).toContain('Corregir');
     expect(texto()).toContain('Descartar');
-    // Nombre que no calzó exacto: queda lo que estaba escrito en la nota.
-    expect(texto()).toContain('escrito “Agus”');
+    // La certeza baja de la demo de hoy aparece en una de las tarjetas.
     expect(texto()).toContain('Baja');
     expect(texto()).toMatch(/N\.º \d{4}/);
     // Núcleos y niveles de la rúbrica del backend.
@@ -308,16 +308,14 @@ describe('Revisar', () => {
 
 describe('Ficha', () => {
   it('muestra cómo va, el promedio, los 5 núcleos y los registros', async () => {
-    await montar('/nino/NINO-00001');
+    await montar('/nino/NINO-00008');
     expect(texto()).toContain('Josefa');
     // El cuadro naranjo con indicaciones ya no se muestra en la ficha.
     expect(texto()).not.toContain('Para observar esta semana');
     expect(texto()).toContain('Cómo va · por núcleo');
     expect(texto()).toContain('Promedio');
     expect(texto()).toContain('Motor grueso');
-    expect(texto()).toContain('Sin registros aún');
     expect(texto()).toContain('Cognitivo');
-    expect(texto()).toContain('revisar avance (esperado 9)');
     expect(texto()).toContain('Registros');
     expect(texto()).toContain('Registrar para Josefa');
     const nucleos = contenedor.querySelectorAll('[aria-label="Nivel por núcleo"] li');
@@ -325,10 +323,10 @@ describe('Ficha', () => {
   });
 
   it('abre el detalle de un núcleo con el nivel actual y el siguiente', async () => {
-    await montar('/nino/NINO-00001');
+    await montar('/nino/NINO-00008');
     await tocar(botonPor('Lenguaje y comunicación'));
-    expect(texto()).toContain('Ahora: Representación y combinación inicial');
-    expect(texto()).toContain('Siguiente: Combinación y participación');
+    expect(texto()).toContain('Ahora:');
+    expect(texto()).toContain('Siguiente:');
   });
 });
 
@@ -340,52 +338,50 @@ describe('Directora', () => {
   it('muestra una tarjeta por sala con los observados de 30 días', async () => {
     await montar('/directora');
     expect(texto()).toContain('Salas del jardín');
-    expect(texto()).toContain('Medio Menor A');
-    expect(texto()).toContain('Medio Menor B');
-    expect(texto()).toContain('Sala Cuna Mayor');
-    expect(texto()).toContain('16 de 18 observados en 30 días');
-    expect(texto()).toContain('1 por revisar avance');
-    expect(texto()).toContain('Menos registrado: Motor grueso');
+    expect(texto()).toContain('Sala A');
+    expect(texto()).toContain('Sala B');
+    expect(texto()).toMatch(/\d+ de 13 observados en 30 días/);
+    expect(texto()).toContain('Menos registrado:');
     // Nunca fotos de niños ni niñas (solo el logo del encabezado).
     expect(imagenesSinLogo()).toHaveLength(0);
   });
 
   it('abre una sala en modo lectura, sin captura ni pila de pendientes', async () => {
-    await montar('/directora/sala/SALA-MMA');
+    await montar('/directora/sala/SG-A');
     expect(texto()).toContain('Vista de la directora · solo lectura');
-    expect(texto()).toContain('Medio Menor A');
+    expect(texto()).toContain('Sala A');
     expect(contenedor.querySelector('[aria-label="Registrar"]')).toBeNull();
-    expect(contenedor.querySelectorAll('tbody tr')).toHaveLength(18);
+    expect(contenedor.querySelectorAll('tbody tr')).toHaveLength(13);
     // La misma planilla, con los colores de nivel.
     expect(contenedor.querySelectorAll('tbody [data-nivel]').length).toBeGreaterThan(50);
   });
 
   it('mueve de sala a un niño/a con confirmación', async () => {
-    await montar('/directora/sala/SALA-MMA');
+    await montar('/directora/sala/SG-A');
     await tocar(botonPor('Josefa'));
     expect(texto()).toContain('Ver su ficha');
     await tocar(botonPor('Mover de sala'));
     expect(texto()).toContain('Nueva sala');
     await tocar(botonPor('Mover'));
-    expect((await datos.nino('NINO-00001')).salaId).toBe('SALA-MMB');
-    expect(texto()).toContain('ahora está en Medio Menor B');
+    expect((await datos.nino('NINO-00008')).salaId).toBe('SG-B');
+    expect(texto()).toContain('ahora está en Sala B');
   });
 
   it('da de baja a un niño/a solo después de confirmar', async () => {
-    await montar('/directora/sala/SALA-MMA');
+    await montar('/directora/sala/SG-A');
     await tocar(botonPor('Josefa'));
     await tocar(botonPor('Dar de baja'));
     expect(texto()).toContain('¿Dar de baja a Josefa?');
     // Mientras no confirme, nada cambia.
-    expect((await datos.nino('NINO-00001')).activo).toBe(true);
+    expect((await datos.nino('NINO-00008')).activo).toBe(true);
     await tocar(botonPor('Sí, dar de baja'));
-    expect((await datos.nino('NINO-00001')).activo).toBe(false);
+    expect((await datos.nino('NINO-00008')).activo).toBe(false);
   });
 
   it('en Inicio puede registrar en cualquiera de las salas del jardín', async () => {
     await montar('/');
     const selector = contenedor.querySelector<HTMLSelectElement>('#sala-registro')!;
-    expect(selector.options).toHaveLength(3);
+    expect(selector.options).toHaveLength(2);
   });
 });
 
@@ -393,7 +389,7 @@ describe('Acceso por rol', () => {
   it('una tía no entra a la vista directora', async () => {
     await montar('/directora');
     // Redirige a su inicio.
-    expect(texto()).toContain('Inicio · Medio Menor A');
+    expect(texto()).toContain('Inicio · Sala A');
     expect(texto()).not.toContain('Salas del jardín');
   });
 

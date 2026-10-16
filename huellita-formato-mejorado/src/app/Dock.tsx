@@ -1,5 +1,6 @@
 import { Camera, FileAudio, Mic, Pencil, type LucideIcon } from 'lucide-react';
 import { useCaptura, type AccionCaptura } from './captura';
+import { useServicios } from './servicios';
 
 /** Nombre del grupo de captura, el mismo en el celular y en el computador. */
 export function etiquetaRegistrar(nombreNino?: string): string {
@@ -29,6 +30,8 @@ export const OPCIONES_CAPTURA: OpcionCaptura[] = [
  * - `fila`: los 4 en fila, ícono sobre el texto (dock del celular, en la ficha);
  * - `columna`: uno bajo otro (bloque "Registrar" de la barra lateral);
  * - `grande`: tarjetas de 2 × 2 con una línea de ayuda (pantalla de Inicio).
+ *
+ * Si el servicio de datos todavía no recibe fotos (versión AWS), Foto no aparece.
  */
 export type DisposicionCaptura = 'fila' | 'columna' | 'grande';
 
@@ -40,9 +43,14 @@ const CONTENEDOR: Record<DisposicionCaptura, string> = {
 
 export function BotonesCaptura({ disposicion = 'fila' }: { disposicion?: DisposicionCaptura }) {
   const abrir = useCaptura();
+  const { datos } = useServicios();
+  const conFoto = datos.admiteFoto !== false;
+  const opciones = conFoto
+    ? OPCIONES_CAPTURA
+    : OPCIONES_CAPTURA.filter((opcion) => opcion.accion !== 'foto');
   return (
     <div className={CONTENEDOR[disposicion]}>
-      {OPCIONES_CAPTURA.map((opcion) => (
+      {opciones.map((opcion) => (
         <BotonCaptura
           key={opcion.accion}
           opcion={opcion}
