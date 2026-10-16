@@ -49,6 +49,11 @@ Parameters:
     Type: String
     AllowedPattern: '^[A-Za-z0-9]{5,64}$'
     Description: ID (no el valor) de la clave de API del transcriptor
+  FuncionOcr:
+    Type: String
+    Default: postits-ocr
+    AllowedPattern: '^[A-Za-z0-9_-]{1,64}$'
+    Description: Nombre de la Lambda de OCR de post-its (stack postits-ocr); se invoca sincronamente
 
   # --- Demo ---------------------------------------------------------------------
   JardinDemo:
@@ -183,6 +188,8 @@ Resources:
           URL_TRANSCRIPTOR: !Ref UrlTranscriptor
           # Solo el ID de la clave; el valor se pide en caliente y vive en memoria.
           ID_CLAVE_TRANSCRIPTOR: !Ref IdClaveTranscriptor
+          # Nombre de la Lambda de OCR; la foto se sube a S3 y luego se invoca sincronamente.
+          FUNCION_OCR: !Ref FuncionOcr
           JARDIN_DEMO: !Ref JardinDemo
           SALAS_DEMO: !Ref SalasDemo
           # Sub, no Ref: el entorno de Lambda solo acepta cadenas.
@@ -233,7 +240,8 @@ Resources:
             TableName: !Ref TablaCapturas
         - DynamoDBCrudPolicy:
             TableName: !Ref TablaDecisiones
-        # Entrega a ProcesarNota: exactamente los dos objetos que escribe el BFF.
+        # Entrega a ProcesarNota: los objetos que escribe el BFF. meta.json y
+        # texto.json para texto/audio, y la foto original (que luego lee el OCR).
         # Sin GetObject, sin DeleteObject y sin ListBucket.
         - Statement:
             - Sid: EscribirCapturaEnS3
@@ -242,6 +250,13 @@ Resources:
               Resource:
                 - !Sub "arn:${AWS::Partition}:s3:::${BucketCapturas}/capturas/*/meta.json"
                 - !Sub "arn:${AWS::Partition}:s3:::${BucketCapturas}/capturas/*/texto.json"
+                - !Sub "arn:${AWS::Partition}:s3:::${BucketCapturas}/capturas/*/original/*"
+        # OCR de post-its: invocar la Lambda postits-ocr, nada mas.
+        - Statement:
+            - Sid: InvocarOcrDePostits
+              Effect: Allow
+              Action: lambda:InvokeFunction
+              Resource: !Sub "arn:${AWS::Partition}:lambda:${AWS::Region}:${AWS::AccountId}:function:${FuncionOcr}"
         # Valor de la clave de API del transcriptor: una sola clave, por su ID.
         - Statement:
             - Sid: LeerClaveDelTranscriptor

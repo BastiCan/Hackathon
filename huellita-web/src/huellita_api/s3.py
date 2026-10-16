@@ -37,6 +37,11 @@ def clave_texto(id_captura: str) -> str:
     return f"capturas/{id_captura}/texto.json"
 
 
+def clave_foto(id_captura: str, ext: str = "jpg") -> str:
+    """Clave de la foto original de la captura: `capturas/{id}/original/foto.{ext}`."""
+    return f"capturas/{id_captura}/original/foto.{ext}"
+
+
 def cuerpo_meta(autor_id: str, sala_id: str, fecha: str) -> dict:
     """Las tres claves de `meta.json`, en este orden. `fecha` es la de Chile."""
     return {"id_educadora": autor_id, "sala_grupo": sala_id, "fecha_observacion": fecha}
@@ -55,4 +60,15 @@ def subir_json(cfg: Config, clave: str, contenido: dict) -> None:
         Key=clave,
         Body=json.dumps(contenido, ensure_ascii=False).encode("utf-8"),
         ContentType="application/json",
+    )
+
+
+def subir_imagen(cfg: Config, clave: str, datos: bytes, content_type: str) -> None:
+    """Sube los bytes de la foto bajo `original/`. Como `subir_json`, cualquier
+    error se propaga tal cual: lo traduce a `error_envio` quien llama."""
+    cliente().put_object(
+        Bucket=cfg.bucket_capturas,
+        Key=clave,
+        Body=datos,
+        ContentType=content_type,
     )

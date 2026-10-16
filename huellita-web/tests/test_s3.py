@@ -78,6 +78,31 @@ def test_subir_json_usa_el_bucket_el_tipo_y_utf8(cfg: Config, falso: FalsoS3) ->
     assert json.loads(puesto["Body"].decode("utf-8")) == s3.cuerpo_texto(ID, "apiló la torre")
 
 
+def test_la_clave_de_la_foto_lleva_el_prefijo_original() -> None:
+    assert s3.clave_foto(ID) == f"capturas/{ID}/original/foto.jpg"
+    assert s3.clave_foto(ID, "png") == f"capturas/{ID}/original/foto.png"
+
+
+def test_subir_imagen_pone_los_bytes_con_su_tipo(cfg: Config, falso: FalsoS3) -> None:
+    datos = b"\xff\xd8\xff\xe0bytes-de-foto"
+    s3.subir_imagen(cfg, s3.clave_foto(ID), datos, "image/jpeg")
+
+    (puesto,) = falso.puestos
+    assert puesto["Bucket"] == "integra-capturas-test"
+    assert puesto["Key"] == f"capturas/{ID}/original/foto.jpg"
+    assert puesto["ContentType"] == "image/jpeg"
+    assert puesto["Body"] == datos
+    assert isinstance(puesto["Body"], bytes)
+
+
+def test_subir_imagen_png_usa_su_content_type(cfg: Config, falso: FalsoS3) -> None:
+    s3.subir_imagen(cfg, s3.clave_foto(ID, "png"), b"\x89PNG", "image/png")
+
+    (puesto,) = falso.puestos
+    assert puesto["Key"] == f"capturas/{ID}/original/foto.png"
+    assert puesto["ContentType"] == "image/png"
+
+
 def test_el_error_de_s3_se_propaga_tal_cual(cfg: Config, monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setattr(s3, "cliente", lambda: FalsoS3(falla_en="meta.json"))
 

@@ -30,6 +30,12 @@ capturas = importlib.import_module("huellita_api.datos.capturas")
 errores = importlib.import_module("huellita_api.errores")
 tiempo = importlib.import_module("huellita_api.tiempo")
 audio = importlib.import_module("huellita_api.datos.audio")
+foto = importlib.import_module("huellita_api.datos.foto")
+ocr = importlib.import_module("huellita_api.ocr")
+
+JPEG = b"\xff\xd8\xff\xe0\x00\x10JFIF" + b"\x00" * 32
+PNG = b"\x89PNG\r\n\x1a\n" + b"\x00" * 32
+HEIC = b"\x00\x00\x00\x18ftypheic" + b"\x00" * 16
 
 CABECERA = {"X-Usuaria-Id": "EDU-0001"}
 TEXTO = "Nayara apiló cinco cubos y dijo torre"
@@ -124,6 +130,33 @@ def envio_de_audio(monkeypatch: pytest.MonkeyPatch, entorno: Entorno) -> Entorno
     return entorno
 
 
+@pytest.fixture
+def ocr_ok(monkeypatch: pytest.MonkeyPatch, entorno: Entorno) -> Entorno:
+    """Doble de `ocr.invocar`: la Lambda OCR siempre lee bien, sin salir a la red."""
+
+    def invocar(cfg: Config, id_captura: str, *_args: object) -> dict:
+        entorno.enviados.append((id_captura, "ocr"))
+        return {"n_postits": 3, "partes": []}
+
+    monkeypatch.setattr(ocr, "invocar", invocar)
+    return entorno
+
+
+def foto_base64(crudo: bytes = JPEG) -> str:
+    return base64.b64encode(crudo).decode("ascii")
+
+
+def cuerpo_foto(**extra: object) -> dict:
+    base: dict = {
+        "salaId": "SG-A",
+        "autorId": "EDU-0001",
+        "formato": "foto",
+        "fotoBase64": foto_base64(),
+    }
+    base.update(extra)
+    return base
+
+
 def cuerpo(**extra: object) -> dict:
     """Cuerpo de `POST /api/capturas` con formato texto."""
     base: dict = {"salaId": "SG-A", "autorId": "EDU-0001", "formato": "texto", "texto": TEXTO}
@@ -206,8 +239,8 @@ def test_el_texto_se_guarda_recortado(entorno: Entorno) -> None:
     assert entorno.s3.cuerpo("texto.json")["partes"] == [{"texto": TEXTO}]
 
 
-@pytest.mark.parametrize("formato", ["foto", "video", "TEXTO", ""])
-def test_foto_u_otro_formato_responde_422(entorno: Entorno, formato: str) -> None:
+@pytest.mark.parametrize("formato", ["video", "TEXTO", ""])
+def test_un_formato_desconocido_responde_422(entorno: Entorno, formato: str) -> None:
     respuesta = entorno.cliente.post("/api/capturas", json=cuerpo(formato=formato), headers=CABECERA)
 
     assert respuesta.status_code == 422
@@ -438,6 +471,144 @@ def test_los_errores_del_transcriptor_se_traducen(
         json={"salaId": "SG-A", "autorId": "EDU-0001", "formato": "audio", "audioBase64": audio_base64()},
         headers=CABECERA,
     )
+
+    assert respuesta.status_code == estado
+    assert respuesta.json()["error"]["codigo"] == codigo
+    (item,) = [fila for fila in entorno.almacen.filas(entorno.cfg.tabla_capturas).values() if "sala_key" in fila]
+    assert item["estado_envio"] == {"S": "error_envio"}
+
+
+def test_la_foto_escribe_meta_json_y_la_imagen_e_invoca_el_ocr(ocr_ok: Entorno) -> None:
+    entorno = ocr_ok
+
+    respuesta = entorno.cliente.post("/api/capturas", json=cuerpo_foto(), headers=CABECERA)
+
+    assert respuesta.status_code == 201
+    evidencia = respuesta.json()["evidencia"]
+    assert evidencia["formato"] == "foto"
+    assert evidencia["estado"] == "procesando"
+    assert "textoExtraido" not in evidencia  # el texto lo escribe postits-ocr, no el BFF
+    id_captura = evidencia["id"]
+    # meta.json PRIMERO, luego la foto; nunca texto.json para foto.
+    assert entorno.s3.claves == [
+        f"capturas/{id_captura}/meta.json",
+        f"capturas/{id_captura}/original/foto.jpg",
+    ]
+    puesto_foto = entorno.s3.cuerpos[f"capturas/{id_captura}/original/foto.jpg"]
+    assert puesto_foto["ContentType"] == "image/jpeg"
+    assert puesto_foto["Body"] == JPEG
+    assert entorno.enviados == [(id_captura, "ocr")]
+    item = fila(entorno, id_captura)
+    assert item["estado_envio"] == {"S": "enviada"}
+
+
+def test_la_foto_png_se_sube_con_su_extension(ocr_ok: Entorno) -> None:
+    entorno = ocr_ok
+
+    respuesta = entorno.cliente.post(
+        "/api/capturas", json=cuerpo_foto(fotoBase64=foto_base64(PNG)), headers=CABECERA
+    )
+
+    assert respuesta.status_code == 201
+    id_captura = respuesta.json()["evidencia"]["id"]
+    assert f"capturas/{id_captura}/original/foto.png" in entorno.s3.claves
+    puesto = entorno.s3.cuerpos[f"capturas/{id_captura}/original/foto.png"]
+    assert puesto["ContentType"] == "image/png"
+
+
+def test_la_foto_rota_responde_422_sin_tocar_s3(entorno: Entorno) -> None:
+    respuesta = entorno.cliente.post(
+        "/api/capturas", json=cuerpo_foto(fotoBase64="no-es-base64!!"), headers=CABECERA
+    )
+
+    assert respuesta.status_code == 422
+    assert respuesta.json()["error"]["codigo"] == "foto_invalida"
+    assert entorno.s3.claves == []
+    assert entorno.almacen.tablas == {}  # ni fila ni cupo del día
+
+
+def test_la_foto_heic_responde_415(entorno: Entorno) -> None:
+    respuesta = entorno.cliente.post(
+        "/api/capturas", json=cuerpo_foto(fotoBase64=foto_base64(HEIC)), headers=CABECERA
+    )
+
+    assert respuesta.status_code == 415
+    assert respuesta.json()["error"]["codigo"] == "formato_foto_no_soportado"
+    assert entorno.s3.claves == []
+
+
+def test_la_foto_sobre_el_tope_responde_413(entorno: Entorno) -> None:
+    grande = JPEG + b"\x00" * (foto.MAX_BYTES_FOTO + 1)
+
+    respuesta = entorno.cliente.post(
+        "/api/capturas", json=cuerpo_foto(fotoBase64=foto_base64(grande)), headers=CABECERA
+    )
+
+    assert respuesta.status_code == 413
+    assert respuesta.json()["error"]["codigo"] == "foto_demasiado_grande"
+    assert entorno.s3.claves == []
+
+
+def test_la_foto_sin_contenido_responde_422(entorno: Entorno) -> None:
+    cuerpo = cuerpo_foto()
+    del cuerpo["fotoBase64"]
+
+    respuesta = entorno.cliente.post("/api/capturas", json=cuerpo, headers=CABECERA)
+
+    assert respuesta.status_code == 422
+    assert respuesta.json()["error"]["codigo"] == "foto_invalida"
+
+
+def test_si_falla_la_subida_de_la_foto_la_fila_queda_en_error_envio(ocr_ok: Entorno) -> None:
+    entorno = ocr_ok
+    entorno.s3.falla_en = "original/foto.jpg"
+
+    respuesta = entorno.cliente.post("/api/capturas", json=cuerpo_foto(), headers=CABECERA)
+
+    assert respuesta.status_code == 502
+    assert respuesta.json()["error"]["codigo"] == "error_envio"
+    assert [clave.rsplit("/", 1)[-1] for clave in entorno.s3.claves] == ["meta.json"]
+    assert entorno.enviados == []  # no se invocó el OCR
+    (item,) = [fila for fila in entorno.almacen.filas(entorno.cfg.tabla_capturas).values() if "sala_key" in fila]
+    assert item["estado_envio"] == {"S": "error_envio"}
+
+
+def test_ocr_en_proceso_deja_la_captura_en_procesando(
+    monkeypatch: pytest.MonkeyPatch, ocr_ok: Entorno
+) -> None:
+    entorno = ocr_ok
+
+    def invocar(*_args: object) -> dict:
+        raise ocr.OcrEnProceso
+
+    monkeypatch.setattr(ocr, "invocar", invocar)
+
+    respuesta = entorno.cliente.post("/api/capturas", json=cuerpo_foto(), headers=CABECERA)
+
+    assert respuesta.status_code == 201
+    evidencia = respuesta.json()["evidencia"]
+    assert evidencia["estado"] == "procesando"
+    item = fila(entorno, evidencia["id"])
+    assert item["estado_envio"] == {"S": "enviada"}
+
+
+@pytest.mark.parametrize(
+    ("codigo", "estado"),
+    [
+        ("ocr_sin_lectura", 502),
+        ("ocr_caido", 502),
+        ("foto_invalida", 422),
+    ],
+)
+def test_los_errores_del_ocr_se_traducen(
+    monkeypatch: pytest.MonkeyPatch, entorno: Entorno, codigo: str, estado: int
+) -> None:
+    def invocar(*_args: object) -> dict:
+        raise ocr.ErrorOcr(codigo)
+
+    monkeypatch.setattr(ocr, "invocar", invocar)
+
+    respuesta = entorno.cliente.post("/api/capturas", json=cuerpo_foto(), headers=CABECERA)
 
     assert respuesta.status_code == estado
     assert respuesta.json()["error"]["codigo"] == codigo

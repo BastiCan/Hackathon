@@ -9,7 +9,7 @@ fail_on_empty_changeset = false
 tags = "proyecto=\"integra-hackaton\" componente=\"huellita-web\""
 # Nombres de los stacks integra-procesador y transcriptor-audio (salidas de describe-stacks).
 # IdClaveTranscriptor es el ID de la clave de API, no su valor: la función lee el valor al arrancar.
-parameter_overrides = "TablaJardines=\"integra-procesador-TablaJardines-4DF6PS9M1AK4\" TablaEducadoras=\"integra-procesador-TablaEducadoras-PMJ55I44WU75\" TablaNinos=\"integra-procesador-TablaNinos-11AMEMFM7SFST\" TablaRegistros=\"integra-procesador-TablaRegistros-P238ZZKPTQ51\" TablaObservaciones=\"integra-procesador-TablaObservaciones-1MP6ZR2QT9JAU\" BucketCapturas=\"integra-capturas-277702547089\" UrlTranscriptor=\"https://289khkzbpd.execute-api.us-east-1.amazonaws.com/v1\" IdClaveTranscriptor=\"14b8weklf1\" JardinDemo=\"JAR-0001\" SalasDemo=\"SG-A,SG-B\" MaxCapturasDia=\"300\" MinutosMaxProcesando=\"20\""
+parameter_overrides = "TablaJardines=\"integra-procesador-TablaJardines-4DF6PS9M1AK4\" TablaEducadoras=\"integra-procesador-TablaEducadoras-PMJ55I44WU75\" TablaNinos=\"integra-procesador-TablaNinos-11AMEMFM7SFST\" TablaRegistros=\"integra-procesador-TablaRegistros-P238ZZKPTQ51\" TablaObservaciones=\"integra-procesador-TablaObservaciones-1MP6ZR2QT9JAU\" BucketCapturas=\"integra-capturas-277702547089\" UrlTranscriptor=\"https://289khkzbpd.execute-api.us-east-1.amazonaws.com/v1\" IdClaveTranscriptor=\"14b8weklf1\" FuncionOcr=\"postits-ocr\" JardinDemo=\"JAR-0001\" SalasDemo=\"SG-A,SG-B\" MaxCapturasDia=\"300\" MinutosMaxProcesando=\"20\""
 
 [default.global.parameters]
 region = "us-east-1"

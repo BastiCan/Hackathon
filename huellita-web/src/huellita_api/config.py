@@ -18,6 +18,7 @@ class Config:
     bucket_capturas: str
     url_transcriptor: str
     id_clave_transcriptor: str
+    funcion_ocr: str
     jardin: str
     salas: tuple[str, ...]
     max_capturas_dia: int
@@ -52,6 +53,7 @@ def cargar_config(entorno: Mapping[str, str] | None = None) -> Config:
         bucket_capturas=entorno.get("BUCKET_CAPTURAS", ""),
         url_transcriptor=entorno.get("URL_TRANSCRIPTOR", "").rstrip("/"),
         id_clave_transcriptor=entorno.get("ID_CLAVE_TRANSCRIPTOR", ""),
+        funcion_ocr=entorno.get("FUNCION_OCR", ""),
         jardin=entorno.get("JARDIN_DEMO", "JAR-0001"),
         salas=salas,
         max_capturas_dia=_entero(entorno, "MAX_CAPTURAS_DIA", 300, 1),

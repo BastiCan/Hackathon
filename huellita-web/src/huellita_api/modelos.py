@@ -109,6 +109,7 @@ class CapturaEntrada(_Modelo):
     formato: str
     texto: str | None = None
     audioBase64: str | None = None
+    fotoBase64: str | None = None
     mimeType: str | None = None
     ninoIdSugerido: str | None = None
 

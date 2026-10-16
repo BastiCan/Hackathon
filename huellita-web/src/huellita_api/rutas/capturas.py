@@ -15,12 +15,15 @@ from pydantic import BaseModel, ConfigDict
 
 from .. import auth, errores, s3, tiempo, ulid
 from ..config import Config, cargar_config
-from ..datos import audio, capturas
+from ..datos import audio, capturas, foto
 from ..modelos import CapturaCreada, CapturaEntrada, Evidencia
 from . import PREFIJO
 
-FORMATOS = ("texto", "audio")
+FORMATOS = ("texto", "audio", "foto")
 LARGO_MAX_TEXTO = 5000
+
+#: Extensión del objeto en S3 por `content_type` de la foto.
+_EXT_FOTO = {"image/jpeg": "jpg", "image/png": "png"}
 
 CFG: Config = cargar_config()
 
@@ -59,19 +62,31 @@ def _revisar_audio(entrada: CapturaEntrada) -> None:
     audio.decodificar(entrada.audioBase64)
 
 
-def _entregar(id_captura: str, entrada: CapturaEntrada, dia: str, texto: str | None) -> None:
-    """`meta.json` primero y `texto.json` después. Un fallo de escritura deja la
-    fila en `error_envio` y responde 502; el audio lo entrega el transcriptor,
-    que trae sus propios códigos."""
+def _entregar(
+    id_captura: str,
+    entrada: CapturaEntrada,
+    dia: str,
+    texto: str | None,
+    imagen: tuple[bytes, str] | None,
+) -> None:
+    """`meta.json` primero y después el resto. Un fallo de escritura deja la fila
+    en `error_envio` y responde 502; el audio lo entrega el transcriptor y la foto
+    el OCR, cada uno con sus propios códigos. Para foto NO se escribe `texto.json`:
+    lo escribe la Lambda `postits-ocr`."""
     try:
         s3.subir_json(CFG, s3.clave_meta(id_captura), s3.cuerpo_meta(entrada.autorId, entrada.salaId, dia))
         if texto is not None:
             s3.subir_json(CFG, s3.clave_texto(id_captura), s3.cuerpo_texto(id_captura, texto, "manual"))
+        if imagen is not None:
+            datos, content_type = imagen
+            s3.subir_imagen(CFG, s3.clave_foto(id_captura, _EXT_FOTO[content_type]), datos, content_type)
     except Exception as falla:
         capturas.marcar_envio(CFG, id_captura, "error_envio")
         raise errores.error("error_envio") from falla
     if entrada.formato == "audio":
         audio.enviar(CFG, id_captura, entrada.audioBase64 or "")
+    elif entrada.formato == "foto":
+        foto.enviar(CFG, id_captura, entrada.autorId, entrada.salaId, dia)
 
 
 @router.post(
@@ -93,6 +108,7 @@ def crear_captura(entrada: CapturaEntrada, id_usuaria: Cabecera = None) -> Captu
     texto = _texto_o_error(entrada) if entrada.formato == "texto" else None
     if entrada.formato == "audio":
         _revisar_audio(entrada)
+    imagen = foto.decodificar(entrada.fotoBase64) if entrada.formato == "foto" else None
 
     momento = tiempo.ahora(CFG)
     dia = tiempo.dia(momento)
@@ -113,7 +129,7 @@ def crear_captura(entrada: CapturaEntrada, id_usuaria: Cabecera = None) -> Captu
     )
     if texto is not None:
         capturas.guardar_texto(CFG, id_captura, texto)
-    _entregar(id_captura, entrada, dia, texto)
+    _entregar(id_captura, entrada, dia, texto, imagen)
     capturas.marcar_envio(CFG, id_captura, "enviada")
 
     return CapturaCreada(
