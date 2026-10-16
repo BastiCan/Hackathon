@@ -205,13 +205,12 @@ describe('escritorio (desde 1024 px)', () => {
 describe('pantallas en escritorio', () => {
   it('el inicio se abre en dos columnas', async () => {
     await montar('/');
-    const semana = uno('[aria-label="Días de la semana"]').parentElement as HTMLElement;
-    const grilla = semana.parentElement as HTMLElement;
+    const seccion = uno('section[aria-labelledby="titulo-registrar"]');
+    const grilla = seccion.parentElement as HTMLElement;
     expect(grilla.className).toContain('lg:grid');
     expect(grilla.className).toContain('lg:grid-cols-[minmax(0,1fr)_300px]');
-    // La semana y los botones a la izquierda; el aviso de pendientes a la derecha.
-    expect(semana.className).toContain('lg:col-start-1');
-    expect(uno('section[aria-labelledby="titulo-registrar"]').className).toContain('lg:col-start-1');
+    // Los botones a la izquierda; el aviso de pendientes a la derecha.
+    expect(seccion.className).toContain('lg:col-start-1');
     expect(uno('.aviso').parentElement!.className).toContain('lg:col-start-2');
     // En escritorio los 4 botones van en una fila.
     const botones = uno('section[aria-labelledby="titulo-registrar"] button').parentElement!;
@@ -245,7 +244,7 @@ describe('pantallas en escritorio', () => {
 
   it('la ficha del niño o niña se abre en dos columnas', async () => {
     await montar('/nino/NINO-00008');
-    const grilla = uno('.aviso').parentElement!.parentElement as HTMLElement;
+    const grilla = uno('[aria-label="Nivel por núcleo"]').parentElement!.parentElement as HTMLElement;
     expect(grilla.className).toContain('lg:grid');
     expect(grilla.className).toContain('lg:grid-cols-2');
   });

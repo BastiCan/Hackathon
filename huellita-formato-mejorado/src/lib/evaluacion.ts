@@ -296,3 +296,96 @@ export function evaluacionesDe(
 ): EvaluacionValidada[] {
   return porFechaDesc(evaluaciones.filter((e) => e.ninoId === ninoId));
 }
+
+/**
+ * Promedio de las notas válidas de un niño/a: el nivel actual de cada núcleo
+ * con evidencia (los núcleos sin registro no cuentan). `null` si no tiene
+ * ninguna evaluación validada.
+ */
+export function promedioNiveles(evaluaciones: EvaluacionValidada[]): number | null {
+  const niveles = Object.values(nivelActualPorNucleo(evaluaciones)).filter(
+    (n): n is Nivel => n !== null,
+  );
+  if (niveles.length === 0) return null;
+  return niveles.reduce((a, b) => a + b, 0) / niveles.length;
+}
+
+export interface RezagoRelativo {
+  /** Promedio de las notas válidas del niño/a. */
+  promedio: number | null;
+  /** Promedio del resto de la sala (niños/as con al menos una nota válida). */
+  promedioSala: number | null;
+  /** Desviación estándar poblacional de los promedios de la sala. */
+  desviacion: number | null;
+  /** Cuántas desviaciones está por debajo del promedio de la sala (positivo = más abajo). */
+  desviacionesAbajo: number | null;
+  /**
+   * `true` cuando el niño/a está, en promedio, al menos una desviación estándar
+   * por debajo del resto de la sala: señal de posible rezago.
+   */
+  enRezago: boolean;
+}
+
+/**
+ * Marca de posible rezago relativo a la sala: se compara el promedio de las
+ * notas válidas del niño/a contra el promedio y la desviación estándar de los
+ * promedios de todos los niños/as de la sala con evidencia. Se marca cuando el
+ * niño/a está una desviación estándar o más por debajo del promedio de la sala.
+ *
+ * Necesita al menos 3 niños/as con evidencia y una desviación mayor que cero
+ * para que la comparación tenga sentido; si no, no se marca a nadie.
+ */
+export function rezagoRelativoSala(
+  ninoId: string,
+  ninos: Nino[],
+  evaluaciones: EvaluacionValidada[],
+): RezagoRelativo {
+  const promedioNino = promedioNiveles(evaluacionesDe(evaluaciones, ninoId));
+
+  const promedios = ninos
+    .filter((n) => n.activo)
+    .map((n) => promedioNiveles(evaluacionesDe(evaluaciones, n.id)))
+    .filter((p): p is number => p !== null);
+
+  if (promedios.length < 3 || promedioNino === null) {
+    return {
+      promedio: promedioNino,
+      promedioSala: promedios.length > 0 ? media(promedios) : null,
+      desviacion: null,
+      desviacionesAbajo: null,
+      enRezago: false,
+    };
+  }
+
+  const promedioSala = media(promedios);
+  const desviacion = desviacionEstandar(promedios, promedioSala);
+  if (desviacion === 0) {
+    return {
+      promedio: promedioNino,
+      promedioSala,
+      desviacion,
+      desviacionesAbajo: 0,
+      enRezago: false,
+    };
+  }
+
+  const desviacionesAbajo = (promedioSala - promedioNino) / desviacion;
+  return {
+    promedio: promedioNino,
+    promedioSala,
+    desviacion,
+    desviacionesAbajo,
+    enRezago: desviacionesAbajo >= 1,
+  };
+}
+
+function media(valores: number[]): number {
+  return valores.reduce((a, b) => a + b, 0) / valores.length;
+}
+
+/** Desviación estándar poblacional. */
+function desviacionEstandar(valores: number[], promedio: number): number {
+  const varianza =
+    valores.reduce((a, b) => a + (b - promedio) ** 2, 0) / valores.length;
+  return Math.sqrt(varianza);
+}

@@ -703,6 +703,10 @@ export class DataServiceHttp implements DataService {
     }));
   }
 
+  async editarNotaSala(_sugerenciaId: string, _texto: string): Promise<void> {
+    throw new ErrorParaTia('Esto todavía no se puede hacer desde aquí.', 'no_disponible');
+  }
+
   async moverNino(_ninoId: string, _salaId: string): Promise<void> {
     throw new ErrorParaTia('Esto todavía no se puede hacer desde aquí.', 'no_disponible');
   }

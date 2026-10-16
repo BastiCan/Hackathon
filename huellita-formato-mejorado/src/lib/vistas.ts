@@ -24,6 +24,7 @@ import type {
   Nivel,
   NucleoId,
   ResumenSala,
+  Sugerencia,
   SugerenciaObservacion,
 } from './tipos';
 
@@ -362,4 +363,44 @@ export function historialVista(
     autora: nombreAutora(e.validadaPor),
     cita: e.cita,
   }));
+}
+
+
+/** Una nota de la sala (observacion general) ya guardada, para listarla y editarla. */
+export interface NotaSalaVista {
+  sugerenciaId: string;
+  evidenciaId: string;
+  fecha: string;
+  fechaCorta: string;
+  /** Texto mostrado: el de la evidencia si existe, si no la cita. */
+  texto: string;
+  autora: string;
+}
+
+/**
+ * Notas de la sala validadas (aceptadas o cambiadas), de la mas reciente a la
+ * mas antigua. Son las observaciones generales que no son de un nino en
+ * particular. El texto sale de la evidencia (lo transcrito/escrito) y, si no
+ * esta, de la cita de la sugerencia.
+ */
+export function notasSalaVista(
+  sugerencias: Sugerencia[],
+  nombreAutora: (id: string | undefined) => string,
+  textoEvidencia: (id: string) => string | undefined = () => undefined,
+  fechaEvidencia: (id: string) => string | undefined = () => undefined,
+): NotaSalaVista[] {
+  return sugerencias
+    .filter((s) => s.tipo === 'nota_sala' && (s.estado === 'aceptada' || s.estado === 'cambiada'))
+    .map((s) => {
+      const fecha = fechaEvidencia(s.evidenciaId) ?? s.validadaEn ?? '';
+      return {
+        sugerenciaId: s.id,
+        evidenciaId: s.evidenciaId,
+        fecha,
+        fechaCorta: fecha ? fechaCorta(fecha) : '',
+        texto: textoEvidencia(s.evidenciaId) ?? s.cita,
+        autora: nombreAutora(s.validadaPor),
+      };
+    })
+    .sort((a, b) => (a.fecha < b.fecha ? 1 : a.fecha > b.fecha ? -1 : 0));
 }

@@ -85,6 +85,8 @@ export interface DataService {
   ): Promise<void>;
   guardarSugerencias(s: Sugerencia[]): Promise<void>;
   validar(id: string, cambios?: CambiosValidacion): Promise<void>;
+  /** Edita el texto de una nota de sala ya guardada (observacion general). */
+  editarNotaSala(sugerenciaId: string, texto: string): Promise<void>;
   descartar(id: string): Promise<void>;
   moverNino(ninoId: string, salaId: string): Promise<void>;
   darDeBaja(ninoId: string): Promise<void>;
@@ -384,6 +386,20 @@ export class DataServiceLocal implements DataService {
     s.estado = huboCambio ? 'cambiada' : 'aceptada';
     s.validadaPor = this.estado.usuariaId;
     s.validadaEn = this.ahoraISO();
+    this.guardar();
+  }
+
+  async editarNotaSala(sugerenciaId: string, texto: string): Promise<void> {
+    const s = this.estado.sugerencias.find((x) => x.id === sugerenciaId);
+    if (!s || s.tipo !== 'nota_sala') throw new Error('Esa nota de sala ya no esta.');
+    const limpio = texto.trim();
+    if (!limpio) throw new Error('La nota no puede quedar vacia.');
+    s.cita = limpio;
+    s.validadaPor = this.estado.usuariaId;
+    s.validadaEn = this.ahoraISO();
+    // El texto mostrado sale de la evidencia si existe; se mantiene en sintonia.
+    const evidencia = this.estado.evidencias.find((e) => e.id === s.evidenciaId);
+    if (evidencia) evidencia.textoExtraido = limpio;
     this.guardar();
   }
 

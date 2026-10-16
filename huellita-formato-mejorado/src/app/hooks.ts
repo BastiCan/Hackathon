@@ -12,7 +12,10 @@ import {
   nivelActualPorNucleo,
   nivelEsperado,
   observarAhora,
+  promedioNiveles,
   resumenSala,
+  rezagoRelativoSala,
+  type RezagoRelativo,
 } from '../lib/evaluacion';
 import { proximoIEA, semanaDe, type DiaSemana } from '../lib/inicio';
 import { conductas, nivelSiguiente } from '../lib/rubrica';
@@ -32,6 +35,7 @@ import {
   etiquetaFormato,
   historialVista,
   iniciales,
+  notasSalaVista,
   nucleosDeFicha,
   ordenarNucleosFicha,
   partesResumenSala,
@@ -40,6 +44,7 @@ import {
   tarjetasDeSala,
   textoResumenSala,
   type ConteosFiltro,
+  type NotaSalaVista,
   type NucleoVista,
   type RegistroVista,
   type TarjetaNinoVista,
@@ -142,6 +147,8 @@ export interface VistaMiSala {
   resumen: string;
   /** Las dos partes que van en negrita (como en el prototipo). */
   partesResumen: { observados: string; menos: string };
+  /** Observaciones generales de la sala (notas de sala) ya guardadas. */
+  notas: NotaSalaVista[];
   pendientes: number;
 }
 
@@ -152,10 +159,11 @@ export function useMiSala(salaId: string | undefined): Consulta<VistaMiSala> {
         ? (await datos.salas()).find((s) => s.id === salaId) ?? (await datos.salaActual())
         : await datos.salaActual();
       const hoy = datos.hoy();
-      const [ninos, sugerencias, evidencias] = await Promise.all([
+      const [ninos, sugerencias, evidencias, usuarias] = await Promise.all([
         datos.ninos(sala.id),
         datos.sugerencias({ salaId: sala.id }),
         datos.evidencias({ salaId: sala.id }),
+        datos.usuarias(),
       ]);
       const evaluaciones = evaluacionesValidadas(sugerencias, evidencias);
       const tarjetas = tarjetasDeSala(ninos, evaluaciones, hoy);
@@ -167,6 +175,12 @@ export function useMiSala(salaId: string | undefined): Consulta<VistaMiSala> {
         conteos: conteosFiltro(tarjetas),
         resumen: textoResumenSala(resumen),
         partesResumen: partesResumenSala(resumen),
+        notas: notasSalaVista(
+          sugerencias,
+          (id) => usuarias.find((u) => u.id === id)?.nombre ?? 'Tia',
+          (id) => evidencias.find((e) => e.id === id)?.textoExtraido,
+          (id) => evidencias.find((e) => e.id === id)?.creadaEn,
+        ),
         pendientes:
           sugerencias.filter((s) => s.estado === 'pendiente').length +
           evidencias.filter((e) => e.estado === 'error').length,
@@ -306,6 +320,12 @@ export interface VistaFicha {
   nivelEsperadoEdad: Nivel;
   /** Conductas observables del núcleo propuesto (vienen de la rúbrica). */
   conductasObservar: string[];
+  /** Promedio de las notas validas del nino/a (null si aun no tiene). */
+  promedio: number | null;
+  /** Comparacion con el resto de la sala para detectar posible rezago. */
+  rezago: RezagoRelativo;
+  /** Ninos activos de la sala, para el selector al corregir un registro. */
+  ninosSala: Nino[];
   historial: RegistroVista[];
 }
 
@@ -315,8 +335,9 @@ export function useFicha(ninoId: string | undefined): Consulta<VistaFicha> {
       if (!ninoId) throw new Error('Falta el niño o niña.');
       const hoy = datos.hoy();
       const nino = await datos.nino(ninoId);
-      const [salas, sugerencias, evidencias, usuarias] = await Promise.all([
+      const [salas, ninosSala, sugerencias, evidencias, usuarias] = await Promise.all([
         datos.salas(),
+        datos.ninos(nino.salaId),
         datos.sugerencias({ salaId: nino.salaId }),
         datos.evidencias({ salaId: nino.salaId }),
         datos.usuarias(),
@@ -336,6 +357,8 @@ export function useFicha(ninoId: string | undefined): Consulta<VistaFicha> {
           })()
         : observarAhora(suyas, niveles, esperado);
       const tarjeta = tarjetasDeSala([nino], suyas, hoy)[0];
+      const evaluacionesSala = evaluacionesValidadas(sugerencias, evidencias);
+      const rezago = rezagoRelativoSala(nino.id, ninosSala, evaluacionesSala);
 
       return {
         nino,
@@ -349,6 +372,9 @@ export function useFicha(ninoId: string | undefined): Consulta<VistaFicha> {
         observar,
         nivelEsperadoEdad: esperado,
         conductasObservar: observar ? conductas(observar.nucleo, observar.nivel).slice(0, 2) : [],
+        promedio: promedioNiveles(suyas),
+        rezago,
+        ninosSala,
         historial: historialVista(
           suyas,
           (id) => usuarias.find((u) => u.id === id)?.nombre ?? 'Tía',
